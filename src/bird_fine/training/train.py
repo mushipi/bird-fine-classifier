@@ -83,9 +83,9 @@ def main() -> None:
     label2id = label_map
 
     if args.dry_run:
-        print("[DRY] dry-run: 各splitを最大50件に縮小")
-        train_ds.df = train_ds.df.head(50).reset_index(drop=True)
-        val_ds.df = val_ds.df.head(20).reset_index(drop=True)
+        print("[DRY] dry-run: 各speciesから層化サンプリング（train 各6 / val 各3）")
+        train_ds.df = train_ds.df.groupby("species").head(6).reset_index(drop=True)
+        val_ds.df = val_ds.df.groupby("species").head(3).reset_index(drop=True)
 
     print(f"  train: {len(train_ds)} / val: {len(val_ds)} / test: {len(test_ds)}")
 
