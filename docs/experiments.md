@@ -129,6 +129,69 @@
 
 ---
 
+## run03 — lr 単独評価 (2026-05-20)
+
+**出力:** `models/ast-duck-v3/`
+**コミット:** （学習後に記録）
+**ステータス:** 学習前記録（事前登録）— 条件と仮説を学習前に固定。結果・経過・所見は学習完了後に追記。
+
+### ハイパラ（run01 / run02 からの差分）
+
+| 項目 | run01 | run02 | run03 | run03 の意図 |
+|---|---|---|---|---|
+| learning_rate | 5.0e-5 | 2.0e-5 | **2.0e-5** | 主軸。lr↓ を単独評価 |
+| weight_decay | 0.01 | 0.1 | **0.01** | run02 の 0.1 を baseline に戻し固定変数化 |
+| early_stopping_patience | 3 | 2 | **4** | lr↓ への整合補正。早期打ち切り回避 |
+| SpecAugment | なし | あり | **なし** | 補助を排除、主軸に集中 |
+
+run01 baseline から見た実質変更は **lr↓ と patience↑ のみ**（patience は lr↓ の従属補正）。実質「lr 単独評価」。
+
+### データ規模
+
+- run01 / run02 と同一（train 約2016 / val 約313 / test 約313、10秒チャンク、8種）
+
+### 仮説と予測（学習前に固定）
+
+run02 から確定した事実:
+- eval_loss は lr↓+wd↑ で 0.622 → 0.365 に改善（正則化は機能）
+- f1_macro は 0.848 → 0.826 に悪化、best epoch は 4 → 2 に前倒し
+- SpecAugment の eval 漏れは実装確認で否定（→ journal.md 2026-05-20）
+
+| | 仮説 | 予測 |
+|---|---|---|
+| **H1（主）** | f1 悪化の主因は patience=2 の早期打ち切りと wd=0.1 の過剰正則化であり、lr↓ 自体は f1 に有害でない | **f1_macro ≥ 0.848**（run01 と同等以上に回復） |
+| **H2** | lr↓ で overfit 進行が緩み、ピークが後ろにずれる | **best_epoch ≥ 5**（run01 は 4） |
+| **H3** | lr↓ 単独でも校正は改善する | **eval_loss < 0.622**（run01 比） |
+
+### 検証後の分岐（学習前に固定）
+
+- **H1 成立（f1 ≥ 0.848）**: 「run02 失敗の主因は patience/wd」が確定 → run04 で wd を単独評価
+- **H1 不成立（f1 < 0.848）**: lr↓ 自体が f1 に不利な疑い → lr を 5e-5 系に戻す方向で再検討
+- **H2 不成立（best_epoch < 5）**: lr は overfit タイミングに効きにくい → 別の正則化手段を検討
+
+### 結果（学習完了後に記入）
+
+| metric | value | run01 比 | run02 比 |
+|---|---|---|---|
+| best_epoch | — | | |
+| eval_accuracy | — | | |
+| eval_f1_macro | — | | |
+| eval_precision_macro | — | | |
+| eval_recall_macro | — | | |
+| eval_loss | — | | |
+
+### 経過（学習完了後に記入）
+
+| epoch | step | train_loss | eval_loss | eval_f1_macro |
+|---|---|---|---|---|
+| — | | | | |
+
+### 所見（学習完了後に記入）
+
+— H1 / H2 / H3 の成否と、検証分岐に沿った次アクションを記入。
+
+---
+
 ## メモ
 
 - baseline (`models/ast-duck/`) は常に保護する。新規 run は必ず別 output_dir へ
