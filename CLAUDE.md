@@ -28,12 +28,15 @@
 
 1. **新規 run は必ず別の output_dir** に出す（例: `models/ast-duck-v3/`）。baseline (`models/ast-duck/`) は保護
 2. `config.yaml` を編集する前に、現状からの差分意図をコメントで残す（例: `# v2: 5.0e-5 → overfit対策で半分以下`）
-3. 学習完了後、`docs/experiments.md` の末尾に `## run<NN> — <タイトル> (YYYY-MM-DD)` で追記
-   - ハイパラ差分表
+3. **学習前（事前登録）**: `docs/experiments.md` に `## run<NN> — <タイトル> (YYYY-MM-DD)` セクションを先行作成
+   - ステータスに「学習前記録（事前登録）」と明記
+   - ハイパラ差分表 / 仮説と予測（予測値を具体的に固定）/ 検証後の分岐
+   - 結果・経過・所見はプレースホルダにし、`run<NN>(pre):` でコミット（→ コミット粒度参照）
+4. **学習完了後**: 同セクションの結果欄を埋める
    - 主要マイルストーン表（epoch / train_loss / eval_loss / eval_f1_macro）
    - 結果メトリクス表（過去 run との比較カラム付き）
-   - 所見と次のアクション候補
-4. 設計判断・失敗・気づきは `docs/journal.md` に追記（experiments.md には書ききれない経緯・学び）
+   - 所見（仮説の成否と検証分岐に沿った次のアクション）
+5. 設計判断・失敗・気づきは `docs/journal.md` に追記（experiments.md には書ききれない経緯・学び）
 
 ### 思考と失敗の記録（journal）
 
@@ -53,6 +56,7 @@
 ### コミット粒度
 
 - 1 run = 1 commit を目安に（config.yaml + docs/experiments.md + journal.md + 関連コード変更）
+- **事前登録する run は 2 commit**: 学習前に `run<NN>(pre): 条件と仮説を学習前に記録`、学習後に結果を `run<NN>: <結果>` で別コミット。「結果を見る前に予測を固定した」ことを git 履歴で担保するため
 - メッセージ例: `run02: lr↓ wd↑ + SpecAugment で overfit対策（結果: f1 0.826 / 失敗）`
 
 ### 既知の落とし穴
@@ -61,8 +65,8 @@
 - `data/raw/` は容量大。git ignore 対象、コミットしない
 - SpecAugment は **train_ds のみに適用**。val/test に漏れていないか実装確認すること
 
-## 現状サマリ（更新: 2026-05-19）
+## 現状サマリ（更新: 2026-05-20）
 
 - run01 baseline: f1_macro **0.848** (epoch 4)。明確な overfit
 - run02: ハイパラ4点 + SpecAugment 同時変更で f1_macro **0.826** に悪化（失敗）
-- 次は run03 で変更を絞った再実験予定
+- run03: lr 単独評価（lr=2e-5 / wd=0.01 / patience=4 / SpecAugment オフ）を準備済み。条件・仮説は experiments.md に事前登録。学習待ち
