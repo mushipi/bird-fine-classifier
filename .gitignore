@@ -25,10 +25,11 @@ ENV/
 .env.local
 
 # Data & models (大容量のため除外)
-data/raw/
-data/processed/
-models/
-outputs/
+# 先頭スラッシュ必須: スラッシュ無しだと src/bird_fine/models/ など全階層にマッチする
+/data/raw/
+/data/processed/
+/models/
+/outputs/
 *.mp3
 *.wav
 *.flac

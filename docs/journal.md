@@ -53,3 +53,29 @@ run01 baseline の overfit が明確だったので、改善のため以下を**
 - [ ] どちらを先に走らせるかは A 推奨（主軸が大きく効く可能性が高いため）
 
 ---
+
+## 2026-05-20 .gitignore が src/bird_fine/models を巻き込んで除外していた
+
+### やったこと
+
+初回コミット作成後、`train.py` を読んでいて `from bird_fine.models.ast_classifier import build_ast_classifier` の import 先が初回コミットに含まれていないことに気づいた。
+
+### なぜそうなったか
+
+`.gitignore` の `models/`（学習出力 `models/ast-duck/` を除外する意図）が、先頭スラッシュ無しのため**全階層の `models/` ディレクトリ**にマッチ。`src/bird_fine/models/` も巻き込み、モデル定義 `ast_classifier.py` / `__init__.py` が追跡対象外になっていた。`git check-ignore -v` で `.gitignore:30:models/` がヒットすることを確認。
+
+### 結果
+
+clone しただけでは `ImportError` で学習も評価も動かない壊れた状態だった。`models/` → `/models/` に修正（`data/raw` 等も同様にルート限定へ統一）し、`src/bird_fine/models/` を追跡対象に戻した。
+
+### 学び
+
+- `.gitignore` でディレクトリ名だけ書くと**深さに関係なく全マッチ**する。特定の場所だけ除外したいなら**先頭スラッシュ必須**
+- 大容量ディレクトリ名（`models`, `data`, `outputs`）はソースのパッケージ名と衝突しやすい。除外パターンは最初からルート限定で書くべきだった
+- 初回コミット後は「import 先がコミットに入っているか」を一度確認すると安全
+
+### 次にやる
+
+- run03 の準備に戻る（案A: lr=2e-5 + wd=0.05 + patience=4、SpecAugment オフ）
+
+---
