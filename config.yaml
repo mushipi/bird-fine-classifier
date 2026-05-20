@@ -1,0 +1,105 @@
+# bird-fine-classifier: カモ類 AST分類器の設定
+
+# ==================================================
+# 対象種（Xeno-canto英名 ↔ 学名 ↔ 日本語名）
+# ==================================================
+target_species:
+  - en: "Mallard"
+    sci: "Anas platyrhynchos"
+    ja: "マガモ"
+  - en: "Eurasian Teal"
+    sci: "Anas crecca"
+    ja: "コガモ"
+  - en: "Northern Pintail"
+    sci: "Anas acuta"
+    ja: "オナガガモ"
+  - en: "Northern Shoveler"
+    sci: "Spatula clypeata"
+    ja: "ハシビロガモ"
+  - en: "Eurasian Wigeon"
+    sci: "Mareca penelope"
+    ja: "ヒドリガモ"
+  - en: "Tufted Duck"
+    sci: "Aythya fuligula"
+    ja: "キンクロハジロ"
+  - en: "Common Goldeneye"
+    sci: "Bucephala clangula"
+    ja: "ホオジロガモ"
+  - en: "Common Pochard"
+    sci: "Aythya ferina"
+    ja: "ホシハジロ"
+
+# ==================================================
+# ダウンロード設定
+# ==================================================
+download:
+  output_dir: "data/raw"
+  quality: "A"                       # A: 最高品質、B: 高品質も含めるなら "A B"
+  max_recordings_per_species: 100
+  # 検索フォールバック: Japan -> worldwide
+  countries: ["Japan"]
+  fallback_worldwide: true
+
+# ==================================================
+# 前処理設定
+# ==================================================
+preprocessing:
+  sample_rate: 16000               # ASTの仕様
+  chunk_duration_sec: 10.0         # ASTの標準入力長
+  min_chunk_duration_sec: 3.0      # これより短いチャンクはパディング
+  overlap_ratio: 0.0               # チャンク間のオーバーラップ（0で重複なし）
+  processed_dir: "data/processed"
+  splits_dir: "data/splits"
+  train_ratio: 0.70
+  val_ratio: 0.15
+  test_ratio: 0.15
+  random_seed: 42
+
+# ==================================================
+# モデル設定
+# ==================================================
+model:
+  pretrained: "MIT/ast-finetuned-audioset-10-10-0.4593"
+  num_labels: 8                    # target_speciesの数と一致させる
+
+# ==================================================
+# 学習設定
+# ==================================================
+training:
+  output_dir: "models/ast-duck-v2"
+  num_train_epochs: 15
+  per_device_train_batch_size: 4   # RTX 3060 Ti (VRAM 8GB) 想定
+  per_device_eval_batch_size: 8
+  gradient_accumulation_steps: 4   # effective batch = 16
+  learning_rate: 2.0e-5            # v1: 5.0e-5 → overfit対策で半分以下に
+  warmup_ratio: 0.1
+  weight_decay: 0.1                # v1: 0.01 → 10倍に強化
+  fp16: true                       # mixed precision
+  gradient_checkpointing: true     # VRAM節約
+  eval_strategy: "epoch"
+  save_strategy: "epoch"
+  save_total_limit: 3
+  load_best_model_at_end: true
+  metric_for_best_model: "f1_macro"
+  early_stopping_patience: 2       # v1: 3 → 早めに止めて無駄計算削減
+  logging_steps: 20
+  report_to: ["tensorboard"]
+
+# ==================================================
+# データ拡張（train_dsのみ適用）
+# ==================================================
+augmentation:
+  spec_augment:
+    enabled: true
+    freq_mask_param: 24            # 周波数軸のマスク幅（128メル中）
+    time_mask_param: 80            # 時間軸のマスク幅
+    num_freq_masks: 2
+    num_time_masks: 2
+
+# ==================================================
+# 評価設定
+# ==================================================
+evaluation:
+  output_dir: "outputs"
+  attention_visualization: true
+  top_k: 3

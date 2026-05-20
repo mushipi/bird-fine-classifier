@@ -1,0 +1,57 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+build/
+dist/
+wheels/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+
+# uv
+.uv/
+
+# Secrets
+.env
+.env.local
+
+# Data & models (大容量のため除外)
+data/raw/
+data/processed/
+models/
+outputs/
+*.mp3
+*.wav
+*.flac
+*.ogg
+*.pt
+*.bin
+*.safetensors
+
+# Logs
+*.log
+runs/
+logs/
+wandb/
+
+# Notebooks
+.ipynb_checkpoints/
+*.ipynb
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp

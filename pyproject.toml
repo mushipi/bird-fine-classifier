@@ -1,0 +1,40 @@
+[project]
+name = "bird-fine-classifier"
+version = "0.1.0"
+description = "BirdNet後段のカモ類細分類用 Audio Spectrogram Transformer (AST) fine-tune"
+requires-python = ">=3.12"
+dependencies = [
+    "torch>=2.4.0",
+    "torchaudio>=2.4.0",
+    "transformers>=4.45.0",
+    "accelerate>=1.0",
+    "librosa>=0.11.0",
+    "soundfile>=0.13.0",
+    "numpy>=1.26",
+    "pandas>=2.0",
+    "pyyaml>=6.0",
+    "python-dotenv>=1.0",
+    "scikit-learn>=1.5",
+    "matplotlib>=3.9",
+    "seaborn>=0.13",
+    "tqdm>=4.67",
+    "tensorboard>=2.18",
+    "xenocanto-api",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/bird_fine"]
+
+[tool.uv.sources]
+xenocanto-api = { git = "https://github.com/bghani/xcapi" }
+torch = [{ index = "pytorch-cu124" }]
+torchaudio = [{ index = "pytorch-cu124" }]
+
+[[tool.uv.index]]
+name = "pytorch-cu124"
+url = "https://download.pytorch.org/whl/cu124"
+explicit = true
