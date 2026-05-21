@@ -66,14 +66,14 @@ model:
 # 学習設定
 # ==================================================
 training:
-  output_dir: "models/ast-duck-v3"   # run03: v2 保護のため新規ディレクトリ
+  output_dir: "models/ast-duck-v4"   # run04: v3 保護のため新規ディレクトリ
   num_train_epochs: 15
   per_device_train_batch_size: 4   # RTX 3060 Ti (VRAM 8GB) 想定
   per_device_eval_batch_size: 8
   gradient_accumulation_steps: 4   # effective batch = 16
-  learning_rate: 2.0e-5            # run03: v2 から据え置き。lr 単独評価のため 2e-5 を維持（run01 比 5e-5→2e-5）
+  learning_rate: 2.0e-5            # run04: 据え置き（固定変数）。run03 の lr 単独評価で f1 0.875 を確認済み
   warmup_ratio: 0.1
-  weight_decay: 0.01               # run03: v2 の 0.1 は wd 過剰の疑い → run01 baseline 値に戻し lr 単独評価
+  weight_decay: 0.05               # run04: wd 単独評価。0.01→0.05。overfit タイミングが後ろにずれるか/f1 を保てるか検証
   fp16: true                       # mixed precision
   gradient_checkpointing: true     # VRAM節約
   eval_strategy: "epoch"
@@ -81,7 +81,7 @@ training:
   save_total_limit: 3
   load_best_model_at_end: true
   metric_for_best_model: "f1_macro"
-  early_stopping_patience: 4       # run03: v2 の 2 は早すぎ（lr↓と非整合）→ 4 に。lr↓ への整合補正
+  early_stopping_patience: 4       # run04: 据え置き（固定変数）。run03 から維持
   logging_steps: 20
   report_to: ["tensorboard"]
 
@@ -90,7 +90,7 @@ training:
 # ==================================================
 augmentation:
   spec_augment:
-    enabled: false                 # run03: 補助は一旦オフ。主軸(lr)単独評価に集中
+    enabled: false                 # run04: 補助オフ継続。主軸(wd)単独評価に集中
     freq_mask_param: 24            # 周波数軸のマスク幅（128メル中）
     time_mask_param: 80            # 時間軸のマスク幅
     num_freq_masks: 2

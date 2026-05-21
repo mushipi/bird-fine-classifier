@@ -205,6 +205,69 @@ epoch 6 の eval 値はシステム異常終了で tfevents 未フラッシュ +
 
 ---
 
+## run04 — weight_decay 単独評価 (2026-05-21)
+
+**出力:** `models/ast-duck-v4/`
+**コミット:** （学習後に記録）
+**ステータス:** 学習前記録（事前登録）— 条件と仮説を学習前に固定。結果・経過・所見は学習完了後に追記。
+
+### ハイパラ（run01 / run02 / run03 からの差分）
+
+| 項目 | run01 | run02 | run03 | run04 | run04 の意図 |
+|---|---|---|---|---|---|
+| weight_decay | 0.01 | 0.1 | 0.01 | **0.05** | 主軸。wd↑ を単独評価 |
+| learning_rate | 5.0e-5 | 2.0e-5 | 2.0e-5 | **2.0e-5** | run03 から据え置き（固定変数）|
+| early_stopping_patience | 3 | 2 | 4 | **4** | run03 から据え置き（固定変数）|
+| SpecAugment | なし | あり | なし | **なし** | 補助オフ継続、主軸に集中 |
+
+run03 から見た実質変更は **weight_decay のみ**（output_dir 分離は学習ダイナミクスに無関係）。実質「wd 単独評価」。
+
+### データ規模
+
+- run01〜03 と同一（train 約2016 / val 約313 / test 約313、10秒チャンク、8種）
+
+### 仮説と予測（学習前に固定）
+
+run03 から確定した事実:
+- lr↓ で f1_macro は 0.848 → 0.875 に回復（H1 成立）。run02 失敗の主因は patience=2 / wd=0.1 と確定
+- best_epoch は 2 のまま（H2 不成立）。lr↓ では overfit タイミングは後ろにずれない
+- train_loss は ep2 末 0.12 → ep3 0.026 → ep4 0.003 と急降下（overfit は速いまま）
+
+| | 仮説 | 予測 |
+|---|---|---|
+| **H1（主）** | wd 強化（0.01→0.05）で overfit 進行が緩み、best epoch が後ろにずれる | **best_epoch ≥ 3**（run03 は 2）|
+| **H2** | wd=0.05 は過剰正則化ではなく、f1 は run03 と同等以上を維持 | **f1_macro ≥ 0.87**（run03 は 0.875）|
+| **H3** | train_loss の急降下が run03 より鈍る | **epoch 4 時点の train_loss > 0.003**（run03 比で鈍化）|
+
+### 検証後の分岐（学習前に固定）
+
+- **H1 成立（best_epoch ≥ 3）**: wd は overfit タイミングに効く → run05 で wd をさらに強める、もしくは wd + SpecAugment 併用へ
+- **H1 不成立（best_epoch = 2）**: wd も overfit タイミングに効かない → 主軸を SpecAugment 等のデータ拡張へ移す
+- **H2 不成立（f1_macro < 0.87）**: wd=0.05 は過剰正則化 → run05 で wd=0.03 に弱めて再評価
+
+### 結果（学習完了後に記入）
+
+| metric | value | run03 比 |
+|---|---|---|
+| best_epoch | — | |
+| eval_accuracy | — | |
+| eval_f1_macro | — | |
+| eval_precision_macro | — | |
+| eval_recall_macro | — | |
+| eval_loss | — | |
+
+### 経過（学習完了後に記入）
+
+| epoch | step | train_loss | eval_loss | eval_f1_macro |
+|---|---|---|---|---|
+| — | | | | |
+
+### 所見（学習完了後に記入）
+
+— H1 / H2 / H3 の成否と、検証分岐に沿った次アクションを記入。
+
+---
+
 ## メモ
 
 - baseline (`models/ast-duck/`) は常に保護する。新規 run は必ず別 output_dir へ

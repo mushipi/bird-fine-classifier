@@ -173,3 +173,29 @@ run03 本番学習（15 epoch 上限 / EarlyStopping patience=4）を実行。�
 - [ ] run04: weight_decay 単独評価（run03 の H1 検証分岐どおり）。lr=2e-5 / patience=4 据え置き、wd のみ変更
 
 ---
+
+## 2026-05-21 run04 の設計を「weight_decay 単独評価」に確定
+
+### やったこと
+
+run03 の検証分岐（H2 不成立 → 別の正則化手段が必要）に従い、run04 を weight_decay 単独評価に確定。wd を 0.01 → 0.05 に強化し、experiments.md に学習前記録（事前登録）した。lr=2e-5 / patience=4 / SpecAugment オフは run03 から据え置き。
+
+### なぜ wd=0.05 か
+
+- 候補は wd=0.05 / 0.1 / 0.03。run02 が使った 0.1 は patience=2・SpecAugment と同時変更で切り分け不能だった値
+- 0.01→0.1 は 10× ジャンプで、効いた/効かないの解釈が粗くなる。dose-response（用量反応）を追うなら一段ずつ上げたい
+- 0.03 は弱すぎて overfit への効きが見えにくく、結論が出ない懸念
+- → まず 0.05 で wd の効き方を見る。overfit タイミングが後ろにずれれば run05 でさらに調整、f1 が落ちれば 0.03 に弱める。分岐は experiments.md run04 に事前登録済み
+
+### 学び
+
+- run03 で「lr は f1 に効くが overfit タイミングには効かない」と切り分けられたので、run04 の狙いは f1 の絶対値ではなく **overfit タイミング（best_epoch）を後ろにずらせるか** に明確化できた。主軸指標が H1 に出ている
+- run02 の失敗（同時多変更）以降、1 run 1 変更を徹底できている。run03→run04 も実質変更は wd のみ
+
+### 次にやる
+
+- [ ] run04 学習前に GPU 電力上限を下げる（管理者 PowerShell で `nvidia-smi -pl 150`）。PSU 疑いの切り分けも兼ねる
+- [ ] dry-run（層化サンプリング修正済み）で v4 の import / end-to-end を確認 → run04 本番学習（15 epoch）
+- [ ] 完了後 experiments.md の結果欄を埋めて `run04:` でコミット
+
+---
