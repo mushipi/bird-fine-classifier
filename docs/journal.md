@@ -136,3 +136,40 @@ dry-run の `eval_f1_macro=1.0` が不自然だった。再初期化直後の分
 - 完了後 experiments.md の結果欄を埋めて `run03:` でコミット
 
 ---
+
+## 2026-05-21 run03 学習直後にシステム異常終了、成果物が破損（失敗ログ）
+
+### やったこと
+
+run03 本番学習（15 epoch 上限 / EarlyStopping patience=4）を実行。学習は epoch 6 で EarlyStopping により正常終了（best = epoch 2）。後日「実行状況をチェック」した際に、成果物の一部が破損していることに気づいた。
+
+### 結果
+
+- 学習プロセス自体は完走（7:36 開始 → 7:47:53 に最終 eval まで出力）。best モデル checkpoint-252（epoch 2, f1_macro 0.875）を取得。数値は experiments.md run03 参照
+- Windows イベントログに **Kernel-Power ID 41**（7:48:29）と ID 6008（予期しないシャットダウン）。学習完走の約30秒後にシステムが異常終了し再起動（7:48:25 起動完了）
+- 異常終了で**直前に書かれたファイルがゼロ埋め破損**していた:
+  - root 成果物（`models/ast-duck-v3/` 直下）の `model.safetensors` / `config.json` / `label_map.csv` / `training_args.bin` が全滅
+  - `checkpoint-756/` の `trainer_state.json` / `rng_state.pth` / `scaler.pt` / `scheduler.pt` がゼロ埋め
+  - TensorBoard ログ（`runs/`）と `checkpoint-252` / `checkpoint-630` は無傷
+- 復旧: best モデル checkpoint-252 は完全無傷（transformers で実ロードし推論まで確認）。root 成果物は checkpoint-252 と `data/splits/label_map.csv` からのコピーで再生成。**再学習は不要**
+
+### なぜそうなったか
+
+- 異常終了の原因は Kernel-Power 41 — クラッシュ / ハング / 電源遮断のいずれか。Windows Update の計画再起動（ID 1074）ではない
+- ファイル破損のメカニズムは NTFS のライトバックキャッシュ。ファイルサイズ（メタデータ）は MFT にコミット済みだが、データブロックがディスクにフラッシュされる前に電源が落ちた → サイズは正常なのに中身が全ゼロのファイルになる。学習完走間際の数十秒（7:47:48〜53）に書かれたファイルだけがこの窓に該当した
+- GPU 学習中〜直後は消費電力スパイクが大きい。**電源（PSU）容量が不足ぎみで、負荷ピークでクラッシュした可能性**がある
+
+### 学び
+
+- **学習完了 ≠ 成果物が安全**。プロセスが正常終了しても、OS のライトバックキャッシュ未フラッシュ分は不正シャットダウンで飛ぶ。学習直後はすぐ再起動・電源断を起こさない
+- **checkpoint を複数残す運用が効いた**。`save_total_limit` で checkpoint-252 / 630 が残っていたため、root が全滅しても best から復旧できた。1 checkpoint しか残らない設定だったら詰んでいた
+- **TensorBoard ログは別系統で残る**。`trainer_state.json` が飛んでも `runs/` から数値を復元できた。ただし最後の epoch 6 eval は tfevents 未フラッシュで欠損 → ログも完全ではない
+- ゼロ埋め破損はファイルサイズが正常に見えるので、サイズだけでは気づけない。中身の非ゼロバイト数 / safetensors ヘッダの妥当性で判定する
+- 既知の落とし穴「Win+Ctrl+Shift+B」とは別の異常終了。CUDA 文脈だけでなく**ディスク書き込み中の電源喪失**もリスクとして認識する
+
+### 次にやる
+
+- [ ] PSU 疑いの切り分け: 次の学習（run04）は GPU 負荷を下げて回す（batch size 縮小 / `nvidia-smi -pl` で電力上限を絞る 等）。落ちなければ電源容量が原因の傍証になる
+- [ ] run04: weight_decay 単独評価（run03 の H1 検証分岐どおり）。lr=2e-5 / patience=4 据え置き、wd のみ変更
+
+---

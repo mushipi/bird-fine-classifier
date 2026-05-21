@@ -65,8 +65,9 @@
 - `data/raw/` は容量大。git ignore 対象、コミットしない
 - SpecAugment は **train_ds のみに適用**。val/test に漏れていないか実装確認すること
 
-## 現状サマリ（更新: 2026-05-20）
+## 現状サマリ（更新: 2026-05-21）
 
 - run01 baseline: f1_macro **0.848** (epoch 4)。明確な overfit
 - run02: ハイパラ4点 + SpecAugment 同時変更で f1_macro **0.826** に悪化（失敗）
-- run03: lr 単独評価（lr=2e-5 / wd=0.01 / patience=4 / SpecAugment オフ）を準備済み。条件・仮説は experiments.md に事前登録。学習待ち
+- run03: lr 単独評価。f1_macro **0.875** (epoch 2) で run01 超え（H1 成立）。ただし overfit タイミングは不変（best_epoch=2、H2 不成立）。学習直後のシステム異常終了で成果物が一部破損 → checkpoint-252 から復旧済み（journal 2026-05-21）
+- run04: weight_decay 単独評価を予定（run03 の H1 検証分岐）。PSU 疑いのため GPU 負荷を下げて実行する
