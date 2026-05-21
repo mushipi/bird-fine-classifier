@@ -368,6 +368,56 @@ eval_f1_macro は epoch 4 以降 7エポック連続でほぼ 0.840 に張り付
 
 ---
 
+## test セット評価 — run03 / 04 / 05 比較 (2026-05-22)
+
+**目的:** run03〜05 の val f1 比較（0.875 / 0.850 / 0.840）が early-stopping の選択バイアスを含む疑い（run05 所見）。未使用の test セット338件で素の汎化性能を測り決着をつける。
+**方法:** 各 run の best モデル（root の `model.safetensors`）を `evaluate.py --model-dir <dir> --no-attention` で test 338件評価。出力は `outputs/eval_20260522_*`（混同行列・report.json・predictions.csv）。
+
+### 全体メトリクス
+
+| run | wd | best_epoch | val f1 | **test f1** | **test acc** | val−test gap |
+|---|---|---|---|---|---|---|
+| run03 | 0.01 | 2 | 0.875 | 0.775 | 0.843 | **−0.100** |
+| run04 | 0.05 | 5 | 0.850 | 0.806 | 0.873 | −0.044 |
+| run05 | 0.03 | 6 | 0.840 | **0.838** | **0.876** | −0.002 |
+
+### 所見 — val 順位が test で完全に逆転した
+
+- **test の順位は val の真逆**。val 最良の run03（0.875）が test 最低（0.775）、val 最低の run05（0.840）が test 最高（0.838）。
+- run03 の val−test gap は **−0.100**、run05 はわずか −0.002。
+- run05 所見の仮説「run03 の 0.875 は early-stopping が拾ったノイズスパイク」は test で裏付けられた。さらに踏み込むと、run03 は単にノイズで持ち上がっただけでなく **3 run 中で最も汎化しないモデル**だった。
+- gap は best_epoch と連動する: best_epoch 2 → 5 → 6 で gap −0.100 → −0.044 → −0.002、test f1 0.775 → 0.806 → 0.838。**早く止まったモデルほど test で悪い**。epoch 2 で選ばれた run03 は実質、学習不足のモデルを val スパイクで掴んでいた。
+- run05 の val（0.840）≈ test（0.838）は、run05 の val 曲線が平坦なプラトーで「選択する山」が無く、選択バイアスが乗らなかったため。
+
+### 種別 F1（test）
+
+| 種 | n | run03 | run04 | run05 |
+|---|---|---|---|---|
+| Common_Goldeneye | 64 | 0.885 | 0.953 | 0.930 |
+| Common_Pochard | 63 | 0.952 | 0.938 | 0.945 |
+| Eurasian_Teal | 86 | 0.845 | 0.866 | 0.844 |
+| Eurasian_Wigeon | 27 | 0.650 | 0.816 | 0.809 |
+| Mallard | 46 | 0.907 | 0.874 | 0.918 |
+| Northern_Pintail | 28 | 0.871 | 0.949 | 0.949 |
+| Northern_Shoveler | 14 | 0.786 | 0.667 | 0.923 |
+| Tufted_Duck | 10 | 0.303 | 0.387 | 0.389 |
+
+- **Tufted_Duck（n=10）が全 run で壊滅的**（F1 0.30〜0.39）。precision 0.22〜0.29 と低く、他種が Tufted_Duck 側へ誤分類されている。support 極小で学習・評価とも不安定。
+- Eurasian_Wigeon（n=27）/ Northern_Shoveler（n=14）も support 小で run 間のブレが大きい。
+- support の大きい5種（Goldeneye / Pochard / Teal / Mallard / Pintail）は 0.84〜0.95 で安定。
+
+### 結論と次アクション
+
+- **現時点の最良モデルは run05（test f1 0.838 / acc 0.876）**。「run03 が最良（0.875）」は val 選択バイアスによる誤り。run05 を採用する。
+- **モデル選択の方法に問題がある**。`load_best_model_at_end` が noisy な val f1 のスパイクを掴む。val 313件はチャンク単位 f1 を 0.02〜0.03 揺らし、その最大値を選ぶと上方バイアスがかかる。run 比較・モデル選択は val ピークでなく test、または平滑化した指標で行うべき。
+- **val f1 ≈0.85 / test f1 ≈0.84 の天井を破るレバーはハイパラではない**。test の弱点は明確に少数種 — Tufted_Duck（n=10）/ Eurasian_Wigeon（n=27）/ Northern_Shoveler（n=14）。**クラス不均衡・少数種のデータ不足が真のボトルネック**。
+- 次の一手候補:
+  1. 少数種のデータ追加収集（Xeno-canto から Tufted_Duck 等）、または class-weighted loss / オーバーサンプリング
+  2. SpecAugment のクリーン単独評価（run02 は同時変更で評価不能だった）
+  3. モデル選択を val ピーク依存から脱却（test 併用、val f1 の平滑化 / val loss 選択の検討）
+
+---
+
 ## メモ
 
 - baseline (`models/ast-duck/`) は常に保護する。新規 run は必ず別 output_dir へ

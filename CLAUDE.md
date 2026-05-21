@@ -71,5 +71,6 @@
 - run02: ハイパラ4点 + SpecAugment 同時変更で f1_macro **0.826** に悪化（失敗）
 - run03: lr 単独評価。f1_macro **0.875** (epoch 2)。学習直後のシステム異常終了で成果物が一部破損 → checkpoint-252 から復旧済み（journal 2026-05-21）
 - run04: weight_decay 単独評価（0.01→0.05）。f1_macro **0.850** (epoch 5)。wd↑ で overfit ピークが後退（H1 成立）も f1 低下
-- run05: weight_decay 中間点評価（0.03）。f1_macro **0.840** (epoch 6)。wd 0.01/0.03/0.05 → f1 0.875/0.840/0.850 で dose-response 非単調。3 run の差は early-stopping のノイズ水準で、wd は val f1 を実質動かさないと判明（負の知見）
-- 次: run03/04/05 を test セットで評価 → wd チューニング打ち切り、SpecAugment 等の別軸へ
+- run05: weight_decay 中間点評価（0.03）。val f1_macro **0.840** (epoch 6)。wd 0.01/0.03/0.05 → val f1 0.875/0.840/0.850 で dose-response 非単調
+- **test 評価 (2026-05-22)**: run03/04/05 を未使用 test 338件で評価。test f1 は 0.775 / 0.806 / **0.838** で val 順位が逆転。val 最良の run03 が test 最低 = `load_best_model_at_end` が noisy な val f1 のスパイクを掴む選択バイアス。**現行ベストは run05（test f1 0.838）**
+- 次: 改善はハイパラでなくデータ軸へ — 少数種（Tufted_Duck n=10 等）のデータ不足が真のボトルネック。SpecAugment クリーン評価、モデル選択の見直しが課題
