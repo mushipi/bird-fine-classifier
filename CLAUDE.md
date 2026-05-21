@@ -65,10 +65,11 @@
 - `data/raw/` は容量大。git ignore 対象、コミットしない
 - SpecAugment は **train_ds のみに適用**。val/test に漏れていないか実装確認すること
 
-## 現状サマリ（更新: 2026-05-21）
+## 現状サマリ（更新: 2026-05-22）
 
 - run01 baseline: f1_macro **0.848** (epoch 4)。明確な overfit
 - run02: ハイパラ4点 + SpecAugment 同時変更で f1_macro **0.826** に悪化（失敗）
-- run03: lr 単独評価。f1_macro **0.875** (epoch 2) で run01 超え（H1 成立）。ただし overfit タイミングは不変（best_epoch=2、H2 不成立）。学習直後のシステム異常終了で成果物が一部破損 → checkpoint-252 から復旧済み（journal 2026-05-21）
-- run04: weight_decay 単独評価（0.01→0.05）。f1_macro **0.850** (epoch 5)。wd↑ で overfit ピークが run03 の epoch 2 → 5 に後退（H1 成立）するが、f1 は 0.875→0.850 に低下（H2 不成立）。GPU 150W 制限下で異常終了の再発なし
-- 次: run05 で wd=0.03（run03 0.01 と run04 0.05 の中間）を評価
+- run03: lr 単独評価。f1_macro **0.875** (epoch 2)。学習直後のシステム異常終了で成果物が一部破損 → checkpoint-252 から復旧済み（journal 2026-05-21）
+- run04: weight_decay 単独評価（0.01→0.05）。f1_macro **0.850** (epoch 5)。wd↑ で overfit ピークが後退（H1 成立）も f1 低下
+- run05: weight_decay 中間点評価（0.03）。f1_macro **0.840** (epoch 6)。wd 0.01/0.03/0.05 → f1 0.875/0.840/0.850 で dose-response 非単調。3 run の差は early-stopping のノイズ水準で、wd は val f1 を実質動かさないと判明（負の知見）
+- 次: run03/04/05 を test セットで評価 → wd チューニング打ち切り、SpecAugment 等の別軸へ
