@@ -282,6 +282,70 @@ EarlyStopping は patience=4 到達で作動（best=ep5 に対し ep6〜9 が4�
 
 ---
 
+## run05 — weight_decay 中間点評価 (2026-05-21)
+
+**出力:** `models/ast-duck-v5/`
+**コミット:** （学習後に記録）
+**ステータス:** 学習前記録（事前登録）— 条件と仮説を学習前に固定。結果・経過・所見は学習完了後に追記。
+
+### ハイパラ（run03 / run04 からの差分）
+
+| 項目 | run03 | run04 | run05 | run05 の意図 |
+|---|---|---|---|---|
+| weight_decay | 0.01 | 0.05 | **0.03** | 主軸。wd の中間点を評価 |
+| learning_rate | 2.0e-5 | 2.0e-5 | **2.0e-5** | 据え置き（固定変数）|
+| early_stopping_patience | 4 | 4 | **4** | 据え置き（固定変数）|
+| SpecAugment | なし | なし | **なし** | 補助オフ継続 |
+
+run04 から見た実質変更は **weight_decay のみ**（0.05→0.03）。run03→04→05 で wd を 0.01 / 0.05 / 0.03 と振り、dose-response の中間点を埋める。
+
+### データ規模
+
+- run01〜04 と同一（train 2011 / val 313 / test 338、10秒チャンク、8種）
+
+### 仮説と予測（学習前に固定）
+
+run03 / run04 から確定した事実:
+- wd=0.01（run03）: best_epoch 2 / f1_macro 0.875
+- wd=0.05（run04）: best_epoch 5 / f1_macro 0.850
+- wd↑ は overfit ピークを後退させる（H1 成立済み）が、f1 を下げる（トレードオフ）
+- train_loss の急降下は wd では変わらない（wd は eval ピーク位置・安定性のみに効く）
+
+| | 仮説 | 予測 |
+|---|---|---|
+| **H1（主）** | wd=0.03 でも overfit ピークは run03 より後退する | **best_epoch ≥ 3** |
+| **H2** | wd=0.03 の f1 は run04 を上回り、f1 コストを抑えられる | **f1_macro ≥ 0.86**（run04 0.850 を超え run03 0.875 寄りに回復）|
+| **H3** | wd の効果は単調 — best_epoch・f1 とも run03 と run04 の中間に収まる | **best_epoch ∈ [3, 4]** かつ **f1_macro ∈ [0.855, 0.870]** |
+
+### 検証後の分岐（学習前に固定）
+
+- **H1・H2 ともに成立**: wd=0.03 が overfit 後退と f1 維持を両立 → 採用候補。run06 で SpecAugment 併用など別軸の上積みへ
+- **H2 不成立（f1_macro < 0.86）**: wd=0.03 でも f1 コストが大きい → f1 最良は run03 の wd=0.01。overfit 対策は別軸（SpecAugment / dropout）へ切り替える
+- **H3 不成立（中間に収まらない）**: wd の効果は非線形。dose-response が単純でないため wd の振り方を再設計する
+
+### 結果（学習完了後に記入）
+
+| metric | value | run03 比 | run04 比 |
+|---|---|---|---|
+| best_epoch | — | | |
+| eval_accuracy | — | | |
+| eval_f1_macro | — | | |
+| eval_precision_macro | — | | |
+| eval_recall_macro | — | | |
+| eval_loss | — | | |
+
+### 経過（学習完了後に記入）
+
+| epoch | step | train_loss | eval_loss | eval_f1_macro |
+|---|---|---|---|---|
+| — | | | | |
+
+### 所見（学習完了後に記入）
+
+— H1 / H2 / H3 の成否と、検証分岐に沿った次アクションを記入。
+
+---
+
 ## メモ
 
 - baseline (`models/ast-duck/`) は常に保護する。新規 run は必ず別 output_dir へ
