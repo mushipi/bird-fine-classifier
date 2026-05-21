@@ -73,4 +73,5 @@
 - run04: weight_decay 単独評価（0.01→0.05）。f1_macro **0.850** (epoch 5)。wd↑ で overfit ピークが後退（H1 成立）も f1 低下
 - run05: weight_decay 中間点評価（0.03）。val f1_macro **0.840** (epoch 6)。wd 0.01/0.03/0.05 → val f1 0.875/0.840/0.850 で dose-response 非単調
 - **test 評価 (2026-05-22)**: run03/04/05 を未使用 test 338件で評価。test f1 は 0.775 / 0.806 / **0.838** で val 順位が逆転。val 最良の run03 が test 最低 = `load_best_model_at_end` が noisy な val f1 のスパイクを掴む選択バイアス。**現行ベストは run05（test f1 0.838）**
-- 次: 改善はハイパラでなくデータ軸へ — 少数種（Tufted_Duck n=10 等）のデータ不足が真のボトルネック。SpecAugment クリーン評価、モデル選択の見直しが課題
+- 種別分析 (2026-05-22): test F1 は train 録音数と連動（録音20本の Tufted_Duck / Eurasian_Wigeon が最弱）。Tufted_Duck は trainチャンク最多694だが録音20本＝多様性不足＋チャンク不均衡。「少数種のデータ不足」は誤り
+- 次: 改善はデータ軸 — 録音数の少ない種の音源追加、チャンク不均衡の是正、SpecAugment クリーン評価、モデル選択の見直し

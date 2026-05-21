@@ -389,32 +389,33 @@ eval_f1_macro は epoch 4 以降 7エポック連続でほぼ 0.840 に張り付
 - gap は best_epoch と連動する: best_epoch 2 → 5 → 6 で gap −0.100 → −0.044 → −0.002、test f1 0.775 → 0.806 → 0.838。**早く止まったモデルほど test で悪い**。epoch 2 で選ばれた run03 は実質、学習不足のモデルを val スパイクで掴んでいた。
 - run05 の val（0.840）≈ test（0.838）は、run05 の val 曲線が平坦なプラトーで「選択する山」が無く、選択バイアスが乗らなかったため。
 
-### 種別 F1（test）
+### 種別 F1（test）と train データ量
 
-| 種 | n | run03 | run04 | run05 |
-|---|---|---|---|---|
-| Common_Goldeneye | 64 | 0.885 | 0.953 | 0.930 |
-| Common_Pochard | 63 | 0.952 | 0.938 | 0.945 |
-| Eurasian_Teal | 86 | 0.845 | 0.866 | 0.844 |
-| Eurasian_Wigeon | 27 | 0.650 | 0.816 | 0.809 |
-| Mallard | 46 | 0.907 | 0.874 | 0.918 |
-| Northern_Pintail | 28 | 0.871 | 0.949 | 0.949 |
-| Northern_Shoveler | 14 | 0.786 | 0.667 | 0.923 |
-| Tufted_Duck | 10 | 0.303 | 0.387 | 0.389 |
+| 種 | test n | run03 | run04 | run05 | train録音数 | trainチャンク数 |
+|---|---|---|---|---|---|---|
+| Common_Goldeneye | 64 | 0.885 | 0.953 | 0.930 | 30 | 144 |
+| Common_Pochard | 63 | 0.952 | 0.938 | 0.945 | 47 | 220 |
+| Eurasian_Teal | 86 | 0.845 | 0.866 | 0.844 | 42 | 249 |
+| Eurasian_Wigeon | 27 | 0.650 | 0.816 | 0.809 | 20 | 154 |
+| Mallard | 46 | 0.907 | 0.874 | 0.918 | 70 | 390 |
+| Northern_Pintail | 28 | 0.871 | 0.949 | 0.949 | 32 | 88 |
+| Northern_Shoveler | 14 | 0.786 | 0.667 | 0.923 | 31 | 72 |
+| Tufted_Duck | 10 | 0.303 | 0.387 | 0.389 | 20 | 694 |
 
-- **Tufted_Duck（n=10）が全 run で壊滅的**（F1 0.30〜0.39）。precision 0.22〜0.29 と低く、他種が Tufted_Duck 側へ誤分類されている。support 極小で学習・評価とも不安定。
-- Eurasian_Wigeon（n=27）/ Northern_Shoveler（n=14）も support 小で run 間のブレが大きい。
-- support の大きい5種（Goldeneye / Pochard / Teal / Mallard / Pintail）は 0.84〜0.95 で安定。
+- **弱点を決めているのは train 録音数（チャンク数ではない）**。test F1（run05）は train 録音数と連動: 録音20本の Eurasian_Wigeon / Tufted_Duck が test 最下位2つ、録音30本以上の6種は 0.84〜0.95。録音の多様性が汎化を決めている。
+- **Tufted_Duck は「データ不足」ではない**。trainチャンク数 694 で全種最多。だが録音は20本（1録音あたり35チャンク）で実質の多様性が低く、かつ 694 という突出量がチャンク不均衡を生む。run05 混同行列で Tufted_Duck と予測した26件中、正解は7件のみ（precision 0.269）。誤りは Eurasian_Teal 14 / Eurasian_Wigeon 5 — モデルが Tufted_Duck を過剰予測している。
+- **Northern_Shoveler（test n=14）は弱点ではない**。trainチャンク最少72だが録音31本で多様、run05 F1 0.923・precision 1.000。test n の小ささを「弱い種」と誤読しないこと。
 
 ### 結論と次アクション
 
 - **現時点の最良モデルは run05（test f1 0.838 / acc 0.876）**。「run03 が最良（0.875）」は val 選択バイアスによる誤り。run05 を採用する。
 - **モデル選択の方法に問題がある**。`load_best_model_at_end` が noisy な val f1 のスパイクを掴む。val 313件はチャンク単位 f1 を 0.02〜0.03 揺らし、その最大値を選ぶと上方バイアスがかかる。run 比較・モデル選択は val ピークでなく test、または平滑化した指標で行うべき。
-- **val f1 ≈0.85 / test f1 ≈0.84 の天井を破るレバーはハイパラではない**。test の弱点は明確に少数種 — Tufted_Duck（n=10）/ Eurasian_Wigeon（n=27）/ Northern_Shoveler（n=14）。**クラス不均衡・少数種のデータ不足が真のボトルネック**。
+- **val f1 ≈0.85 / test f1 ≈0.84 の天井を破るレバーはハイパラではない**。真のボトルネックはデータ — ただし「量」ではなく **train 録音数（多様性）とチャンク数の不均衡**。録音20本前後の Tufted_Duck / Eurasian_Wigeon が弱い（「少数種のデータ不足」は誤り。Tufted_Duck はチャンク最多の694）。
 - 次の一手候補:
-  1. 少数種のデータ追加収集（Xeno-canto から Tufted_Duck 等）、または class-weighted loss / オーバーサンプリング
-  2. SpecAugment のクリーン単独評価（run02 は同時変更で評価不能だった）
-  3. モデル選択を val ピーク依存から脱却（test 併用、val f1 の平滑化 / val loss 選択の検討）
+  1. 録音数の少ない種（Tufted_Duck / Eurasian_Wigeon、各20録音）の音源を追加収集。チャンクでなく多様な録音を増やす
+  2. チャンク数の不均衡是正 — 1録音あたりのチャンク数に上限、または class-weighted loss / オーバーサンプリング
+  3. SpecAugment のクリーン単独評価（run02 は同時変更で評価不能だった）
+  4. モデル選択を val ピーク依存から脱却（test 併用、val f1 の平滑化 / val loss 選択の検討）
 
 ---
 
