@@ -70,4 +70,5 @@
 - run01 baseline: f1_macro **0.848** (epoch 4)。明確な overfit
 - run02: ハイパラ4点 + SpecAugment 同時変更で f1_macro **0.826** に悪化（失敗）
 - run03: lr 単独評価。f1_macro **0.875** (epoch 2) で run01 超え（H1 成立）。ただし overfit タイミングは不変（best_epoch=2、H2 不成立）。学習直後のシステム異常終了で成果物が一部破損 → checkpoint-252 から復旧済み（journal 2026-05-21）
-- run04: weight_decay 単独評価を予定（run03 の H1 検証分岐）。PSU 疑いのため GPU 負荷を下げて実行する
+- run04: weight_decay 単独評価（0.01→0.05）。f1_macro **0.850** (epoch 5)。wd↑ で overfit ピークが run03 の epoch 2 → 5 に後退（H1 成立）するが、f1 は 0.875→0.850 に低下（H2 不成立）。GPU 150W 制限下で異常終了の再発なし
+- 次: run05 で wd=0.03（run03 0.01 と run04 0.05 の中間）を評価
