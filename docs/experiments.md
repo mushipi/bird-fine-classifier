@@ -419,6 +419,86 @@ eval_f1_macro は epoch 4 以降 7エポック連続でほぼ 0.840 に張り付
 
 ---
 
+## run06 — SpecAugment クリーン単独評価 (2026-05-24)
+
+**出力:** `models/ast-duck-v6/`
+**コミット:** 事前登録 `<commit-hash>` / 結果は本セクションのコミットで記録
+**ステータス:** 学習前記録（事前登録）。run01〜05 はハイパラ主軸（lr / wd）を回し val f1 ≈0.85 / test f1 ≈0.84 が動かないと判明。run02 で同時変更により評価不能になった SpecAugment を、現行ベース（run05）から単独で flip し補助レバーの効果を切り分ける。
+
+### ハイパラ（run03 / run04 / run05 からの差分）
+
+| 項目 | run03 | run04 | run05 | run06 | run06 の意図 |
+|---|---|---|---|---|---|
+| SpecAugment | なし | なし | なし | **あり** | 補助。データ拡張を単独で評価 |
+| freq_mask_param × num_freq_masks | — | — | — | **24 × 2** | 128メル中、最大 38% を周波数マスク |
+| time_mask_param × num_time_masks | — | — | — | **80 × 2** | 時間軸最大 160 フレーム分をマスク |
+| weight_decay | 0.01 | 0.05 | 0.03 | **0.03** | run05 据え置き（現行ベース / 固定変数）|
+| learning_rate | 2.0e-5 | 2.0e-5 | 2.0e-5 | **2.0e-5** | run03 から据え置き（固定変数）|
+| early_stopping_patience | 4 | 4 | 4 | **4** | 据え置き（固定変数）|
+
+ベースは **run05**（test f1 0.838 で現行ベスト）。run05 から見た実質変更は **SpecAugment enabled: false → true のみ**。SpecAugment パラメータは config.yaml の既定値（freq 24×2 / time 80×2）をそのまま使用 — run02 と同じ強度なので、run02 失敗を SpecAugment 自体の問題と切り分ける目的も兼ねる。
+
+### データ規模
+
+- run01〜05 と同一（train 2011 / val 313 / test 338、10秒チャンク、8種）。SpecAugment は train_ds のみに適用（`src/bird_fine/data/dataset.py:124` 確認済み、val/test には None）
+
+### 仮説と予測（学習前に固定）
+
+run03〜05 / test 評価から確定した事実:
+- lr / wd では val f1 ≈0.85 / test f1 ≈0.84 の天井を破れない（3 run で実証）
+- train_loss は毎 run epoch 4 で ≈0.003、epoch 8 で ≈0.0001 まで落ち、訓練 2011 件は完全暗記される
+- 真のボトルネックは録音多様性（Tufted_Duck / Eurasian_Wigeon の各20録音）。ただし SpecAugment は録音追加なしでスペクトログラム上の不変性を学ばせる別軸の対策
+- run02 の SpecAugment は lr↓ / wd↑ / patience↓ と同時変更で評価不能だった
+
+| | 仮説 | 予測 |
+|---|---|---|
+| **H1（主）** | SpecAugment は train の完全暗記を遅らせる | **epoch 4 時点の train_loss ≥ 0.01**（run05 は 0.003 / run04 は 0.002）、かつ **best_epoch ≥ 7**（run05 は 6）|
+| **H2（主）** | SpecAugment は補助レバーとして汎化天井を押し上げる | **test f1_macro ≥ 0.85**（run05 0.838 を上回る）|
+| **H3** | val f1 の選択バイアスは run05 同様に小さい（プラトー型曲線が維持される） | **\|val − test\| ≤ 0.03**、かつ **val f1_macro ≥ 0.83**（run05 0.840 のプラトー水準を維持）|
+| **H4** | SpecAugment は録音多様性不足を一部補う | **Tufted_Duck と Eurasian_Wigeon の test F1 が run05 比で改善**（run05 はそれぞれ 0.389 / 0.809）|
+
+### 検証後の分岐（学習前に固定）
+
+- **H2 成立（test f1_macro ≥ 0.85）**: SpecAugment は補助で天井を押し上げる。採用候補。run07 で SpecAugment + 録音追加の組み合わせ、あるいは mask param のチューニングへ
+- **H2 不成立だが H4 成立**: 全体 test f1 は動かないが少数種は改善 → SpecAugment は class-imbalance 対策として有効。class-weighted loss と組み合わせる
+- **H2・H4 ともに不成立（test f1 < 0.85 かつ少数種も横ばい）**: SpecAugment ではモデル側で天井を破れない。主軸をデータ側（録音追加収集、チャンク不均衡是正）に完全に切り替える
+- **H1 不成立（train_loss が ≥0.01 まで上がらない / best_epoch ≤ 6）**: SpecAugment 強度が弱すぎる可能性 → freq_mask_param / num_*_masks の増強を検討。または実装バグ疑い（spec_augment が train に効いているか確認）
+
+### 結果（best = checkpoint-???, epoch ?）
+
+| metric | value | run05 比 |
+|---|---|---|
+| best_epoch | — | 6 |
+| eval_accuracy | — | 0.885 |
+| eval_f1_macro | — | 0.840 |
+| eval_precision_macro | — | 0.865 |
+| eval_recall_macro | — | 0.857 |
+| eval_loss | — | 0.457 |
+| **test_f1_macro** | — | **0.838** |
+| **test_accuracy** | — | **0.876** |
+
+### 経過（主要マイルストーン）
+
+| epoch | step | train_loss | eval_loss | eval_f1_macro |
+|---|---|---|---|---|
+| 1 | 126 | — | — | — |
+| 2 | 252 | — | — | — |
+| ... | | | | |
+
+### 種別 test F1（run03 / 04 / 05 / 06 比較）
+
+| 種 | test n | run03 | run04 | run05 | run06 | 録音数 | チャンク数 |
+|---|---|---|---|---|---|---|---|
+| Tufted_Duck | 10 | 0.303 | 0.387 | 0.389 | — | 20 | 694 |
+| Eurasian_Wigeon | 27 | 0.650 | 0.816 | 0.809 | — | 20 | 154 |
+| （他6種は run05 で 0.84〜0.95）| | | | | | | |
+
+### 所見
+
+（学習完了後に記録）
+
+---
+
 ## メモ
 
 - baseline (`models/ast-duck/`) は常に保護する。新規 run は必ず別 output_dir へ
