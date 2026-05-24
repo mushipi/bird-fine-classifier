@@ -360,3 +360,74 @@ run02 で評価不能だった SpecAugment を、現行ベース（run05）か�
 - SpecAugment 再評価は録音追加後に回す。ベース性能が上がった状態で別物として測る
 
 ---
+
+## 2026-05-24 run07 準備: 弱2種に quality=B から +10 録音追加 — preserve-existing で test 固定
+
+### やったこと
+
+run06 の結論「データ軸へ切替」を実行。Tufted_Duck / Eurasian_Wigeon（各 train 録音20本）に Xeno-canto から quality=B の録音を +10 ずつ追加。test 338 件を run01〜06 と同一に保つため、split.py に `--preserve-existing` モードを実装。
+
+### 設計判断（事前検討）
+
+**Quality 緩和の対象**: 既存 raw は quality=A のみで Tufted 29本 / Wigeon 30本が上限。これ以上 A で増やせない。「弱2種だけ quality=B を許可」を採用。全種で A+B にすると比較公平性は出るが既存 splits が崩れる代償が大きい。「弱い種だけ品質基準が低い」というバイアスは付くが、test 数値を直接比較するメリットを優先。
+
+**Split 戦略**: 既存 val/test を完全固定し、追加録音は全て train に振る。preserve-existing モードを `split.py` に新設。理由: test 数値を run01〜06 と直接比較したいから。再 split すると val/test 構成が変わり比較が壊れる。
+
+**録音数**: 「他種中央値まで（+10）」を採用。Tufted 29 + 10 = 39 / Wigeon 30 + 10 = 40 で他種の下位レンジに揃う。+200本など大量追加は弱2種が逆方向の多数派になり、また quality=B noise が大量に混じる懸念。
+
+**ベース**: run05（現行ベスト、SpecAugment off）に揃える。run06 で SpecAugment は不採用確定（test 0.810 < 0.838）したものを残す理由はない。1 変数変更原則。
+
+### 実装
+
+`src/bird_fine/data/download.py`:
+- `--quality` で config.yaml の quality を上書き
+- `--exclude-existing` で `metadata.csv`（実 DL 済み）の XCID をスキップ。`metadata_only.csv` は対象外（候補メタは「DL 済み」ではない）
+- `--worldwide-only` で countries フィルタを外して worldwide 単独検索（追加収集は地域多様性を取りたいので Japan→worldwide の fallback ロジックを切る）
+- 取得録音は XCID 昇順で安定ソート → 再現性確保
+
+`src/bird_fine/data/split.py`:
+- `--preserve-existing` で既存 train/val/test の (species, xc_id) を読み込み、chunks_index.csv の新規録音だけ train に追加
+
+### 実行
+
+```
+uv run python -m bird_fine.data.download --species "Tufted Duck" "Eurasian Wigeon" \
+    --quality B --exclude-existing --worldwide-only --max-per-species 10
+uv run python -m bird_fine.data.preprocess
+uv run python -m bird_fine.data.split --preserve-existing
+```
+
+### 追加された XCID（再現性のため記録）
+
+- **Tufted_Duck (+10)**: XC32831, XC34072, XC96339, XC97432, XC111191, XC138103, XC138253, XC243761, XC244007, XC251919
+- **Eurasian_Wigeon (+10)**: XC28030, XC37499, XC83875, XC83876, XC88827, XC92776, XC96338, XC110737, XC111211, XC143305
+
+### 結果（split 状態）
+
+```
+train: 2082 chunks / 311 recordings  ← 元 2011 / 292 から +71 chunks / +19 unique_xcid
+val:    313 chunks /  61 recordings  ← 完全同一（run01〜06）
+test:   338 chunks /  69 recordings  ← 完全同一（run01〜06）
+
+Tufted_Duck train: 694 chunks (20 xc_id) → 728 chunks (29 xc_id) ※
+Eurasian_Wigeon train: 154 chunks (20 xc_id) → 191 chunks (30 xc_id)
+```
+
+※ Tufted_Duck の追加分のうち XC32831 と XC34072 は preprocess.py の `_extract_xc_id` の既知バグでどちらも xc_id=`Aythya` に集約（XCプレフィクスのないファイル名 `Aythya fuligula ...mp3` に対して stem.split()[0] フォールバックが効くため）。チャンクは10録音分すべて train.csv に入っており**学習データとしては +10録音**。xc_id ベースのカウントだけ +9 になる。
+
+### 既知の課題（TODO）
+
+- **preprocess.py の `_extract_xc_id` バグ**: XC プレフィクスのないファイル名で先頭単語が同じ録音同士が同一 xc_id に集約される。修正案: metadata.csv の `file-name` → `id` マップを読み込んで正しい XCID をルックアップ。既存 splits の xc_id 体系と整合性が崩れるため、修正は run07 完了後に別案件として実施
+- 全種で衝突を調査済み: Tufted_Duck 1件のみ。他種は no_XC_prefix ファイルがあっても偶然先頭単語が分散していて衝突なし
+
+### 学び
+
+- **「既存 splits を維持して追加録音を train だけに足す」運用は test 比較性を守るために重要**。再 split は seed=42 でも追加データで shuffle 順序が変わり、結果として val/test 構成が全部変わる
+- データ追加は **コードのコミットと、データ追加実行ログ（XCID 一覧）の docs コミット**の 2 段階で残す。data/raw は git 管理外なので、再現性は XCID リストとコマンドで担保する
+
+### 次にやる
+
+- run07 学習 → test 評価 → 事前登録した H1〜H5 で検証 → 結果コミット
+- preprocess.py の `_extract_xc_id` バグ修正は run07 完了後に別案件で
+
+---

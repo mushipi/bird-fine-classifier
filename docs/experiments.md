@@ -533,6 +533,105 @@ train_loss は run05 比で大きく上振れ（epoch 4 ≈0.025 vs run05 0.003�
 
 ---
 
+## run07 — 弱2種の録音追加（quality=B から +10 ずつ） (2026-05-24)
+
+**出力:** `models/ast-duck-v7/`
+**コミット:** 事前登録 `<commit-hash>` / 結果は本セクションの結果コミットで記録
+**ステータス:** 学習前記録（事前登録）。run06 まででハイパラ・正則化軸では val f1 ≈0.85 / test f1 ≈0.84 の天井を破れないと判明。run07 はデータ軸への完全切替で、弱2種（Tufted_Duck / Eurasian_Wigeon、各 train 録音20本）に Xeno-canto から quality=B の録音を +10 ずつ追加する。
+
+### データ変更（差分）
+
+`docs/journal.md` の追加収集セクションに XCID 一覧と取得手順を記録。要約:
+
+| 種 | train 録音 (run01〜06) | run07 追加 | 追加後 train 録音 | 追加後 train chunks | val / test |
+|---|---|---|---|---|---|
+| Tufted_Duck | 20 | **+10**（quality=B） | 30 (xc_id 上は29※) | 694 → **728**（+34） | val 16/4, test 10/5（不変） |
+| Eurasian_Wigeon | 20 | **+10**（quality=B） | 30 | 154 → **191**（+37） | val 21/4, test 27/5（不変） |
+| 他 6 種 | 30〜70 | 0 | 同左 | 同左 | 不変 |
+
+※ Tufted_Duck の追加分のうち XC32831 と XC34072 は preprocess の `_extract_xc_id` の既知バグ（XC プレフィクスなしファイルでフォールバックで先頭単語を xc_id とする）により共に xc_id=`Aythya` に集約される。チャンクは10録音分すべて train.csv に入っているので学習データとしては +10録音だが、xc_id ベースのカウントは +9。
+
+データソース:
+- `data/raw/{Species}/metadata.csv` を `XCID 昇順` で先頭10件（quality=B）取得
+- 既存 quality=A の XCID は `--exclude-existing` でスキップ
+- `--worldwide-only` で countries フィルタを外して取得（既存 Wigeon q=B は Japan 3件 / worldwide 202件で worldwide のみ叩く方針）
+- split.py `--preserve-existing` で val/test を完全固定したまま train だけに新規録音を追加
+
+test 338件は run01〜06 と完全同一構成 → test 数値が直接比較可能。
+
+### ハイパラ（run05 からの差分）
+
+run07 のハイパラは **run05（現行ベスト）と完全同一**。変更点は train データのみ。run06 で評価して不採用が確定した SpecAugment は run05 の `enabled: false` に戻した。
+
+| 項目 | run05 | run06 | **run07** | 意図 |
+|---|---|---|---|---|
+| データ | 既存 | 既存 | **+ Tufted +10 / Wigeon +10** | 主軸変更点 |
+| weight_decay | 0.03 | 0.03 | **0.03** | run05 据え置き |
+| learning_rate | 2.0e-5 | 2.0e-5 | **2.0e-5** | run05 据え置き |
+| SpecAugment | off | on | **off** | run06 で不採用確定 → run05 と同条件 |
+| early_stopping_patience | 4 | 4 | **4** | run05 据え置き |
+
+### 仮説と予測（学習前に固定）
+
+run01〜06 の事実から:
+- ハイパラ・正則化系では val f1 ≈0.85 / test f1 ≈0.84 を破れない（4 run で実証）
+- 弱点を決めるのは **train 録音数（多様性）**: 録音20本の Tufted / Wigeon が test 最弱、録音30本以上の6種は test F1 0.84〜0.95（run01〜06 で安定）
+- Tufted_Duck はチャンク数最多（694）だが録音20本 → モデルが過剰予測（run05 で precision 0.269）
+- run06 で SpecAugment は train 暗記抑制（H1a 成立）も val 曲線を悪化させた → 「正則化」では弱2種を救えない
+
+| | 仮説 | 予測 |
+|---|---|---|
+| **H1（主）** | 弱2種の録音追加で test 全体 F1 が上がる | **test f1_macro ≥ 0.86**（run05 0.838 を 0.02 以上上回る） |
+| **H2（主）** | 弱2種の test F1 が個別に改善する | **Tufted_Duck test F1 ≥ 0.50**（run05 0.389、+0.11 以上）かつ **Eurasian_Wigeon test F1 ≥ 0.85**（run05 0.809、+0.04 以上） |
+| **H3** | Tufted_Duck の過剰予測が緩和される（precision が上がる） | **Tufted_Duck precision ≥ 0.40**（run05 は run05 混同行列の値 ≈0.27、+0.13 以上） |
+| **H4** | 他種の test F1 はほぼ不変（負の波及がない） | **他6種すべて run05 比 −0.02 以内**（=どの種も 0.02 以上は下げない） |
+| **H5** | val−test gap は run05 並みの水準を維持 | **\|val − test\| ≤ 0.03**（run05 は 0.002）、best_epoch ≥ 5（run05 は 6） |
+
+### 検証後の分岐（学習前に固定）
+
+- **H1 成立（test f1 ≥ 0.86）**: 録音追加は 0.85 天井を破る有効レバー。次は (1) チャンク不均衡是正 (2) 残り種への録音追加 (3) class-weighted loss などデータ軸の上積みを継続
+- **H1 不成立だが H2 成立**: 全体 F1 は動かないが弱2種は改善 → 「弱2種は録音追加で救えるが、他種が頭打ち」。次は弱2種にさらに録音追加 + 他種は録音多様性以外のレバー（モデル選択方式）を検討
+- **H1・H2 ともに不成立**: 録音 +10 / 種では量が不足、または quality=B の noise が効果を打ち消す。次は (1) +20以上の追加 (2) quality=A 限定の精選追加 (3) チャンク不均衡是正（1録音上限）を試す
+- **H4 不成立（他種が −0.02 以上下落）**: 弱2種優遇で他種が犠牲になっている → 不均衡是正策（1録音あたりチャンク上限、class-weighted loss）が必要
+- **H5 不成立（val−test gap > 0.03）**: 選択バイアス再発 → run07 の test 結果は信頼度を下げて読む。次は `load_best_model_at_end` の代替を本気で検討
+
+### 結果（best = checkpoint-???, epoch ?）
+
+| metric | value | run05 比 | run06 比 |
+|---|---|---|---|
+| best_epoch | — | 6 | 2 |
+| eval_accuracy | — | 0.885 | 0.875 |
+| eval_f1_macro | — | 0.840 | 0.846 |
+| eval_loss | — | 0.457 | 0.392 |
+| **test_f1_macro** | — | **0.838** | **0.810** |
+| **test_accuracy** | — | **0.876** | **0.858** |
+
+### 経過（主要マイルストーン）
+
+| epoch | step | train_loss | eval_loss | eval_f1_macro |
+|---|---|---|---|---|
+| 1 | — | — | — | — |
+| ... | | | | |
+
+### 種別 test F1（run05 / 06 / 07 比較）
+
+| 種 | test n | run05 | run06 | **run07** | 録音数 (train) |
+|---|---|---|---|---|---|
+| Common_Goldeneye | 64 | 0.930 | 0.909 | — | 30 |
+| Common_Pochard | 63 | 0.945 | 0.950 | — | 47 |
+| Eurasian_Teal | 86 | 0.844 | 0.843 | — | 42 |
+| Eurasian_Wigeon | 27 | 0.809 | 0.816 | — | **30**（+10）|
+| Mallard | 46 | 0.918 | 0.863 | — | 70 |
+| Northern_Pintail | 28 | 0.949 | 0.929 | — | 32 |
+| Northern_Shoveler | 14 | 0.923 | 0.733 | — | 31 |
+| Tufted_Duck | 10 | 0.389 | 0.438 | — | **30**（+10）|
+
+### 所見
+
+（学習完了後に記録）
+
+---
+
 ## メモ
 
 - baseline (`models/ast-duck/`) は常に保護する。新規 run は必ず別 output_dir へ

@@ -37,17 +37,19 @@ def load_config() -> dict:
 
 
 def _load_existing_ids(species_dir: str, output_dir: str) -> set[str]:
-    """既存の metadata.csv / metadata_only.csv から XCID を集める。"""
+    """既存の metadata.csv（実際に DL 済み）から XCID を集める。
+
+    metadata_only.csv は「メタのみ取得した候補」であり実 DL ではないため除外しない。
+    """
     ids: set[str] = set()
-    for fname in ("metadata.csv", "metadata_only.csv"):
-        meta = Path(output_dir) / species_dir / fname
-        if not meta.exists():
-            continue
-        with open(meta, "r", encoding="utf-8", newline="") as f:
-            for row in csv.DictReader(f):
-                rid = row.get("id")
-                if rid:
-                    ids.add(str(rid))
+    meta = Path(output_dir) / species_dir / "metadata.csv"
+    if not meta.exists():
+        return ids
+    with open(meta, "r", encoding="utf-8", newline="") as f:
+        for row in csv.DictReader(f):
+            rid = row.get("id")
+            if rid:
+                ids.add(str(rid))
     return ids
 
 
@@ -145,14 +147,23 @@ def main() -> None:
         action="store_true",
         help="data/raw/{Species}/metadata*.csv に既出の XCID を除外して追加収集モードで動く",
     )
+    parser.add_argument(
+        "--worldwide-only",
+        action="store_true",
+        help="Japan を試さず worldwide だけ叩く。追加収集で地域多様性を取りたい時に使う",
+    )
     args = parser.parse_args()
 
     config = load_config()
     dl_cfg = config["download"]
     output_dir = str(PROJECT_ROOT / dl_cfg["output_dir"])
     quality = args.quality if args.quality else dl_cfg["quality"]
-    countries = dl_cfg.get("countries", ["Japan"])
-    fallback_worldwide = dl_cfg.get("fallback_worldwide", True)
+    if args.worldwide_only:
+        countries = []
+        fallback_worldwide = True
+    else:
+        countries = dl_cfg.get("countries", ["Japan"])
+        fallback_worldwide = dl_cfg.get("fallback_worldwide", True)
     max_recordings = args.max_per_species or dl_cfg.get("max_recordings_per_species", 100)
 
     api_key = os.environ.get("XENO_CANTO_API_KEY")
