@@ -7,10 +7,14 @@ BirdProject/scripts/01_download_data.py をベースに簡略化。
     uv run python -m bird_fine.data.download                 # 全種DL
     uv run python -m bird_fine.data.download --metadata-only # メタデータのみ
     uv run python -m bird_fine.data.download --species Mallard "Common Teal"
+    # 追加収集（既存 XCID を除外して quality=B から10本ずつ）
+    uv run python -m bird_fine.data.download --species "Tufted Duck" "Eurasian Wigeon" \
+        --quality B --exclude-existing --max-per-species 10
 """
 from __future__ import annotations
 
 import argparse
+import csv
 import os
 import sys
 import time
@@ -32,6 +36,21 @@ def load_config() -> dict:
         return yaml.safe_load(f)
 
 
+def _load_existing_ids(species_dir: str, output_dir: str) -> set[str]:
+    """既存の metadata.csv / metadata_only.csv から XCID を集める。"""
+    ids: set[str] = set()
+    for fname in ("metadata.csv", "metadata_only.csv"):
+        meta = Path(output_dir) / species_dir / fname
+        if not meta.exists():
+            continue
+        with open(meta, "r", encoding="utf-8", newline="") as f:
+            for row in csv.DictReader(f):
+                rid = row.get("id")
+                if rid:
+                    ids.add(str(rid))
+    return ids
+
+
 def _build_query(species_en: str, quality: str, country: str | None) -> str:
     qb = QueryBuilder().group("birds").english_name(species_en).quality(quality)
     if country:
@@ -47,6 +66,7 @@ def _download(
     output_dir: str,
     metadata_only: bool,
     max_recordings: int,
+    exclude_ids: set[str] | None = None,
 ) -> int:
     query = _build_query(species_en, quality, country)
     scope = country if country else "worldwide"
@@ -61,6 +81,20 @@ def _download(
     if not recordings:
         print(f"  -> no recordings")
         return 0
+
+    if exclude_ids:
+        before = len(recordings)
+        recordings = [r for r in recordings if str(r.get("id")) not in exclude_ids]
+        skipped = before - len(recordings)
+        if skipped:
+            print(f"  -> excluded {skipped} existing recordings (kept {len(recordings)})")
+
+    if not recordings:
+        print(f"  -> no new recordings after exclusion")
+        return 0
+
+    # 再現性のため XCID 昇順で安定ソート
+    recordings = sorted(recordings, key=lambda r: int(r.get("id", 0)))
 
     if len(recordings) > max_recordings:
         recordings = recordings[:max_recordings]
@@ -100,12 +134,23 @@ def main() -> None:
         default=None,
         help="種あたりの最大録音数",
     )
+    parser.add_argument(
+        "--quality",
+        type=str,
+        default=None,
+        help="quality 上書き（例: B）。省略時は config.yaml の download.quality を使用",
+    )
+    parser.add_argument(
+        "--exclude-existing",
+        action="store_true",
+        help="data/raw/{Species}/metadata*.csv に既出の XCID を除外して追加収集モードで動く",
+    )
     args = parser.parse_args()
 
     config = load_config()
     dl_cfg = config["download"]
     output_dir = str(PROJECT_ROOT / dl_cfg["output_dir"])
-    quality = dl_cfg["quality"]
+    quality = args.quality if args.quality else dl_cfg["quality"]
     countries = dl_cfg.get("countries", ["Japan"])
     fallback_worldwide = dl_cfg.get("fallback_worldwide", True)
     max_recordings = args.max_per_species or dl_cfg.get("max_recordings_per_species", 100)
@@ -139,6 +184,12 @@ def main() -> None:
         ja = sp.get("ja", "")
         print(f"\n[{i}/{len(species_list)}] {species_en} ({ja})")
 
+        species_dir = species_en.replace(" ", "_")
+        exclude_ids: set[str] | None = None
+        if args.exclude_existing:
+            exclude_ids = _load_existing_ids(species_dir, output_dir)
+            print(f"  exclude-existing: {len(exclude_ids)} XCID をスキップ対象に")
+
         count = 0
         for country in countries:
             n = _download(
@@ -149,6 +200,7 @@ def main() -> None:
                 output_dir=output_dir,
                 metadata_only=args.metadata_only,
                 max_recordings=max_recordings,
+                exclude_ids=exclude_ids,
             )
             count += n
             time.sleep(1)
@@ -165,6 +217,7 @@ def main() -> None:
                 output_dir=output_dir,
                 metadata_only=args.metadata_only,
                 max_recordings=max_recordings,
+                exclude_ids=exclude_ids,
             )
             count += n
             time.sleep(1)

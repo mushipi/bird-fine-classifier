@@ -5,6 +5,8 @@
 
 使い方:
     uv run python -m bird_fine.data.split
+    # 既存 splits を維持し、新規録音だけ train に追加（追加収集 run 用）
+    uv run python -m bird_fine.data.split --preserve-existing
 """
 from __future__ import annotations
 
@@ -66,9 +68,64 @@ def split_by_recording(
     return train_df, val_df, test_df
 
 
+def split_preserving_existing(
+    df: pd.DataFrame,
+    splits_dir: Path,
+) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
+    """既存 splits の (species, xc_id) を維持し、新規録音は全て train に追加する。
+
+    用途: 既に学習・評価済みの run と比較するため test/val を固定したまま、
+    追加収集した録音のみを train に組み込む追加収集 run。
+    """
+    existing = {}
+    for name in ("train", "val", "test"):
+        path = splits_dir / f"{name}.csv"
+        if not path.exists():
+            raise FileNotFoundError(f"{path} が見つからない。--preserve-existing は既存 splits を前提とする")
+        existing[name] = pd.read_csv(path)
+
+    train_ids = set(zip(existing["train"]["species"], existing["train"]["xc_id"]))
+    val_ids = set(zip(existing["val"]["species"], existing["val"]["xc_id"]))
+    test_ids = set(zip(existing["test"]["species"], existing["test"]["xc_id"]))
+    known_ids = train_ids | val_ids | test_ids
+
+    df_keys = set(zip(df["species"], df["xc_id"]))
+    new_ids = df_keys - known_ids
+    removed_ids = known_ids - df_keys
+
+    if removed_ids:
+        print(f"[WARN] 既存 split にあって現在の chunks_index にない録音が {len(removed_ids)} 件。preprocess の状態を確認して")
+        for sp, rid in sorted(removed_ids)[:5]:
+            print(f"  - {sp} / {rid}")
+
+    print(f"[INFO] 既存録音: train={len(train_ids)} / val={len(val_ids)} / test={len(test_ids)}")
+    print(f"[INFO] 新規録音（train に追加）: {len(new_ids)}")
+    if new_ids:
+        per_species: dict[str, int] = defaultdict(int)
+        for sp, _ in new_ids:
+            per_species[sp] += 1
+        for sp, n in sorted(per_species.items()):
+            print(f"  + {sp}: {n} 録音")
+
+    train_ids_updated = train_ids | new_ids
+
+    def belongs(row, target):
+        return (row["species"], row["xc_id"]) in target
+
+    train_df = df[df.apply(lambda r: belongs(r, train_ids_updated), axis=1)].reset_index(drop=True)
+    val_df = df[df.apply(lambda r: belongs(r, val_ids), axis=1)].reset_index(drop=True)
+    test_df = df[df.apply(lambda r: belongs(r, test_ids), axis=1)].reset_index(drop=True)
+    return train_df, val_df, test_df
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.parse_args()
+    parser.add_argument(
+        "--preserve-existing",
+        action="store_true",
+        help="既存 splits の (species, xc_id) を維持し、新規録音だけ train に追加する",
+    )
+    args = parser.parse_args()
 
     config = load_config()
     pp = config["preprocessing"]
@@ -85,13 +142,17 @@ def main() -> None:
     print(f"[INFO] 全チャンク数: {len(df)}")
     print(f"[INFO] 種数: {df['species'].nunique()}")
 
-    train_df, val_df, test_df = split_by_recording(
-        df,
-        train_ratio=float(pp["train_ratio"]),
-        val_ratio=float(pp["val_ratio"]),
-        test_ratio=float(pp["test_ratio"]),
-        seed=int(pp["random_seed"]),
-    )
+    if args.preserve_existing:
+        print(f"[MODE] preserve-existing — 既存 val/test を固定、新規録音は train に追加")
+        train_df, val_df, test_df = split_preserving_existing(df, splits_dir)
+    else:
+        train_df, val_df, test_df = split_by_recording(
+            df,
+            train_ratio=float(pp["train_ratio"]),
+            val_ratio=float(pp["val_ratio"]),
+            test_ratio=float(pp["test_ratio"]),
+            seed=int(pp["random_seed"]),
+        )
 
     train_df.to_csv(splits_dir / "train.csv", index=False)
     val_df.to_csv(splits_dir / "val.csv", index=False)
