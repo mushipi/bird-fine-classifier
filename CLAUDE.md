@@ -76,4 +76,6 @@
 - 種別分析 (2026-05-22): test F1 は train 録音数と連動（録音20本の Tufted_Duck / Eurasian_Wigeon が最弱）。Tufted_Duck は trainチャンク最多694だが録音20本＝多様性不足＋チャンク不均衡。「少数種のデータ不足」は誤り
 - **run06 (2026-05-24)**: SpecAugment クリーン単独評価。val f1 **0.846** (epoch 2) / **test f1 0.810**（run05 比 −0.028）。H1a 成立（train_loss が桁単位で上振れ）も H1b/H2 不成立 — best_epoch が逆に早期化し val ピーク選択バイアスを引き戻した。Tufted_Duck +0.05 も Northern_Shoveler −0.19 で全体下落。**現行ベストは引き続き run05**
 - 学び: 「train 暗記の抑制」は汎化を保証しない。正則化系手法は val 曲線の形状を変えて `load_best_model_at_end` との相性が悪い場合がある
-- 次: ハイパラ・正則化系では 0.85 天井を破れないと確定。**データ軸に完全に切替** — 録音数20本種（Tufted_Duck / Eurasian_Wigeon）の音源追加、チャンク不均衡是正、モデル選択方式の改善（val 単点ピーク依存からの脱却）
+- **run07 (2026-05-24)**: 弱2種に quality=B 録音を +10 ずつ追加（test 固定）。val f1 **0.8446** (epoch 4) / **test f1 0.8268**（run05 比 −0.011）。H1〜H4 不成立。Tufted_Duck precision 0.269→0.296 で過剰予測未解決、Mallard −0.029 / Northern_Shoveler −0.108（小サンプルでバイアス）と他種へ負の波及。**現行ベストは引き続き run05**
+- 学び: 録音追加でチャンクも増え（Tufted train 694→728）チャンク不均衡が悪化、録音多様性向上の効果を打ち消した。**録音追加とチャンク上限は同時にやるべき**
+- 次: ハイパラ系 4 run + データ系 1 run の計5本で 0.85 天井を破れず → run08 は **チャンク不均衡是正（train 1録音あたりチャンク上限）** の単独評価。class-weighted loss は run09 候補
