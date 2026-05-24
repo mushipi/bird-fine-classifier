@@ -896,8 +896,9 @@ train に juvenile タグ録音は 1 件しかなく、AST は **「カモの ju
 ## run09 — Tufted_Duck の長尺2録音を train から完全除外 (2026-05-24)
 
 **出力:** `models/ast-duck-v9/`
-**コミット:** 事前登録 `<commit-hash>` / 結果は本セクションの結果コミットで記録
-**ステータス:** 学習前記録（事前登録）。分析タスクで「Tufted の長尺2録音が他種の音を吸収して決定境界を歪めている」仮説に到達。**XC488112 (cap=100 で 100 chunks) と XC488113 (cap=100 で 100 chunks) を train から完全削除**し、Tufted_Duck train chunks を 361→161 に減らす。録音は 29→27（run07 で +10 した後の状態から −2）。
+**コミット:** 事前登録 `a41b3f3` / 結果は本セクションの結果コミットで記録
+**ステータス:** 学習・test 評価完了（2026-05-24）。**仮説の核は確証された**: XC197026 (Teal juvenile) と XC349677 (Wigeon duet) の Tufted_Duck 過剰予測がそれぞれ 12→4、4→0 に激減。「Tufted の長尺2録音が決定境界を歪めていた」仮説は明確に確認。**ただし副作用**: Tufted の train chunks 161 が少なすぎて Tufted recall が 0.700→0.300 に崩壊、test f1 は **0.810**（run05 比 −0.028 / run08 比 −0.010）で全体悪化。
+**結論:** **真因の特定に成功**したが「全削除」は介入が強すぎ。次は **長尺2録音を部分復活させる中間点**を探る（run10 候補）。現行ベストは引き続き **run05（test f1 0.838）**。
 
 ### データ変更（差分）
 
@@ -949,37 +950,109 @@ run08 で chunks 半減が効かなかった事実から:
 - **H4 / H5 のいずれか成立、H2 不成立**: 一部の問題録音は解消できたが Tufted の過剰予測パターンは残る → 他のソースが他種誤分類を起こしている。詳細な混同行列分析
 - **H3 不成立（Tufted recall <0.40）**: Tufted の学習データが少なすぎて学習不能 → recall を犠牲にしすぎ。Tufted を他録音で補充する方向
 
-### 結果（best = checkpoint-???, epoch ?）
+### 結果（best = checkpoint-475, epoch 5）
 
 | metric | value | run05 比 | run08 比 |
 |---|---|---|---|
-| best_epoch | — | 6 | 6 |
-| eval_f1_macro | — | 0.840 | 0.838 |
-| **test_f1_macro** | — | **0.838** | **0.820** |
+| best_epoch | **5** | 6 | 6 |
+| eval_accuracy | 0.885 | 0.885 | 0.879 |
+| eval_f1_macro | **0.8436** | 0.840 | 0.838 |
+| eval_loss | 0.417 | 0.457 | 0.486 |
+| **test_f1_macro** | **0.8098** | **0.838** | **0.820** |
+| **test_accuracy** | **0.870** | **0.876** | **0.864** |
+| val−test gap | **+0.034** | +0.002 | +0.018 |
+
+学習は epoch 9 で early stop（patience=4, best=epoch 5）。test 評価出力: `outputs/eval_20260524_234838/`。学習時間 808s（run08 比 -20%）。
+
+### 仮説検証
+
+| 仮説 | 予測 | 実測 | 判定 |
+|---|---|---|---|
+| H1 全体 test f1 | ≥0.86 | 0.810 | **不成立** (run05 −0.028) |
+| H2 Tufted precision | ≥0.55 | 0.333 | **不成立**（run08 0.269 から +0.064 微改善）|
+| H3 Tufted recall | ≥0.40 | **0.300** | **不成立**（run08 0.700 から **−0.400 崩壊**）|
+| H4 XC197026 Teal 予測 | ≥7/13 | 3/13 | 不成立（数値）も **Tufted 過剰予測は 12→4 に劇的減少** |
+| H5 XC349677 Wigeon 予測 | ≥2/6 | **2/6** | **成立**（Tufted 予測は 4→0 に完全消滅）|
+| H6 Eurasian_Teal F1 | ≥0.90 | 0.859 | 不成立（run08 と同値）|
+| H7 \|val−test\| | ≤0.03 | 0.034 | 僅か不成立（境界）|
+
+### 重点検証: XC197026 / XC349677 の予測変化（run05→09 通史）
+
+**XC197026 (Eurasian_Teal juvenile, n=13)**:
+
+| run | Tufted_Duck | Common_Pochard | Eurasian_Teal | その他 |
+|---|---|---|---|---|
+| run05 | **13** | 0 | 0 | 0 |
+| run07 | 12 | 0 | 1 | 0 |
+| run08 | 12 | 1 | 0 | 0 |
+| **run09** | **4** | **6** | 3 | 0 |
+
+**XC349677 (Eurasian_Wigeon duet, n=6)**:
+
+| run | Tufted_Duck | Eurasian_Wigeon | Mallard |
+|---|---|---|---|
+| run05 | 5 | 0 | 1 |
+| run07 | 2 | 3 | 1 |
+| run08 | **4** | 1 | 1 |
+| **run09** | **0** | **2** | **4** |
+
+**仮説の核は確証**: XC488112 / XC488113 削除で XC197026 の Tufted 予測 12→4、XC349677 の Tufted 予測 4→0。「長尺2録音が決定境界を歪めていた」は事実だった。
+
+ただし:
+- XC197026 の半数（6件）は **Common_Pochard に流れた** — distribution shift（juvenile 音）は Tufted の問題と独立。train に juvenile データが 1件しかないため、Tufted から離れたら別の種に吸引されるだけ
+- XC349677 は Mallard に4件流れた — こちらも Wigeon の典型 call から離れた音は他種に流れる
 
 ### 種別 test F1（run05 / 08 / 09 比較）
 
-| 種 | test n | run05 | run08 | **run09** | train chunks |
-|---|---|---|---|---|---|
-| Common_Goldeneye | 64 | 0.930 | 0.917 | — | 144 |
-| Common_Pochard | 63 | 0.945 | 0.960 | — | 220 |
-| Eurasian_Teal | 86 | 0.844 | 0.859 | — | 249 |
-| Eurasian_Wigeon | 27 | 0.809 | 0.760 | — | 191 |
-| Mallard | 46 | 0.918 | 0.849 | — | 390 |
-| Northern_Pintail | 28 | 0.949 | 0.982 | — | 88 |
-| Northern_Shoveler | 14 | 0.923 | 0.846 | — | 72 |
-| **Tufted_Duck** | 10 | 0.389 | 0.389 | — | **361→161** |
+| 種 | test n | run05 | run08 | **run09** | run08→09 差 | train chunks (run08→09) |
+|---|---|---|---|---|---|---|
+| Common_Goldeneye | 64 | 0.930 | 0.917 | 0.915 | −0.002 | 144 |
+| Common_Pochard | 63 | 0.945 | 0.960 | 0.931 | **−0.029** | 220 |
+| Eurasian_Teal | 86 | 0.844 | 0.859 | 0.859 | ±0.000 | 249 |
+| Eurasian_Wigeon | 27 | 0.809 | 0.760 | 0.755 | −0.005 | 191 |
+| Mallard | 46 | 0.918 | 0.849 | 0.857 | +0.008 | 390 |
+| Northern_Pintail | 28 | 0.949 | 0.982 | 0.966 | −0.016 | 88 |
+| **Northern_Shoveler** | 14 | 0.923 | 0.846 | **0.880** | **+0.034** | 72 |
+| **Tufted_Duck** | 10 | 0.389 | 0.389 | **0.316** | **−0.073** | **361→161** |
 
-### 重点検証: XC197026 / XC349677 の予測変化
+### Tufted_Duck の予測の構造変化（run08 vs run09）
 
-| 録音 | 種 (true) | チャンク数 | run05 pred | run08 pred | **run09 pred** |
-|---|---|---|---|---|---|
-| XC197026 | Eurasian_Teal (juvenile) | 13 (test) | Tufted 多数 | Tufted 12/13 | — |
-| XC349677 | Eurasian_Wigeon (掛け合い) | 4 (test) | Tufted 多数 | Tufted 4/4 | — |
+**Tufted と予測されたチャンク**:
+| | run08 | run09 |
+|---|---|---|
+| 総予測数 | 26 | **9** |
+| Tufted 正解 (TP) | 7 | 3 |
+| Teal 誤吸引 (FP) | 13 | 4 |
+| Wigeon 誤吸引 (FP) | 4 | 0 |
+| Goldeneye 誤吸引 (FP) | 2 | 2 |
+| precision | 0.269 | 0.333 |
+
+**Tufted_Duck 正解の内訳（test n=10）**:
+| | run08 pred | run09 pred |
+|---|---|---|
+| Tufted_Duck | 7 | **3** |
+| Mallard | 1 | 3 |
+| Wigeon | 1 | 2 |
+| Teal | 1 | 1 |
+| Pintail | 0 | 1 |
+
+過剰予測は劇的に解消（26→9）したが、recall も 0.700→0.300 に崩壊。Tufted の test 10件中 7件が他種に流出。
 
 ### 所見
 
-（学習完了後に記録）
+- **仮説の核（長尺2録音の決定境界歪み）は確証**: XC197026 / XC349677 の Tufted 過剰予測が劇的に減少。run05→09 で XC197026 は Tufted 13→4、XC349677 は Tufted 5→0。**run08 で chunks 半減が効かなかったのに、run09 で長尺2録音の完全削除が効いた** = 「chunks の数」ではなく「特定録音が学習させる音響パターンの幅」が問題だったと確定
+- **数値仮説 (H2/H4) は不成立だが仮説の意図は達成**: H2「precision ≥0.55」は不成立（0.333）だが、Tufted 予測総数 26→9 で過剰予測自体は大幅解消。H4「XC197026 Teal 予測 ≥7」は数値不成立も、Tufted 予測 12→4 で過剰予測解消の意図は達成
+- **distribution shift は別問題**: XC197026 の半数（6件）が Common_Pochard に流れたのは、train に juvenile データが 1件しかないため。Tufted を狭めるだけでは「学習データに無い音」の問題は解決しない。**録音追加（juvenile タグ付き）が別軸で必要**
+- **介入が強すぎた**: Tufted train chunks 161 では Tufted の学習が不十分。Tufted の test 10件中 7件が他種に流出。test n=10 で F1 が 0.073 悪化したのは絶対数で「正解 7→3 件」の差
+- **「過剰予測の解消」と「適正な学習」の両立点を探す必要**: 全削除（chunks 161）は介入が強すぎ、何もしない（chunks 728）は過剰予測。中間点（chunks 200〜400 程度？）を探す
+- **副次的な発見: 短尺録音だけでも Tufted の test recall が確保できる程度の汎化が起きている**: Tufted 正解 3件はすべて短尺の test 録音（XC303149, XC476421, XC760407）から来ている。run08 と同じ。長尺2録音を削除しても Tufted の **本来の音響特徴**は他の短尺27録音から学べている
+
+### 検証後の次アクション
+
+- **run10 候補: 長尺録音の cap を強めにかける** — 全削除（chunks 0）でなく cap=30 や cap=50 などで部分復活。Tufted chunks を 161 < x < 361 の中間値（例 cap=30 で XC488112 270→30, XC488113 297→30 → Tufted total ~221）で、過剰予測抑制と Tufted 学習量のバランスを取る
+- **run11 候補: Eurasian_Teal の juvenile 録音追加** — distribution shift の独立対処。Xeno-canto で `stage:juvenile` を指定して Teal の追加収集
+- **run12 候補: モデル選択方式の改善** — 6 run 撃って run05 を超えられないが、val−test gap は run09 で再び 0.034 に拡大。`load_best_model_at_end` の代替案検討
+- run10 を先に試して中間点を見つけてから、run11 で distribution shift を対処する順序が筋。並行は変数増えすぎ
 
 ---
 
