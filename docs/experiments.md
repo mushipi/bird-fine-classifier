@@ -840,6 +840,149 @@ Tufted のチャンクを **−50%（728→361）削っても precision は小�
 
 ---
 
+## 分析タスク — Tufted 誤分類の音響的根拠調査 (2026-05-24)
+
+**目的:** run08 で「Tufted_Duck の chunks を半減しても precision が完全に変わらない」現象を受けて、誤分類されたチャンクの音響特徴を分光図で確認し、真の原因を突き止める。
+
+**手法:** `src/bird_fine/analysis/confusion_audio.py` を新規実装。run08 の predictions.csv と test.csv を順序ベースで結合し、5 グループ（A: Tufted TP / B: Teal→Tufted 誤分類 / C: Wigeon→Tufted 誤分類 / D: Teal TP / E: Wigeon TP）のメルスペクトログラムを各最大8チャンク並べて画像化。
+
+### 発見1: 誤分類の **録音単位での異常集中**
+
+| グループ | チャンク数 | unique 録音 | 集中度 |
+|---|---|---|---|
+| A: Tufted_Duck TP | 7 | 3 | 分散（XC303149 4件, XC476421 2件, XC760407 1件）|
+| **B: Teal → Tufted 誤分類** | **13** | **2** | **XC197026 から 12件 (92%)**, XC241897 から 1件 |
+| **C: Wigeon → Tufted 誤分類** | **4** | **1** | **XC349677 から全件** |
+| D: Eurasian_Teal TP | 67 | 8 | 分散（XC695865 21件 など）|
+| E: Eurasian_Wigeon TP | 19 | 5 | 分散（XC615223 8件 など）|
+
+正解は録音間で分散しているのに、**誤分類は特定の少数録音に異常集中**。これは「音響的類似」ではなく「**特定録音の問題**」を示唆。
+
+### 発見2: 問題録音のメタデータが「学習データに無いタイプの音」
+
+| XCID | 種 | type | sex | stage | 録音者コメント |
+|---|---|---|---|---|---|
+| **XC197026** | Eurasian_Teal | call | female | **juvenile** | "Female with 6 juvenil. The short whistling call is juvenile and the 'Butt' call is female." |
+| **XC349677** | Eurasian_Wigeon | call | **female, male** | (none) | "Loud and Clear, nice recording of interspecific calls between males and females.." |
+| XC241897 | Eurasian_Teal | song | (none) | (none) | （誤分類1件のみで集中なし）|
+
+- **XC197026**: メス + **6羽の幼鳥**の鳴き声。**幼鳥の口笛声**が大量含まれる
+- **XC349677**: **オスとメスの掛け合い**録音
+
+### 発見3: train data に juvenile のサンプルがほぼ無い（distribution shift）
+
+Eurasian_Teal の `stage` 分布:
+
+| split | adult | juvenile | (none) |
+|---|---|---|---|
+| train (42 recordings) | 9 | **1** | 28 |
+| **test (9 recordings)** | 1 | **1 (XC197026)** | 7 |
+
+train に juvenile タグ録音は 1 件しかなく、AST は **「カモの juvenile call」を学んでない**。一方 test に juvenile 録音が入っている → **train/test の音響特徴分布が偏っている (distribution shift)**。
+
+### 結論: 真の原因は「Tufted の決定境界が広すぎる」+ distribution shift
+
+仮説の更新:
+- 「Tufted 過剰予測 = chunks 不均衡」は **反証済み**（run08）
+- 「Tufted 過剰予測 = 音響的類似性」も **疑わしい**（誤分類が特定録音に集中している = 種全体ではなく録音由来）
+- **新仮説**: Tufted_Duck の長尺2録音 **XC488112 (45分) と XC488113 (49分)** が「多様なカモのデフォルト call っぽい音」を含んでおり、Tufted の決定境界を不当に広げている。学習データに無い音（juvenile call, 複数個体の鳴き合い）は、もっとも音響範囲の広い「Tufted_Duck」クラスに吸引される
+
+この仮説は **chunks 半減（cap=100）で precision が動かなかった事実とも整合**: cap=100 ではランダムサブサンプリングなので XC488112/XC488113 の代表チャンクは残り、多様な音響パターンも保持されるため。
+
+次の検証: **XC488112 / XC488113 を train から完全除外** (run09)。
+
+---
+
+## run09 — Tufted_Duck の長尺2録音を train から完全除外 (2026-05-24)
+
+**出力:** `models/ast-duck-v9/`
+**コミット:** 事前登録 `<commit-hash>` / 結果は本セクションの結果コミットで記録
+**ステータス:** 学習前記録（事前登録）。分析タスクで「Tufted の長尺2録音が他種の音を吸収して決定境界を歪めている」仮説に到達。**XC488112 (cap=100 で 100 chunks) と XC488113 (cap=100 で 100 chunks) を train から完全削除**し、Tufted_Duck train chunks を 361→161 に減らす。録音は 29→27（run07 で +10 した後の状態から −2）。
+
+### データ変更（差分）
+
+`src/bird_fine/data/exclude_train_recordings.py` を新規実装。`train.csv` から指定 XCID（部分一致）の chunks を完全削除。val/test は変更しない。
+
+| 種 | run08 train chunks | run09 train chunks | 差 |
+|---|---|---|---|
+| Common_Goldeneye | 144 | 144 | ±0 |
+| Common_Pochard | 220 | 220 | ±0 |
+| Eurasian_Teal | 249 | 249 | ±0 |
+| Eurasian_Wigeon | 191 | 191 | ±0 |
+| Mallard | 390 | 390 | ±0 |
+| Northern_Pintail | 88 | 88 | ±0 |
+| Northern_Shoveler | 72 | 72 | ±0 |
+| **Tufted_Duck** | **361** | **161** | **−200**（XC488112: 100→0, XC488113: 100→0）|
+
+Tufted_Duck の train 録音数は 29 → 27（XC488112 と XC488113 を全削除）。chunks 数は他種より少ない逆方向の不均衡だが、これは **「長尺2録音が決定境界を歪めている」仮説の純粋な検証** が目的。
+
+### ハイパラ（run08 からの差分）
+
+run09 のハイパラは **run08 と完全同一**（=run05/07 とも同一）。変更点は train データの exclude のみ。
+
+### 仮説と予測（学習前に固定）
+
+run08 で chunks 半減が効かなかった事実から:
+- chunks 数は原因ではない
+- 真の原因は **特定録音（XC488112 / XC488113）が学習する音響パターンの幅**
+
+長尺2録音を完全削除すれば:
+- Tufted の決定境界が狭まる
+- 「カモのデフォルト call」のような汎用パターンが Tufted に吸収されなくなる
+- XC197026 (Teal juvenile) や XC349677 (Wigeon 掛け合い) が **正しく予測される確率が上がる**
+
+| | 仮説 | 予測 |
+|---|---|---|
+| **H1（主）** | XC488112/XC488113 削除で Tufted の過剰予測が解消し、全体 test f1 が上がる | **test f1_macro ≥ 0.86**（run05 0.838 を上回る）|
+| **H2（主）** | Tufted_Duck の precision が大幅改善する | **Tufted_Duck precision ≥ 0.55**（run08 0.269、+0.28）|
+| **H3** | Tufted の recall は許容範囲内に維持 | **Tufted_Duck recall ≥ 0.40**（run08 0.700 から落ちても 0.40 維持）|
+| **H4** | XC197026 (Teal juvenile) のチャンク群が **Tufted ではなく Teal と予測される** | **XC197026 のチャンク13件中、Teal 予測 ≥ 7件**（run08 では 0/13）|
+| **H5** | XC349677 (Wigeon 掛け合い) のチャンク群が **Wigeon と予測される** | **XC349677 のチャンク4件中、Wigeon 予測 ≥ 2件**（run08 では 0/4）|
+| **H6** | Eurasian_Teal の test F1 が改善（誤吸引解消の波及）| **Eurasian_Teal F1 ≥ 0.90**（run08 0.859、+0.04）|
+| **H7** | val−test gap は維持 | **\|val−test\| ≤ 0.03**（run08 は 0.018）|
+
+### 検証後の分岐（学習前に固定）
+
+- **H1・H2 ともに成立（test f1 ≥0.86 かつ Tufted precision ≥0.55）**: 「長尺2録音が決定境界を歪めていた」仮説が確証。**真のレバーを発見**。次は (1) 他種にも同様の問題録音がないか調査 (2) Tufted の他の録音で 27 → 30 程度に補充するか検討
+- **H2 成立だが H1 不成立**: Tufted の過剰予測は解消したが、全体 F1 が他種の悪化で相殺された → 他種の混同行列を精査
+- **H2 不成立（Tufted precision <0.55）**: 長尺2録音削除でも効かない → 仮説が間違い。残るのは「カモ全般の音響特徴を AST-base では区別できない」モデル容量限界説 → run10 で AST-Large or class-weighted loss
+- **H4 / H5 のいずれか成立、H2 不成立**: 一部の問題録音は解消できたが Tufted の過剰予測パターンは残る → 他のソースが他種誤分類を起こしている。詳細な混同行列分析
+- **H3 不成立（Tufted recall <0.40）**: Tufted の学習データが少なすぎて学習不能 → recall を犠牲にしすぎ。Tufted を他録音で補充する方向
+
+### 結果（best = checkpoint-???, epoch ?）
+
+| metric | value | run05 比 | run08 比 |
+|---|---|---|---|
+| best_epoch | — | 6 | 6 |
+| eval_f1_macro | — | 0.840 | 0.838 |
+| **test_f1_macro** | — | **0.838** | **0.820** |
+
+### 種別 test F1（run05 / 08 / 09 比較）
+
+| 種 | test n | run05 | run08 | **run09** | train chunks |
+|---|---|---|---|---|---|
+| Common_Goldeneye | 64 | 0.930 | 0.917 | — | 144 |
+| Common_Pochard | 63 | 0.945 | 0.960 | — | 220 |
+| Eurasian_Teal | 86 | 0.844 | 0.859 | — | 249 |
+| Eurasian_Wigeon | 27 | 0.809 | 0.760 | — | 191 |
+| Mallard | 46 | 0.918 | 0.849 | — | 390 |
+| Northern_Pintail | 28 | 0.949 | 0.982 | — | 88 |
+| Northern_Shoveler | 14 | 0.923 | 0.846 | — | 72 |
+| **Tufted_Duck** | 10 | 0.389 | 0.389 | — | **361→161** |
+
+### 重点検証: XC197026 / XC349677 の予測変化
+
+| 録音 | 種 (true) | チャンク数 | run05 pred | run08 pred | **run09 pred** |
+|---|---|---|---|---|---|
+| XC197026 | Eurasian_Teal (juvenile) | 13 (test) | Tufted 多数 | Tufted 12/13 | — |
+| XC349677 | Eurasian_Wigeon (掛け合い) | 4 (test) | Tufted 多数 | Tufted 4/4 | — |
+
+### 所見
+
+（学習完了後に記録）
+
+---
+
 ## メモ
 
 - baseline (`models/ast-duck/`) は常に保護する。新規 run は必ず別 output_dir へ
