@@ -327,3 +327,36 @@ test n=10 が最少 → 反射的に「学習データも少ない」と結論�
 - チャンク不均衡の是正（1録音あたりチャンク数の上限、または class-weighted loss）
 
 ---
+
+## 2026-05-24 run06: SpecAugment 単独投入は失敗 —「train 暗記の抑制」は汎化を保証しない
+
+### やったこと
+
+run02 で評価不能だった SpecAugment を、現行ベース（run05）から 1 変数だけ flip して切り分け。config.yaml で `spec_augment.enabled: false → true`（freq 24×2 / time 80×2、wd/lr/patience は run05 据え置き）。事前登録（`docs/experiments.md` run06 セクション）で H1〜H4 と分岐を学習前に固定。学習完了後 `evaluate.py --model-dir models/ast-duck-v6 --no-attention` で test 評価。
+
+### 結果
+
+- val f1 0.846（run05 比 +0.006）/ **test f1 0.810（run05 比 −0.028）** / best_epoch **2**（run05 は 6）
+- 仮説検証: H1a 成立（train_loss @ ep4 が run05 の 0.003 → 0.025、10倍に上振れ）/ H1b **不成立**（best_epoch は ≥7 予測に対し 2 に早期化）/ H2 **不成立**（test ≥0.85 予測に対し 0.810）/ H3a 僅か不成立（gap 0.036）/ H4 部分成立（Tufted_Duck +0.05、Eurasian_Wigeon ≈0）
+- 種別: Tufted_Duck 0.389→0.438（+0.05）と狙いどおり改善も、**Northern_Shoveler が 0.923→0.733（−0.19）で大きく悪化**。全体下落の主因はここ
+
+### なぜそうなったか
+
+- SpecAugment は train の暗記を確かに抑えた（H1a 成立）。だが val 曲線は平坦化せず「epoch 2 にスパイク → 以降緩やかに悪化」型に変わった。`load_best_model_at_end` は最大値を掴むので **未学習に近い checkpoint-252（epoch 2）が選ばれた**
+- 結果として val−test gap が 0.002（run05）→ 0.036（run06）に拡大。**val ピーク選択バイアスを引き戻している**。run03（best_epoch=2, gap=0.100）と同じ症状で、対策のはずの SpecAugment が選択バイアスを増幅した格好
+- 少数種を救うはずが、効いたのは Tufted_Duck だけ（+0.05）。一方で Northern_Shoveler（録音31本、チャンク72の中堅）が −0.19。SpecAugment による周波数/時間マスクが、訓練データの少ない中堅種のクラス境界を曖昧化した可能性
+
+### 学び（重い方法論の知見）
+
+- **train_loss の抑制 ≠ 汎化向上**。「完全暗記の阻止」を成功の代理指標にできない。H1a 成立 + H2 不成立 の組み合わせがこれを直接示している。「過学習対策」と書かれた手法でも、test で改善するとは限らない（むしろ best_epoch が早期化して悪化することがある）
+- **正則化系の手法は val 曲線の形状を変える** → `load_best_model_at_end` との相性が悪い。曲線が「平坦なプラトー」型から「初期スパイク + 緩やかな悪化」型に変わると、選択バイアスが復活する。run03 → run05 で gap が縮んだのは val 曲線が平坦化したからで、SpecAugment はその逆方向に作用した
+- **事前登録 → 結果のサイクルは機能している**: H2 を「test f1 ≥0.85」で固定していたから、val が微増しても「失敗」と即断できた。事前登録なしなら「val ちょっと上がったし採用?」と判断を曇らせていた可能性
+- **「補助レバー単独で 0.85 天井を破れる」期待は捨てる**: ハイパラ3 run（lr/wd/wd 中間点）+ SpecAugment 1 run、4 run 回して全て天井を破れず。残るレバーはデータ側（録音追加、不均衡是正）とモデル選択方式の改善
+
+### 次にやる
+
+- **データ軸に完全に切り替える**: Xeno-canto から Tufted_Duck / Eurasian_Wigeon の録音追加。チャンク数でなく「録音数」を増やすことが目的
+- **モデル選択方式の見直し**: `load_best_model_at_end` の val 単点ピーク依存をやめ、val f1 の移動平均 / 上位 k checkpoint の平均 / val loss 併用 などを検討。run03 と run06 で踏んだ同じ罠（best_epoch=2 → test 大幅劣化）を構造的に潰す
+- SpecAugment 再評価は録音追加後に回す。ベース性能が上がった状態で別物として測る
+
+---

@@ -422,8 +422,9 @@ eval_f1_macro は epoch 4 以降 7エポック連続でほぼ 0.840 に張り付
 ## run06 — SpecAugment クリーン単独評価 (2026-05-24)
 
 **出力:** `models/ast-duck-v6/`
-**コミット:** 事前登録 `<commit-hash>` / 結果は本セクションのコミットで記録
-**ステータス:** 学習前記録（事前登録）。run01〜05 はハイパラ主軸（lr / wd）を回し val f1 ≈0.85 / test f1 ≈0.84 が動かないと判明。run02 で同時変更により評価不能になった SpecAugment を、現行ベース（run05）から単独で flip し補助レバーの効果を切り分ける。
+**コミット:** 事前登録 `e0e9271` / 結果は本セクションのコミットで記録
+**ステータス:** 学習・test 評価完了（2026-05-24）。結果: val f1 0.846（run05 比 +0.006）/ **test f1 0.810（run05 比 −0.028）**。H2 不成立で SpecAugment 単独投入は失敗。
+**結論:** 現行ベストは引き続き **run05（test f1 0.838）**。SpecAugment は学習ダイナミクスを変えたが（H1 部分成立）、val ピークが逆に早期化して未学習モデルが選択された。Tufted_Duck のみ +0.05 改善も Northern_Shoveler が −0.19 で全体下落。
 
 ### ハイパラ（run03 / run04 / run05 からの差分）
 
@@ -464,38 +465,71 @@ run03〜05 / test 評価から確定した事実:
 - **H2・H4 ともに不成立（test f1 < 0.85 かつ少数種も横ばい）**: SpecAugment ではモデル側で天井を破れない。主軸をデータ側（録音追加収集、チャンク不均衡是正）に完全に切り替える
 - **H1 不成立（train_loss が ≥0.01 まで上がらない / best_epoch ≤ 6）**: SpecAugment 強度が弱すぎる可能性 → freq_mask_param / num_*_masks の増強を検討。または実装バグ疑い（spec_augment が train に効いているか確認）
 
-### 結果（best = checkpoint-???, epoch ?）
+### 結果（best = checkpoint-252, epoch 2）
 
 | metric | value | run05 比 |
 |---|---|---|
-| best_epoch | — | 6 |
-| eval_accuracy | — | 0.885 |
-| eval_f1_macro | — | 0.840 |
-| eval_precision_macro | — | 0.865 |
-| eval_recall_macro | — | 0.857 |
-| eval_loss | — | 0.457 |
-| **test_f1_macro** | — | **0.838** |
-| **test_accuracy** | — | **0.876** |
+| best_epoch | **2** | 6 |
+| eval_accuracy | 0.875 | 0.885 |
+| eval_f1_macro | **0.846** | 0.840 |
+| eval_precision_macro | 0.893 | 0.865 |
+| eval_recall_macro | 0.845 | 0.857 |
+| eval_loss | 0.392 | 0.457 |
+| **test_f1_macro** | **0.810** | **0.838** |
+| **test_accuracy** | **0.858** | **0.876** |
+| val−test gap | **−0.036** | −0.002 |
+
+学習は epoch 6 で early stop（patience=4, best=epoch 2）。`load_best_model_at_end` は val f1_macro 最大の checkpoint-252 を選択。test 評価出力: `outputs/eval_20260524_112150/`。
 
 ### 経過（主要マイルストーン）
 
-| epoch | step | train_loss | eval_loss | eval_f1_macro |
+| epoch | step | train_loss(平均) | eval_loss | eval_f1_macro |
 |---|---|---|---|---|
-| 1 | 126 | — | — | — |
-| 2 | 252 | — | — | — |
-| ... | | | | |
+| 1 | 126 | ≈0.55 | 0.613 | 0.756 |
+| **2** | **252** | ≈0.22 | **0.392** | **0.846** ← best |
+| 3 | 378 | ≈0.10 | 0.461 | 0.811 |
+| 4 | 504 | ≈0.025 | 0.533 | 0.842 |
+| 5 | 630 | ≈0.019 | 0.662 | 0.830 |
+| 6 | 756 | ≈0.012 | 0.772 | 0.826 |
+
+train_loss は run05 比で大きく上振れ（epoch 4 ≈0.025 vs run05 0.003、epoch 5 ≈0.019 vs run05 0.001）。H1 train_loss 予測（≥0.01 @ ep4）は成立。一方 best_epoch は予測（≥7）に反して **2** と最早期化し、不成立。
+
+### 仮説検証
+
+| 仮説 | 予測 | 実測 | 判定 |
+|---|---|---|---|
+| H1a train_loss @ ep4 | ≥0.01 | 0.019〜0.054（≈0.025） | **成立** |
+| H1b best_epoch | ≥7 | **2** | **不成立**（逆に早期化） |
+| H2 test f1 | ≥0.85 | **0.810** | **不成立** |
+| H3a \|val−test\| | ≤0.03 | 0.036 | 僅か不成立 |
+| H3b val f1 | ≥0.83 | 0.846 | 成立 |
+| H4 Tufted_Duck / Eurasian_Wigeon | 両方 run05 比改善 | 0.389→0.438 / 0.809→0.816 | 部分成立（Tufted のみ +0.05） |
 
 ### 種別 test F1（run03 / 04 / 05 / 06 比較）
 
-| 種 | test n | run03 | run04 | run05 | run06 | 録音数 | チャンク数 |
-|---|---|---|---|---|---|---|---|
-| Tufted_Duck | 10 | 0.303 | 0.387 | 0.389 | — | 20 | 694 |
-| Eurasian_Wigeon | 27 | 0.650 | 0.816 | 0.809 | — | 20 | 154 |
-| （他6種は run05 で 0.84〜0.95）| | | | | | | |
+| 種 | test n | run03 | run04 | run05 | **run06** | run05→06 差 | 録音数 | チャンク数 |
+|---|---|---|---|---|---|---|---|---|
+| Common_Goldeneye | 64 | 0.885 | 0.953 | 0.930 | 0.909 | **−0.021** | 30 | 144 |
+| Common_Pochard | 63 | 0.952 | 0.938 | 0.945 | 0.950 | +0.005 | 47 | 220 |
+| Eurasian_Teal | 86 | 0.845 | 0.866 | 0.844 | 0.843 | ≈0 | 42 | 249 |
+| Eurasian_Wigeon | 27 | 0.650 | 0.816 | 0.809 | 0.816 | +0.007 | 20 | 154 |
+| Mallard | 46 | 0.907 | 0.874 | 0.918 | 0.863 | **−0.055** | 70 | 390 |
+| Northern_Pintail | 28 | 0.871 | 0.949 | 0.949 | 0.929 | −0.020 | 32 | 88 |
+| **Northern_Shoveler** | 14 | 0.786 | 0.667 | 0.923 | **0.733** | **−0.190** | 31 | 72 |
+| **Tufted_Duck** | 10 | 0.303 | 0.387 | 0.389 | **0.438** | **+0.049** | 20 | 694 |
 
 ### 所見
 
-（学習完了後に記録）
+- **H2 不成立、H4 部分成立**: 事前登録の分岐ロジックでは「H2 不成立 / H4 部分成立」分岐に該当。SpecAugment 単独投入は test 全体で run05 を下回り、**現行ベストは引き続き run05（test f1 0.838）**。
+- **SpecAugment は学習ダイナミクスを変えたが、選択指標の劣化を招いた**: H1a は明確に成立し train の暗記は確かに抑制された（train_loss が桁単位で上振れ）。だが val f1 のピークは逆に **epoch 6 → epoch 2 に早期化** した。SpecAugment が val 曲線を平坦化せずに「初期スパイク → 早期プラトー → 緩やかに悪化」型に変えた可能性がある。`load_best_model_at_end` は最大値（epoch 2 の 0.846）を掴むので、未学習に近い checkpoint が選ばれた。
+- **val−test gap が再び拡大**: gap 0.036 は run05（0.002）から悪化し、run04（0.044）寄りに戻った。best_epoch=2 で選んだ結果という点でも run03 と類似の症状（run03: best_epoch=2, gap=0.100）。**val ピーク選択バイアスを引き戻している** ことになる。
+- **少数種改善は限定的、強い種が悪化**: Tufted_Duck +0.05 / Eurasian_Wigeon ≈0 で「少数種を救う」効果は弱い。一方 Northern_Shoveler が −0.19（run05 で precision 1.000 だったのが run06 では 0.688 に低下）。SpecAugment が録音数の中程度のクラス境界を曖昧化した可能性。
+- **「class-imbalance 対策として有効」と言える結果ではない**: 事前登録分岐の H2 不成立 + H4 成立分岐は「class-weighted loss と組み合わせる」だったが、**少数種 +0.05 / 中堅種 −0.19 のトレードはペイしない**。SpecAugment + 録音多様性向上で再評価するなら、まず録音追加が先で SpecAugment は後段に回す方が筋。
+- **train_loss 抑制 ≠ 汎化向上**: 「train 完全暗記の阻止」を成功の代理指標にできない、という方法論の裏付け。H1a 成立 + H2 不成立 の組み合わせはこの結論を直接示している。
+- 次の一手:
+  1. **データ軸へ完全に切り替える** — 録音数20本の Tufted_Duck / Eurasian_Wigeon の音源を Xeno-canto から追加収集
+  2. **モデル選択方式の見直し** — `load_best_model_at_end` の val 単点ピーク依存をやめ、val f1 の移動平均 / 上位 k checkpoint 平均 / val loss 併用などを検討。run03 / run06 と同じ罠を踏まないため
+  3. **SpecAugment 再評価は後回し** — 録音多様性が改善した後、ベース性能が上がった状態で再度クリーン評価する
 
 ---
 
