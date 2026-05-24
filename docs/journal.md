@@ -476,3 +476,65 @@ Eurasian_Wigeon train: 154 chunks (20 xc_id) → 191 chunks (30 xc_id)
 - preprocess.py の `_extract_xc_id` バグ修正は引き続き TODO
 
 ---
+
+## 2026-05-24 run08 準備: Tufted の長尺2録音だけ clip して chunk 不均衡を是正
+
+### やったこと
+
+`src/bird_fine/data/cap_train_chunks.py` を新規実装。`train.csv` のみ xc_id 単位で chunks 数の上限を設けて seed 固定でランダムサブサンプリング。val/test は触らない。
+
+cap=100 で実行: **Tufted_Duck train 728 → 361 chunks（−367）**。他種は全て不変。
+
+### 設計判断
+
+**なぜ「1録音上限」か**:
+train.csv の chunks 分布を全種で取って気づいた:
+- Tufted_Duck の上位2録音 XC488113 (297 chunks ≈49分) と XC488112 (270 chunks ≈45分) で **Tufted total 728 の 78%** を占めている
+- 他種の最大は Mallard XC396538 の 64 chunks、Wigeon XC110737 の 49 chunks など
+- 「Tufted_Duck はチャンクが多い種」というより、**「2つの異常に長い録音を含む種」** だった
+
+これは「録音数20本→多様性不足」の問題とは別の、データ収集時の構造的偏り。録音の長さが均一でない以上、chunks ベースで均す＝1録音上限を設けるのが筋。
+
+**なぜ cap=100 か**:
+- cap=30 だと Mallard (top1=64) や Wigeon (top1=49) も削れて変数が増える → 単独評価にならない
+- cap=50 だと Mallard だけ軽く削れる → 変数2つ
+- **cap=100 だと Tufted のみ介入**。Mallard 64, Wigeon 49 は影響なし → 完全な単独評価
+- cap=100 で Tufted total 728→361 となり、Mallard 390 と並ぶ。class-imbalance（chunks ベース）はほぼ解消
+
+**なぜ録音追加（run07 の状態）を残したまま上限を入れるか**:
+- run07 で「録音追加 + チャンク追加（副作用）」が打ち消し合うのが分かった
+- run08 で「録音追加状態のまま chunks だけ均す」と、録音多様性向上の正の効果だけ残す形になる
+- これは run07 と run08 の差分が **純粋にチャンク不均衡是正の効果** になる
+
+### 実装
+
+`cap_train_chunks.py`:
+- `groupby(['species', 'xc_id'])` で xc_id 単位に分け、cap を超える行を `random.Random(seed).sample` でクリップ
+- `--dry-run` で差分のみプレビュー
+- 上書き保存（git で履歴は残る）
+
+確認:
+```
+Tufted_Duck after cap: 361 chunks, 29 records
+top10:
+   100  XC488113-2018-07-29  ← 297 から clip
+   100  XC488112-2018-07-31  ← 270 から clip
+    27  XC730568-Fuligule    ← 影響なし
+    （以下中央値前後は全部影響なし）
+records preserved: 29/29
+```
+
+長尺2録音だけが clip され、録音数は全保持。Tufted の **「異常な2録音による嵩増し分」が消えた状態**。
+
+### 仮説の置き方の工夫
+
+run07 で「H4 不成立（他種への波及）」が出た反省を活かし、run08 では H6 で「cap は他種データを変えていないので H6 達成は当然視」と明記したうえで、それでも学習ダイナミクスの間接波及で他種が悪化する可能性を残している。
+
+「Tufted の過剰予測抑制 → Eurasian_Teal が改善」が運動学的に成立するはずの仮説（H5）も別途立てた。run07 では Tufted と予測した27件中 Eurasian_Teal が14件含まれていたので、Tufted を予測しなくなれば Teal が正しく予測される件数が増えるはず。
+
+### 次にやる
+
+- run08(pre) コミット → 学習 → test 評価 → 結果コミット
+- 結果に応じて run09 を分岐: cap=50 を試す / class-weighted loss に切り替え / 別軸へ
+
+---

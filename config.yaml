@@ -66,7 +66,7 @@ model:
 # 学習設定
 # ==================================================
 training:
-  output_dir: "models/ast-duck-v7"   # run07: v6 保護のため新規ディレクトリ
+  output_dir: "models/ast-duck-v8"   # run08: v7 保護のため新規ディレクトリ
   num_train_epochs: 15
   per_device_train_batch_size: 4   # RTX 3060 Ti (VRAM 8GB) 想定
   per_device_eval_batch_size: 8

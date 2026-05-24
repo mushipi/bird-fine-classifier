@@ -678,6 +678,103 @@ H4 不成立（Mallard / N.Shoveler への負の波及）も含めて、**run08 
 
 ---
 
+## run08 — 1録音あたりチャンク数の上限（cap=100）単独評価 (2026-05-24)
+
+**出力:** `models/ast-duck-v8/`
+**コミット:** 事前登録 `<commit-hash>` / 結果は本セクションの結果コミットで記録
+**ステータス:** 学習前記録（事前登録）。run07 で「録音追加でチャンクも増えチャンク不均衡が悪化、録音多様性向上の効果を相殺した」と判明。run08 は **チャンク不均衡是正を単独評価** する。
+
+### データ変更（差分）
+
+`src/bird_fine/data/cap_train_chunks.py` を新規実装し、`data/splits/train.csv` に対して **1録音あたりチャンク数の上限 100** を適用（seed=42 固定で再現性確保）。val/test は不変。
+
+| 種 | run07 train chunks | run08 train chunks | 差 | top1 record clip |
+|---|---|---|---|---|
+| Common_Goldeneye | 144 | 144 | ±0 | （18→18 影響なし） |
+| Common_Pochard | 220 | 220 | ±0 | （27→27 影響なし） |
+| Eurasian_Teal | 249 | 249 | ±0 | （28→28 影響なし） |
+| Eurasian_Wigeon | 191 | 191 | ±0 | （49→49 影響なし） |
+| Mallard | 390 | 390 | ±0 | （64→64 影響なし） |
+| Northern_Pintail | 88 | 88 | ±0 | （19→19 影響なし） |
+| Northern_Shoveler | 72 | 72 | ±0 | （10→10 影響なし） |
+| **Tufted_Duck** | **728** | **361** | **−367** | **XC488113: 297→100, XC488112: 270→100** |
+
+Tufted のみ介入。録音数は 29/29 保持（全録音を残しつつ XC488113 / XC488112 の長尺録音だけ削った）。
+
+### ハイパラ（run05 / 07 からの差分）
+
+run08 のハイパラは **run07 と完全同一**（=run05 とも同一）。変更点は train データの cap のみ。
+
+| 項目 | run05 | run07 | **run08** | 意図 |
+|---|---|---|---|---|
+| データ | 既存 | +録音 +チャンク不均衡悪化 | **+録音 +cap=100** | 主軸変更点（chunk 不均衡是正）|
+| weight_decay | 0.03 | 0.03 | **0.03** | 据え置き |
+| learning_rate | 2.0e-5 | 2.0e-5 | **2.0e-5** | 据え置き |
+| SpecAugment | off | off | **off** | 据え置き |
+| early_stopping_patience | 4 | 4 | **4** | 据え置き |
+
+### 仮説と予測（学習前に固定）
+
+run07 までの事実から:
+- Tufted_Duck の chunks 数突出（728 / 全種 最多）が **過剰予測の構造的原因**。run05 で precision 0.269、run07 で 0.296 と録音追加でも未解決
+- 上位2録音 XC488113 (297 chunks ≈49分) と XC488112 (270 chunks ≈45分) で Tufted total の **78%** を占める異常な偏り
+- cap=100 で Tufted を 728→361 まで均し、Mallard 390 と並ぶ水準に。class-imbalance（チャンクベース）が大幅に改善
+- val/test は不変なので test の数値は run05/07 と直接比較可能
+
+| | 仮説 | 予測 |
+|---|---|---|
+| **H1（主）** | チャンク不均衡是正で Tufted の過剰予測が緩和され、全体 test f1 が上がる | **test f1_macro ≥ 0.86**（run05 0.838 / run07 0.827 を上回る） |
+| **H2（主）** | Tufted_Duck の precision が大幅改善する | **Tufted_Duck precision ≥ 0.50**（run07 0.296、+0.20 以上）|
+| **H3** | Tufted の recall は悪化するが許容範囲 | **Tufted_Duck recall ≥ 0.50**（run07 0.800 から落ちても 0.50 は維持）|
+| **H4** | Tufted_Duck の F1 自体は改善する | **Tufted_Duck F1 ≥ 0.55**（run07 0.432、+0.12 以上）|
+| **H5** | 誤吸引されていた他種（Eurasian_Teal）が改善する | **Eurasian_Teal F1 ≥ 0.85**（run07 0.831、+0.02 以上）|
+| **H6** | 他種への負の波及は最小 | **Mallard, Northern_Shoveler を含む他6種が run07 比 −0.02 以内**（cap で他種を変えていないので H6 達成は当然視するが、学習ダイナミクスの変化で間接波及の可能性は残る）|
+| **H7** | val−test gap は run05/07 並み | **\|val − test\| ≤ 0.03**（run05 0.002 / run07 0.018）|
+
+### 検証後の分岐（学習前に固定）
+
+- **H1・H2 ともに成立（test f1 ≥0.86 かつ Tufted precision ≥0.50）**: チャンク不均衡是正が有効レバー。run09 では (1) cap をさらに下げる単独評価 or (2) class-weighted loss との併用検討
+- **H1 不成立だが H2 成立（全体は伸びないが Tufted precision は改善）**: 不均衡是正は局所的に効くが全体改善には繋がらない → 他種で吸引されていた誤分類が **別の誤分類パターン** に置き換わったか確認。混同行列の精査
+- **H2 不成立（Tufted precision <0.50）**: cap=100 でも十分でない → run09 で cap=50 を試すか、class-weighted loss に切り替え
+- **H1 成立だが H3 不成立（Tufted recall が大幅悪化）**: 「過剰予測の抑制」が「Tufted を取りこぼす」に転じた → cap が強すぎる
+- **H6 不成立（他種で −0.02 以上の悪化）**: cap は他種データを変えていないので **学習ダイナミクスの変化による間接波及**。Tufted 関連の決定境界変化が他種にも影響している。介入が想定外の副作用を起こしているサイン
+
+### 結果（best = checkpoint-???, epoch ?）
+
+| metric | value | run05 比 | run07 比 |
+|---|---|---|---|
+| best_epoch | — | 6 | 4 |
+| eval_f1_macro | — | 0.840 | 0.845 |
+| eval_loss | — | 0.457 | 0.458 |
+| **test_f1_macro** | — | **0.838** | **0.827** |
+| **test_accuracy** | — | **0.876** | **0.870** |
+
+### 経過（主要マイルストーン）
+
+| epoch | step | train_loss | eval_loss | eval_f1_macro |
+|---|---|---|---|---|
+| 1 | — | — | — | — |
+| ... | | | | |
+
+### 種別 test F1（run05 / 07 / 08 比較）
+
+| 種 | test n | run05 | run07 | **run08** | run07→08 差 | train chunks (run07→08) |
+|---|---|---|---|---|---|---|
+| Common_Goldeneye | 64 | 0.930 | 0.938 | — | — | 144→144 |
+| Common_Pochard | 63 | 0.945 | 0.968 | — | — | 220→220 |
+| Eurasian_Teal | 86 | 0.844 | 0.831 | — | — | 249→249 |
+| Eurasian_Wigeon | 27 | 0.809 | 0.809 | — | — | 191→191 |
+| Mallard | 46 | 0.918 | 0.889 | — | — | 390→390 |
+| Northern_Pintail | 28 | 0.949 | 0.933 | — | — | 88→88 |
+| Northern_Shoveler | 14 | 0.923 | 0.815 | — | — | 72→72 |
+| Tufted_Duck | 10 | 0.389 | 0.432 | — | — | **728→361** |
+
+### 所見
+
+（学習完了後に記録）
+
+---
+
 ## メモ
 
 - baseline (`models/ast-duck/`) は常に保護する。新規 run は必ず別 output_dir へ
