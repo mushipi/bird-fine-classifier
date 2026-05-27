@@ -56,3 +56,7 @@ Thumbs.db
 .vscode/
 .idea/
 *.swp
+
+# Qiita 記事下書き（プロジェクト外の成果物）
+/qiita_draft.md
+/qiita_assets/
