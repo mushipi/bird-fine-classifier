@@ -11,6 +11,7 @@ in-distribution (test.csv) と OOD (data/ood_processed/) の confidence 分布�
 from __future__ import annotations
 
 import argparse
+import sys
 from datetime import datetime
 from pathlib import Path
 
@@ -53,7 +54,7 @@ def infer_chunks(
     id2label: dict[int, str],
     device: torch.device,
 ) -> list[dict]:
-    """チャンク単位で推論し、各チャンクのmax_conf・pred_species・全probs を返す。"""
+    """チャンク単位で推論し、softmax max_conf・energy_score・pred_species を返す。"""
     import soundfile as sf
 
     results = []
@@ -70,14 +71,19 @@ def infer_chunks(
                 audio, sampling_rate=feature_extractor.sampling_rate, return_tensors="pt"
             )
             logits = model(input_values=inputs["input_values"].to(device)).logits
+            logits_np = logits.cpu().numpy()[0]          # (num_classes,)
             probs = torch.softmax(logits, dim=-1).cpu().numpy()[0]
 
             top_idx = int(np.argmax(probs))
+            # Energy score: logsumexp(logits)。in-dist ほど高い
+            a = logits_np.max()
+            energy = float(a + np.log(np.sum(np.exp(logits_np - a))))
+
             results.append({
                 "file": wav.name,
                 "max_conf": float(probs[top_idx]),
+                "energy_score": energy,
                 "pred_species": id2label[top_idx],
-                "probs": probs,
             })
     return results
 
@@ -106,6 +112,7 @@ def collect_indist(
             "true_species": row["species"],
             "pred_species": r["pred_species"],
             "max_conf": r["max_conf"],
+            "energy_score": r["energy_score"],
             "correct": row["species"] == r["pred_species"],
         })
 
@@ -145,6 +152,7 @@ def collect_ood(
                     "true_species": en,
                     "pred_species": r["pred_species"],
                     "max_conf": r["max_conf"],
+                    "energy_score": r["energy_score"],
                     "correct": False,
                 })
             print(f"  Tier{tier} / {en}: {len(res)} チャンク")
@@ -152,58 +160,61 @@ def collect_ood(
     return pd.DataFrame(rows)
 
 
-def plot_confidence_dist(df: pd.DataFrame, out_dir: Path) -> None:
-    """Tier 別の max_conf 分布をバイオリンプロットで可視化。"""
+def plot_score_dist(df: pd.DataFrame, out_dir: Path, score_col: str, filename: str, title: str, ylabel: str) -> None:
+    """Tier 別のスコア分布をバイオリンプロットで可視化。"""
     groups = ["in_dist", "tier1", "tier2", "tier3"]
-    labels = ["In-dist\n(test)", "OOD Tier1\n(他カモ科)", "OOD Tier2\n(水辺非カモ)", "OOD Tier3\n(コントロール)"]
+    labels = ["In-dist\n(test)", "OOD Tier1\n(duck-adj)", "OOD Tier2\n(waterbird)", "OOD Tier3\n(control)"]
     colors = ["#4c72b0", "#dd8452", "#55a868", "#c44e52"]
 
-    data = [df[df["tier"] == g]["max_conf"].values for g in groups]
-    data = [d for d in data if len(d) > 0]
-    active_labels = [l for l, d in zip(labels, data) if len(d) > 0]
-    active_colors = [c for c, d in zip(colors, data) if len(d) > 0]
+    data = [df[df["tier"] == g][score_col].values for g in groups]
+    valid = [(d, l, c) for d, l, c in zip(data, labels, colors) if len(d) > 0]
+    data_v, labels_v, colors_v = zip(*valid) if valid else ([], [], [])
 
     fig, ax = plt.subplots(figsize=(9, 5))
-    parts = ax.violinplot(data, positions=range(len(data)), showmedians=True, showextrema=True)
-    for pc, color in zip(parts["bodies"], active_colors):
+    parts = ax.violinplot(list(data_v), positions=range(len(data_v)), showmedians=True, showextrema=True)
+    for pc, color in zip(parts["bodies"], colors_v):
         pc.set_facecolor(color)
         pc.set_alpha(0.7)
 
-    ax.set_xticks(range(len(active_labels)))
-    ax.set_xticklabels(active_labels, fontsize=10)
-    ax.set_ylabel("Max Softmax Confidence")
-    ax.set_title("Confidence Distribution: In-distribution vs OOD")
-    ax.set_ylim(0, 1.05)
+    ax.set_xticks(range(len(labels_v)))
+    ax.set_xticklabels(list(labels_v), fontsize=10)
+    ax.set_ylabel(ylabel)
+    ax.set_title(title)
     ax.grid(axis="y", alpha=0.3)
-    ax.axhline(0.7, color="gray", linestyle="--", linewidth=0.8, label="θ=0.7 (暫定)")
-    ax.legend(fontsize=9)
 
     fig.tight_layout()
-    fig.savefig(out_dir / "confidence_dist.png", dpi=150)
+    fig.savefig(out_dir / filename, dpi=150)
     plt.close(fig)
-    print(f"  [PLOT] confidence_dist.png")
+    print(f"  [PLOT] {filename}")
 
 
-def plot_roc(df_indist: pd.DataFrame, df_ood: pd.DataFrame, out_dir: Path) -> float:
-    """TPR (in-dist 正解保持率) vs FPR (OOD 誤受理率) の ROC 曲線を描き、推奨 θ を返す。"""
-    thresholds = np.linspace(0.0, 1.0, 200)
+def plot_roc(
+    df_indist: pd.DataFrame,
+    df_ood: pd.DataFrame,
+    out_dir: Path,
+    score_col: str,
+    filename: str,
+    label: str,
+    color: str,
+) -> tuple[float, float]:
+    """TPR vs FPR の ROC 曲線を描き、(推奨閾値, AUROC) を返す。"""
+    scores_in = df_indist[score_col].values
+    correct_in = df_indist["correct"].values.astype(bool)
+    scores_ood = df_ood[score_col].values if len(df_ood) > 0 else np.array([])
+
+    all_scores = np.concatenate([scores_in, scores_ood]) if len(scores_ood) > 0 else scores_in
+    thresholds = np.linspace(all_scores.min(), all_scores.max(), 300)
+
     tprs, fprs = [], []
-
-    indist_conf = df_indist["max_conf"].values
-    indist_correct = df_indist["correct"].values.astype(bool)
-    ood_conf = df_ood["max_conf"].values if len(df_ood) > 0 else np.array([])
-
     for theta in thresholds:
-        # TPR: 正解 in-dist チャンクのうち confidence >= θ の割合
-        tpr = float(np.mean(indist_conf[indist_correct] >= theta)) if indist_correct.sum() > 0 else 0.0
-        # FPR: OOD チャンクのうち confidence >= θ の割合（誤受理）
-        fpr = float(np.mean(ood_conf >= theta)) if len(ood_conf) > 0 else 0.0
+        tpr = float(np.mean(scores_in[correct_in] >= theta)) if correct_in.sum() > 0 else 0.0
+        fpr = float(np.mean(scores_ood >= theta)) if len(scores_ood) > 0 else 0.0
         tprs.append(tpr)
         fprs.append(fpr)
 
     tprs, fprs = np.array(tprs), np.array(fprs)
+    auroc = float(np.trapezoid(tprs[::-1], fprs[::-1]))
 
-    # 推奨 θ: FPR <= 0.05 を満たしながら TPR を最大化
     mask = fprs <= 0.05
     if mask.any():
         best_idx = int(np.argmax(tprs[mask]))
@@ -217,24 +228,24 @@ def plot_roc(df_indist: pd.DataFrame, df_ood: pd.DataFrame, out_dir: Path) -> fl
         rec_fpr = float(fprs[best_idx])
 
     fig, ax = plt.subplots(figsize=(6, 5))
-    ax.plot(fprs, tprs, color="#4c72b0", linewidth=2, label="ROC")
+    ax.plot(fprs, tprs, color=color, linewidth=2, label=f"{label} (AUROC={auroc:.3f})")
     ax.scatter([rec_fpr], [rec_tpr], color="red", zorder=5,
-               label=f"推奨 θ={rec_theta:.2f} (TPR={rec_tpr:.3f}, FPR={rec_fpr:.3f})")
-    ax.axvline(0.05, color="gray", linestyle="--", linewidth=0.8, label="FPR=0.05 基準")
-    ax.set_xlabel("FPR (OOD 誤受理率)")
-    ax.set_ylabel("TPR (in-dist 正解保持率)")
-    ax.set_title("ROC: Confidence Threshold vs OOD Rejection")
+               label=f"rec theta={rec_theta:.3f} (TPR={rec_tpr:.3f}, FPR={rec_fpr:.3f})")
+    ax.axvline(0.05, color="gray", linestyle="--", linewidth=0.8, label="FPR=0.05")
+    ax.set_xlabel("FPR (OOD false acceptance rate)")
+    ax.set_ylabel("TPR (in-dist correct retention rate)")
+    ax.set_title(f"ROC [{label}]")
     ax.legend(fontsize=9)
     ax.grid(alpha=0.3)
     ax.set_xlim(-0.01, 1.01)
     ax.set_ylim(-0.01, 1.01)
 
     fig.tight_layout()
-    fig.savefig(out_dir / "roc_curve.png", dpi=150)
+    fig.savefig(out_dir / filename, dpi=150)
     plt.close(fig)
-    print(f"  [PLOT] roc_curve.png")
+    print(f"  [PLOT] {filename}  AUROC={auroc:.3f}  rec_theta={rec_theta:.3f}")
 
-    return rec_theta
+    return rec_theta, auroc
 
 
 def report_top_misclassified(df_ood: pd.DataFrame, out_dir: Path) -> None:
@@ -306,32 +317,57 @@ def main() -> None:
     if df_ood.empty:
         print("  [WARN] OOD チャンクが見つからない。先に download_ood.py を実行して。")
     else:
-        print(f"  OOD: {len(df_ood)} チャンク / mean_conf={df_ood['max_conf'].mean():.3f}")
+        print(f"  OOD: {len(df_ood)} チャンク / mean_conf={df_ood['max_conf'].mean():.3f} / mean_energy={df_ood['energy_score'].mean():.3f}")
 
-    # 全データ統合
     df_all = pd.concat([df_indist, df_ood], ignore_index=True)
-    df_all.drop(columns=["probs"] if "probs" in df_all.columns else [], errors="ignore")
     df_all.to_csv(out_dir / "ood_results.csv", index=False)
 
     print("\n[PLOT] 可視化...")
-    plot_confidence_dist(df_all, out_dir)
+    # softmax 分布
+    plot_score_dist(
+        df_all, out_dir,
+        score_col="max_conf", filename="dist_softmax.png",
+        title="Softmax Confidence: In-dist vs OOD",
+        ylabel="Max Softmax Confidence",
+    )
+    # energy スコア分布
+    plot_score_dist(
+        df_all, out_dir,
+        score_col="energy_score", filename="dist_energy.png",
+        title="Energy Score: In-dist vs OOD",
+        ylabel="Energy Score (logsumexp of logits)",
+    )
 
-    rec_theta = None
+    rec_softmax, rec_energy = None, None
+    auroc_softmax, auroc_energy = None, None
     if not df_ood.empty:
-        rec_theta = plot_roc(df_indist, df_ood, out_dir)
+        rec_softmax, auroc_softmax = plot_roc(
+            df_indist, df_ood, out_dir,
+            score_col="max_conf", filename="roc_softmax.png",
+            label="Max Softmax", color="#4c72b0",
+        )
+        rec_energy, auroc_energy = plot_roc(
+            df_indist, df_ood, out_dir,
+            score_col="energy_score", filename="roc_energy.png",
+            label="Energy Score", color="#dd8452",
+        )
         report_top_misclassified(df_ood, out_dir)
 
-    # サマリ
     print("\n" + "=" * 60)
     print("[SUMMARY]")
-    print(f"  in-dist test: {len(df_indist)} chunks / acc={indist_acc:.3f} / mean_conf={indist_mean_conf:.3f}")
+    print(f"  in-dist: {len(df_indist)} chunks / acc={indist_acc:.3f}")
+    print(f"    softmax mean_conf={df_indist['max_conf'].mean():.3f}  energy_mean={df_indist['energy_score'].mean():.3f}")
     if not df_ood.empty:
         for tier in args.tiers:
             sub = df_ood[df_ood["tier"] == f"tier{tier}"]
             if not sub.empty:
-                print(f"  OOD Tier{tier}: {len(sub)} chunks / mean_conf={sub['max_conf'].mean():.3f}")
-    if rec_theta is not None:
-        print(f"\n  推奨 confidence_threshold: {rec_theta:.2f}")
+                print(f"  OOD Tier{tier}: {len(sub)} chunks / softmax={sub['max_conf'].mean():.3f} / energy={sub['energy_score'].mean():.3f}")
+    if auroc_softmax is not None:
+        print(f"\n  AUROC  softmax={auroc_softmax:.3f}  energy={auroc_energy:.3f}")
+        better = "Energy" if auroc_energy > auroc_softmax else "Softmax"
+        print(f"  → {better} の方が OOD 分離性能が高い")
+    if rec_energy is not None:
+        print(f"\n  推奨閾値 (energy, FPR<=5%): {rec_energy:.3f}")
         print(f"  → species_taxonomy.yaml の pipeline.confidence_threshold に設定してください")
     print(f"\n  出力先: {out_dir}")
     print("=" * 60)

@@ -169,7 +169,12 @@ def preprocess_tier(
             results[en] = 0
             continue
 
-        mp3_files = list(species_raw.glob("*.mp3")) + list(species_raw.glob("*.wav")) + list(species_raw.glob("*.flac"))
+        # xcapi は {Species}/{Scientific_name}/ にファイルを置くので再帰検索
+        mp3_files = (
+            list(species_raw.rglob("*.mp3"))
+            + list(species_raw.rglob("*.wav"))
+            + list(species_raw.rglob("*.flac"))
+        )
         if not mp3_files:
             print(f"  [SKIP] {en}: 音声ファイルなし")
             results[en] = 0
