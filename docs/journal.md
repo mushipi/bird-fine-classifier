@@ -711,3 +711,41 @@ XC488112 (45分) と XC488113 (49分) という長尺フィールド録音は、
 Tufted の test 正解 3件（XC303149, XC476421, XC760407）はいずれも **短尺録音**から。長尺2録音を削除しても **「本来の Tufted_Duck の鳴き声」は他の27録音から学べている**。これは「Tufted 27 録音で十分に種特徴を捉えられる」可能性を示唆。あとは「過剰予測しないバランス」を見つけるだけ。
 
 ---
+
+## 2026-05-31 Ubuntu移行 + 3sチャンクへのパラダイム変更
+
+### やったこと
+
+開発環境を Windows から Ubuntu（同一マシンのデュアルブート）に移行。あわせて BirdNet のソースコード（`kahst/BirdNET-Analyzer`）を確認し、チャンク長の設計上の問題を発見したため 10s→3s への変更を決定。run10 として事前登録した。
+
+### 発見: BirdNet は 3秒窓で処理している
+
+BirdNet-Analyzer の `birdnet_analyzer/model.py` に `keras.Input(shape=(144000,))` とあり、48kHz × 3秒 = 144000 サンプルが確認できた。`audio.py` の `split_signal()` もデフォルト `seconds=3.0`。
+
+本プロジェクトは「BirdNet が カモ類 を検出した 3秒音声を受け取って8種に細分類する」設計のはずなのに、**学習時は 10秒チャンクを使っていた**。推論時には 7秒分のゼロパディングが発生する設計不整合だった。
+
+### 旧 run10 計画（cap=30/50）との関係
+
+run09 終了時点で「next: run10 は長尺2録音の中間 cap を探る」としていたが、それより上位の前処理設計の問題を先に直すべきと判断した。cap 実験は 3s チャンク体制が安定してから再検討する。
+
+### Ubuntu 移行で対応した問題
+
+Windows 側で生成された `data/splits/*.csv` の `file_path` 列がバックスラッシュ区切り（`data\processed\...`）だったため Linux で動かない。対応:
+1. CSV を sed で一括修正（`\` → `/`）
+2. `dataset.py` と `confusion_audio.py` の `Path / row["file_path"]` に `.replace("\\", "/")` を追加（防御的修正）
+
+### コード変更内容
+
+- `config.yaml`: `chunk_duration_sec` 10.0→3.0、`min_chunk_duration_sec` 3.0→1.0、`feature_extractor_max_length: 304` を追加
+- `dataset.py`: `build_datasets()` に `max_length` 引数を追加、`ASTFeatureExtractor.from_pretrained()` に渡す
+- `train.py`: `build_datasets()` 呼び出し時に `model_cfg` から `feature_extractor_max_length` を読んで渡す
+
+### max_length=304 の根拠
+
+ASTFeatureExtractor は 16kHz / 25ms窓 / 10ms hop でメルスペクトログラムを作る。3秒音声のフレーム数 ≈ (48000-400)/160+1 ≈ 298。AST の慣例（10s=1024, 1s=128 ≒ 102.4フレーム/秒）から 3s ≈ 307。実装上の標準値として 304 を採用。
+
+### 次にやる
+
+`uv run python -m bird_fine.data.preprocess` → `split` → `train --dry-run` → `train` の順で実行。
+
+---

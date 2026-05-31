@@ -67,7 +67,7 @@ class DuckChunkDataset(Dataset):
 
     def __getitem__(self, idx: int) -> dict:
         row = self.df.iloc[idx]
-        file_path = self.project_root / row["file_path"]
+        file_path = self.project_root / Path(row["file_path"].replace("\\", "/"))
 
         audio, sr = sf.read(str(file_path), dtype="float32")
         if audio.ndim > 1:
@@ -113,11 +113,12 @@ def build_datasets(
     pretrained: str,
     project_root: Optional[Path] = None,
     spec_augment_cfg: Optional[dict] = None,
+    max_length: int = 1024,
 ) -> tuple[DuckChunkDataset, DuckChunkDataset, DuckChunkDataset, dict[str, int]]:
     """train/val/test の3つのDatasetを構築して返す。SpecAugmentはtrainのみ適用。"""
     project_root = project_root or PROJECT_ROOT
     label_map = load_label_map(splits_dir)
-    feature_extractor = ASTFeatureExtractor.from_pretrained(pretrained)
+    feature_extractor = ASTFeatureExtractor.from_pretrained(pretrained, max_length=max_length)
 
     train_ds = DuckChunkDataset(
         splits_dir / "train.csv", label_map, feature_extractor, project_root,

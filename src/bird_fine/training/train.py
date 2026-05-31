@@ -78,6 +78,7 @@ def main() -> None:
         pretrained=model_cfg["pretrained"],
         project_root=PROJECT_ROOT,
         spec_augment_cfg=spec_augment_cfg,
+        max_length=int(model_cfg.get("feature_extractor_max_length", 1024)),
     )
     id2label = {v: k for k, v in label_map.items()}
     label2id = label_map

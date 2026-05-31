@@ -45,8 +45,8 @@ download:
 # ==================================================
 preprocessing:
   sample_rate: 16000               # ASTの仕様
-  chunk_duration_sec: 10.0         # ASTの標準入力長
-  min_chunk_duration_sec: 3.0      # これより短いチャンクはパディング
+  chunk_duration_sec: 3.0          # BirdNetの3s窓に合わせる
+  min_chunk_duration_sec: 1.0      # 3s切り出し後の端数チャンクを救う
   overlap_ratio: 0.0               # チャンク間のオーバーラップ（0で重複なし）
   processed_dir: "data/processed"
   splits_dir: "data/splits"
@@ -61,12 +61,13 @@ preprocessing:
 model:
   pretrained: "MIT/ast-finetuned-audioset-10-10-0.4593"
   num_labels: 8                    # target_speciesの数と一致させる
+  feature_extractor_max_length: 304  # 3s×16kHz のmelフレーム数（10s=1024の3/10）
 
 # ==================================================
 # 学習設定
 # ==================================================
 training:
-  output_dir: "models/ast-duck-v9"   # run09: v8 保護のため新規ディレクトリ
+  output_dir: "models/ast-duck-v10"  # run10: 3sチャーク移行、v9保護
   num_train_epochs: 15
   per_device_train_batch_size: 4   # RTX 3060 Ti (VRAM 8GB) 想定
   per_device_eval_batch_size: 8

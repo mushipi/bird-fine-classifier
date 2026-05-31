@@ -1056,8 +1056,74 @@ run08 で chunks 半減が効かなかった事実から:
 
 ---
 
+## run10 — 前処理パラダイム変更: 10s→3sチャンク / BirdNet pipeline alignment (2026-05-31)
+
+**ステータス:** 学習前記録（事前登録）
+**出力:** `models/ast-duck-v10/`
+
+### 変更概要
+
+| パラメータ | run09（旧） | run10（今回） | 変更理由 |
+|---|---|---|---|
+| `chunk_duration_sec` | 10.0 | **3.0** | BirdNet 3s窓に合わせる |
+| `min_chunk_duration_sec` | 3.0 | **1.0** | 端数チャンクを救う |
+| `feature_extractor_max_length` | 1024 | **304** | 3s×16kHz のmelフレーム数 |
+| `output_dir` | ast-duck-v9 | **ast-duck-v10** | 新規run |
+| lr / wd / patience | 2.0e-5 / 0.03 / 4 | 同じ | run05ベースラインを継承 |
+| SpecAugment | off | off | 固定変数 |
+
+**旧 run10 計画（cap=30/50）との関係:** Ubuntu移行 + BirdNetコード確認を機に、チャンク長変更という上位の問題を先に解決することにした。cap 実験は 3s チャンク体制が安定してから再検討。
+
+### 仮説と予測
+
+**前提:** BirdNet は 3秒窓で音声を処理し「カモ類」を検出する。本モデルがその3秒音声を受け取る想定なのに、10秒チャンクで学習していたのは設計上の不整合。
+
+**H1: チャンク数が増加する（録音あたり約3倍）**
+- 10秒チャンクより細かく切れるため train/val/test の総チャンク数が増加するはず
+
+**H2: Tufted_Duck の過剰予測が緩和方向に動く**
+- XC488112/XC488113 の長尺録音も 3秒単位で切られるため、「45分の音響パターンを丸ごと学習」という状況が緩和される可能性
+
+**H3: val / test f1 は初回でrun05（0.838）を超えない可能性が高い**
+- AST の位置埋め込みは 10s（1024フレーム）向けに事前学習済み。3s（304フレーム）への適応は fine-tune で徐々に進む
+- ただし run05 と同ハイパラなので早期に拮抗できれば成功と見なす
+
+**数値予測:**
+- 総 train チャンク数: 現状の 2.5〜3.0 倍（10s→3s で単純計算 3.3倍、端数・短尺除外で減少）
+- val f1_macro: 0.80〜0.86（初期適応コスト + データ増の効果が拮抗）
+- test f1_macro: 0.80〜0.86
+
+**検証後の分岐:**
+- test f1 ≥ 0.838（run05相当）→ 3sチャンク体制で実験継続（run11でTufted cap再検討）
+- test f1 < 0.838 かつ Tufted F1 改善 → 3sチャンクは方向性として正しい。別ハイパラで run12
+- test f1 < 0.838 かつ Tufted F1 も悪化 → 3sチャンクがASTの事前学習と相性が悪い可能性。10sに戻すか別モデル検討
+
+### 学習前のチャンク分布（予測）
+
+- 現 run05（10s）: train 約 2000チャンク
+- run10（3s）: train 約 5000〜6000チャンク（予測）
+
+※ preprocess → split 後の実数で更新
+
+### 結果（学習後に記入）
+
+| epoch | train_loss | eval_loss | eval_f1_macro |
+|---|---|---|---|
+| - | - | - | - |
+
+### メトリクス（run05比較）
+
+| 指標 | run05 | run10 | 差分 |
+|---|---|---|---|
+| val f1_macro | 0.840 | - | - |
+| test f1_macro | **0.838** | - | - |
+
+### 所見（学習後に記入）
+
+---
+
 ## メモ
 
 - baseline (`models/ast-duck/`) は常に保護する。新規 run は必ず別 output_dir へ
-- 学習中に `Win+Ctrl+Shift+B`（GPUドライバ再起動）は避ける — CUDA コンテキストが吹っ飛ぶ可能性
-- TensorBoard: `uv run tensorboard --logdir models/ast-duck-v2/runs`
+- 学習中は GPU ドライバ再起動（Linux では Ctrl+Alt+Backspace 等）を避ける
+- TensorBoard: `uv run tensorboard --logdir models/ast-duck-v10/runs`
