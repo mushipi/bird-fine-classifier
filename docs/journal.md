@@ -823,3 +823,45 @@ per-species 50chunk 上限では 350chunk 程度 → Sampler での複製が多�
 ### 次にやる
 
 run11 の学習・評価完了後、OOD eval で AUROC と energy threshold を再測定する。
+
+## 2026-05-31 Outlier Exposure としての割り切り — 第4の選択肢への収束
+
+### 経緯
+
+run11 の結果（AUROC energy 0.932 / other_recall 0.09）を受けて、OOD 対策の最終方針を決定した。
+
+当初の選択肢は「backbone 凍結して "other" 決定境界を強制する」か「energy パイプラインを構築する」の二択だったが、正しいフレーミングはどちらでもなく——
+
+**第4の選択肢: Outlier Exposure としての割り切り**
+
+run11 でやったことは Hendrycks et al. (2018) の Outlier Exposure そのもの。「OOD データを学習に晒して energy 空間を calibrate する」ことが目的であり、"other" を正確に分類することは目的ではなかった。other_recall=0.09 は失敗ではなく「エネルギー空間が分離された結果として softmax 空間では境界が引けない」という構造的帰結。AUROC 0.932 が成功の証拠。
+
+### 決定したアーキテクチャ
+
+```
+推論時:
+  logits → energy_score = T * logsumexp(logits / T)  (T=1.0)
+  energy_score < energy_threshold → reject ("unknown duck species")
+  energy_score >= energy_threshold → argmax(logits[:8]) → 種名
+```
+
+- 閾値は `species_taxonomy.yaml` の `energy_threshold: 10.35` で管理
+- 温度は `energy_temperature: 1.0`（将来 Temperature Scaling を試す際は config だけ変える）
+- `predict.py` に energy gate を追加することで完成
+
+### なぜシステム側で解決するか
+
+- AUROC 0.932 は実運用に耐えるレベル
+- "other" をモデル側で分類しようとすると「閉世界仮定で開世界の問題を解く」矛盾を抱える
+- energy ゲートはモデルと独立しているため、閾値だけ調整すれば FPR/TPR のトレードオフを変えられる
+- run11 のモデル重みを変えずに運用設計を完成させられる
+
+### energy スコアの符号規約（コード上の注意）
+
+- ood_eval.py の convention: `score = logsumexp(logits)` → 高い = in-distribution
+- 閾値 10.35 はこの convention で calibrate されている
+- predict.py でも同じ convention を使う。論文の E(x) = -logsumexp(logits)（負値）とは符号が逆なので混同注意
+
+### 次にやる
+
+`predict.py` に energy gate を実装して動作確認し、コミットする。

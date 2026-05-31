@@ -36,8 +36,10 @@ pipeline:
 
   # Stage2 AST の energy score がこの値未満 → "unknown" を出力
   # run11 ood_eval (2026-05-31): AUROC=0.932 / FPR<=5% 条件での推奨値
-  # スコア方式: logsumexp(logits)（高い = in-distribution）
-  confidence_threshold: 10.35  # energy-based threshold（softmax は不使用）
+  # スコア方式: T * logsumexp(logits / T)（高い = in-distribution）
+  # softmax confidence とは別物。混同注意
+  energy_threshold: 10.35
+  energy_temperature: 1.0  # Temperature Scaling 用。1.0 = スケーリングなし
 
 # ==================================================
 # Stage2 (AST Transformer) 分類対象 — 8種
