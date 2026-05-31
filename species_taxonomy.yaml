@@ -34,9 +34,10 @@ pipeline:
     - "Common Merganser"       # BirdProject 未収録
     - "Greater Scaup"          # BirdProject 未収録
 
-  # Stage2 AST の softmax max がこの値未満 → "unknown" を出力
-  # ood_eval.py で ROC 分析後に決定。それまでは null（閾値なし）
-  confidence_threshold: null   # TBD
+  # Stage2 AST の energy score がこの値未満 → "unknown" を出力
+  # run11 ood_eval (2026-05-31): AUROC=0.932 / FPR<=5% 条件での推奨値
+  # スコア方式: logsumexp(logits)（高い = in-distribution）
+  confidence_threshold: 10.35  # energy-based threshold（softmax は不使用）
 
 # ==================================================
 # Stage2 (AST Transformer) 分類対象 — 8種
