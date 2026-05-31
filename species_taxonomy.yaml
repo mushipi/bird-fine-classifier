@@ -1,0 +1,217 @@
+# species_taxonomy.yaml
+# Stage1 CNN (BirdProject) → Stage2 AST (bird-fine-classifier) パイプラインの種管理
+# bird-fine-classifier / BirdProject 共通の canonical source
+#
+# birdnet_label 規則: "{sci}_{en}" (BirdNET-Analyzer の出力ラベル形式)
+# birdproject: true = BirdProject CNN (71クラス) に収録済み → Stage1 で検出可能
+# birdproject: false = BirdNet v2.4 デフォルト (6000種) 経由でのみ検出
+
+# ==================================================
+# パイプライン設定
+# ==================================================
+pipeline:
+
+  # Stage1 (CNN) がこれらの種を検出した場合 → Stage2 (AST) へルーティング
+  # target_species + ood.tier1 の en 名を列挙
+  stage2_triggers:
+    # --- target_species (Stage2 が識別できる) ---
+    - "Mallard"
+    - "Eurasian Wigeon"
+    - "Eurasian Teal"          # BirdProject では "Common Teal" として収録
+    - "Northern Pintail"
+    - "Northern Shoveler"
+    - "Tufted Duck"
+    - "Common Pochard"
+    # Common Goldeneye は BirdProject 未収録
+    # → BirdNET v2.4 デフォルト出力で補完する運用
+    - "Common Goldeneye"
+    # --- ood.tier1 (Stage2 が知らない → OOD として扱う) ---
+    - "Eastern Spot-billed Duck"
+    - "Gadwall"
+    - "Baikal Teal"
+    - "Falcated Duck"
+    - "Red-breasted Merganser"
+    - "Common Merganser"       # BirdProject 未収録
+    - "Greater Scaup"          # BirdProject 未収録
+
+  # Stage2 AST の softmax max がこの値未満 → "unknown" を出力
+  # ood_eval.py で ROC 分析後に決定。それまでは null（閾値なし）
+  confidence_threshold: null   # TBD
+
+# ==================================================
+# Stage2 (AST Transformer) 分類対象 — 8種
+# ==================================================
+target_species:
+
+  - en: "Mallard"
+    sci: "Anas platyrhynchos"
+    ja: "マガモ"
+    birdproject: true
+
+  - en: "Eurasian Teal"
+    alt_en: "Common Teal"      # BirdProject / 旧 IOC での表記
+    sci: "Anas crecca"
+    ja: "コガモ"
+    birdproject: true
+
+  - en: "Northern Pintail"
+    sci: "Anas acuta"
+    ja: "オナガガモ"
+    birdproject: true
+
+  - en: "Northern Shoveler"
+    sci: "Spatula clypeata"
+    ja: "ハシビロガモ"
+    birdproject: true
+
+  - en: "Eurasian Wigeon"
+    sci: "Mareca penelope"
+    ja: "ヒドリガモ"
+    birdproject: true
+
+  - en: "Tufted Duck"
+    sci: "Aythya fuligula"
+    ja: "キンクロハジロ"
+    birdproject: true
+
+  - en: "Common Pochard"
+    sci: "Aythya ferina"
+    ja: "ホシハジロ"
+    birdproject: true
+
+  - en: "Common Goldeneye"
+    sci: "Bucephala clangula"
+    ja: "ホオジロガモ"
+    birdproject: false
+    note: "BirdProject CNN 未収録。BirdNET v2.4 デフォルトモデルで検出。Stage1→Stage2 ルーティングは BirdNET デフォルト経由"
+
+# ==================================================
+# OOD テストセット
+# Stage1 が検出する可能性があるが Stage2 が識別できない種
+# ood_eval.py でしきい値の ROC 分析に使用
+# ==================================================
+ood_species:
+
+  # --------------------------------------------------
+  # Tier1: 他のカモ科
+  # Stage1 がルーティングしてくる可能性が高い最重要 OOD
+  # --------------------------------------------------
+  tier1:
+
+    - en: "Eastern Spot-billed Duck"
+      sci: "Anas zonorhyncha"
+      ja: "カルガモ"
+      birdproject: true
+      note: "国内最普通の留鳥。BirdProject 経由で最も頻繁に誤ルーティングされるリスク"
+
+    - en: "Gadwall"
+      sci: "Mareca strepera"
+      ja: "オカヨシガモ"
+      birdproject: true
+
+    - en: "Baikal Teal"
+      sci: "Sibirionetta formosa"
+      ja: "トモエガモ"
+      birdproject: true
+      note: "コガモと音響近縁"
+
+    - en: "Falcated Duck"
+      sci: "Mareca falcata"
+      ja: "ヨシガモ"
+      birdproject: true
+      note: "ヒドリガモと同 Mareca 属"
+
+    - en: "Red-breasted Merganser"
+      sci: "Mergus serrator"
+      ja: "ウミアイサ"
+      birdproject: true
+
+    - en: "Common Merganser"
+      sci: "Mergus merganser"
+      ja: "カワアイサ"
+      birdproject: false
+
+    - en: "Greater Scaup"
+      sci: "Aythya marila"
+      ja: "スズガモ"
+      birdproject: false
+      note: "キンクロハジロと同 Aythya 属。音響近縁"
+
+  # --------------------------------------------------
+  # Tier2: 水辺の非カモ科
+  # Stage1 は通常スルーするが念のためテスト
+  # --------------------------------------------------
+  tier2:
+
+    - en: "Eurasian Coot"
+      sci: "Fulica atra"
+      ja: "オオバン"
+      birdproject: true
+
+    - en: "Little Grebe"
+      sci: "Tachybaptus ruficollis"
+      ja: "カイツブリ"
+      birdproject: true
+
+    - en: "Black-necked Grebe"
+      sci: "Podiceps nigricollis"
+      ja: "ハジロカイツブリ"
+      birdproject: false
+
+  # --------------------------------------------------
+  # Tier3: コントロール
+  # AST が低確信度を返すかの確認用。水辺環境で同時録音される種
+  # --------------------------------------------------
+  tier3:
+
+    - en: "Blue Rock Thrush"
+      sci: "Monticola solitarius"
+      ja: "イソヒヨドリ"
+      birdproject: true
+
+    - en: "Osprey"
+      sci: "Pandion haliaetus"
+      ja: "ミサゴ"
+      birdproject: true
+
+    - en: "Black-tailed Gull"
+      sci: "Larus crassirostris"
+      ja: "ウミネコ"
+      birdproject: true
+
+    - en: "Black Kite"
+      sci: "Milvus migrans"
+      ja: "トビ"
+      birdproject: true
+
+    # チドリ類
+    - en: "Little Ringed Plover"
+      sci: "Charadrius dubius"
+      ja: "コチドリ"
+      birdproject: false
+
+    - en: "Kentish Plover"
+      sci: "Charadrius alexandrinus"
+      ja: "シロチドリ"
+      birdproject: true
+
+    - en: "Grey Plover"
+      sci: "Pluvialis squatarola"
+      ja: "ダイゼン"
+      birdproject: true
+
+    # シギ類
+    - en: "Far Eastern Curlew"
+      sci: "Numenius madagascariensis"
+      ja: "ダイシャクシギ"
+      birdproject: true
+
+    - en: "Eurasian Curlew"
+      sci: "Numenius arquata"
+      ja: "ホウロクシギ"
+      birdproject: true
+
+    - en: "Eurasian Whimbrel"
+      sci: "Numenius phaeopus"
+      ja: "チュウシャクシギ"
+      birdproject: true
