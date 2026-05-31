@@ -13,6 +13,7 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 import torch
+import torch.nn.functional as F
 import yaml
 from sklearn.metrics import accuracy_score, f1_score, precision_score, recall_score
 from transformers import (
@@ -42,6 +43,44 @@ def compute_metrics(eval_pred) -> dict:
         "recall_macro": recall_score(labels, preds, average="macro", zero_division=0),
         "f1_macro": f1_score(labels, preds, average="macro", zero_division=0),
     }
+
+
+def resize_position_embeddings(model, max_length: int) -> None:
+    """AST の位置埋め込みを max_length に対応したパッチ数へ線形補間でリサイズする。
+
+    事前学習済み重みは max_length=1024 向けの 1214 埋め込みを持つが、
+    3s チャンク（max_length=304）では 350 パッチしか生成されないため不整合が起きる。
+    CLS/distillation トークン (先頭2) は流用し、パッチ埋め込み部分のみ補間する。
+    """
+    import torch.nn as nn
+
+    cfg = model.config
+    patch_size: int = cfg.patch_size
+    freq_patches = (cfg.num_mel_bins - patch_size) // cfg.frequency_stride + 1
+    time_patches = (max_length - patch_size) // cfg.time_stride + 1
+    new_num_patches = freq_patches * time_patches
+    new_n = new_num_patches + 2  # CLS + distillation token
+
+    emb = model.audio_spectrogram_transformer.embeddings
+    old_pos = emb.position_embeddings.data  # (1, old_n, hidden) — nn.Parameter
+    _, old_n, hidden = old_pos.shape
+
+    if old_n == new_n:
+        return
+
+    cls_tokens = old_pos[:, :2, :]    # (1, 2, hidden)
+    patch_tokens = old_pos[:, 2:, :]  # (1, old_n-2, hidden)
+
+    new_patch_tokens = F.interpolate(
+        patch_tokens.permute(0, 2, 1).float(),  # (1, hidden, old_n-2)
+        size=new_n - 2,
+        mode="linear",
+        align_corners=False,
+    ).permute(0, 2, 1)  # (1, new_n-2, hidden)
+
+    new_pos = torch.cat([cls_tokens, new_patch_tokens], dim=1)  # (1, new_n, hidden)
+    emb.position_embeddings = nn.Parameter(new_pos)
+    print(f"[POS] 位置埋め込みをリサイズ: {old_n} → {new_n} ({time_patches}×{freq_patches} patches)")
 
 
 def main() -> None:
@@ -97,6 +136,11 @@ def main() -> None:
         id2label=id2label,
         label2id=label2id,
     )
+
+    max_length = int(model_cfg.get("feature_extractor_max_length", 1024))
+    if max_length != 1024:
+        resize_position_embeddings(model, max_length)
+        model.config.max_length = max_length  # 保存時にアーキテクチャ情報を残す
 
     if train_cfg.get("gradient_checkpointing", False):
         model.gradient_checkpointing_enable()

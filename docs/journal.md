@@ -748,4 +748,48 @@ ASTFeatureExtractor は 16kHz / 25ms窓 / 10ms hop でメルスペクトログ�
 
 `uv run python -m bird_fine.data.preprocess` → `split` → `train --dry-run` → `train` の順で実行。
 
+## 2026-05-31 run10 完了: 3sチャンク移行の結果と次のアクション
+
+### やったこと
+
+Ubuntu 移行後、3s チャーク移行（BirdNet pipeline alignment）を run10 として実行。XC488112/XC488113 を chunks_index.csv 段階で全splits から除外し re-split した上で学習。
+
+### 結果
+
+- val f1 0.806 (epoch 6) / **test f1 0.782**（run05 比 −0.056）
+- **Tufted_Duck F1: 0.389 → 0.738（+0.349）** — 最大の成果
+- Goldeneye（−0.201）・Pintail（−0.227）・Shoveler（−0.230）が大幅悪化
+
+### なぜ Tufted が改善したか
+
+XC488112/XC488113 の完全除外（run09 で仮説確証済み）に加え、3s チャンクで train 477 chunks（run09 の 161 より多い）を確保できた。「過剰予測の解消」と「適正な学習量」の両立が初めて達成された。
+
+### なぜ全体 f1 は低下したか
+
+1. **AST 位置埋め込みの適応コスト**: 10s→3s で位置埋め込みを 1214→350 に線形補間。事前学習の文脈（10s）から離れた分、汎化が落ちた
+2. **train チャンク数が少ない種の悪化**: Pintail 305/Shoveler 243 は run05 と同水準だが、3s チャンクは 1 チャンクあたりの情報量が少ない（10s の 1/3）→ 実質的な学習情報量は減少
+3. **test n の変化**: 3s 再分割で test n が変わり（例: Goldeneye 64→199）比較が難しい面もある
+
+### 技術的な落とし穴と修正
+
+位置埋め込みリサイズ後に `model.config.max_length` を更新していなかったため、保存 config.json（max_length=1024）と実際の重み（350次元）が不一致。evaluate.py でロード時にエラー。
+→ `model.config.max_length = max_length` を train.py に追加し、既存チェックポイントの config.json も手動修正。
+
+### 次にやる
+
+run10 で Tufted F1 が改善した一方、全体は低下。2つの方向性が考えられる:
+
+1. **run11: ハイパラ調整（lr, patience）で全体 f1 を底上げ** — 3s チャーク体制を維持したまま学習を安定させる
+2. **run11: Pintail/Shoveler などデータ不足種に録音追加** — チャンク数の少ない種の弱点を補う
+
+AST の 3s 適応には複数 epoch が必要な可能性があり、lr を下げて patience を増やす（より長く学習させる）のが有力。
+
+### 追記: XC488112/XC488113 の全splits除外 と re-split (2026-05-31)
+
+preprocess → split 後に Tufted_Duck val が 1032 chunks と異常に多いことを発見。XC488113（49分）が val に丸ごと入っていた。`load_best_model_at_end` がこれを基準にモデルを選ぶと run03 と同じ選択バイアスが再発する。
+
+対処: chunks_index.csv から XC488112（899 chunks）・XC488113（989 chunks）を除外し re-split。Tufted_Duck val が 1032→76 に正常化。run09 の知見（「この2録音が問題」）と一貫した処置。
+
+また dry-run で位置埋め込みの次元ミスマッチ (`tensor a=350 vs b=1214`) が判明。`resize_position_embeddings()` を train.py に実装し、事前学習済み1214次元の埋め込みを線形補間で350次元にリサイズしてから学習する方式とした。
+
 ---
