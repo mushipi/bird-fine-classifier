@@ -13,9 +13,12 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 import torch
+import torch.nn as nn
 import torch.nn.functional as F
+from torch.utils.data import WeightedRandomSampler
 import yaml
-from sklearn.metrics import accuracy_score, f1_score, precision_score, recall_score
+from collections import Counter
+from sklearn.metrics import accuracy_score, f1_score, recall_score
 from transformers import (
     EarlyStoppingCallback,
     Trainer,
@@ -33,16 +36,105 @@ def load_config() -> dict:
         return yaml.safe_load(f)
 
 
-def compute_metrics(eval_pred) -> dict:
-    """accuracy / precision / recall / f1_macro を計算。"""
-    logits, labels = eval_pred
-    preds = np.argmax(logits, axis=-1)
-    return {
-        "accuracy": accuracy_score(labels, preds),
-        "precision_macro": precision_score(labels, preds, average="macro", zero_division=0),
-        "recall_macro": recall_score(labels, preds, average="macro", zero_division=0),
-        "f1_macro": f1_score(labels, preds, average="macro", zero_division=0),
-    }
+def make_compute_metrics(num_target: int = 8):
+    """9クラス全体 + 既存8種のみ F1 を返す compute_metrics を生成する。
+
+    metric_for_best_model に 'f1_macro_8class' を指定することで、
+    "other" クラスの F1 に引きずられずに既存8種の精度でモデルを選択できる。
+    """
+    def compute_metrics(eval_pred) -> dict:
+        logits, labels = eval_pred
+        preds = np.argmax(logits, axis=-1)
+        target_mask = labels < num_target
+
+        metrics = {
+            "accuracy": float(accuracy_score(labels, preds)),
+            "f1_macro": float(f1_score(labels, preds, average="macro", zero_division=0)),
+            "f1_macro_8class": float(
+                f1_score(
+                    labels[target_mask], preds[target_mask],
+                    average="macro", zero_division=0,
+                    labels=list(range(num_target)),
+                )
+            ) if target_mask.sum() > 0 else 0.0,
+        }
+        # "other" クラスが存在する場合のみ recall を追加
+        other_mask = labels == num_target
+        if other_mask.sum() > 0:
+            metrics["other_recall"] = float(recall_score(
+                other_mask.astype(int), (preds == num_target).astype(int),
+                average="binary", zero_division=0,
+            ))
+        return metrics
+    return compute_metrics
+
+
+def expand_classifier(model, new_num_labels: int) -> None:
+    """既存の分類ヘッドを new_num_labels に拡張する。
+
+    既存クラスの重みを保持したまま "other" ニューロンをゼロ初期化で追加する。
+    これにより run10 の学習済み8クラス境界を崩さずに run11 を開始できる。
+    """
+    old_linear = model.classifier.dense
+    old_w = old_linear.weight.data   # (old_n, hidden)
+    old_b = old_linear.bias.data     # (old_n,)
+    old_n, hidden = old_w.shape
+
+    if old_n == new_num_labels:
+        return
+
+    new_linear = nn.Linear(hidden, new_num_labels)
+    new_linear.weight.data[:old_n] = old_w
+    new_linear.weight.data[old_n:] = torch.zeros(new_num_labels - old_n, hidden)
+    new_linear.bias.data[:old_n] = old_b
+    new_linear.bias.data[old_n:] = torch.zeros(new_num_labels - old_n)
+
+    model.classifier.dense = new_linear
+    model.config.num_labels = new_num_labels
+    print(f"[EXPAND] 分類ヘッド拡張: {old_n} → {new_num_labels} クラス（新規ニューロンはゼロ初期化）")
+
+
+class DuckTrainer(Trainer):
+    """WeightedRandomSampler + カスタム CE Loss を組み込んだ Trainer。
+
+    Sampler でバッチ内クラス比率を均等化し、Loss には固定重み alpha を "other" のみに付与する。
+    Sampler と Loss の二重補正（Double Dipping）を避けるため、Loss 重みはデータ数ベースではなく
+    固定値 alpha のみを使用する。
+    """
+
+    def __init__(self, *args, other_label_id: int | None = None, other_alpha: float = 1.0, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.other_label_id = other_label_id
+        self.other_alpha = other_alpha
+
+    def _get_train_sampler(self, dataset=None) -> WeightedRandomSampler | None:
+        # transformers 5.x は dataset 引数を渡してくる
+        ds = dataset if dataset is not None else self.train_dataset
+        if ds is None:
+            return None
+        species_counts = Counter(ds.df["species"])
+        sample_weights = [
+            1.0 / species_counts[ds.df.iloc[i]["species"]]
+            for i in range(len(ds))
+        ]
+        return WeightedRandomSampler(
+            weights=sample_weights,
+            num_samples=len(ds),
+            replacement=True,
+        )
+
+    def compute_loss(self, model, inputs, return_outputs=False, **kwargs):
+        labels = inputs.get("labels")
+        outputs = model(**inputs)
+        logits = outputs.logits
+
+        num_labels = logits.shape[-1]
+        weights = torch.ones(num_labels, device=logits.device)
+        if self.other_label_id is not None and self.other_label_id < num_labels:
+            weights[self.other_label_id] = self.other_alpha
+
+        loss = nn.CrossEntropyLoss(weight=weights)(logits, labels)
+        return (loss, outputs) if return_outputs else loss
 
 
 def resize_position_embeddings(model, max_length: int) -> None:
@@ -129,18 +221,42 @@ def main() -> None:
 
     print(f"  train: {len(train_ds)} / val: {len(val_ds)} / test: {len(test_ds)}")
 
-    print(f"[LOAD] モデル: {model_cfg['pretrained']}")
-    model = build_ast_classifier(
-        pretrained=model_cfg["pretrained"],
-        num_labels=int(model_cfg["num_labels"]),
-        id2label=id2label,
-        label2id=label2id,
-    )
-
+    num_labels = int(model_cfg["num_labels"])
+    init_from = model_cfg.get("init_from")
     max_length = int(model_cfg.get("feature_extractor_max_length", 1024))
+
+    if init_from:
+        import json
+        init_path = PROJECT_ROOT / init_from
+        saved_cfg = json.loads((init_path / "config.json").read_text())
+        saved_n = int(saved_cfg.get("num_labels", 8))
+        print(f"[LOAD] チェックポイントから初期化: {init_path} (saved num_labels={saved_n})")
+        # saved_n で読み込む → ヘッドが完全に一致してランダム再初期化されない
+        saved_id2label = {i: f"cls{i}" for i in range(saved_n)}
+        saved_label2id = {v: k for k, v in saved_id2label.items()}
+        model = build_ast_classifier(
+            pretrained=str(init_path),
+            num_labels=saved_n,
+            id2label=saved_id2label,
+            label2id=saved_label2id,
+        )
+        if saved_n < num_labels:
+            expand_classifier(model, num_labels)
+        # 正しい id2label/label2id をセット
+        model.config.id2label = id2label
+        model.config.label2id = label2id
+    else:
+        print(f"[LOAD] モデル: {model_cfg['pretrained']}")
+        model = build_ast_classifier(
+            pretrained=model_cfg["pretrained"],
+            num_labels=num_labels,
+            id2label=id2label,
+            label2id=label2id,
+        )
+
     if max_length != 1024:
         resize_position_embeddings(model, max_length)
-        model.config.max_length = max_length  # 保存時にアーキテクチャ情報を残す
+        model.config.max_length = max_length
 
     if train_cfg.get("gradient_checkpointing", False):
         model.gradient_checkpointing_enable()
@@ -178,13 +294,22 @@ def main() -> None:
     if patience > 0 and not args.dry_run:
         callbacks.append(EarlyStoppingCallback(early_stopping_patience=patience))
 
-    trainer = Trainer(
+    # "other" クラスの設定
+    other_label_id = label_map.get("other")
+    other_alpha = float(config.get("other_class", {}).get("loss_alpha", 1.0))
+    num_target = num_labels - (1 if other_label_id is not None else 0)
+    if other_label_id is not None:
+        print(f"[OTHER] label_id={other_label_id} / loss_alpha={other_alpha} / metric=f1_macro_8class")
+
+    trainer = DuckTrainer(
         model=model,
         args=training_args,
+        other_label_id=other_label_id,
+        other_alpha=other_alpha,
         train_dataset=train_ds,
         eval_dataset=val_ds,
         data_collator=collate_fn,
-        compute_metrics=compute_metrics,
+        compute_metrics=make_compute_metrics(num_target=num_target),
         callbacks=callbacks,
     )
 

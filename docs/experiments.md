@@ -1168,8 +1168,76 @@ early stopping: epoch 10 で停止（patience=4、best=epoch 6）
 
 ---
 
+---
+
+## run11 — "other" クラス追加による OOD 検知 (2026-05-31)
+
+**ステータス:** 学習前記録（事前登録）
+**出力:** `models/ast-duck-v11/`
+**初期化元:** `models/ast-duck-v10/`（run10チェックポイントから分類ヘッドを拡張）
+
+### 変更概要
+
+| 項目 | run10 | run11 |
+|---|---|---|
+| num_labels | 8 | **9**（+`other`クラス）|
+| metric_for_best_model | f1_macro | **f1_macro_8class**（8種のみ）|
+| WeightedRandomSampler | なし | **あり**（全クラス均等サンプリング）|
+| CE loss | 均等 | **[1.0×8, 1.5×other]**（固定値・Double Dipping なし）|
+| SpecAugment | off | **other クラスにのみ適用**（8種の境界を守る）|
+| init | pretrained AST | **run10 checkpoint**（8クラス重みを保持して拡張）|
+
+### "other" クラスデータ
+
+recording 単位で train20 / eval10 に分割、per-recording cap=30 で過学習防止。
+
+| 種 | tier | train録音 | eval録音 |
+|---|---|---|---|
+| Eastern Spot-billed Duck | 1 | 2 | 0 |
+| Gadwall | 1 | 20 | 10 |
+| Baikal Teal | 1 | 3 | 0 |
+| Falcated Duck | 1 | 3 | 0 |
+| Red-breasted Merganser | 1 | 20 | 5 |
+| Eurasian Coot | 2 | 20 | 10 |
+| Little Grebe | 2 | 20 | 10 |
+| **合計** | | **1220 chunks** | **391 chunks** |
+
+### 仮説と予測
+
+**H1: 既存8種の精度（f1_macro_8class）が run10（val 0.806）を下回らない**
+- run10 チェックポイントから分類ヘッドをゼロ拡張して初期化
+- "other" ニューロンが徐々に学習される一方、8クラス境界は開始時点で保持
+- Double Dipping を排除したことで "other" 学習が8種境界を侵食しない
+
+**H2: OOD チャンクの energy_score が run10 比で低下する**
+- "other" クラスを学習したことでモデルが「カモ以外の音」に低エネルギーを割り当てる
+- AUROC（energy）が run10 の 0.894 を超える
+
+**H3: other_recall（val）が最終的に 0.5 以上になる**
+- val の "other" 391チャンクに対して半数以上を正しく弾ける
+
+**数値予測:**
+- val f1_macro_8class: 0.78 以上（run10 の 0.806 付近を維持）
+- val other_recall: 0.50〜0.80
+- OOD eval AUROC（energy）: 0.92 以上
+
+**検証後の分岐:**
+- f1_8class ≥ 0.78 かつ other_recall ≥ 0.5 → OOD対策として有効。confidence_threshold を設定して pipeline に組み込む
+- f1_8class < 0.78（8種境界が侵食）→ alpha を下げる / 別ハイパラで run12
+- other_recall < 0.5（"other" を学習できず）→ データ量・多様性を再検討
+
+### 結果（学習後に記入）
+
+| epoch | eval_loss | f1_macro | f1_macro_8class | other_recall |
+|---|---|---|---|---|
+| - | - | - | - | - |
+
+### 所見（学習後に記入）
+
+---
+
 ## メモ
 
 - baseline (`models/ast-duck/`) は常に保護する。新規 run は必ず別 output_dir へ
 - 学習中は GPU ドライバ再起動（Linux では Ctrl+Alt+Backspace 等）を避ける
-- TensorBoard: `uv run tensorboard --logdir models/ast-duck-v10/runs`
+- TensorBoard: `uv run tensorboard --logdir models/ast-duck-v11/runs`

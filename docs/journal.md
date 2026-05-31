@@ -793,3 +793,33 @@ preprocess → split 後に Tufted_Duck val が 1032 chunks と異常に多い�
 また dry-run で位置埋め込みの次元ミスマッチ (`tensor a=350 vs b=1214`) が判明。`resize_position_embeddings()` を train.py に実装し、事前学習済み1214次元の埋め込みを線形補間で350次元にリサイズしてから学習する方式とした。
 
 ---
+
+## 2026-05-31 run11 設計：Double Dipping の罠と "other" クラス戦略
+
+### やったこと
+
+run10 の OOD 評価（AUROC softmax=0.838 / energy=0.894）を受けて、「"other" クラスを追加して再学習」する run11 の設計を行い実装した。
+
+### 最重要の設計判断：Sampler と Loss の役割分担
+
+当初「WeightedRandomSampler で均等化 + Loss に N_duck/N_other の重みを掛ける」と提案したが、これは **Double Dipping**（二重補正）だと指摘を受けた。Sampler で既にバッチ内比率が均等になっているのに、さらにデータ数ベースの Loss 重みを掛けると "other" の勾配が爆発して8種の決定境界が破壊される。
+
+**採用した設計：**
+- Sampler: WeightedRandomSampler（全9クラスを均等にサンプリング）
+- Loss: CE weight = [1.0, ..., 1.0, 1.5]（固定値。データ数ベースは捨てる）
+
+### SpecAugment の条件付き適用
+
+run06 で「8種にSpecAugment → 境界が壊れて test f1 -0.028」を確認済み。一方で "other" クラスは過学習防止のために波形の多様性が必要。→ `if label == other_label_id` の条件分岐で **"other" のみ適用**。実装コストが低い割に理論と実利が完璧に一致する解。
+
+### "other" チャンク数の設計（過学習防止）
+
+per-species 50chunk 上限では 350chunk 程度 → Sampler での複製が多く丸暗記リスク。recording 単位の train/eval 分割 + per-recording cap=30 のみにして上限を外し、1220chunk を確保。複製回数は各チャンク ~0.5回/epoch と低水準に抑えた。
+
+### metric_for_best_model の変更
+
+9クラス全体の f1_macro をモデル選択基準にすると「other が高くて8種が壊れたモデル」が選ばれるリスク。→ `f1_macro_8class`（8種のみの F1 マクロ平均）を選択基準に変更。other_recall はログに出すが選択には使わない。
+
+### 次にやる
+
+run11 の学習・評価完了後、OOD eval で AUROC と energy threshold を再測定する。

@@ -50,17 +50,25 @@ class DuckChunkDataset(Dataset):
         self.sampling_rate = feature_extractor.sampling_rate
 
         self.spec_augment = None
-        if spec_augment_cfg and spec_augment_cfg.get("enabled", False):
+        self.spec_augment_other_only = False
+        cfg = spec_augment_cfg or {}
+        # other_only=True の場合、enabled フラグに関わらず "other" クラスにのみ適用する
+        other_only = cfg.get("other_only", False)
+        apply = cfg.get("enabled", False) or other_only
+        if apply:
             self.spec_augment = {
                 "freq_mask": T.FrequencyMasking(
-                    freq_mask_param=int(spec_augment_cfg["freq_mask_param"])
+                    freq_mask_param=int(cfg["freq_mask_param"])
                 ),
                 "time_mask": T.TimeMasking(
-                    time_mask_param=int(spec_augment_cfg["time_mask_param"])
+                    time_mask_param=int(cfg["time_mask_param"])
                 ),
-                "num_freq": int(spec_augment_cfg["num_freq_masks"]),
-                "num_time": int(spec_augment_cfg["num_time_masks"]),
+                "num_freq": int(cfg["num_freq_masks"]),
+                "num_time": int(cfg["num_time_masks"]),
             }
+            self.spec_augment_other_only = other_only
+            other_label = label_map.get("other")
+            self.other_label_id = other_label  # None なら "other" クラスなし
 
     def __len__(self) -> int:
         return len(self.df)
@@ -84,16 +92,21 @@ class DuckChunkDataset(Dataset):
         )
         input_values = inputs["input_values"].squeeze(0)  # (time, freq)
 
-        if self.spec_augment is not None:
-            # torchaudio の masking は (..., freq, time) を想定。AST は (time, freq) なので転置
-            x = input_values.transpose(0, 1)  # (freq, time)
-            for _ in range(self.spec_augment["num_freq"]):
-                x = self.spec_augment["freq_mask"](x)
-            for _ in range(self.spec_augment["num_time"]):
-                x = self.spec_augment["time_mask"](x)
-            input_values = x.transpose(0, 1)  # (time, freq) に戻す
-
         label = self.label_map[row["species"]]
+
+        if self.spec_augment is not None:
+            # other_only=True の場合は "other" ラベルのサンプルにのみ適用
+            apply_aug = (
+                not self.spec_augment_other_only
+                or (self.other_label_id is not None and label == self.other_label_id)
+            )
+            if apply_aug:
+                x = input_values.transpose(0, 1)  # (freq, time)
+                for _ in range(self.spec_augment["num_freq"]):
+                    x = self.spec_augment["freq_mask"](x)
+                for _ in range(self.spec_augment["num_time"]):
+                    x = self.spec_augment["time_mask"](x)
+                input_values = x.transpose(0, 1)
 
         return {
             "input_values": input_values,
