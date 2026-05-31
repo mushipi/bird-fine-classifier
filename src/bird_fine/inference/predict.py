@@ -3,10 +3,19 @@
 BirdNet後段として呼び出される想定: BirdNetが「カモ類」と判定した音声を
 渡すと、本モデルが具体的な種を返す。
 
+Energy-based OOD gate を内蔵しており、カモ科以外の音（OOD）を
+energy スコアの閾値で弾いてから8種分類を行う。
+
+  energy = T * logsumexp(logits / T)   高い = in-distribution
+  energy < energy_threshold → "unknown" を返す（OOD 判定）
+
+閾値・温度は species_taxonomy.yaml で管理する。
+
 使い方:
     uv run python -m bird_fine.inference.predict --audio path/to/duck.wav
     uv run python -m bird_fine.inference.predict --audio path/to/duck.wav --top-k 3
     uv run python -m bird_fine.inference.predict --audio path/to/duck.wav --model-dir models/ast-duck
+    uv run python -m bird_fine.inference.predict --audio path/to/duck.wav --no-ood-gate
 """
 from __future__ import annotations
 
@@ -23,9 +32,24 @@ from transformers import ASTFeatureExtractor, ASTForAudioClassification
 PROJECT_ROOT = Path(__file__).resolve().parents[3]
 
 
+TAXONOMY_PATH = PROJECT_ROOT / "species_taxonomy.yaml"
+
+
 def load_config() -> dict:
     with open(PROJECT_ROOT / "config.yaml", "r", encoding="utf-8") as f:
         return yaml.safe_load(f)
+
+
+def load_ood_config() -> tuple[float | None, float]:
+    """species_taxonomy.yaml から energy_threshold と energy_temperature を読む。"""
+    if not TAXONOMY_PATH.exists():
+        return None, 1.0
+    with open(TAXONOMY_PATH, "r", encoding="utf-8") as f:
+        taxonomy = yaml.safe_load(f)
+    pipeline = taxonomy.get("pipeline", {})
+    threshold = pipeline.get("energy_threshold")  # None の場合は gate 無効
+    temperature = float(pipeline.get("energy_temperature", 1.0))
+    return threshold, temperature
 
 
 def load_label_map(model_dir: Path) -> dict[int, str]:
@@ -66,6 +90,13 @@ def split_into_chunks(
     return chunks
 
 
+def compute_energy(logits_np: np.ndarray, T: float = 1.0) -> float:
+    """Energy score = T * logsumexp(logits / T)。高い = in-distribution。"""
+    scaled = logits_np / T
+    a = scaled.max()
+    return float(T * (a + np.log(np.sum(np.exp(scaled - a)))))
+
+
 def predict_audio(
     audio_path: Path,
     model: ASTForAudioClassification,
@@ -75,8 +106,15 @@ def predict_audio(
     chunk_duration: float,
     min_duration: float,
     top_k: int,
+    energy_threshold: float | None = None,
+    energy_temperature: float = 1.0,
 ) -> dict:
-    """音声ファイルを推論。チャンクごとの予測を平均してtop-Kを返す。"""
+    """音声ファイルを推論。チャンクごとの予測を平均して top-K を返す。
+
+    energy_threshold が設定されている場合、energy スコアが閾値未満なら
+    OOD と判定して predictions=[] / ood_rejected=True を返す。
+    "other" ラベル（学習時に追加した第9クラス）は推論時に除外する。
+    """
     audio, sr = librosa.load(audio_path, sr=feature_extractor.sampling_rate, mono=True)
     chunks = split_into_chunks(audio, sr, chunk_duration, min_duration)
 
@@ -86,35 +124,52 @@ def predict_audio(
             "predictions": [],
         }
 
-    all_probs = []
+    # "other" ラベルを除いた有効ラベル一覧
+    valid_labels = {k: v for k, v in id2label.items() if v != "other"}
+    n_target = len(valid_labels)
+
+    all_probs: list[np.ndarray] = []
+    all_energies: list[float] = []
+
     with torch.no_grad():
         for chunk in chunks:
-            inputs = feature_extractor(
-                chunk, sampling_rate=sr, return_tensors="pt"
-            )
-            input_values = inputs["input_values"].to(device)
-            logits = model(input_values=input_values).logits
+            inputs = feature_extractor(chunk, sampling_rate=sr, return_tensors="pt")
+            logits = model(input_values=inputs["input_values"].to(device)).logits
+            logits_np = logits.cpu().numpy()[0]
+
+            all_energies.append(compute_energy(logits_np, energy_temperature))
             probs = torch.softmax(logits, dim=-1).cpu().numpy()[0]
             all_probs.append(probs)
 
+    mean_energy = float(np.mean(all_energies))
     mean_probs = np.mean(all_probs, axis=0)
-    top_indices = np.argsort(mean_probs)[::-1][:top_k]
+
+    base = {
+        "audio_file": str(audio_path),
+        "duration_sec": float(len(audio) / sr),
+        "n_chunks": len(chunks),
+        "energy_score": round(mean_energy, 4),
+        "energy_threshold": energy_threshold,
+    }
+
+    # OOD gate
+    if energy_threshold is not None and mean_energy < energy_threshold:
+        return {**base, "ood_rejected": True, "predictions": []}
+
+    # 8種（有効ラベル）のみで top-K を構成
+    target_probs = mean_probs[:n_target]
+    top_indices = np.argsort(target_probs)[::-1][:top_k]
 
     predictions = [
         {
             "rank": rank + 1,
-            "species": id2label[int(idx)],
-            "probability": float(mean_probs[idx]),
+            "species": valid_labels[int(idx)],
+            "probability": float(target_probs[idx]),
         }
         for rank, idx in enumerate(top_indices)
     ]
 
-    return {
-        "audio_file": str(audio_path),
-        "duration_sec": float(len(audio) / sr),
-        "n_chunks": len(chunks),
-        "predictions": predictions,
-    }
+    return {**base, "ood_rejected": False, "predictions": predictions}
 
 
 def main() -> None:
@@ -126,6 +181,11 @@ def main() -> None:
         help="学習済みモデルディレクトリ。省略時はconfig.training.output_dir",
     )
     parser.add_argument("--top-k", type=int, default=None)
+    parser.add_argument(
+        "--no-ood-gate",
+        action="store_true",
+        help="OOD gate を無効化（閾値なしで8種分類のみ実行）",
+    )
     args = parser.parse_args()
 
     config = load_config()
@@ -145,17 +205,28 @@ def main() -> None:
         return
 
     top_k = args.top_k or int(eval_cfg.get("top_k", 3))
+    energy_threshold, energy_temperature = load_ood_config()
+    if args.no_ood_gate:
+        energy_threshold = None
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     print(f"[DEV] device: {device}")
 
     print(f"[LOAD] モデル: {model_dir}")
-    feature_extractor = ASTFeatureExtractor.from_pretrained(model_cfg["pretrained"])
+    max_length = int(model_cfg.get("feature_extractor_max_length", 1024))
+    feature_extractor = ASTFeatureExtractor.from_pretrained(
+        model_cfg["pretrained"], max_length=max_length
+    )
     model = ASTForAudioClassification.from_pretrained(str(model_dir))
     model.to(device)
     model.eval()
 
     id2label = load_label_map(model_dir)
+
+    if energy_threshold is not None:
+        print(f"[OOD] energy gate 有効: threshold={energy_threshold} / T={energy_temperature}")
+    else:
+        print("[OOD] energy gate 無効（--no-ood-gate）")
 
     print(f"[AUDIO] 推論: {audio_path}")
     result = predict_audio(
@@ -167,6 +238,8 @@ def main() -> None:
         chunk_duration=float(pp["chunk_duration_sec"]),
         min_duration=float(pp["min_chunk_duration_sec"]),
         top_k=top_k,
+        energy_threshold=energy_threshold,
+        energy_temperature=energy_temperature,
     )
 
     if "error" in result:
@@ -174,6 +247,16 @@ def main() -> None:
         return
 
     print(f"\n  音声長: {result['duration_sec']:.2f} 秒 ({result['n_chunks']} チャンク)")
+    print(f"  energy score: {result['energy_score']:.4f}", end="")
+    if energy_threshold is not None:
+        print(f"  (閾値: {energy_threshold})", end="")
+    print()
+
+    if result.get("ood_rejected"):
+        print(f"\n[OOD] ⚠ 非対象種と判定（energy {result['energy_score']:.4f} < {energy_threshold}）")
+        print("  → BirdNet の誤検出またはカモ科以外の音声の可能性があります")
+        return
+
     print(f"\n[INFO] Top-{top_k} 予測:")
     for p in result["predictions"]:
         bar = "█" * int(p["probability"] * 40)
