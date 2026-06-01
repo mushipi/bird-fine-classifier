@@ -1,220 +1,303 @@
 # species_taxonomy.yaml
-# Stage1 CNN (BirdProject) → Stage2 AST (bird-fine-classifier) パイプラインの種管理
+# Stage1 CNN (BirdProject) → Stage2 AST パイプラインの種管理
 # bird-fine-classifier / BirdProject 共通の canonical source
 #
-# birdnet_label 規則: "{sci}_{en}" (BirdNET-Analyzer の出力ラベル形式)
-# birdproject: true = BirdProject CNN (71クラス) に収録済み → Stage1 で検出可能
-# birdproject: false = BirdNet v2.4 デフォルト (6000種) 経由でのみ検出
+# 構造: 種群（group）単位で Stage2 モデルを管理する。
+#   Dispatcher は各 group の pipeline.stage2_triggers を見てルーティングを決定する。
+#
+# birdproject: true  = BirdProject CNN (71クラス) に収録済み → Stage1 で検出可能
+# birdproject: false = BirdNET v2.4 デフォルト (6000種) 経由でのみ検出
+#
+# データソース方針:
+#   primary:  Xeno-canto (quality=A, Japan → worldwide フォールバック)
+#   fallback: YouTube (日本録音が Xeno-canto で不足する種に限り手動収集)
+#             yt-dlp で取得 → 16kHz mono 変換 → 鳴き声区間を人力確認してから使用
+#             source="youtube" を metadata に記録して Xeno-canto 録音と区別すること
 
 # ==================================================
-# パイプライン設定
+# カモ類グループ
 # ==================================================
-pipeline:
+duck:
 
-  # Stage1 (CNN) がこれらの種を検出した場合 → Stage2 (AST) へルーティング
-  # target_species + ood.tier1 の en 名を列挙
-  stage2_triggers:
-    # --- target_species (Stage2 が識別できる) ---
-    - "Mallard"
-    - "Eurasian Wigeon"
-    - "Eurasian Teal"          # BirdProject では "Common Teal" として収録
-    - "Northern Pintail"
-    - "Northern Shoveler"
-    - "Tufted Duck"
-    - "Common Pochard"
-    # Common Goldeneye は BirdProject 未収録
-    # → BirdNET v2.4 デフォルト出力で補完する運用
-    - "Common Goldeneye"
-    # --- ood.tier1 (Stage2 が知らない → OOD として扱う) ---
-    - "Eastern Spot-billed Duck"
-    - "Gadwall"
-    - "Baikal Teal"
-    - "Falcated Duck"
-    - "Red-breasted Merganser"
-    - "Common Merganser"       # BirdProject 未収録
-    - "Greater Scaup"          # BirdProject 未収録
+  pipeline:
+    stage2_model: "models/ast-duck-v11"
+    # Stage1 がこれらの種を検出した場合 → duck Stage2 へルーティング
+    # target_species + ood.tier1 の en 名を列挙
+    stage2_triggers:
+      - "Mallard"
+      - "Eurasian Wigeon"
+      - "Eurasian Teal"           # BirdProject では "Common Teal" として収録
+      - "Northern Pintail"
+      - "Northern Shoveler"
+      - "Tufted Duck"
+      - "Common Pochard"
+      - "Common Goldeneye"        # BirdProject 未収録、BirdNET デフォルト経由
+      - "Eastern Spot-billed Duck"
+      - "Gadwall"
+      - "Baikal Teal"
+      - "Falcated Duck"
+      - "Red-breasted Merganser"
+      - "Common Merganser"
+      - "Greater Scaup"
+    # energy = T * logsumexp(logits / T)、高い = in-distribution
+    # run11 ood_eval: AUROC=0.932 / FPR<=5% 条件での推奨値
+    energy_threshold: 10.35
+    energy_temperature: 1.0
 
-  # Stage2 AST の energy score がこの値未満 → "unknown" を出力
-  # run11 ood_eval (2026-05-31): AUROC=0.932 / FPR<=5% 条件での推奨値
-  # スコア方式: T * logsumexp(logits / T)（高い = in-distribution）
-  # softmax confidence とは別物。混同注意
-  energy_threshold: 10.35
-  energy_temperature: 1.0  # Temperature Scaling 用。1.0 = スケーリングなし
+  # Stage2 が分類する 8 種
+  target_species:
 
-# ==================================================
-# Stage2 (AST Transformer) 分類対象 — 8種
-# ==================================================
-target_species:
-
-  - en: "Mallard"
-    sci: "Anas platyrhynchos"
-    ja: "マガモ"
-    birdproject: true
-
-  - en: "Eurasian Teal"
-    alt_en: "Common Teal"      # BirdProject / 旧 IOC での表記
-    sci: "Anas crecca"
-    ja: "コガモ"
-    birdproject: true
-
-  - en: "Northern Pintail"
-    sci: "Anas acuta"
-    ja: "オナガガモ"
-    birdproject: true
-
-  - en: "Northern Shoveler"
-    sci: "Spatula clypeata"
-    ja: "ハシビロガモ"
-    birdproject: true
-
-  - en: "Eurasian Wigeon"
-    sci: "Mareca penelope"
-    ja: "ヒドリガモ"
-    birdproject: true
-
-  - en: "Tufted Duck"
-    sci: "Aythya fuligula"
-    ja: "キンクロハジロ"
-    birdproject: true
-
-  - en: "Common Pochard"
-    sci: "Aythya ferina"
-    ja: "ホシハジロ"
-    birdproject: true
-
-  - en: "Common Goldeneye"
-    sci: "Bucephala clangula"
-    ja: "ホオジロガモ"
-    birdproject: false
-    note: "BirdProject CNN 未収録。BirdNET v2.4 デフォルトモデルで検出。Stage1→Stage2 ルーティングは BirdNET デフォルト経由"
-
-# ==================================================
-# OOD テストセット
-# Stage1 が検出する可能性があるが Stage2 が識別できない種
-# ood_eval.py でしきい値の ROC 分析に使用
-# ==================================================
-ood_species:
-
-  # --------------------------------------------------
-  # Tier1: 他のカモ科
-  # Stage1 がルーティングしてくる可能性が高い最重要 OOD
-  # --------------------------------------------------
-  tier1:
-
-    - en: "Eastern Spot-billed Duck"
-      sci: "Anas zonorhyncha"
-      ja: "カルガモ"
+    - en: "Mallard"
+      sci: "Anas platyrhynchos"
+      ja: "マガモ"
       birdproject: true
-      note: "国内最普通の留鳥。BirdProject 経由で最も頻繁に誤ルーティングされるリスク"
+      data_source: xeno-canto
 
-    - en: "Gadwall"
-      sci: "Mareca strepera"
-      ja: "オカヨシガモ"
+    - en: "Eurasian Teal"
+      alt_en: "Common Teal"       # BirdProject / 旧 IOC での表記
+      sci: "Anas crecca"
+      ja: "コガモ"
       birdproject: true
+      data_source: xeno-canto
 
-    - en: "Baikal Teal"
-      sci: "Sibirionetta formosa"
-      ja: "トモエガモ"
+    - en: "Northern Pintail"
+      sci: "Anas acuta"
+      ja: "オナガガモ"
       birdproject: true
-      note: "コガモと音響近縁"
+      data_source: xeno-canto
 
-    - en: "Falcated Duck"
-      sci: "Mareca falcata"
-      ja: "ヨシガモ"
+    - en: "Northern Shoveler"
+      sci: "Spatula clypeata"
+      ja: "ハシビロガモ"
       birdproject: true
-      note: "ヒドリガモと同 Mareca 属"
+      data_source: xeno-canto
 
-    - en: "Red-breasted Merganser"
-      sci: "Mergus serrator"
-      ja: "ウミアイサ"
+    - en: "Eurasian Wigeon"
+      sci: "Mareca penelope"
+      ja: "ヒドリガモ"
       birdproject: true
+      data_source: xeno-canto
 
-    - en: "Common Merganser"
-      sci: "Mergus merganser"
-      ja: "カワアイサ"
+    - en: "Tufted Duck"
+      sci: "Aythya fuligula"
+      ja: "キンクロハジロ"
+      birdproject: true
+      data_source: xeno-canto
+
+    - en: "Common Pochard"
+      sci: "Aythya ferina"
+      ja: "ホシハジロ"
+      birdproject: true
+      data_source: xeno-canto
+
+    - en: "Common Goldeneye"
+      sci: "Bucephala clangula"
+      ja: "ホオジロガモ"
       birdproject: false
+      data_source: xeno-canto
+      note: "BirdProject 未収録。BirdNET v2.4 デフォルト経由で検出"
 
-    - en: "Greater Scaup"
-      sci: "Aythya marila"
-      ja: "スズガモ"
-      birdproject: false
-      note: "キンクロハジロと同 Aythya 属。音響近縁"
+  # OOD テストセット（ood_eval.py・download_ood.py が参照）
+  ood_species:
 
-  # --------------------------------------------------
-  # Tier2: 水辺の非カモ科
-  # Stage1 は通常スルーするが念のためテスト
-  # --------------------------------------------------
-  tier2:
+    # Stage1 がルーティングしてくる可能性が高い最重要 OOD（他カモ科）
+    tier1:
+      - en: "Eastern Spot-billed Duck"
+        sci: "Anas zonorhyncha"
+        ja: "カルガモ"
+        birdproject: true
+        data_source: xeno-canto
+        note: "国内最普通の留鳥。最も頻繁に誤ルーティングされるリスク"
 
-    - en: "Eurasian Coot"
-      sci: "Fulica atra"
-      ja: "オオバン"
+      - en: "Gadwall"
+        sci: "Mareca strepera"
+        ja: "オカヨシガモ"
+        birdproject: true
+        data_source: xeno-canto
+
+      - en: "Baikal Teal"
+        sci: "Sibirionetta formosa"
+        ja: "トモエガモ"
+        birdproject: true
+        data_source: xeno-canto
+        note: "コガモと音響近縁"
+
+      - en: "Falcated Duck"
+        sci: "Mareca falcata"
+        ja: "ヨシガモ"
+        birdproject: true
+        data_source: xeno-canto
+        note: "ヒドリガモと同 Mareca 属"
+
+      - en: "Red-breasted Merganser"
+        sci: "Mergus serrator"
+        ja: "ウミアイサ"
+        birdproject: true
+        data_source: xeno-canto
+
+      - en: "Common Merganser"
+        sci: "Mergus merganser"
+        ja: "カワアイサ"
+        birdproject: false
+        data_source: xeno-canto
+
+      - en: "Greater Scaup"
+        sci: "Aythya marila"
+        ja: "スズガモ"
+        birdproject: false
+        data_source: xeno-canto
+        note: "キンクロハジロと同 Aythya 属。音響近縁"
+
+    # Stage1 は通常スルーするが念のためテスト（水辺の非カモ科）
+    tier2:
+      - en: "Eurasian Coot"
+        sci: "Fulica atra"
+        ja: "オオバン"
+        birdproject: true
+        data_source: xeno-canto
+
+      - en: "Little Grebe"
+        sci: "Tachybaptus ruficollis"
+        ja: "カイツブリ"
+        birdproject: true
+        data_source: xeno-canto
+
+      - en: "Black-necked Grebe"
+        sci: "Podiceps nigricollis"
+        ja: "ハジロカイツブリ"
+        birdproject: false
+        data_source: xeno-canto
+
+    # コントロール（AST が低確信度を返すかの確認用）
+    tier3:
+      - en: "Blue Rock Thrush"
+        sci: "Monticola solitarius"
+        ja: "イソヒヨドリ"
+        birdproject: true
+        data_source: xeno-canto
+
+      - en: "Osprey"
+        sci: "Pandion haliaetus"
+        ja: "ミサゴ"
+        birdproject: true
+        data_source: xeno-canto
+
+      - en: "Black-tailed Gull"
+        sci: "Larus crassirostris"
+        ja: "ウミネコ"
+        birdproject: true
+        data_source: xeno-canto
+
+      - en: "Black Kite"
+        sci: "Milvus migrans"
+        ja: "トビ"
+        birdproject: true
+        data_source: xeno-canto
+
+      - en: "Little Ringed Plover"
+        sci: "Charadrius dubius"
+        ja: "コチドリ"
+        birdproject: false
+        data_source: xeno-canto
+
+      - en: "Kentish Plover"
+        sci: "Charadrius alexandrinus"
+        ja: "シロチドリ"
+        birdproject: true
+        data_source: xeno-canto
+
+      - en: "Grey Plover"
+        sci: "Pluvialis squatarola"
+        ja: "ダイゼン"
+        birdproject: true
+        data_source: xeno-canto
+
+      - en: "Far Eastern Curlew"
+        sci: "Numenius madagascariensis"
+        ja: "ダイシャクシギ"
+        birdproject: true
+        data_source: xeno-canto
+
+      - en: "Eurasian Curlew"
+        sci: "Numenius arquata"
+        ja: "ホウロクシギ"
+        birdproject: true
+        data_source: xeno-canto
+
+      - en: "Eurasian Whimbrel"
+        sci: "Numenius phaeopus"
+        ja: "チュウシャクシギ"
+        birdproject: true
+        data_source: xeno-canto
+
+# ==================================================
+# カラス類グループ（実装予定）
+# ==================================================
+crow:
+
+  pipeline:
+    stage2_model: null              # TBD: models/ast-crow-v1
+    # BirdNET が欧州データ偏重のためハシブト/ハシボソをほぼミヤマガラスと出力する
+    # → カラス系ラベルを全て duck Stage2 と同様に受け取って Stage2 で正しく識別する
+    stage2_triggers:
+      - "Rook"                      # BirdNET が日本のカラスを誤検出する主要ラベル
+      - "Large-billed Crow"         # ハシブトガラスを正しく検出した場合
+      - "Carrion Crow"              # ハシボソガラスを正しく検出した場合
+      - "Eurasian Magpie"           # カササギ
+      - "Daurian Jackdaw"           # コクマルガラス（OODだが通してStage2で弾く）
+    energy_threshold: null          # TBD: 学習・ood_eval 後に設定
+    energy_temperature: 1.0
+
+  # Stage2 が分類する 4 種
+  target_species:
+
+    - en: "Large-billed Crow"
+      sci: "Corvus macrorhynchos"
+      ja: "ハシブトガラス"
       birdproject: true
+      data_source: xeno-canto
 
-    - en: "Little Grebe"
-      sci: "Tachybaptus ruficollis"
-      ja: "カイツブリ"
+    - en: "Carrion Crow"
+      sci: "Corvus corone"
+      ja: "ハシボソガラス"
       birdproject: true
+      data_source: xeno-canto
 
-    - en: "Black-necked Grebe"
-      sci: "Podiceps nigricollis"
-      ja: "ハジロカイツブリ"
-      birdproject: false
-
-  # --------------------------------------------------
-  # Tier3: コントロール
-  # AST が低確信度を返すかの確認用。水辺環境で同時録音される種
-  # --------------------------------------------------
-  tier3:
-
-    - en: "Blue Rock Thrush"
-      sci: "Monticola solitarius"
-      ja: "イソヒヨドリ"
+    - en: "Rook"
+      sci: "Corvus frugilegus"
+      ja: "ミヤマガラス"
       birdproject: true
+      data_source: xeno-canto
+      note: "冬鳥。BirdNET が日本のカラスをこのラベルで誤出力することが多い"
 
-    - en: "Osprey"
-      sci: "Pandion haliaetus"
-      ja: "ミサゴ"
+    - en: "Eurasian Magpie"
+      sci: "Pica serica"
+      ja: "カササギ"
       birdproject: true
+      data_source: xeno-canto  # 日本録音が少なければ youtube で補完
+      note: "北部九州に限定分布。日本録音が Xeno-canto で不足する場合は YouTube で補完"
 
-    - en: "Black-tailed Gull"
-      sci: "Larus crassirostris"
-      ja: "ウミネコ"
-      birdproject: true
+  ood_species:
 
-    - en: "Black Kite"
-      sci: "Milvus migrans"
-      ja: "トビ"
-      birdproject: true
+    # カラス科だが分類対象外
+    tier1:
+      - en: "Daurian Jackdaw"
+        sci: "Coloeus dauuricus"
+        ja: "コクマルガラス"
+        birdproject: true
+        data_source: xeno-canto
+        note: "ミヤマガラスと混群を作る小型カラス。同時録音されやすい"
 
-    # チドリ類
-    - en: "Little Ringed Plover"
-      sci: "Charadrius dubius"
-      ja: "コチドリ"
-      birdproject: false
+    # カラス科周辺
+    tier2:
+      - en: "Eurasian Jay"
+        sci: "Garrulus glandarius"
+        ja: "カケス"
+        birdproject: true
+        data_source: xeno-canto
 
-    - en: "Kentish Plover"
-      sci: "Charadrius alexandrinus"
-      ja: "シロチドリ"
-      birdproject: true
-
-    - en: "Grey Plover"
-      sci: "Pluvialis squatarola"
-      ja: "ダイゼン"
-      birdproject: true
-
-    # シギ類
-    - en: "Far Eastern Curlew"
-      sci: "Numenius madagascariensis"
-      ja: "ダイシャクシギ"
-      birdproject: true
-
-    - en: "Eurasian Curlew"
-      sci: "Numenius arquata"
-      ja: "ホウロクシギ"
-      birdproject: true
-
-    - en: "Eurasian Whimbrel"
-      sci: "Numenius phaeopus"
-      ja: "チュウシャクシギ"
-      birdproject: true
+      - en: "Azure-winged Magpie"
+        sci: "Cyanopica cyanus"
+        ja: "オナガ"
+        birdproject: true
+        data_source: xeno-canto
