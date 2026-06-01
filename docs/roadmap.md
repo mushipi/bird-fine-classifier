@@ -44,16 +44,32 @@ flowchart TD
 PyTorch 生モデル（86M params）を Jetson Nano で毎秒回すのは非現実的。
 FP16 での ONNX 変換 → TensorRT 最適化の検討が必要。
 
-**⚠ 注意点**: run11 モデルは学習時に `nn.Parameter` を直接書き換えて
-位置埋め込みをリサイズしている（`resize_position_embeddings` 関数）。
-`torch.onnx.export` がこの非標準 op を正しく扱えるか、
-**ONNX 変換の最初のステップとして確認が必要**。
+**✅ ONNX エクスポート検証済み（2026-06-01）**
 
-```python
-# 確認コマンド（実装前に要テスト）
-torch.onnx.export(model, dummy_input, "model.onnx", opset_version=17)
-# → 位置埋め込みが定数として展開されるか、動的グラフになるかを確認
+懸念していた位置埋め込みリサイズ（`resize_position_embeddings` で `nn.Parameter`
+を直接書き換え）の問題は発生しなかった。`export_onnx.py` で検証完了:
+
 ```
+batch=1: max_abs_diff=8.3e-06  ✓
+batch=2: max_abs_diff=4.4e-06  ✓（動的バッチ正常）
+energy score diff=8.3e-07      ✓
+ファイルサイズ: 326MB（FP16 化で約 160MB 見込み）
+opset 17 / onnx.checker パス
+```
+
+```bash
+uv run python -m bird_fine.inference.export_onnx
+# → models/ast-duck-v11/model.onnx を生成
+```
+
+**⚠ 残る注意点**: SDPA の `is_causal` が入力形状依存でトレース時に定数化される
+（`TracerWarning`）。3s チャンク固定（304 フレーム）運用では無害だが、
+入力長を変える場合は再検証が必要。
+
+**次のアクション:**
+1. FP16 量子化（onnxruntime or polygraphy）でサイズ・速度を測定
+2. TensorRT 変換（Jetson Nano 上で `trtexec`）
+3. Jetson Nano での推論レイテンシ実測
 
 ### 1-2. メモリ競合管理
 
@@ -167,7 +183,8 @@ stage_filter = None  # or "juvenile" を明示的に追加
 
 | 課題 | 緊急度 | 重要度 | タイミング |
 |---|---|---|---|
-| ONNX/TensorRT 変換検証 | 高 | 高 | Jetson 実装前に必須 |
+| ~~ONNX エクスポート検証~~ | - | - | ✅ 完了（2026-06-01）|
+| FP16/TensorRT 変換 | 高 | 高 | Jetson 実装前に必須 |
 | 非同期 Queue 設計 | 高 | 高 | Jetson 実装前に必須 |
 | Dispatcher 実装 | 高 | 高 | Jetson 実装前に必須 |
 | メモリ競合評価 | 中 | 高 | Jetson 実装時に確認 |

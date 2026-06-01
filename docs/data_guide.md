@@ -1,247 +1,203 @@
 # Data Guide
 
-データ収集（DL）→ 前処理 → 分割 の各ステップの仕様と運用方法。
+データ収集 → 前処理 → 分割 の各ステップの仕様と運用方法。
+
+---
+
+## 0. 種マスタの管理
+
+### species_master.csv が起点
+
+全データ収集はこのファイルで管理されている種を対象に行う。
+
+```bash
+# iNaturalist から北部九州の観察種を同期（candidate を追記）
+uv run python -m bird_fine.data.sync_species_master --dry-run  # 件数確認
+uv run python -m bird_fine.data.sync_species_master            # 本実行
+```
+
+取得した candidate に対して手動でステータスを付与する:
+
+| status | 意味 |
+|---|---|
+| `target` | Stage2 が識別する種 → 学習データを収集 |
+| `ood_tier1` | 近縁 OOD 種 → Outlier Exposure 用データを収集 |
+| `ood_tier2/3` | OOD テスト用 |
+| `ignore` | 収集不要 |
+| `candidate` | 未決定（デフォルト）|
 
 ---
 
 ## 1. データダウンロード
 
-### 何をするスクリプトか
+### 学習データ（target 種）
 
-`src/bird_fine/data/download.py` は **Xeno-canto API v3** にxcapiライブラリ経由でアクセスし、
-config.yamlで指定されたカモ類8種の音声をダウンロードする。
+`download.py` は `status="target"` の種を Xeno-canto からダウンロードする。
 
-### フォールバック戦略
-
-```
-種ごとに以下の順で検索：
-  1. Japan で検索 → ヒットあり？ → そのまま採用
-  2. (1で0件なら) worldwide で検索
-  3. (2でも0件なら) 録音なしとして記録
-```
-
-カモ類は渡り鳥なので、日本国内録音だけだと種によっては大幅にデータ不足になる。
-そのため`fallback_worldwide: true` をデフォルトとしている。
-
-### 品質フィルタ
-
-config.yamlの `download.quality`:
-
-- `"A"`: 最高品質のみ（推奨、データ少なくなる可能性あり）
-- `"A B"`: A + B 品質（データ量重視ならこちら）
-
-### 重複防止
-
-xcapi Downloaderは `xcapi_runs.json` でDL済みIDを管理。再実行しても重複DLしない。
-強制再DLしたい場合は出力フォルダごと削除する：
-
-```powershell
-Remove-Item -Recurse -Force data\raw
-```
-
-### コマンド例
-
-```powershell
-# 全種、メタデータのみ確認（DLしない、件数チェック用）
-uv run python -m bird_fine.data.download --metadata-only
-
-# 全種DL
-uv run python -m bird_fine.data.download
-
-# 特定種のみ
-uv run python -m bird_fine.data.download --species Mallard "Common Teal"
-
-# 種あたり50件に制限
-uv run python -m bird_fine.data.download --max-per-species 50
-```
-
-### 出力構造
+**フォールバック戦略:**
 
 ```
-data/raw/
-├── Mallard/
-│   ├── XC123456.mp3
-│   ├── XC123457.mp3
-│   ├── metadata.csv          # 録音ごとの詳細（座標、品質、録音者...）
-│   └── xcapi_runs.json       # DL履歴
-├── Common_Teal/
-│   └── ...
-└── ...
+Japan で検索 → ヒットあり → 採用
+    ↓ 0件
+worldwide で検索 → ヒットあり → 採用
+    ↓ 0件
+YouTube で補完（下記参照）
 ```
 
-### メタデータ列（metadata.csv）
+**品質フィルタ** (`config.yaml` の `download.quality`):
+- `"A"`: 最高品質のみ（推奨）
+- `"A B"`: データ量重視ならこちら
 
-主要なもの：
+```bash
+uv run python -m bird_fine.data.download --metadata-only  # 件数確認
+uv run python -m bird_fine.data.download                  # 全種 DL
+uv run python -m bird_fine.data.download --species Mallard "Common Teal"  # 特定種
+```
 
-| 列名 | 意味 |
-|---|---|
-| id | Xeno-canto録音ID（XC{id}） |
-| gen / sp | 学名（属/種） |
-| en | 英名 |
-| cnt | 国 |
-| loc | 場所 |
-| lat / lon | 緯度・経度 |
-| length | 録音長（mm:ss） |
-| q | 品質ランク（A〜E） |
-| type | コール種別（call/song/alarm/...） |
-| file | 音声URL |
+### OOD データ
+
+`download_ood.py` は master の `ood_tier1〜3` 種をダウンロードし、3s チャンクに前処理する。
+
+```bash
+uv run python -m bird_fine.data.download_ood --metadata-only  # 件数確認
+uv run python -m bird_fine.data.download_ood                  # 全 tier DL
+uv run python -m bird_fine.data.download_ood --tiers 1 2      # tier 指定
+```
+
+### YouTube 補完（Xeno-canto 不足時）
+
+日本産録音が著しく少ない種（例: カササギ）は YouTube で補完する。
+
+```bash
+# 取得
+yt-dlp -x --audio-format wav -o "data/raw_youtube/%(title)s.%(ext)s" "URL"
+
+# 16kHz mono に変換
+ffmpeg -i input.wav -ar 16000 -ac 1 output.wav
+```
+
+**必須ルール:**
+1. 鳴き声区間を人力で聴取確認してから使用
+2. `species_master.csv` の `data_source` 列に `youtube` と記録
+3. `notes` に URL と収録日を残す
 
 ---
 
 ## 2. 前処理
 
-### 何をするスクリプトか
+`preprocess.py` は raw 音声を 3s WAV チャンクに変換する。
 
-`src/bird_fine/data/preprocess.py` は raw音声を**ASTの入力フォーマット** に変換する：
-
-1. mp3/wav/flac/ogg を librosa で読み込み
-2. 16kHz mono にリサンプリング・ダウンミックス
-3. 10秒チャンクに分割
-4. PCM_16 wav として保存
-
-### チャンク化ルール
+**チャンク化ルール:**
 
 | 元の長さ | 処理 |
 |---|---|
-| `< 3秒` | スキップ（情報量不足） |
-| `3〜10秒` | ゼロパディングで10秒に伸ばす（1チャンク） |
-| `> 10秒` | 先頭から10秒ずつ非重複で切り出し、残り3秒以上ならパディングして追加 |
+| `< 1秒` | スキップ |
+| `1〜3秒` | ゼロパディングで 3s に伸ばす（1 チャンク）|
+| `> 3秒` | 3s ずつ非重複で切り出し、残り 1s 以上ならパディングして追加 |
 
-`config.yaml`:
+設定（`config.yaml`）:
+
 ```yaml
 preprocessing:
   sample_rate: 16000
-  chunk_duration_sec: 10.0
-  min_chunk_duration_sec: 3.0
-  overlap_ratio: 0.0  # 0 = 重複なし、0.5なら50%重複
+  chunk_duration_sec: 3.0    # BirdNET の処理窓に合わせる
+  min_chunk_duration_sec: 1.0
+  overlap_ratio: 0.0
 ```
 
-### コマンド例
-
-```powershell
-# 通常実行（既存チャンクはスキップ）
+```bash
 uv run python -m bird_fine.data.preprocess
-
-# 既存を上書き
-uv run python -m bird_fine.data.preprocess --overwrite
 ```
 
-### 出力構造
+**問題録音への対応（per-recording cap）:**
 
+run09 の分析で「長尺録音（45〜49分）が決定境界を歪める」ことが判明。
+問題録音が発見された場合:
+
+```bash
+# chunks_index.csv から特定録音を除外して re-split
+uv run python -m bird_fine.data.exclude_train_recordings --xc-ids XC488112 XC488113
 ```
-data/processed/
-├── Mallard/
-│   ├── XC123456_chunk000.wav
-│   ├── XC123456_chunk001.wav
-│   ├── XC123457_chunk000.wav
-│   └── ...
-├── Common_Teal/
-│   └── ...
-└── chunks_index.csv          # 全チャンクのメタデータ
-```
-
-### chunks_index.csv の列
-
-| 列名 | 意味 |
-|---|---|
-| species | 種名（フォルダ名と同じ） |
-| xc_id | Xeno-canto録音ID |
-| chunk_index | その録音内のチャンク番号（0,1,2...） |
-| file_path | プロジェクトルートからの相対パス |
-| duration_sec | チャンク長（常に10.0） |
-| source_file | 元音声ファイル名 |
 
 ---
 
 ## 3. データ分割
 
-### 何をするスクリプトか
+`split.py` は `chunks_index.csv` を train/val/test に分ける。
 
-`src/bird_fine/data/split.py` は chunks_index.csv を **train/val/test に分ける** スクリプト。
+### Leakage 防止（録音 ID 単位 split）
 
-### Leakage防止の仕組み
-
-**同じ録音から作られたチャンクは必ず同じsplitに入る** ようにする。これを「**録音ID単位split**」と呼ぶ。
+同じ録音から作られたチャンクは必ず同じ split に入る。
 
 ```
-NG例（チャンク単位split）:
-  XC123456_chunk000 → train
-  XC123456_chunk001 → test    ← 同じ録音！testで過大評価される
-
-OK例（録音ID単位split）:
-  XC123456_chunk000 → train
-  XC123456_chunk001 → train   ← 同じ録音は同じsplit
-  XC123457_chunk000 → test    ← 別録音
+NG（チャンク単位）: XC123456_chunk000 → train / XC123456_chunk001 → test
+OK（録音 ID 単位）: XC123456 の全チャンク → train
 ```
 
-カモなどの鳴き声は **同じ録音内で似たフレーズが繰り返される** ため、
-チャンク単位だとモデルが「録音の癖」を学習してしまい、テスト精度が見かけ上高くなる。
-本番の未知音声での精度が低くなる原因。
-
-### 層化分割
-
-各種ごとに `train:val:test = 70:15:15` の比率を保つ。
-1種で録音が少ない場合（例: 5件）でも、最低1件はtrainに、可能ならval/testにも分配。
-
-### コマンド例
-
-```powershell
+```bash
 uv run python -m bird_fine.data.split
 ```
 
-### 出力構造
+出力:
 
 ```
 data/splits/
-├── train.csv         # 全種のtrainチャンク
-├── val.csv
-├── test.csv
-└── label_map.csv     # species名 → label_id (0〜7)
+├── train.csv      # 学習チャンク（target 8種 + other が混在）
+├── val.csv        # 検証チャンク
+├── test.csv       # テストチャンク（評価用、学習中は触らない）
+└── label_map.csv  # species → label_id
 ```
 
-### label_map.csv の例
+### "other" クラスの追加
 
-```csv
-label_id,species
-0,Common_Pochard
-1,Common_Teal
-2,Eurasian_Wigeon
-3,Greater_Scaup
-4,Mallard
-5,Northern_Pintail
-6,Northern_Shoveler
-7,Tufted_Duck
+Outlier Exposure を行う場合は split 後に実行:
+
+```bash
+uv run python -m bird_fine.data.prepare_other_class --dry-run  # 件数確認
+uv run python -m bird_fine.data.prepare_other_class            # train/val.csv に追記
 ```
 
-アルファベット順でソート → label_idが振られる。学習・推論時は必ずこのmapを使う。
+これにより:
+- `train.csv`: target 8 種 + "other" 1220 chunks
+- `val.csv`: target 8 種 + "other" 391 chunks（録音単位で分離済み）
+- `label_map.csv`: "other" → label_id=8 を追記
 
 ---
 
-## 4. 運用上の注意
+## 4. 問題録音の発見と対処
 
-### データ件数の目安
+過去の実験で判明した問題録音パターン:
 
-| 状況 | 最低限 | 推奨 |
+| パターン | 症状 | 対処 |
 |---|---|---|
-| 種あたりの録音数 | 5件以上 | 30件以上 |
-| 種あたりのチャンク数 | 20件以上 | 100件以上 |
+| 長尺フィールド録音（45分超）| 多様な音響パターンが1種ラベルで大量投入され決定境界を歪める | `exclude_train_recordings` で除外 |
+| juvenile タグ音声が 1 件しかない | distribution shift で幼鳥鳴き声が他種に誤分類 | Xeno-canto で `stage:juvenile` を指定して追加収集 |
 
-`--metadata-only` で件数を事前確認、明らかに足りない種はconfigから外す or `"A B"`品質に緩める検討を。
+```bash
+# 問題録音の調査
+uv run python -m bird_fine.analysis.confusion_audio  # 誤分類チャンクの mel 表示
+```
 
-### データ不均衡
+---
 
-種ごとの録音数は大きくばらつく：
+## 5. データ量の目安
 
-- **マガモ**: 数百件（人気種、世界中で録音）
-- **スズガモ/ホシハジロ**: 数十件以下のことも
+| 指標 | 最低限 | 推奨 |
+|---|---|---|
+| 種あたりの録音数 | 10件 | 30件以上 |
+| 種あたりの train chunks | 100 | 300〜500 |
+| "other" 全体 train chunks | 500 | 1000以上 |
 
-学習時の影響：
-- macro F1で評価 → 少数派の精度も見える
-- 必要なら `class_weights` を追加（[training_guide.md](training_guide.md) 参照）
+per-recording cap（`prepare_other_class` のデフォルト: 30 chunks/録音）で
+長尺録音による chunk 不均衡を防ぐ。
 
-### ライセンス
+---
 
-Xeno-cantoの録音は CC BY-NC-SA 等の条件付き。
-- ✅ 個人研究、教育、非商用利用
-- ❌ 商用配布、未クレジットの再公開
-- 学習済みモデル公開時は録音者のクレジット要件を確認すること
+## 6. ライセンス
+
+Xeno-canto の録音は CC BY-NC-SA 等の条件付き:
+- ✅ 個人研究・教育・非商用利用
+- ❌ 商用配布・未クレジットの再公開
+- モデル公開時は録音者のクレジット要件を確認
+
+YouTube 補完データはソースの利用規約を各自確認すること。
