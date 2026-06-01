@@ -1,0 +1,36 @@
+taxon_id,sci,en_inat,en_birdnet,ja,family,order,obs_count,last_observed,status,group,birdproject,data_source,notes
+,Anas platyrhynchos,Mallard,Mallard,マガモ,Anatidae,Anseriformes,,,target,duck,true,xeno-canto,
+,Anas crecca,Eurasian Teal,Common Teal,コガモ,Anatidae,Anseriformes,,,target,duck,true,xeno-canto,BirdProjectでは"Common Teal"として収録
+,Anas acuta,Northern Pintail,Northern Pintail,オナガガモ,Anatidae,Anseriformes,,,target,duck,true,xeno-canto,
+,Spatula clypeata,Northern Shoveler,Northern Shoveler,ハシビロガモ,Anatidae,Anseriformes,,,target,duck,true,xeno-canto,
+,Mareca penelope,Eurasian Wigeon,Eurasian Wigeon,ヒドリガモ,Anatidae,Anseriformes,,,target,duck,true,xeno-canto,
+,Aythya fuligula,Tufted Duck,Tufted Duck,キンクロハジロ,Anatidae,Anseriformes,,,target,duck,true,xeno-canto,
+,Aythya ferina,Common Pochard,Common Pochard,ホシハジロ,Anatidae,Anseriformes,,,target,duck,true,xeno-canto,
+,Bucephala clangula,Common Goldeneye,Common Goldeneye,ホオジロガモ,Anatidae,Anseriformes,,,target,duck,false,xeno-canto,BirdProject未収録。BirdNET v2.4デフォルト経由
+,Anas zonorhyncha,Eastern Spot-billed Duck,Eastern Spot-billed Duck,カルガモ,Anatidae,Anseriformes,,,ood_tier1,duck,true,xeno-canto,国内最普通の留鳥
+,Mareca strepera,Gadwall,Gadwall,オカヨシガモ,Anatidae,Anseriformes,,,ood_tier1,duck,true,xeno-canto,
+,Sibirionetta formosa,Baikal Teal,Baikal Teal,トモエガモ,Anatidae,Anseriformes,,,ood_tier1,duck,true,xeno-canto,コガモと音響近縁
+,Mareca falcata,Falcated Duck,Falcated Duck,ヨシガモ,Anatidae,Anseriformes,,,ood_tier1,duck,true,xeno-canto,ヒドリガモと同Mareca属
+,Mergus serrator,Red-breasted Merganser,Red-breasted Merganser,ウミアイサ,Anatidae,Anseriformes,,,ood_tier1,duck,true,xeno-canto,
+,Mergus merganser,Common Merganser,Common Merganser,カワアイサ,Anatidae,Anseriformes,,,ood_tier1,duck,false,xeno-canto,
+,Aythya marila,Greater Scaup,Greater Scaup,スズガモ,Anatidae,Anseriformes,,,ood_tier1,duck,false,xeno-canto,キンクロハジロと同Aythya属
+,Fulica atra,Eurasian Coot,Eurasian Coot,オオバン,Rallidae,Gruiformes,,,ood_tier2,duck,true,xeno-canto,
+,Tachybaptus ruficollis,Little Grebe,Little Grebe,カイツブリ,Podicipedidae,Podicipediformes,,,ood_tier2,duck,true,xeno-canto,
+,Podiceps nigricollis,Black-necked Grebe,Black-necked Grebe,ハジロカイツブリ,Podicipedidae,Podicipediformes,,,ood_tier2,duck,false,xeno-canto,
+,Monticola solitarius,Blue Rock Thrush,Blue Rock Thrush,イソヒヨドリ,Muscicapidae,Passeriformes,,,ood_tier3,duck,true,xeno-canto,
+,Pandion haliaetus,Osprey,Osprey,ミサゴ,Pandionidae,Accipitriformes,,,ood_tier3,duck,true,xeno-canto,
+,Larus crassirostris,Black-tailed Gull,Black-tailed Gull,ウミネコ,Laridae,Charadriiformes,,,ood_tier3,duck,true,xeno-canto,
+,Milvus migrans,Black Kite,Black Kite,トビ,Accipitridae,Accipitriformes,,,ood_tier3,duck,true,xeno-canto,
+,Charadrius dubius,Little Ringed Plover,Little Ringed Plover,コチドリ,Charadriidae,Charadriiformes,,,ood_tier3,duck,false,xeno-canto,
+,Charadrius alexandrinus,Kentish Plover,Kentish Plover,シロチドリ,Charadriidae,Charadriiformes,,,ood_tier3,duck,true,xeno-canto,
+,Pluvialis squatarola,Grey Plover,Grey Plover,ダイゼン,Charadriidae,Charadriiformes,,,ood_tier3,duck,true,xeno-canto,
+,Numenius madagascariensis,Far Eastern Curlew,Far Eastern Curlew,ダイシャクシギ,Scolopacidae,Charadriiformes,,,ood_tier3,duck,true,xeno-canto,
+,Numenius arquata,Eurasian Curlew,Eurasian Curlew,ホウロクシギ,Scolopacidae,Charadriiformes,,,ood_tier3,duck,true,xeno-canto,
+,Numenius phaeopus,Eurasian Whimbrel,Eurasian Whimbrel,チュウシャクシギ,Scolopacidae,Charadriiformes,,,ood_tier3,duck,true,xeno-canto,
+,Corvus macrorhynchos,Large-billed Crow,Large-billed Crow,ハシブトガラス,Corvidae,Passeriformes,,,target,crow,true,xeno-canto,
+,Corvus corone,Carrion Crow,Carrion Crow,ハシボソガラス,Corvidae,Passeriformes,,,target,crow,true,xeno-canto,
+,Corvus frugilegus,Rook,Rook,ミヤマガラス,Corvidae,Passeriformes,,,target,crow,true,xeno-canto,BirdNETが日本のカラスをこのラベルで誤出力することが多い
+,Pica serica,Oriental Magpie,Eurasian Magpie,カササギ,Corvidae,Passeriformes,,,target,crow,true,xeno-canto,北部九州限定分布。日本録音不足時はYouTubeで補完
+,Coloeus dauuricus,Daurian Jackdaw,Daurian Jackdaw,コクマルガラス,Corvidae,Passeriformes,,,ood_tier1,crow,true,xeno-canto,ミヤマガラスと混群を作る小型カラス
+,Garrulus glandarius,Eurasian Jay,Eurasian Jay,カケス,Corvidae,Passeriformes,,,ood_tier2,crow,true,xeno-canto,
+,Cyanopica cyanus,Azure-winged Magpie,Azure-winged Magpie,オナガ,Corvidae,Passeriformes,,,ood_tier2,crow,true,xeno-canto,
