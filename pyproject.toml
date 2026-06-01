@@ -20,6 +20,8 @@ dependencies = [
     "tqdm>=4.67",
     "tensorboard>=2.18",
     "xenocanto-api",
+    "onnx>=1.21.0",
+    "onnxruntime>=1.26.0",
 ]
 
 [build-system]
