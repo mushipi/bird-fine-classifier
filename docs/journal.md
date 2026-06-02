@@ -865,3 +865,132 @@ run11 でやったことは Hendrycks et al. (2018) の Outlier Exposure その�
 ### 次にやる
 
 `predict.py` に energy gate を実装して動作確認し、コミットする。
+
+---
+
+## 2026-06-02 メタデータ駆動キュレーション基盤 — 耳で聞かずに長尺録音と shift を自動検出
+
+### 経緯
+
+AudioMAE/SSAM へのバックボーン差し替え検討（`docs/model_comparison_audiomae_ssam.md`）の中で「ボトルネックはアーキでなくデータキュレーション」と結論したのを受け、「データキュレーションは耳で聞く以外に手法があるか?」という問いを立てた。手法を棚卸し（メタデータ / 信号処理 / 埋め込み / モデルベース）した上で、最小コストの第一段＝**Xeno-canto メタデータの復元**に着手した。
+
+### やったこと
+
+`src/bird_fine/data/enrich_metadata.py` を実装。`data/raw/{Species}/metadata.csv`（DL時に保存済み・454録音）を結合し、split CSV に録音メタ（type/sex/stage/q/length_sec 等）を付与。`data/splits/*_enriched.csv` と `outputs/curation/recordings.csv` を出力する。
+
+### 発見1: split がメタを捨てていた / file-name 照合で100%復元
+
+現行の `data/splits/*.csv` は species/xc_id/chunk_index/file_path/duration_sec/source_file しか持たず、type/stage/length 等を保持していなかった。juvenile shift（run09）や長尺録音を「耳で」発見せざるを得なかった一因。
+
+`xc_id` から XC番号を抽出して metadata と結合（大多数）＋ **XC番号が無い古い録音（33本）は source_file を metadata の `file-name` 列と正規化照合**することで、**8種は全 split で 100% カバー（未一致0本）を API を一切叩かずに達成**した。
+
+### 発見2: API再取得は不要だった
+
+当初の全体カバー率（train 75.9%）は低く見えたが、未一致の大半（XC番号あり・metadata未収録の103録音）は**全て "other" クラス**で、8種分析には無関係。8種本体は最初からほぼ完備していた。`xcapi_runs.json` は ID リストのみで生メタを含まず補完に使えないことも確認。"other" のメタが必要になった時だけ API 取得すれば足りる。
+
+### 結果: 耳で聞かずに新しいキュレーション候補を自動検出
+
+**(1) 長尺×冗長チャンクの偏り** — train の録音あたり chunks は中央値8に対し、`Mallard XC396538`=**214ch**(10:41) / `XC717935`=194ch(9:42) / `Eurasian_Wigeon XC780288`=161ch(8:03) が突出。run09 で問題化した「特定録音が学習を支配する」構造が Mallard/Wigeon にも存在。`length_sec>10分` のフラグだけで検出できた（除外済みの XC488112=44:55 / XC488113=49:25 もこの基準で即判別できることを後追い確認）。
+
+**(2) distribution shift の定量化** — train vs test の stage 構成比クロス集計で:
+- **Tufted_Duck: juvenile / "adult,juvenile" が test に各1本あるのに train は両方ゼロ**（train は adult のみ）。run10 で Tufted F1 が改善した後も残る新発見の shift。
+- Eurasian_Teal: juvenile が train 1本のみ（run分析の「Teal juvenile 1件」をメタで裏付け）。test の uncertain 2本に対し train ゼロ。
+
+### 学び
+
+- 「データキュレーション」は主観的な傾聴に限らず、メタデータ照合で体系化・自動化できる。第一段（メタデータ復元）が最小工数で最大効果——run09 で数時間かけて耳で特定した juvenile shift / 長尺録音が、`stage` と `length_sec` のフラグで即座に出る。
+- 見かけのカバー率（75.9%）に飛びつかず「未一致の中身」を見たことで、無駄な API 再取得（全部 other）を回避できた。費用対効果は対象を分解して初めて見える。
+
+### 次にやる
+
+run12 候補（メタデータ分析が示すレバー、いずれも「特定録音のキュレーション」軸）:
+1. **Mallard/Wigeon の長尺録音に中間 cap** — run09 終了時に積み残した「長尺の中間 cap」を 3s 体制で実施。チャンク不均衡の是正。
+2. **Tufted / Teal の juvenile shift 対処** — train に juvenile 録音を追加し test との分布ギャップを埋める（独立軸）。
+
+「1 run 1 変更」の原則に従い、まず (1) か (2) のどちらかを単独で。
+
+### 追記: run12 検証分析 — Tufted juvenile shift を確証（同日）
+
+run を回す前に、run09 で機能した「分析→run」の流れに倣い、run11 の test 予測（`outputs/eval_20260531_231427/predictions.csv`）を `test_enriched.csv` と順序結合して Tufted_Duck の誤分類を stage 別に分析した。
+
+**結果（仮説の完全確証）**:
+
+| stage | chunks | recall |
+|---|---|---|
+| adult | 10 | **1.000** |
+| adult, juvenile | 21 | 0.810 |
+| (未記載) | 22 | 0.818 |
+| **juvenile** | 17 | **0.000** |
+
+- Tufted F1 低下（0.703）の主因は **juvenile distribution shift** で確定。juvenile 録音 **XC667403(17ch) が全て Eurasian_Wigeon に誤分類**（recall 0.000）。
+- adult は recall 1.000。モデルは Tufted の adult を完璧に識別できており、**juvenile の音響パターンを学習していないだけ**（train に Tufted juvenile が0本）。
+- precision 誤り（過剰予測）は13件に減少し、もはや主問題ではない。run05/08 時代の「Tufted 過剰予測」から、ボトルネックが recall 側（juvenile 未学習）へ移行した。
+- run09 の XC197026（Teal juvenile）と同じ「特定録音 × distribution shift」構造が Tufted で再現。
+
+**なぜメタデータ基盤が効いたか**: stage 列が無ければ「Tufted の誤りが juvenile に集中」とは切り分けられなかった。本日構築した enrich_metadata.py の stage 付与があって初めて、誤分類 24 件のうち 17 件が単一 juvenile 録音に由来すると即座に分かった。
+
+### 次にやる（更新）
+
+run12 = **train に Tufted juvenile 録音を追加**（test の XC667403/XC667392 を除外し汚染防止、run07 の教訓で cap 併用）。
+事前登録の予測値を立てるには Tufted juvenile の入手可能性確認が先決——`download.py --metadata-only` で Xeno-canto の在庫を調べる（stage=juvenile は希少。メタ全体で11本のみ）。在庫次第で run12 が成立するか決まる。
+
+### 追記: Tufted juvenile は Xeno-canto では枯渇 — 他公開ソースへ展開（同日）
+
+run12 の前提（juvenile 録音の入手可能性）を Xeno-canto API で確認した結果、**データ駆動（XC追加）では解決不能**と確定した。
+
+**在庫調査（read-only・保存なし）**:
+- `en:"Tufted Duck" stage:juvenile` / `gen:Aythya sp:fuligula stage:juvenile` のいずれでも**世界で2件のみ**、しかも両方 test 既存（XC667403 / XC667392）。英名・学名で結果は完全同一でクエリの取りこぼしではない。
+- type/remarks まで広げても追加候補は2件（XC668878 / XC577931）だが、いずれも q=C かつ nestling(雛)で、test の juvenile call とは発達段階が異なり代替にならない。
+- Tufted Duck 全300件の stage 分布: adult 62 / 未記載 207 / juvenile 1 / adult,juvenile 1 / uncertain 28 / adult,nestling 1。
+
+**YouTube 案の検討と保留**: 候補に挙がったが、(1) データ源異質性が run 比較を壊す、(2) 録音単位 shift の本質（test の XC667403 への汎化保証が弱い）、(3) 種同定の確度、(4) ライセンス、の4点で本流の run には不適と判断。PoC 扱いにする。
+
+**方針: 他の公開鳥類音声ソースを検討**。候補は Macaulay Library（age 記入率が高く有望／再配布制限）、iNaturalist（CC選択可）、GBIF（横断・ただし XC を集約するため重複排除必須）、Animal Sound Archive Berlin、British Library Wildlife。条件は **CC0/CC-BY 優先**と **XC-ID 照合による重複排除**、学術フィールド録音同士で異質性を抑えること。まず**無認証で叩ける GBIF + iNaturalist** から Tufted juvenile 音源の在庫を確認する。
+
+**学び**: メタデータ基盤（stage 列）があったからこそ「juvenile が枯渇している」を定量的に確定でき、効果の出ない録音追加 run（run07 の二の舞）を回避できた。データキュレーションの検証は「追加すべきデータが存在するか」の在庫確認まで含めて初めて完結する。
+
+### 次にやる（更新2）
+
+GBIF + iNaturalist の公開 API で「Aythya fuligula × 音声付き × juvenile」の在庫・ライセンス・XC重複を確認。実在すれば run12（他ソース juvenile 追加）が成立、無ければ augmentation か他弱点種（Shoveler/Goldeneye）へ軸を移す。
+
+### 追記: 無認証3ソースで Tufted juvenile 枯渇を確定（同日）
+
+GBIF / iNaturalist の公開 API（無認証・read-only）で在庫確認した:
+- **GBIF**: 音声付き Tufted で `lifeStage=Juvenile` は **1件のみ**。occurrenceID が `data.biodiversitydata.nl/xeno-canto/observation/XC667403`、media が xeno-canto.org、creator が Stichting Xeno-canto → **XC667403 の重複で test 既存**。GBIF は Xeno-canto を集約しているため新規性ゼロ。
+- **iNaturalist**: Life Stage 注釈=Juvenile かつ音声ありは **0件**（音声付き観察は44件あるが juvenile タグは皆無）。
+
+**結論**: 無認証で叩ける主要3ソース（Xeno-canto / GBIF / iNaturalist）すべてで、train に追加できる新規 Tufted juvenile 音源は **0本**。juvenile call の録音が世界的に極めて希少という分野共通の事実が3ソースで裏付けられた。**データ追加で juvenile shift を埋める路線は行き止まり**。
+
+**決定**: Macaulay Library（認証要・再配布制限）と augmentation（疑似 juvenile 合成）は将来の別 PoC に回す。run12 は **他弱点種（Shoveler 0.738 / Goldeneye 0.743）を同じ stage 別分析で切り分け、データで埋められる確実なレバーを探す**方向に確定。juvenile shift は「データ不在による解決不能問題」として確定記録した。
+
+### 次にやる（更新3）
+
+Shoveler / Goldeneye の run11 test 誤分類を enriched メタで stage 別に分析し、Tufted と同じ juvenile/特定録音 shift か、別要因（録音多様性不足・音響類似）かを切り分ける。確実に埋められるレバーがあれば run12 として事前登録。
+
+### 追記: 他弱点種の切り分け — Goldeneye は「表現力ボトルネック」と判明（同日）
+
+**Shoveler/Goldeneye は juvenile shift ではない**（stage はほぼ未記載/uncertain）。Tufted の juvenile 枯渇問題とは別物。
+
+- **Northern_Shoveler (recall 0.686)**: 誤分類が複数録音に薄く分散、誤予測先も Pochard/Teal/Mallard とバラバラ。**分散型で単一介入が効きにくい**。
+- **Common_Goldeneye (recall 0.623)**: **`song`(求愛ディスプレイ音)が Eurasian_Teal に一方向流出**。song の正解59/誤54、誤りは主に Teal へ。Teal precision=0.749 の誤吸込65件中 Goldeneye が42件で突出。`display call`(正32/誤2)や `call` は当たるのに `song` だけ詰む。
+
+**埋め込み距離による切り分け（run11=v11 の AST 最終層 mean pool, cos類似）**:
+
+| 群 | n | →GE重心 | →Teal重心 | Teal寄り割合 |
+|---|---|---|---|---|
+| 誤分類 GE song(→Teal) | 41 | 0.900 | **0.912** | **68%** |
+| 正解 GE song | 89 | **0.940** | 0.853 | 0% |
+
+重心間 cos(train GE song, train Teal song)=**0.880**（両者の song が埋め込み上ほぼ重なる）。
+
+**結論: (a) 本質的な音響類似で確定**。正解 song は train GE song に近い（Teal寄り0%）が、**誤分類 song は68%が train Teal song の方に近く、埋め込み空間で実際に Teal 領域に入り込んでいる**。train Goldeneye song は275chunk と十分あるのに分離できない → **データ追加では解決せず、現行 AST の表現力がボトルネック**。（0.900 vs 0.912 は僅差で「GE song と Teal song がほぼ重なる難境界」だが、データで埋まらない点は明確。）
+
+**メタ含意（重要）**: 一連の分析で弱点が2種類に分離した。
+- **データ不在型**（Tufted juvenile）: 世界に2録音で枯渇 → data/aug/別ソース全滅、解決不能
+- **表現力不足型**（Goldeneye song）: Teal song と音響類似でデータ十分 → **バックボーン強化が本命の解**
+
+`model_comparison_audiomae_ssam.md` の「ボトルネックはアーキでなくデータキュレーション」という結論に対し、**Goldeneye は明確な反例**（アーキ強化が本命の種が実在）。最初のドキュメントで第一候補に挙げた AudioMAE 評価が、今度は定量的根拠付きで再浮上した。
+
+### 次にやる（更新4）
+
+run12 = **AudioMAE 全体fine-tune による表現力評価**を事前登録する（model_comparison ドキュメントの Go/No-Go チェックリストに沿う）。期待: Goldeneye song ↔ Teal song の分離向上。データ系レバー（Tufted juvenile / 録音追加）は尽きたため、アーキ軸へ移行。
