@@ -1292,6 +1292,81 @@ run11 モデルを **Outlier Exposure によるエネルギー空間キャリブ
 
 ---
 
+## run12 — AudioMAE 全体fine-tune による表現力評価 (2026-06-02)
+
+**ステータス:** 学習前記録（事前登録・実装未着手）
+**出力予定:** `models/audiomae-duck-v12/`（バックボーンが変わるため命名を AST と区別）
+**初期化元:** timm 移植チェックポイント `gaunernst/vit_base_patch16_1024_128.audiomae_as2m`
+
+### 背景（なぜ AudioMAE か）
+
+run11 の種別誤分類をメタデータ駆動で精査した結果（→ journal.md 2026-06-02、`docs/model_comparison_audiomae_ssam.md` 結論更新）、弱点が2型に分離した:
+- **データ不在型**（Tufted juvenile）: 世界に2録音で枯渇 → 解決不能
+- **表現力不足型**（Goldeneye `song`）: Eurasian_Teal の song と音響類似・train データ十分 → **バックボーン強化が本命**
+
+埋め込み分析で、誤分類 Goldeneye song の **68%が train Teal song の方に近く**（正解 song は 0%）、train GE song↔Teal song 重心 cos=**0.880**。データ施策が尽きたため、**自己教師あり事前学習（MAE）による低レベルスペクトル表現で song を分離できるか**を評価する。
+
+### 変更概要
+
+| 項目 | run11 (AST) | run12 (AudioMAE) |
+|---|---|---|
+| backbone | ASTForAudioClassification (教師あり AudioSet) | timm ViT-B + AudioMAE (自己教師あり MAE) |
+| 事前学習 | 教師あり | **自己教師あり（マスク再構成）** |
+| num_labels | 9（8種 + other） | 9（踏襲）|
+| メルビン数 | 128 | 128（共有・前処理再利用度大）|
+| max_length | 304 | 304（位置埋め込みを 1024→304 相当に補間）|
+| feature extractor | ASTFeatureExtractor | **自前実装**（128mel・AudioMAE 正規化統計に合わせる）|
+| Sampler / Loss / SpecAugment | WeightedRandomSampler / [1.0×8,1.5×other] / other のみ | **run11 と同一**（DuckTrainer 流用）|
+| metric_for_best_model | f1_macro_8class | f1_macro_8class（踏襲）|
+
+### 実装前 Go/No-Go チェックリスト（model_comparison §6 準拠）
+
+着手前に読み取り/小規模検証で確認する。いずれか No なら見送り or 後回し。
+
+- [ ] **ckpt 入手**: `gaunernst/vit_base_patch16_1024_128.audiomae_as2m` を timm でロードできるか
+- [ ] **依存導入**: `uv add timm`（純Python・ビルド不要）で済むか
+- [ ] **VRAM 実測**: fp16 + gradient_checkpointing + effective batch 16 で RTX 3060 Ti (8GB) に収まるか
+- [ ] **入力整合**: 128mel / max_length=304 / 正規化統計を ckpt 仕様に合わせられるか
+- [ ] **A/B 再現条件**: 既存 `data/splits/{train,val,test}.csv`・`f1_macro_8class`・seed=42 で公平比較できるか
+
+### 仮説と予測（予測値を学習前に固定）
+
+baseline = run11: test f1_macro_8class **0.793** / Goldeneye test F1 **0.743** / AUROC energy **0.932**
+
+**H1（主）: Goldeneye の song 分離が改善し、Goldeneye test F1 が run11 を上回る**
+- 自己教師あり MAE が AudioSet 教師ラベルに縛られず低レベルスペクトル構造を学ぶため、song の微細差を AST より分離できる
+- 予測: Goldeneye test F1 **0.76〜0.82**
+
+**H2: 8種全体の精度が run11 を大きく下回らない**
+- リスク: 位置埋め込み補間の適応コスト（run10 で AST が 10s→3s で test −0.056 した前例）
+- 予測: test f1_macro_8class **0.78〜0.83**（run11 0.793 ± 域内維持）
+
+**H3（機序）: 誤分類 Goldeneye song の「Teal 重心寄り割合」が 68% から低下する**
+- run12 埋め込みで再測定して検証（同一手順）
+
+**検証後の分岐:**
+- H1成立 ∧ H2成立 → **表現力ボトルネック仮説を確証**。AudioMAE 採用、SSAM も PoC 検討
+- H1不成立（Goldeneye 改善せず）→ song 類似は AudioMAE でも分離不能。前処理（mel分解能・入力長）or SSAM、あるいは「この2種は分離限界」と受容
+- H2不成立（全体悪化）→ 位置埋め込み適応 or layer-wise LR decay 等のハイパラ再調整。AST 維持も選択肢
+
+### 実装タスク概略（着手時）
+
+1. timm バックボーン読み込み → 9クラス分類ヘッド付与（`expand_classifier` 流用可）
+2. 128mel 特徴抽出を自前実装（AudioMAE 正規化統計に合わせる）
+3. 位置埋め込み補間（10s/1024 → 3s/304 相当。現行 `resize_position_embeddings` を移植）
+4. `DuckTrainer`（WeightedRandomSampler + other重みCE）に載せる（モデル非依存なので流用可）
+5. 学習後: OOD energy gate を再キャリブレーション（閾値・AUROC を再測定）
+
+### 結果
+
+（学習後に記入）
+
+### 所見
+
+（学習後に記入）
+
+---
+
 ## メモ
 
 - baseline (`models/ast-duck/`) は常に保護する。新規 run は必ず別 output_dir へ
