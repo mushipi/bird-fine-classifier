@@ -1021,3 +1021,27 @@ juvenile データ枯渇を延々追っていたが、ユーザーの「**そも
 ### 次にやる
 
 対象種拡張（軸2）。ood_tier1 のカモ科のうち**データ十分な4種**（Gadwall/ウミアイサ/カルガモ/カワアイサ）を target 昇格し run13 として事前登録（8→12種）。下位3種(トモエ/ヨシ/スズ)は録音不足で見送り。Goldeneye の表現力ボトルネック(run12 AudioMAE)は対象種拡張後に再評価。
+
+## 2026-06-04 run13 準備: 対象種拡張 8→12種 を実装（split まで）
+
+### やったこと
+
+4種を target 化し、split・label_map・config を 12種体制に再構築。run13 として事前登録（学習は未着手）。
+
+### データ収集と2つの落とし穴
+
+1. **カルガモが2本しか取れない** — `download.py` の `fallback_worldwide` は「指定国で**0件**のとき」のみ worldwide 検索する設計。カルガモは Japan に2件ヒットしたため worldwide(16本)に行かなかった。`_download(country=None)` を直接呼んで worldwide 追加収集し16本確保。**学び: fallback は0件時のみ。少数ヒット国があると worldwide を取り逃す。**
+2. **label_map から other が欠落** — split.py / ad-hoc 再生成は `chunks_index.csv`（other を含まない）から label_map を作るため、other が抜けた。`build_datasets` は `label_map.csv` を直接読み、`other_label_id = label_map.get("other")` で OOD 重み付けを決めるため、欠落すると other 処理が無効化される。**other=12 を手動追加して解消。**
+
+### split 戦略（既存8種を公平比較するため）
+
+- split.py の通常モードは全種再分割で既存8種の割り当てが変わり、`--preserve-existing` は新種を全て train に入れてしまう。どちらも不適。
+- → **既存8種 split（test v2）を完全保持し、新4種だけ `split_by_recording`(seed=42, 70/15/15) で分割して追記**。filter_domain を再適用し新4種の juvenile/nestling も除外（test 1299→1261）。これで run11↔run13 の既存8種比較が公平。
+
+### init は pretrained
+
+12種化で label_id のソート順が変わる（Common_Merganser 挿入等）ため、run11(v11) の9クラスヘッド重みを正しくマップできない。`init_from=""` で pretrained から初期化する。
+
+### 次にやる
+
+run13 学習 → 13クラス eval。H1（既存8種 f1_macro_8 ≥ 0.77）/ H2（新4種 macro 0.40〜0.60）/ H3（OOD AUROC ≥ 0.88）を検証。学習前に `train.py --dry-run` で VRAM・テンソル形状（13クラス・pretrained 初期化・位置埋め込み 304）を確認する。

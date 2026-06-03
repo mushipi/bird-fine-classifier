@@ -28,6 +28,19 @@ target_species:
   - en: "Common Pochard"
     sci: "Aythya ferina"
     ja: "ホシハジロ"
+  # run13: ood_tier1 から target 昇格（データ十分な4種）
+  - en: "Gadwall"
+    sci: "Mareca strepera"
+    ja: "オカヨシガモ"
+  - en: "Red-breasted Merganser"
+    sci: "Mergus serrator"
+    ja: "ウミアイサ"
+  - en: "Eastern Spot-billed Duck"
+    sci: "Anas zonorhyncha"
+    ja: "カルガモ"
+  - en: "Common Merganser"
+    sci: "Mergus merganser"
+    ja: "カワアイサ"
 
 # ==================================================
 # ダウンロード設定
@@ -60,15 +73,15 @@ preprocessing:
 # ==================================================
 model:
   pretrained: "MIT/ast-finetuned-audioset-10-10-0.4593"
-  num_labels: 9                    # 8種 + "other" クラス
+  num_labels: 13                   # run13: 12種 + "other" クラス（8→12種に拡張）
   feature_extractor_max_length: 304  # 3s×16kHz のmelフレーム数（10s=1024の3/10）
-  init_from: "models/ast-duck-v10"   # run10チェックポイントから分類ヘッドを拡張して初期化
+  init_from: ""                      # run13: pretrained から初期化（12種で label 順序が変わり run11 ヘッド流用不可）
 
 # ==================================================
 # 学習設定
 # ==================================================
 training:
-  output_dir: "models/ast-duck-v11"  # run11: "other"クラス追加、v10保護
+  output_dir: "models/ast-duck-v13"  # run13: 対象種12種に拡張、v11保護
   num_train_epochs: 15
   per_device_train_batch_size: 4   # RTX 3060 Ti (VRAM 8GB) 想定
   per_device_eval_batch_size: 8
@@ -109,12 +122,10 @@ other_class:
   loss_alpha: 1.5                 # CE loss の "other" クラス重み（Recall 重視）
   seed: 42
   # Tier1: カモ科他種（パイプライン上で最も重要なOOD）
+  # run13: Gadwall / Red-breasted Merganser / Eastern Spot-billed Duck を target 昇格のため除外
   tier1_species:
-    - "Eastern Spot-billed Duck"
-    - "Gadwall"
     - "Baikal Teal"
     - "Falcated Duck"
-    - "Red-breasted Merganser"
   # Tier2: 水辺の非カモ科（声質多様性のため）
   tier2_species:
     - "Eurasian Coot"

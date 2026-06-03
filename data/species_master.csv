@@ -7,12 +7,12 @@ taxon_id,sci,en_inat,en_birdnet,ja,family,order,obs_count,last_observed,status,g
 ,Aythya fuligula,Tufted Duck,Tufted Duck,キンクロハジロ,Anatidae,Anseriformes,,,target,duck,true,xeno-canto,
 ,Aythya ferina,Common Pochard,Common Pochard,ホシハジロ,Anatidae,Anseriformes,,,target,duck,true,xeno-canto,
 ,Bucephala clangula,Common Goldeneye,Common Goldeneye,ホオジロガモ,Anatidae,Anseriformes,,,target,duck,false,xeno-canto,BirdProject未収録。BirdNET v2.4デフォルト経由
-,Anas zonorhyncha,Eastern Spot-billed Duck,Eastern Spot-billed Duck,カルガモ,Anatidae,Anseriformes,,,ood_tier1,duck,true,xeno-canto,国内最普通の留鳥
-,Mareca strepera,Gadwall,Gadwall,オカヨシガモ,Anatidae,Anseriformes,,,ood_tier1,duck,true,xeno-canto,
+,Anas zonorhyncha,Eastern Spot-billed Duck,Eastern Spot-billed Duck,カルガモ,Anatidae,Anseriformes,,,target,duck,true,xeno-canto,run13で target 昇格・国内最普通の留鳥
+,Mareca strepera,Gadwall,Gadwall,オカヨシガモ,Anatidae,Anseriformes,,,target,duck,true,xeno-canto,run13で target 昇格
 ,Sibirionetta formosa,Baikal Teal,Baikal Teal,トモエガモ,Anatidae,Anseriformes,,,ood_tier1,duck,true,xeno-canto,コガモと音響近縁
 ,Mareca falcata,Falcated Duck,Falcated Duck,ヨシガモ,Anatidae,Anseriformes,,,ood_tier1,duck,true,xeno-canto,ヒドリガモと同Mareca属
-,Mergus serrator,Red-breasted Merganser,Red-breasted Merganser,ウミアイサ,Anatidae,Anseriformes,,,ood_tier1,duck,true,xeno-canto,
-,Mergus merganser,Common Merganser,Common Merganser,カワアイサ,Anatidae,Anseriformes,,,ood_tier1,duck,false,xeno-canto,
+,Mergus serrator,Red-breasted Merganser,Red-breasted Merganser,ウミアイサ,Anatidae,Anseriformes,,,target,duck,true,xeno-canto,run13で target 昇格
+,Mergus merganser,Common Merganser,Common Merganser,カワアイサ,Anatidae,Anseriformes,,,target,duck,false,xeno-canto,run13で target 昇格
 ,Aythya marila,Greater Scaup,Greater Scaup,スズガモ,Anatidae,Anseriformes,,,ood_tier1,duck,false,xeno-canto,キンクロハジロと同Aythya属
 ,Fulica atra,Eurasian Coot,Eurasian Coot,オオバン,Rallidae,Gruiformes,,,ood_tier2,duck,true,xeno-canto,
 ,Tachybaptus ruficollis,Little Grebe,Little Grebe,カイツブリ,Podicipedidae,Podicipediformes,,,ood_tier2,duck,true,xeno-canto,

@@ -1404,6 +1404,72 @@ baseline = run11: test f1_macro_8class **0.793** / Goldeneye test F1 **0.743** /
 
 ---
 
+## run13 — 対象種拡張: 8種 → 12種（ood_tier1 カモ科の target 昇格） (2026-06-03)
+
+**ステータス:** 学習前記録（事前登録）。split まで構築済み・学習未着手
+**出力予定:** `models/ast-duck-v13/`
+**初期化元:** **pretrained**（`MIT/ast-finetuned-audioset-10-10-0.4593`）
+
+### 背景
+
+「幼鳥は冬の日本に不要」のドメイン検証（test v2）から派生し、対象種を増やす検証へ。
+`species_master.csv` の ood_tier1 カモ科のうち**データ十分な4種**を target 昇格する。
+下位3種（Baikal Teal/Falcated Duck/Greater Scaup）は録音不足のため見送り、other に残置。
+
+### 変更概要
+
+| 項目 | run11 | run13 |
+|---|---|---|
+| 対象種 | 8 | **12**（+Gadwall/ウミアイサ/カルガモ/カワアイサ）|
+| num_labels | 9 | **13**（12種 + other）|
+| other tier1 | 5種 | **2種**（Baikal Teal / Falcated Duck）|
+| init | run10 ヘッド拡張 | **pretrained**（12種で label 順序が変わり run11 ヘッド流用不可）|
+| split | — | **既存8種は run11 保持・新4種のみ seed=42 で 70/15/15 追記**（既存8種を公平比較）|
+| test | test v2(1038) | 1261（既存8種 test v2 + 新4種、juvenile/nestling 除外済み）|
+
+### 昇格4種のデータ（target 化後）
+
+| 種 | train録音 | val | test | train chunks |
+|---|---|---|---|---|
+| Gadwall オカヨシガモ | 30 | 6 | 8 | 855 |
+| Red-breasted Merganser ウミアイサ | 17 | 3 | 5 | 299 |
+| Eastern Spot-billed Duck カルガモ | 11 | 2 | 3 | 302（worldwide 追加収集）|
+| Common Merganser カワアイサ | 8 | 1 | 3 | 195 |
+
+### 仮説と予測（予測値を学習前に固定）
+
+baseline = run11 (test v2): f1_macro_8class **0.808** / AUROC energy **0.932**
+
+**H1: 既存8種の精度が大きく低下しない**
+- 既存8種の test 録音は run11 と同一（公平比較）。クラス増で決定境界は増えるが既存学習データは不変
+- 予測: 既存8種 f1_macro_8class **0.77〜0.81**（run11 0.808 から ∓域内）
+
+**H2: 新4種は録音数相応の F1**
+- 録音多様性が効く（run01〜09 の知見）。Gadwall(30録音)>RBM(17)>カルガモ(11)>カワアイサ(8)
+- 予測: 新4種 f1_macro **0.40〜0.60**（Gadwall 0.6+、カワアイサ/カルガモは録音少で 0.2〜0.5）
+
+**H3: OOD energy gate が大きく劣化しない**
+- other tier1 が 5→2種に縮小。カモ科 OOD の多様性低下が AUROC に影響しうる
+- 予測: AUROC energy **0.88〜0.93**
+
+**12種全体予測:** f1_macro_12class **0.70〜0.78**（新4種が全体を押し下げる）
+
+### 検証後の分岐
+
+- H1成立 ∧ 新4種が実用水準 → 12種化成功。次は run14 = AudioMAE で Goldeneye song + 増えた近縁種の表現力評価
+- H1不成立（既存8種低下）→ クラス増による容量不足。ハイパラ調整 or AudioMAE を先行
+- 新4種が極端に低い（特にカワアイサ/カルガモ）→ 録音不足種を other に戻す or 追加収集
+
+### 結果
+
+（学習後に記入）
+
+### 所見
+
+（学習後に記入）
+
+---
+
 ## メモ
 
 - baseline (`models/ast-duck/`) は常に保護する。新規 run は必ず別 output_dir へ
