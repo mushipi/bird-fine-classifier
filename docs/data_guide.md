@@ -171,12 +171,30 @@ uv run python -m bird_fine.data.prepare_other_class            # train/val.csv �
 | パターン | 症状 | 対処 |
 |---|---|---|
 | 長尺フィールド録音（45分超）| 多様な音響パターンが1種ラベルで大量投入され決定境界を歪める | `exclude_train_recordings` で除外 |
-| juvenile タグ音声が 1 件しかない | distribution shift で幼鳥鳴き声が他種に誤分類 | Xeno-canto で `stage:juvenile` を指定して追加収集 |
+| juvenile/nestling 音声 | 幼鳥の begging call は夏の繁殖地のもので**冬の日本ドメイン外**。評価に含めると recall が崩れ性能を過小評価 | `filter_domain` で **val/test から除外**（train は多様性のため残す）|
 
 ```bash
 # 問題録音の調査
 uv run python -m bird_fine.analysis.confusion_audio  # 誤分類チャンクの mel 表示
 ```
+
+### ドメイン整合（juvenile/nestling の除外）
+
+本プロジェクトの対象は「冬の日本のカモモニタリング」。juvenile/nestling の鳴き声
+（雛の begging call 等）は夏の繁殖地で発せられ、冬の日本では遭遇しない。これらを
+評価セットに含めると、学習していない音響パターンで誤分類が起き、本来のモニタリング
+性能を過小評価する（例: run11 で Tufted juvenile XC667403 の recall=0.000、フランス・
+8月録音）。
+
+```bash
+uv run python -m bird_fine.data.filter_domain --dry-run   # 除外内容を確認
+uv run python -m bird_fine.data.filter_domain             # val/test を上書き（.bak 退避）
+```
+
+- 除外は **val/test のみ**。train は学習の音響多様性のため残す（→ journal.md 2026-06-03）。
+- ドメイン定義は **stage ベース**。月（繁殖期）での除外は adult call まで巻き込み評価を歪めるため採らない。
+- 効果: run11 を新 test（juvenile/nestling 除外, 1154→1038 chunk）で再評価すると
+  Tufted F1 0.703→**0.767**、f1_macro_8class 0.798→**0.808**。
 
 ---
 

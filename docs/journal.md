@@ -994,3 +994,30 @@ Shoveler / Goldeneye の run11 test 誤分類を enriched メタで stage 別に
 ### 次にやる（更新4）
 
 run12 = **AudioMAE 全体fine-tune による表現力評価**を事前登録する（model_comparison ドキュメントの Go/No-Go チェックリストに沿う）。期待: Goldeneye song ↔ Teal song の分離向上。データ系レバー（Tufted juvenile / 録音追加）は尽きたため、アーキ軸へ移行。
+
+## 2026-06-03 ドメイン整合 — 「幼鳥は冬の日本に不要」を検証し評価セットを修正
+
+### 経緯
+
+juvenile データ枯渇を延々追っていたが、ユーザーの「**そもそも幼鳥は冬の日本のモニタリングに不要では?**」という上流の問いを検証。これが一連の juvenile 議論を根本から正した。
+
+### 検証結果（決定的）
+
+- test の Tufted juvenile 録音 XC667403/667392 は **2021-08-05・フランス**＝繁殖期・繁殖地の雛(begging call)。冬の日本では遭遇しない音響パターン。
+- ドメインフィルタ別に run11 を再評価（既存 predictions）:
+  - stage=juvenile/nestling 除外 → f1_macro_8 0.798→**0.808**、Tufted **0.703→0.767(+0.064)**
+  - 月で繁殖期(5-8月)除外 → 0.764 / Tufted 0.480（adult call を巻き込み悪化）→ **stage ベースが正しい**
+- **さらに大きな発見**: train/test とも **日本録音0**（test 0/73・train 0/313）、繁殖期録音が test 18/train 92。「Japan→worldwide フォールバック」の帰結で、run01〜11 の test f1 は厳密には「冬の日本での性能」を測れていなかった。
+
+### 対処
+
+`filter_domain.py` を実装（`enrich_metadata` の照合ロジックを再利用）。**val/test から juvenile/nestling を除外**（val 1358→1285・test 1154→1038）。train は学習の音響多様性のため不変（ユーザー確定方針）。旧 split は `*.bak` 退避。run12 以降の baseline は **test v2（f1_macro_8class 0.808）**。
+
+### 学び
+
+- 「データをどう埋めるか」の前に「**その評価対象はドメインとして正しいか**」を問うべきだった。juvenile のデータ枯渇（XC/GBIF/iNat 全滅）を数時間追ったが、真の答えは「そもそも評価に入れるべきでない」だった。
+- メタデータ基盤（stage/date/cnt）があったから、ドメイン外を録音単位で即特定でき、評価を定量的に正せた。
+
+### 次にやる
+
+対象種拡張（軸2）。ood_tier1 のカモ科のうち**データ十分な4種**（Gadwall/ウミアイサ/カルガモ/カワアイサ）を target 昇格し run13 として事前登録（8→12種）。下位3種(トモエ/ヨシ/スズ)は録音不足で見送り。Goldeneye の表現力ボトルネック(run12 AudioMAE)は対象種拡張後に再評価。

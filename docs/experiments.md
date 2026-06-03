@@ -1292,6 +1292,43 @@ run11 モデルを **Outlier Exposure によるエネルギー空間キャリブ
 
 ---
 
+## test v2 — ドメイン整合（juvenile/nestling 除外）による評価セット修正 (2026-06-03)
+
+**ステータス:** 完了（評価土台の修正・run 番号は消費しない）
+
+### 背景
+
+「幼鳥は冬の日本のモニタリングに不要では?」という問いを検証。test の juvenile 録音は
+**繁殖期・繁殖地**（XC667403/667392 = 2021-08-05 フランスの雛 begging call）で、冬の日本では
+遭遇しない音響パターン。これらを評価に含めると Tufted recall=0.000 で性能を過小評価していた。
+
+### 対処
+
+`filter_domain.py` で **val/test から stage∋juvenile/nestling を除外**（train は多様性のため不変）。
+
+| split | 変更前 | 除外 | 変更後 |
+|---|---|---|---|
+| val | 1358 | 73 (Mallard juvenile 1録音) | 1285 |
+| test | 1154 | 116 (4録音: Mallard/Tufted×2/Teal) | 1038 |
+
+### run11 再評価（旧 test → test v2、モデルは run11=v11 のまま）
+
+| 指標 | 旧 test(1154) | **test v2(1038)** | 差分 |
+|---|---|---|---|
+| f1_macro_8class | 0.798 | **0.808** | +0.010 |
+| Tufted_Duck F1 | 0.703 | **0.767** | **+0.064** |
+
+繁殖期(5-8月)を月で除外する案は adult call まで巻き込み f1_8=0.764 / Tufted=0.480 と悪化した
+ため不採用。**stage ベース除外が正しい**。
+
+### 所見
+
+- run12 以降の baseline は **test v2** とする（f1_macro_8class 0.808）。
+- 旧 split は `*.csv.bak` に退避。train/test とも日本録音0・繁殖期混在というドメイン乖離は残課題
+  （→ journal.md 2026-06-03。worldwide フォールバックの帰結）。
+
+---
+
 ## run12 — AudioMAE 全体fine-tune による表現力評価 (2026-06-02)
 
 **ステータス:** 学習前記録（事前登録・実装未着手）
