@@ -17,9 +17,10 @@
 # ==================================================
 duck:
   pipeline:
-    stage2_model: "models/ast-duck-v11"
-    # run11 ood_eval (2026-05-31): AUROC=0.932 / FPR<=5% 条件での推奨値
-    energy_threshold: 10.35
+    stage2_model: "models/ast-duck-v15"
+    # run15 ood_eval (2026-06-05): 10種運用, AUROC energy=0.899 / FPR<=5% 推奨値
+    # （旧 run11 9クラス: threshold 10.35 / AUROC 0.932。11クラス化で energy スケール変化）
+    energy_threshold: 6.73
     energy_temperature: 1.0  # 1.0 = Temperature Scaling なし
 
 # ==================================================
