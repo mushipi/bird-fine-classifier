@@ -128,10 +128,19 @@ def collect_ood(
     device: torch.device,
 ) -> pd.DataFrame:
     """OOD チャンクの推論結果を DataFrame で返す。"""
+    # OOD 種は species_master.csv の status から引く（taxonomy の ood_species は
+    # グループ構造移行で廃止。run13 で target 昇格した4種は status が target になり
+    # ここから自動的に除外される）。
+    master = pd.read_csv(PROJECT_ROOT / "data" / "species_master.csv")
+
+    def _tier_species(status: str) -> list[dict]:
+        sub = master[master["status"] == status]
+        return [{"en": en} for en in sub["en_inat"].tolist()]
+
     tier_map = {
-        1: taxonomy["ood_species"]["tier1"],
-        2: taxonomy["ood_species"]["tier2"],
-        3: taxonomy["ood_species"]["tier3"],
+        1: _tier_species("ood_tier1"),
+        2: _tier_species("ood_tier2"),
+        3: _tier_species("ood_tier3"),
     }
     rows = []
     for tier in tiers:
