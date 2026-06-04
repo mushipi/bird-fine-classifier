@@ -81,7 +81,8 @@ model:
 # 学習設定
 # ==================================================
 training:
-  output_dir: "models/ast-duck-v13"  # run13: 対象種12種に拡張、v11保護
+  output_dir: "models/ast-duck-v14"  # run14: focal loss で Mallard 多数派バイアス抑制、v13保護
+  focal_gamma: 2.0                   # run14: focal loss の gamma（0で従来CE）。多数派バイアス対策
   num_train_epochs: 15
   per_device_train_batch_size: 4   # RTX 3060 Ti (VRAM 8GB) 想定
   per_device_eval_batch_size: 8

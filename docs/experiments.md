@@ -1497,6 +1497,51 @@ H1 ほぼ不成立・新4種二極化のため、**12種そのまま採用は見
 
 ---
 
+## run14 — focal loss で Mallard 多数派バイアスを抑制 (2026-06-04)
+
+**ステータス:** 学習前記録（事前登録）
+**出力予定:** `models/ast-duck-v14/`
+**初期化元:** pretrained（run13 と同条件。**loss のみの1変更**で公平比較）
+
+### 背景
+
+run13 でカルガモ F1=0.000・カワアイサ 0.227 が Mallard に吸われた。埋め込み切り分けで、
+**素の pretrained AST では test カルガモの 67% がカルガモ寄り**（run13 学習後は 0%）と判明。
+表現力ではなく **run13 学習が Mallard 多数派に最適化して分類層の境界を潰した**のが主因。
+focal loss で難サンプル（境界付近のカルガモ）を強調し、易しい Mallard の損失を下げて是正する。
+
+### 変更概要
+
+| 項目 | run13 | run14 |
+|---|---|---|
+| loss | CE（other に alpha=1.5）| **focal loss (gamma=2.0)** + 同 class weight |
+| sampler / split / init / 種数 | — | **run13 と同一**（種均等 sampler・12種・pretrained）|
+
+### 仮説と予測（学習前に固定）
+
+baseline = run13: 既存8種 f1_macro_8 **0.769** / カルガモ **0.000** / カワアイサ 0.227 / 12種 0.662
+
+- **H1**: カルガモ F1 > **0.3**（素 AST で 67% 分離可能＝分類層是正で救える）
+- **H2**: 既存8種 f1_macro_8 ≥ **0.769**（Mallard precision 改善でむしろ上振れも）
+- **H3**: 12種 f1_macro_12 > **0.70**
+- リスク: Mallard recall 低下（precision とのトレードオフ）。Mallard F1 を監視。
+
+### 検証後の分岐
+
+- カルガモ救済 ∧ 既存8種維持 → 選択肢2成功。12種採用へ。species_taxonomy.yaml を v14 に
+- カルガモ救えない → 分類層では限界＝表現力。run15 = AudioMAE へ
+- 既存8種が大幅低下 → gamma 過大。gamma=1.0 等へ
+
+### 結果
+
+（学習後に記入）
+
+### 所見
+
+（学習後に記入）
+
+---
+
 ## メモ
 
 - baseline (`models/ast-duck/`) は常に保護する。新規 run は必ず別 output_dir へ

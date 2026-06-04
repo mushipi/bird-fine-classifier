@@ -102,10 +102,12 @@ class DuckTrainer(Trainer):
     固定値 alpha のみを使用する。
     """
 
-    def __init__(self, *args, other_label_id: int | None = None, other_alpha: float = 1.0, **kwargs):
+    def __init__(self, *args, other_label_id: int | None = None, other_alpha: float = 1.0,
+                 focal_gamma: float = 0.0, **kwargs):
         super().__init__(*args, **kwargs)
         self.other_label_id = other_label_id
         self.other_alpha = other_alpha
+        self.focal_gamma = focal_gamma  # 0.0 で従来 CE と等価（後方互換）
 
     def _get_train_sampler(self, dataset=None) -> WeightedRandomSampler | None:
         # transformers 5.x は dataset 引数を渡してくる
@@ -133,7 +135,14 @@ class DuckTrainer(Trainer):
         if self.other_label_id is not None and self.other_label_id < num_labels:
             weights[self.other_label_id] = self.other_alpha
 
-        loss = nn.CrossEntropyLoss(weight=weights)(logits, labels)
+        if self.focal_gamma > 0.0:
+            # focal loss: 易しいサンプル(高 p_t)の損失を抑え、難しいサンプルを強調。
+            # class weight は per-sample CE に乗ったまま focal 係数を掛ける。
+            ce = nn.CrossEntropyLoss(weight=weights, reduction="none")(logits, labels)
+            pt = torch.exp(-ce)  # 正解クラスの確率（weight 込みだが単調性は保たれる）
+            loss = ((1.0 - pt) ** self.focal_gamma * ce).mean()
+        else:
+            loss = nn.CrossEntropyLoss(weight=weights)(logits, labels)
         return (loss, outputs) if return_outputs else loss
 
 
@@ -297,15 +306,19 @@ def main() -> None:
     # "other" クラスの設定
     other_label_id = label_map.get("other")
     other_alpha = float(config.get("other_class", {}).get("loss_alpha", 1.0))
+    focal_gamma = float(train_cfg.get("focal_gamma", 0.0))
     num_target = num_labels - (1 if other_label_id is not None else 0)
     if other_label_id is not None:
         print(f"[OTHER] label_id={other_label_id} / loss_alpha={other_alpha} / metric=f1_macro_8class")
+    if focal_gamma > 0.0:
+        print(f"[FOCAL] focal loss 有効: gamma={focal_gamma}")
 
     trainer = DuckTrainer(
         model=model,
         args=training_args,
         other_label_id=other_label_id,
         other_alpha=other_alpha,
+        focal_gamma=focal_gamma,
         train_dataset=train_ds,
         eval_dataset=val_ds,
         data_collator=collate_fn,
