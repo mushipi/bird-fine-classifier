@@ -1078,3 +1078,39 @@ run13 でカルガモ 0.000(Mallard吸引)。素 AST で test カルガモ 67% �
 ### 次にやる
 
 ①run15 = AudioMAE（表現力軸）で Goldeneye song + カルガモ の分離を検証、または ②カルガモ/カワアイサを other に戻し成功2種(Gadwall/ウミアイサ)のみ昇格＝10種運用で確実に前進。run14 は不採用、12種ベストは run13(v13)。
+
+## 2026-06-04 表現軸 probe 検証: AudioMAE は総合AST以下・SSAMは断念
+
+### やったこと
+
+カルガモ/Goldeneye song の「表現力の壁」に対し、自己教師あり表現(AudioMAE/SSAM)を linear probe で検証。
+
+### AudioMAE 実装の落とし穴（再利用知見）
+
+- timm で `hf_hub:gaunernst/vit_base_patch16_1024_128.audiomae_as2m` をロード。
+- **前処理が AST と全く別**: kaldi.fbank(htk_compat, hanning, 128mel) + 正規化 (x-(-4.268))/(4.569*2)、1024frame固定。ASTFeatureExtractor 流用は不可（埋め込み崩壊 std~0.01）。
+- **3s音声はゼロpadでなく10sタイル**（pad 71%が定数支配で崩壊）。
+- **特徴は CLS でなく patch mean pool**。global_pool=token の CLS は MAE で定数的＝崩壊。
+- 生特徴の重心比較は MAE型に不利（生encoderは分類向けでない）→ linear probe に切替。
+
+### 結果（probe vs probe で公平比較）
+
+| | カルガモ F1 | 既存8種 | 12種 |
+|---|---|---|---|
+| AudioMAE probe | **0.140** | 0.528 | 0.422 |
+| AST probe | 0.000 | 0.631 | 0.472 |
+| run13 AST FT | 0.000 | 0.769 | 0.662 |
+
+- **総合は AST が上**（教師あり AudioSet が分類向け）。AudioMAE 全面採用の根拠は弱い。
+- **カルガモだけ AudioMAE のみ非ゼロ(0.140)**。AST が原理的に潰す種を自己教師あり表現は微細に保持＝芽はあるが小さい。
+- **SSAM は使える port が無く断念**（mamba-ssm ビルド+公式コード移植で AudioMAE の10倍超コスト）。
+
+### 学び
+
+- **表現軸に銀の弾丸なし**。データ追加(run07/13)・分類層(run14 focal)・表現力(AudioMAE/SSAM)を一通り試し、近縁カモ(カルガモ↔Mallard, Goldeneye↔Teal song)は現行リソースで分離困難と確定。
+- linear probe は「fine-tune コスト前の表現力判定」に有効。生特徴比較が MAE型に不適だった失敗から probe へ切替えたのが効いた。
+- 検証の網羅（データ→分類層→表現力）が完了。これ以上は「近縁ペアの受容」が現実解。
+
+### 次にやる
+
+実用化: カルガモ/カワアイサを other に戻し、成功2種(Gadwall/ウミアイサ)昇格の **10種運用** で確定（run15）。カルガモ/Goldeneye song は分離困難な近縁ペアとして受容。
