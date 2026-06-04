@@ -28,19 +28,13 @@ target_species:
   - en: "Common Pochard"
     sci: "Aythya ferina"
     ja: "ホシハジロ"
-  # run13: ood_tier1 から target 昇格（データ十分な4種）
+  # run13→run15: 昇格成功の2種のみ target に残す（カルガモ/カワアイサは other へ差戻し）
   - en: "Gadwall"
     sci: "Mareca strepera"
     ja: "オカヨシガモ"
   - en: "Red-breasted Merganser"
     sci: "Mergus serrator"
     ja: "ウミアイサ"
-  - en: "Eastern Spot-billed Duck"
-    sci: "Anas zonorhyncha"
-    ja: "カルガモ"
-  - en: "Common Merganser"
-    sci: "Mergus merganser"
-    ja: "カワアイサ"
 
 # ==================================================
 # ダウンロード設定
@@ -73,7 +67,7 @@ preprocessing:
 # ==================================================
 model:
   pretrained: "MIT/ast-finetuned-audioset-10-10-0.4593"
-  num_labels: 13                   # run13: 12種 + "other" クラス（8→12種に拡張）
+  num_labels: 11                   # run15: 10種 + "other"（Gadwall/ウミアイサのみ昇格成功）
   feature_extractor_max_length: 304  # 3s×16kHz のmelフレーム数（10s=1024の3/10）
   init_from: ""                      # run13: pretrained から初期化（12種で label 順序が変わり run11 ヘッド流用不可）
 
@@ -81,8 +75,8 @@ model:
 # 学習設定
 # ==================================================
 training:
-  output_dir: "models/ast-duck-v14"  # run14: focal loss で Mallard 多数派バイアス抑制、v13保護
-  focal_gamma: 2.0                   # run14: focal loss の gamma（0で従来CE）。多数派バイアス対策
+  output_dir: "models/ast-duck-v15"  # run15: 10種運用で確定、v13/v14保護
+  focal_gamma: 0.0                   # run15: 従来CEに戻す（run14 focal は失敗）
   num_train_epochs: 15
   per_device_train_batch_size: 4   # RTX 3060 Ti (VRAM 8GB) 想定
   per_device_eval_batch_size: 8
@@ -123,8 +117,10 @@ other_class:
   loss_alpha: 1.5                 # CE loss の "other" クラス重み（Recall 重視）
   seed: 42
   # Tier1: カモ科他種（パイプライン上で最も重要なOOD）
-  # run13: Gadwall / Red-breasted Merganser / Eastern Spot-billed Duck を target 昇格のため除外
+  # run15: カルガモ/カワアイサを other へ差戻し（Gadwall/ウミアイサのみ target 昇格成功）
   tier1_species:
+    - "Eastern Spot-billed Duck"
+    - "Common Merganser"
     - "Baikal Teal"
     - "Falcated Duck"
   # Tier2: 水辺の非カモ科（声質多様性のため）
