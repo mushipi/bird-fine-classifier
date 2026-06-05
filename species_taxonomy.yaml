@@ -17,7 +17,8 @@
 # ==================================================
 duck:
   pipeline:
-    stage2_model: "models/ast-duck-v15"
+    stage2_model: "models/ast-duck-v15"   # ★暫定★ 精度差は統計的に無意味(test 69録音)。
+    # test拡大→複数シード学習→CI選定 の後に正式モデルを再選定する(→ experiments.md 冒頭の但し書き)
     # run15 ood_eval (2026-06-05): 10種運用, AUROC energy=0.899 / FPR<=5% 推奨値
     # （旧 run11 9クラス: threshold 10.35 / AUROC 0.932。11クラス化で energy スケール変化）
     energy_threshold: 6.73

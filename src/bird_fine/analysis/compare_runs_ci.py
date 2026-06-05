@@ -37,8 +37,10 @@ EXIST8 = [
 
 # (name, eval_dir, test の git ref, label_map の git ref)。ref="cur" は現行 split。
 RUNS = [
+    ("run10", "outputs/eval_20260531_190005", "08380cc", "08380cc"),
     ("run11", "outputs/eval_20260531_231427", "038b443", "038b443"),
     ("run13", "outputs/eval_20260604_221425", "d23574b", "d23574b"),
+    ("run14", "outputs/eval_20260604_231559", "d23574b", "d23574b"),
     ("run15", "outputs/eval_20260605_054712", "cur", "cur"),
 ]
 B = 3000
