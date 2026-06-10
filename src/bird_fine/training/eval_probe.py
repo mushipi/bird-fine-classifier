@@ -45,16 +45,22 @@ def plot_confusion_matrix(cm, labels, save_path: Path, normalize: bool = True) -
     plt.tight_layout(); fig.savefig(save_path, dpi=120); plt.close(fig)
 
 
-def macro_auroc(y_true: np.ndarray, proba: np.ndarray, num_classes: int) -> float:
-    """macro-AUROC (OvR)。test に存在しないクラスがあると未定義になるため安全に処理。"""
-    if len(np.unique(y_true)) < 2:
-        return float("nan")
-    try:
-        return float(roc_auc_score(
-            y_true, proba, multi_class="ovr", average="macro", labels=list(range(num_classes))
-        ))
-    except ValueError:
-        return float("nan")  # 一部クラスが test に欠損 等で未定義のとき
+def macro_auroc(y_true: np.ndarray, proba: np.ndarray, labels) -> float:
+    """運用クラス(labels)のみで OvR macro-AUROC。各クラス二値 AUROC の平均。
+
+    label_map に残る空クラス(test support=0)を含めると roc_auc_score が未定義(nan)に
+    なるため、OvR を自前展開し、片側しか出現しないクラスはスキップして平均する。
+    """
+    aucs = []
+    for c in labels:
+        yc = (y_true == c).astype(int)
+        if yc.min() == yc.max():  # 正例 or 負例しか無い → 未定義、スキップ
+            continue
+        try:
+            aucs.append(roc_auc_score(yc, proba[:, c]))
+        except ValueError:
+            continue
+    return float(np.mean(aucs)) if aucs else float("nan")
 
 
 def aggregate_by_recording(proba, y, xc_id):
@@ -68,13 +74,13 @@ def aggregate_by_recording(proba, y, xc_id):
     return np.array(rec_y), np.vstack(rec_proba)
 
 
-def metrics_block(y, proba, num_classes, label_names):
+def metrics_block(y, proba, labels):
     preds = proba.argmax(axis=1)
     return {
         "n": int(len(y)),
-        "f1_macro": float(f1_score(y, preds, average="macro", zero_division=0)),
+        "f1_macro": float(f1_score(y, preds, labels=labels, average="macro", zero_division=0)),
         "top1_acc": float((y == preds).mean()),
-        "macro_auroc": macro_auroc(y, proba, num_classes),
+        "macro_auroc": macro_auroc(y, proba, labels),
     }, preds
 
 
@@ -95,6 +101,9 @@ def main() -> None:
     test = io_utils.load_embeddings(Path(args.emb_root) / meta["model"] / "test.npz")
     X = standardize_apply(get_features(test, meta["probe"]), mean, std)
     y, xc = test["y"], test["xc_id"]
+    # test に実在するクラスのみで評価（label_map に残る空クラスを macro 集計から除外）
+    operative = sorted(np.unique(y).tolist())
+    op_names = [label_names[i] for i in operative]
 
     model = build_probe(meta["probe"], meta["in_dim"], num_classes,
                         dropout=(meta["hparams"].get("dropout") or 0.0))
@@ -103,22 +112,22 @@ def main() -> None:
     with torch.no_grad():
         proba = torch.softmax(model(torch.from_numpy(X)), dim=-1).numpy()
 
-    chunk_m, preds = metrics_block(y, proba, num_classes, label_names)
+    chunk_m, preds = metrics_block(y, proba, operative)
     rec_y, rec_proba = aggregate_by_recording(proba, y, xc)
-    rec_m, _ = metrics_block(rec_y, rec_proba, num_classes, label_names)
+    rec_m, _ = metrics_block(rec_y, rec_proba, operative)
 
-    cm = confusion_matrix(y, preds, labels=list(range(num_classes)))
-    report = classification_report(y, preds, labels=list(range(num_classes)),
-                                   target_names=label_names, output_dict=True, zero_division=0)
+    cm = confusion_matrix(y, preds, labels=operative)
+    report = classification_report(y, preds, labels=operative,
+                                   target_names=op_names, output_dict=True, zero_division=0)
 
     ts = datetime.now().strftime("%Y%m%d_%H%M%S")
     out_dir = Path(args.out_root) / f"{args.run}_{ts}"
     out_dir.mkdir(parents=True, exist_ok=True)
-    plot_confusion_matrix(cm, label_names, out_dir / "confusion_matrix_norm.png", True)
-    pd.DataFrame(cm, index=label_names, columns=label_names).to_csv(out_dir / "confusion_matrix.csv")
+    plot_confusion_matrix(cm, op_names, out_dir / "confusion_matrix_norm.png", True)
+    pd.DataFrame(cm, index=op_names, columns=op_names).to_csv(out_dir / "confusion_matrix.csv")
     pd.DataFrame({"y_true": y, "y_pred": preds, "xc_id": xc}).to_csv(out_dir / "predictions.csv", index=False)
     result = {"run": args.run, "model": meta["model"], "probe": meta["probe"],
-              "chunk_level": chunk_m, "recording_level": rec_m,
+              "operative_classes": op_names, "chunk_level": chunk_m, "recording_level": rec_m,
               "best_val_f1": meta.get("best_val_f1"), "classification_report": report}
     (out_dir / "report.json").write_text(json.dumps(result, indent=2, ensure_ascii=False), encoding="utf-8")
 
@@ -127,8 +136,8 @@ def main() -> None:
           f"AUROC={chunk_m['macro_auroc']:.4f}  (n={chunk_m['n']})")
     print(f"  record: f1_macro={rec_m['f1_macro']:.4f}  top1={rec_m['top1_acc']:.4f}  "
           f"AUROC={rec_m['macro_auroc']:.4f}  (n={rec_m['n']})")
-    print(f"  vs AST baseline (test f1_macro 0.838): "
-          f"{'UP' if chunk_m['f1_macro'] > 0.838 else 'DOWN'} ({chunk_m['f1_macro']-0.838:+.4f})")
+    print(f"  運用{len(operative)}種で評価（label_map の空クラスを除外）。"
+          f"旧8種AST(0.838)とは対象種が異なり直接比較不可。")
     print(f"  -> {out_dir}")
 
 
