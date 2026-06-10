@@ -60,3 +60,12 @@ Thumbs.db
 # Qiita 記事下書き（プロジェクト外の成果物）
 /qiita_draft.md
 /qiita_assets/
+
+# Foundation Model ナレッジ基盤・重み（一次資料、git管理外）
+/references/
+# 埋め込みキャッシュ（再生成可能な中間物）
+/data/embeddings/
+*.npz
+*.npy
+# 抽出ツールの隔離環境
+/tools/**/.venv/
