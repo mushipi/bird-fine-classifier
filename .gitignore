@@ -60,3 +60,7 @@ Thumbs.db
 # Qiita 記事下書き（プロジェクト外の成果物）
 /qiita_draft.md
 /qiita_assets/
+/data/ood/
+*.bak
+/docs/qiita_figures/
+/docs/qiita_part2_draft.md
