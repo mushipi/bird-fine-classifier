@@ -1,0 +1,36 @@
+# species_taxonomy.yaml
+# Stage2 AST パイプラインの設定ファイル。
+# 種リストの管理は data/species_master.csv が主マスタ。
+# このファイルはモデルパス・閾値・温度パラメータのみを保持する。
+#
+# Dispatcher のルーティングテーブル（stage2_triggers）は
+# species_master.csv から動的に生成する:
+#   triggers = master[(master.group == group) &
+#                     (master.status.isin(["target", "ood_tier1"]))]["en_birdnet"]
+#
+# energy スコア規約:
+#   score = T * logsumexp(logits / T)  （高い = in-distribution）
+#   softmax confidence とは別物。混同注意。
+
+# ==================================================
+# カモ類グループ
+# ==================================================
+duck:
+  pipeline:
+    stage2_model: "models/ast-duck-C-kd-soup"   # 2026-06-12: Perch→KD蒸留 3seed soup を昇格
+    # 経緯: 10種運用。Perch教師(複数arm平均,OOF)を蒸留し多seed soup で固めた。
+    # 録音単位f1(test n=231): base-soup 0.813 → KD-soup 0.871、差+0.058 95%CI[+0.018,+0.108]=有意
+    # （seed42/1/2 全てで KD>base 一貫、差+0.027±0.004）。詳細→ docs/perch_kd_report.md
+    # ood_eval (2026-06-12, KD-soup): AUROC energy=0.886 / FPR<=5% 推奨。10クラス(other無し)。
+    # 旧: v15(11クラス) threshold 6.73 / AUROC 0.899。10クラス化で energy スケール変化。
+    energy_threshold: 2.948
+    energy_temperature: 1.0  # 1.0 = Temperature Scaling なし
+
+# ==================================================
+# カラス類グループ（実装予定）
+# ==================================================
+crow:
+  pipeline:
+    stage2_model: null          # TBD: models/ast-crow-v1
+    energy_threshold: null      # TBD: 学習・ood_eval 後に設定
+    energy_temperature: 1.0

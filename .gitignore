@@ -69,3 +69,9 @@ Thumbs.db
 *.npy
 # 抽出ツールの隔離環境
 /tools/**/.venv/
+
+# 追加(local由来)
+/data/ood/
+*.bak
+/docs/qiita_figures/
+/docs/qiita_part2_draft.md

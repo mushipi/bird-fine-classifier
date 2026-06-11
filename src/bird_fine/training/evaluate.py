@@ -154,6 +154,7 @@ def main() -> None:
         splits_dir=splits_dir,
         pretrained=model_cfg["pretrained"],
         project_root=PROJECT_ROOT,
+        max_length=int(model_cfg.get("feature_extractor_max_length", 1024)),
     )
     id2label = {v: k for k, v in label_map.items()}
     label_names = [id2label[i] for i in range(len(id2label))]

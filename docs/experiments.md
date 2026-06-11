@@ -4,6 +4,25 @@
 
 ---
 
+## ⚠️ 評価プロトコルに関する重要な但し書き（2026-06-05 追記）
+
+**本ログの run 間の精度比較（特に ±0.05 未満の差）は統計的に有意でない。**
+
+- test は録音数が少なく（既存8種で **69 録音**）、同一録音内の chunk は強く相関する。
+  chunk 単位 macro-F1 は実効サンプルを過大評価し CI を過小評価＋録音内の一部誤分類を
+  ペナルティして**性能を過小評価**する。
+- 録音単位クラスタ bootstrap（`bird_fine.analysis.compare_runs_ci`）で run11/13/15 の既存8種を
+  検証した結果、**全ペア差の 95%CI が 0 を含む（＝差なし）**。CI 幅は ±0.1。
+  点推定の順位すら指標（chunk単位 vs 録音単位）で逆転した（例: chunk単位 run11>run15>run13、
+  録音単位 run13>run11>run15）。
+- **したがって各 run セクションの f1 値・「+0.0XX 改善/悪化」の記述は参考値**であり、
+  run の優劣を断定する根拠にはならない。**意思決定は大きな構造的差**（例: カルガモ F1=0.000、
+  失敗種除去で f1_macro が桁で動く等）**と定性的所見のみ**で行うこと。
+- 今後の全比較は **録音単位 + bootstrap CI** で行い、CI が重なる差は「差なし」と扱う。
+  test の録音数拡大が最優先の改善課題。
+
+---
+
 ## run01 — baseline (2026-05-19)
 
 **出力:** `models/ast-duck/`
@@ -1056,8 +1075,629 @@ run08 で chunks 半減が効かなかった事実から:
 
 ---
 
+## run10 — 前処理パラダイム変更: 10s→3sチャンク / BirdNet pipeline alignment (2026-05-31)
+
+**ステータス:** 学習前記録（事前登録）
+**出力:** `models/ast-duck-v10/`
+
+### 変更概要
+
+| パラメータ | run09（旧） | run10（今回） | 変更理由 |
+|---|---|---|---|
+| `chunk_duration_sec` | 10.0 | **3.0** | BirdNet 3s窓に合わせる |
+| `min_chunk_duration_sec` | 3.0 | **1.0** | 端数チャンクを救う |
+| `feature_extractor_max_length` | 1024 | **304** | 3s×16kHz のmelフレーム数 |
+| `output_dir` | ast-duck-v9 | **ast-duck-v10** | 新規run |
+| lr / wd / patience | 2.0e-5 / 0.03 / 4 | 同じ | run05ベースラインを継承 |
+| SpecAugment | off | off | 固定変数 |
+
+**旧 run10 計画（cap=30/50）との関係:** Ubuntu移行 + BirdNetコード確認を機に、チャンク長変更という上位の問題を先に解決することにした。cap 実験は 3s チャンク体制が安定してから再検討。
+
+### 仮説と予測
+
+**前提:** BirdNet は 3秒窓で音声を処理し「カモ類」を検出する。本モデルがその3秒音声を受け取る想定なのに、10秒チャンクで学習していたのは設計上の不整合。
+
+**H1: チャンク数が増加する（録音あたり約3倍）**
+- 10秒チャンクより細かく切れるため train/val/test の総チャンク数が増加するはず
+
+**H2: Tufted_Duck の過剰予測が緩和方向に動く**
+- XC488112/XC488113 は run09 の知見に基づき chunks_index.csv 段階で全splits から完全除外済み。3s チャンクで残る 27 録音 477 chunks から学習する
+
+**H3: val / test f1 は初回でrun05（0.838）を超えない可能性が高い**
+- AST の位置埋め込みは 10s（1024フレーム）向けに事前学習済み。3s（304フレーム）への適応は fine-tune で徐々に進む
+- ただし run05 と同ハイパラなので早期に拮抗できれば成功と見なす
+
+**数値予測:**
+- 総 train チャンク数: 現状の 2.5〜3.0 倍（10s→3s で単純計算 3.3倍、端数・短尺除外で減少）
+- val f1_macro: 0.80〜0.86（初期適応コスト + データ増の効果が拮抗）
+- test f1_macro: 0.80〜0.86
+
+**検証後の分岐:**
+- test f1 ≥ 0.838（run05相当）→ 3sチャンク体制で実験継続（run11でTufted cap再検討）
+- test f1 < 0.838 かつ Tufted F1 改善 → 3sチャンクは方向性として正しい。別ハイパラで run12
+- test f1 < 0.838 かつ Tufted F1 も悪化 → 3sチャンクがASTの事前学習と相性が悪い可能性。10sに戻すか別モデル検討
+
+### 学習前のチャンク分布（実数）
+
+XC488112 (899 chunks) / XC488113 (989 chunks) を chunks_index.csv から除外後に re-split。
+
+| 種 | train | val | test |
+|---|---|---|---|
+| Common_Goldeneye | 499 | 42 | 199 |
+| Common_Pochard | 619 | 238 | 247 |
+| Eurasian_Teal | 983 | 55 | 230 |
+| Eurasian_Wigeon | 525 | 159 | 104 |
+| Mallard | 1270 | 237 | 222 |
+| Northern_Pintail | 305 | 107 | 47 |
+| Northern_Shoveler | 243 | 53 | 35 |
+| Tufted_Duck | **477** | **76** | **70** |
+| **合計** | **4921** | **967** | **1154** |
+
+- run05（10s train ~2000）比で train は約 2.5倍
+- Tufted_Duck val が 1032→76 に正常化（XC488113 除外効果）
+
+### 結果
+
+early stopping: epoch 10 で停止（patience=4、best=epoch 6）
+
+| epoch | eval_loss | eval_f1_macro | 備考 |
+|---|---|---|---|
+| 1 | 0.829 | 0.676 | |
+| 2 | 0.847 | 0.729 | |
+| 3 | 0.954 | 0.781 | |
+| 4 | 1.064 | 0.774 | |
+| 5 | 1.002 | 0.764 | |
+| **6** | **0.922** | **0.806** | **← best** |
+| 7 | 0.966 | 0.798 | |
+| 8 | 0.991 | 0.790 | |
+| 9 | 1.005 | 0.791 | |
+| 10 | 1.013 | 0.791 | early stop |
+
+### メトリクス（run05比較）
+
+| 指標 | run05 | run10 | 差分 |
+|---|---|---|---|
+| val f1_macro | 0.840 | 0.806 | −0.034 |
+| test f1_macro | **0.838** | **0.782** | **−0.056** |
+| accuracy | - | 0.816 | |
+
+### 種別 test F1（run05 / run10 比較）
+
+| 種 | test n | run05 | run10 | 差分 |
+|---|---|---|---|---|
+| Common_Goldeneye | 199 | 0.930 | 0.729 | **−0.201** |
+| Common_Pochard | 63→247 | 0.945 | 0.947 | +0.002 |
+| Eurasian_Teal | 86→230 | 0.844 | 0.772 | −0.072 |
+| Eurasian_Wigeon | 27→104 | 0.809 | 0.813 | +0.004 |
+| Mallard | 46→222 | 0.918 | 0.843 | −0.075 |
+| Northern_Pintail | 28→47 | 0.949 | 0.722 | **−0.227** |
+| Northern_Shoveler | 14→35 | 0.923 | 0.693 | −0.230 |
+| **Tufted_Duck** | 10→70 | **0.389** | **0.738** | **+0.349** |
+
+※ test n が run05 と異なる（3sチャンクで再分割のため）
+
+### 所見
+
+- **H1 成立**: train チャンク数 ~2000→4921（約2.5倍）
+- **H2 成立**: Tufted_Duck F1 0.389→0.738（+0.349）。XC488112/XC488113 除外 + 3s チャンク化の複合効果
+- **H3 成立**: test f1 0.782 で run05（0.838）を下回る。AST 位置埋め込みの再適応コストが出た
+- **全体 test f1 は低下（−0.056）**: Goldeneye（−0.201）・Pintail（−0.227）・Shoveler（−0.230）が大幅悪化。train チャンク数の少ない種が 3s 移行で影響を受けた可能性
+- **val f1 のピーク（epoch 6: 0.806）と早期停止**: val 曲線は epoch 3 をピークに上下し、epoch 6 に再上昇。`load_best_model_at_end` が epoch 6 を選んだのは妥当
+- **train.py の技術的課題**: 位置埋め込みのリサイズ後に `model.config.max_length` を更新していなかったため、保存済み config.json と実際の重みが不一致。config.json を手動で修正（→ 次回から自動化済み）
+
+---
+
+---
+
+## run11 — "other" クラス追加による OOD 検知 (2026-05-31)
+
+**ステータス:** 完了
+**出力:** `models/ast-duck-v11/`
+**初期化元:** `models/ast-duck-v10/`（run10チェックポイントから分類ヘッドを拡張）
+
+### 変更概要
+
+| 項目 | run10 | run11 |
+|---|---|---|
+| num_labels | 8 | **9**（+`other`クラス）|
+| metric_for_best_model | f1_macro | **f1_macro_8class**（8種のみ）|
+| WeightedRandomSampler | なし | **あり**（全クラス均等サンプリング）|
+| CE loss | 均等 | **[1.0×8, 1.5×other]**（固定値・Double Dipping なし）|
+| SpecAugment | off | **other クラスにのみ適用**（8種の境界を守る）|
+| init | pretrained AST | **run10 checkpoint**（8クラス重みを保持して拡張）|
+
+### "other" クラスデータ
+
+recording 単位で train20 / eval10 に分割、per-recording cap=30 で過学習防止。
+
+| 種 | tier | train録音 | eval録音 |
+|---|---|---|---|
+| Eastern Spot-billed Duck | 1 | 2 | 0 |
+| Gadwall | 1 | 20 | 10 |
+| Baikal Teal | 1 | 3 | 0 |
+| Falcated Duck | 1 | 3 | 0 |
+| Red-breasted Merganser | 1 | 20 | 5 |
+| Eurasian Coot | 2 | 20 | 10 |
+| Little Grebe | 2 | 20 | 10 |
+| **合計** | | **1220 chunks** | **391 chunks** |
+
+### 仮説と予測
+
+**H1: 既存8種の精度（f1_macro_8class）が run10（val 0.806）を下回らない**
+- run10 チェックポイントから分類ヘッドをゼロ拡張して初期化
+- "other" ニューロンが徐々に学習される一方、8クラス境界は開始時点で保持
+- Double Dipping を排除したことで "other" 学習が8種境界を侵食しない
+
+**H2: OOD チャンクの energy_score が run10 比で低下する**
+- "other" クラスを学習したことでモデルが「カモ以外の音」に低エネルギーを割り当てる
+- AUROC（energy）が run10 の 0.894 を超える
+
+**H3: other_recall（val）が最終的に 0.5 以上になる**
+- val の "other" 391チャンクに対して半数以上を正しく弾ける
+
+**数値予測:**
+- val f1_macro_8class: 0.78 以上（run10 の 0.806 付近を維持）
+- val other_recall: 0.50〜0.80
+- OOD eval AUROC（energy）: 0.92 以上
+
+**検証後の分岐:**
+- f1_8class ≥ 0.78 かつ other_recall ≥ 0.5 → OOD対策として有効。confidence_threshold を設定して pipeline に組み込む
+- f1_8class < 0.78（8種境界が侵食）→ alpha を下げる / 別ハイパラで run12
+- other_recall < 0.5（"other" を学習できず）→ データ量・多様性を再検討
+
+### 結果
+
+early stopping: epoch 5 で停止（patience=4、best=epoch 2）
+
+| epoch | eval_loss | f1_macro | f1_macro_8class | other_recall |
+|---|---|---|---|---|
+| 1 | 1.895 | 0.595 | 0.778 | **0.090** |
+| **2** | **2.550** | **0.586** | **0.800** | 0.023 |
+| 3 | 3.183 | 0.567 | 0.775 | 0.000 |
+| 4 | 3.028 | 0.573 | 0.791 | 0.005 |
+| 5 | 3.124 | 0.574 | 0.789 | 0.008 |
+
+### test 評価（8種のみ・test.csv 1154チャンク）
+
+| 指標 | run10 | run11 | 差分 |
+|---|---|---|---|
+| test f1_macro（8種のみ） | 0.782 | **0.793** | **+0.011** |
+| test accuracy | 0.816 | 0.822 | +0.006 |
+
+### 種別 test F1
+
+| 種 | run10 | run11 | 差分 |
+|---|---|---|---|
+| Common_Goldeneye | 0.729 | 0.743 | +0.014 |
+| Common_Pochard | 0.947 | **0.956** | +0.009 |
+| Eurasian_Teal | 0.772 | 0.793 | +0.021 |
+| Eurasian_Wigeon | 0.813 | 0.790 | −0.023 |
+| Mallard | 0.843 | 0.825 | −0.018 |
+| Northern_Pintail | 0.722 | **0.832** | **+0.110** |
+| Northern_Shoveler | 0.693 | 0.738 | +0.045 |
+| **Tufted_Duck** | 0.738 | **0.703** | −0.035 |
+
+### OOD 評価（Energy-based）
+
+| スコア | run10 | run11 | 差分 |
+|---|---|---|---|
+| AUROC softmax | 0.838 | 0.854 | +0.016 |
+| **AUROC energy** | **0.894** | **0.932** | **+0.038** |
+| 推奨閾値（energy, FPR≤5%）| 10.29 | 10.35 | - |
+
+OOD mean energy: Tier1=6.44 / Tier2=5.89 / Tier3=6.50（run10比で全tier低下 → 正しい方向）
+
+### 所見
+
+- **H1 成立（ほぼ）**: f1_macro_8class val=0.800（run10 0.806 から −0.006 の微減）。8種境界はほぼ保持された
+- **H2 成立**: AUROC energy 0.894 → **0.932（+0.038）**。"other" クラスの学習で energy スコアの分離が向上
+- **H3 不成立（ただし問題設定の読み替えで解消）**: other_recall は最大 0.090 で H3 予測の 0.5 に大幅未達。val での softmax 分類としての "other" 検知はできていない。しかし——
+- **Outlier Exposure としての正しい解釈**: run11 の目的は「"other" を正しく分類すること」ではなく「OOD データを学習に晒すことで energy 空間を calibrate すること」だった（Hendrycks et al., 2018 の Outlier Exposure と同じ設計）。AUROC energy 0.932 はこの目的が達成されたことを示す。other_recall の低さは「Outlier Exposure として成功した結果」であり失敗ではない
+- **eval_loss が epoch1→5 で単調増加**（1.895→3.124）は "other" val チャンクが混入したことで loss スケールが変化した可能性。モデル選択基準として `f1_macro_8class` を使ったため実害なし
+- **test F1（8種）は run10 比 +0.011 の微改善**。Outlier Exposure が 8 種の決定境界を侵食しなかった証拠。特に Pintail +0.110 が顕著
+
+### 次ステップ
+
+run11 モデルを **Outlier Exposure によるエネルギー空間キャリブレーション済みモデル** として確定し、`predict.py` に energy gate を実装することで「システムとしての OOD 弾き」を構築する。
+
+```
+推論パイプライン:
+  logits → energy = T * logsumexp(logits / T)
+  energy < energy_threshold(10.35) → reject ("unknown")
+  energy >= 10.35 → argmax(logits) → 8 種の予測結果
+```
+
+閾値・温度は `species_taxonomy.yaml` で管理（`energy_threshold: 10.35` / `energy_temperature: 1.0`）。
+
+---
+
+## test v2 — ドメイン整合（juvenile/nestling 除外）による評価セット修正 (2026-06-03)
+
+**ステータス:** 完了（評価土台の修正・run 番号は消費しない）
+
+### 背景
+
+「幼鳥は冬の日本のモニタリングに不要では?」という問いを検証。test の juvenile 録音は
+**繁殖期・繁殖地**（XC667403/667392 = 2021-08-05 フランスの雛 begging call）で、冬の日本では
+遭遇しない音響パターン。これらを評価に含めると Tufted recall=0.000 で性能を過小評価していた。
+
+### 対処
+
+`filter_domain.py` で **val/test から stage∋juvenile/nestling を除外**（train は多様性のため不変）。
+
+| split | 変更前 | 除外 | 変更後 |
+|---|---|---|---|
+| val | 1358 | 73 (Mallard juvenile 1録音) | 1285 |
+| test | 1154 | 116 (4録音: Mallard/Tufted×2/Teal) | 1038 |
+
+### run11 再評価（旧 test → test v2、モデルは run11=v11 のまま）
+
+| 指標 | 旧 test(1154) | **test v2(1038)** | 差分 |
+|---|---|---|---|
+| f1_macro_8class | 0.798 | **0.808** | +0.010 |
+| Tufted_Duck F1 | 0.703 | **0.767** | **+0.064** |
+
+繁殖期(5-8月)を月で除外する案は adult call まで巻き込み f1_8=0.764 / Tufted=0.480 と悪化した
+ため不採用。**stage ベース除外が正しい**。
+
+### 所見
+
+- run12 以降の baseline は **test v2** とする（f1_macro_8class 0.808）。
+- 旧 split は `*.csv.bak` に退避。train/test とも日本録音0・繁殖期混在というドメイン乖離は残課題
+  （→ journal.md 2026-06-03。worldwide フォールバックの帰結）。
+
+---
+
+## run12 — AudioMAE 全体fine-tune による表現力評価 (2026-06-02)
+
+**ステータス:** 学習前記録（事前登録・実装未着手）
+**出力予定:** `models/audiomae-duck-v12/`（バックボーンが変わるため命名を AST と区別）
+**初期化元:** timm 移植チェックポイント `gaunernst/vit_base_patch16_1024_128.audiomae_as2m`
+
+### 背景（なぜ AudioMAE か）
+
+run11 の種別誤分類をメタデータ駆動で精査した結果（→ journal.md 2026-06-02、`docs/model_comparison_audiomae_ssam.md` 結論更新）、弱点が2型に分離した:
+- **データ不在型**（Tufted juvenile）: 世界に2録音で枯渇 → 解決不能
+- **表現力不足型**（Goldeneye `song`）: Eurasian_Teal の song と音響類似・train データ十分 → **バックボーン強化が本命**
+
+埋め込み分析で、誤分類 Goldeneye song の **68%が train Teal song の方に近く**（正解 song は 0%）、train GE song↔Teal song 重心 cos=**0.880**。データ施策が尽きたため、**自己教師あり事前学習（MAE）による低レベルスペクトル表現で song を分離できるか**を評価する。
+
+### 変更概要
+
+| 項目 | run11 (AST) | run12 (AudioMAE) |
+|---|---|---|
+| backbone | ASTForAudioClassification (教師あり AudioSet) | timm ViT-B + AudioMAE (自己教師あり MAE) |
+| 事前学習 | 教師あり | **自己教師あり（マスク再構成）** |
+| num_labels | 9（8種 + other） | 9（踏襲）|
+| メルビン数 | 128 | 128（共有・前処理再利用度大）|
+| max_length | 304 | 304（位置埋め込みを 1024→304 相当に補間）|
+| feature extractor | ASTFeatureExtractor | **自前実装**（128mel・AudioMAE 正規化統計に合わせる）|
+| Sampler / Loss / SpecAugment | WeightedRandomSampler / [1.0×8,1.5×other] / other のみ | **run11 と同一**（DuckTrainer 流用）|
+| metric_for_best_model | f1_macro_8class | f1_macro_8class（踏襲）|
+
+### 実装前 Go/No-Go チェックリスト（model_comparison §6 準拠）
+
+着手前に読み取り/小規模検証で確認する。いずれか No なら見送り or 後回し。
+
+- [ ] **ckpt 入手**: `gaunernst/vit_base_patch16_1024_128.audiomae_as2m` を timm でロードできるか
+- [ ] **依存導入**: `uv add timm`（純Python・ビルド不要）で済むか
+- [ ] **VRAM 実測**: fp16 + gradient_checkpointing + effective batch 16 で RTX 3060 Ti (8GB) に収まるか
+- [ ] **入力整合**: 128mel / max_length=304 / 正規化統計を ckpt 仕様に合わせられるか
+- [ ] **A/B 再現条件**: 既存 `data/splits/{train,val,test}.csv`・`f1_macro_8class`・seed=42 で公平比較できるか
+
+### 仮説と予測（予測値を学習前に固定）
+
+baseline = run11: test f1_macro_8class **0.793** / Goldeneye test F1 **0.743** / AUROC energy **0.932**
+
+**H1（主）: Goldeneye の song 分離が改善し、Goldeneye test F1 が run11 を上回る**
+- 自己教師あり MAE が AudioSet 教師ラベルに縛られず低レベルスペクトル構造を学ぶため、song の微細差を AST より分離できる
+- 予測: Goldeneye test F1 **0.76〜0.82**
+
+**H2: 8種全体の精度が run11 を大きく下回らない**
+- リスク: 位置埋め込み補間の適応コスト（run10 で AST が 10s→3s で test −0.056 した前例）
+- 予測: test f1_macro_8class **0.78〜0.83**（run11 0.793 ± 域内維持）
+
+**H3（機序）: 誤分類 Goldeneye song の「Teal 重心寄り割合」が 68% から低下する**
+- run12 埋め込みで再測定して検証（同一手順）
+
+**検証後の分岐:**
+- H1成立 ∧ H2成立 → **表現力ボトルネック仮説を確証**。AudioMAE 採用、SSAM も PoC 検討
+- H1不成立（Goldeneye 改善せず）→ song 類似は AudioMAE でも分離不能。前処理（mel分解能・入力長）or SSAM、あるいは「この2種は分離限界」と受容
+- H2不成立（全体悪化）→ 位置埋め込み適応 or layer-wise LR decay 等のハイパラ再調整。AST 維持も選択肢
+
+### 実装タスク概略（着手時）
+
+1. timm バックボーン読み込み → 9クラス分類ヘッド付与（`expand_classifier` 流用可）
+2. 128mel 特徴抽出を自前実装（AudioMAE 正規化統計に合わせる）
+3. 位置埋め込み補間（10s/1024 → 3s/304 相当。現行 `resize_position_embeddings` を移植）
+4. `DuckTrainer`（WeightedRandomSampler + other重みCE）に載せる（モデル非依存なので流用可）
+5. 学習後: OOD energy gate を再キャリブレーション（閾値・AUROC を再測定）
+
+### 結果
+
+（学習後に記入）
+
+### 所見
+
+（学習後に記入）
+
+---
+
+## run13 — 対象種拡張: 8種 → 12種（ood_tier1 カモ科の target 昇格） (2026-06-03)
+
+**ステータス:** 学習前記録（事前登録）。split まで構築済み・学習未着手
+**出力予定:** `models/ast-duck-v13/`
+**初期化元:** **pretrained**（`MIT/ast-finetuned-audioset-10-10-0.4593`）
+
+### 背景
+
+「幼鳥は冬の日本に不要」のドメイン検証（test v2）から派生し、対象種を増やす検証へ。
+`species_master.csv` の ood_tier1 カモ科のうち**データ十分な4種**を target 昇格する。
+下位3種（Baikal Teal/Falcated Duck/Greater Scaup）は録音不足のため見送り、other に残置。
+
+### 変更概要
+
+| 項目 | run11 | run13 |
+|---|---|---|
+| 対象種 | 8 | **12**（+Gadwall/ウミアイサ/カルガモ/カワアイサ）|
+| num_labels | 9 | **13**（12種 + other）|
+| other tier1 | 5種 | **2種**（Baikal Teal / Falcated Duck）|
+| init | run10 ヘッド拡張 | **pretrained**（12種で label 順序が変わり run11 ヘッド流用不可）|
+| split | — | **既存8種は run11 保持・新4種のみ seed=42 で 70/15/15 追記**（既存8種を公平比較）|
+| test | test v2(1038) | 1261（既存8種 test v2 + 新4種、juvenile/nestling 除外済み）|
+
+### 昇格4種のデータ（target 化後）
+
+| 種 | train録音 | val | test | train chunks |
+|---|---|---|---|---|
+| Gadwall オカヨシガモ | 30 | 6 | 8 | 855 |
+| Red-breasted Merganser ウミアイサ | 17 | 3 | 5 | 299 |
+| Eastern Spot-billed Duck カルガモ | 11 | 2 | 3 | 302（worldwide 追加収集）|
+| Common Merganser カワアイサ | 8 | 1 | 3 | 195 |
+
+### 仮説と予測（予測値を学習前に固定）
+
+baseline = run11 (test v2): f1_macro_8class **0.808** / AUROC energy **0.932**
+
+**H1: 既存8種の精度が大きく低下しない**
+- 既存8種の test 録音は run11 と同一（公平比較）。クラス増で決定境界は増えるが既存学習データは不変
+- 予測: 既存8種 f1_macro_8class **0.77〜0.81**（run11 0.808 から ∓域内）
+
+**H2: 新4種は録音数相応の F1**
+- 録音多様性が効く（run01〜09 の知見）。Gadwall(30録音)>RBM(17)>カルガモ(11)>カワアイサ(8)
+- 予測: 新4種 f1_macro **0.40〜0.60**（Gadwall 0.6+、カワアイサ/カルガモは録音少で 0.2〜0.5）
+
+**H3: OOD energy gate が大きく劣化しない**
+- other tier1 が 5→2種に縮小。カモ科 OOD の多様性低下が AUROC に影響しうる
+- 予測: AUROC energy **0.88〜0.93**
+
+**12種全体予測:** f1_macro_12class **0.70〜0.78**（新4種が全体を押し下げる）
+
+### 検証後の分岐
+
+- H1成立 ∧ 新4種が実用水準 → 12種化成功。次は run14 = AudioMAE で Goldeneye song + 増えた近縁種の表現力評価
+- H1不成立（既存8種低下）→ クラス増による容量不足。ハイパラ調整 or AudioMAE を先行
+- 新4種が極端に低い（特にカワアイサ/カルガモ）→ 録音不足種を other に戻す or 追加収集
+
+### 結果
+
+early stop epoch 10（best は val f1_macro_8class 基準）。test（1261, 既存8種は run11 と同一録音）。
+
+| 指標 | run13 | baseline | 判定 |
+|---|---|---|---|
+| **既存8種 f1_macro_8** | **0.769** | run11 test v2 0.808 | H1 ほぼ不成立（−0.039、予測下限 0.77 を僅か割れ）|
+| 新4種 f1_macro_4 | 0.449 | 予測 0.40〜0.60 | H2 域内（ただし種で二極化）|
+| 12種 f1_macro_12 | 0.662 | 予測 0.70〜0.78 | やや下振れ |
+| accuracy(13cls) | 0.765 | — | — |
+| **OOD AUROC energy** | **0.902** | run11 0.932 | H3 成立（予測 0.88〜0.93、閾値 11.461）|
+
+**種別 F1**:
+- 新4種: Gadwall **0.823**(録音30) / ウミアイサ **0.746**(17) ＝成功 / カワアイサ 0.227(8) / **カルガモ 0.000**(11) ＝失敗
+- 既存8種で低下: Mallard **0.627** / Goldeneye 0.679 / Shoveler 0.658
+
+### 所見
+
+- **Gadwall・ウミアイサの昇格は成功**（録音30/17 で自種を保持）。**カルガモ・カワアイサは失敗**。
+- **真因は同属相互混同ではなく Mallard の「吸引ハブ」化**。カルガモ(27ch)は 18→Mallard で**自種予測0**、
+  カワアイサも 16→Mallard / 13→Goldeneye。pred=Mallard の内訳は Mallard 116 に対し Teal23/Gadwall23/
+  カルガモ18/カワアイサ16 と多種が流入 → Mallard precision 低下 → 既存8種 f1 を −0.039 押し下げた。
+- カルガモは Anas 属で Mallard に音響的に酷似＋録音11で多数派バイアスに負け全滅。**録音追加(worldwide
+  16本上限)では Goldeneye song 同様「表現力/多数派バイアス」の壁の可能性**。
+- run01〜09 の「録音数が効く」が再確認された（成功2種は録音多・失敗2種は録音少）。
+
+### 検証後の分岐（採用判断）
+
+H1 ほぼ不成立・新4種二極化のため、**12種そのまま採用は見送り**が妥当。候補:
+1. **Gadwall・ウミアイサのみ昇格（10種）** ＝成功2種に絞り、カルガモ/カワアイサは other に戻す
+2. Mallard 過剰予測対策（CE クラス重み or sampler 調整）を入れて 12種を再学習
+3. run14 = AudioMAE で表現力を上げ、カルガモ/Goldeneye song の音響類似を分離できるか検証
+
+`species_taxonomy.yaml`（v13 / energy_threshold 11.461）への切替は採用判断後に行う。
+
+---
+
+## run14 — focal loss で Mallard 多数派バイアスを抑制 (2026-06-04)
+
+**ステータス:** 学習前記録（事前登録）
+**出力予定:** `models/ast-duck-v14/`
+**初期化元:** pretrained（run13 と同条件。**loss のみの1変更**で公平比較）
+
+### 背景
+
+run13 でカルガモ F1=0.000・カワアイサ 0.227 が Mallard に吸われた。埋め込み切り分けで、
+**素の pretrained AST では test カルガモの 67% がカルガモ寄り**（run13 学習後は 0%）と判明。
+表現力ではなく **run13 学習が Mallard 多数派に最適化して分類層の境界を潰した**のが主因。
+focal loss で難サンプル（境界付近のカルガモ）を強調し、易しい Mallard の損失を下げて是正する。
+
+### 変更概要
+
+| 項目 | run13 | run14 |
+|---|---|---|
+| loss | CE（other に alpha=1.5）| **focal loss (gamma=2.0)** + 同 class weight |
+| sampler / split / init / 種数 | — | **run13 と同一**（種均等 sampler・12種・pretrained）|
+
+### 仮説と予測（学習前に固定）
+
+baseline = run13: 既存8種 f1_macro_8 **0.769** / カルガモ **0.000** / カワアイサ 0.227 / 12種 0.662
+
+- **H1**: カルガモ F1 > **0.3**（素 AST で 67% 分離可能＝分類層是正で救える）
+- **H2**: 既存8種 f1_macro_8 ≥ **0.769**（Mallard precision 改善でむしろ上振れも）
+- **H3**: 12種 f1_macro_12 > **0.70**
+- リスク: Mallard recall 低下（precision とのトレードオフ）。Mallard F1 を監視。
+
+### 検証後の分岐
+
+- カルガモ救済 ∧ 既存8種維持 → 選択肢2成功。12種採用へ。species_taxonomy.yaml を v14 に
+- カルガモ救えない → 分類層では限界＝表現力。run15 = AudioMAE へ
+- 既存8種が大幅低下 → gamma 過大。gamma=1.0 等へ
+
+### 結果
+
+early stop epoch 8。test（1261, 12種）。
+
+| 指標 | run14 (focal) | run13 (CE) | 判定 |
+|---|---|---|---|
+| **カルガモ F1** | **0.000** | 0.000 | **H1 不成立** |
+| 既存8種 f1_macro_8 | 0.761 | 0.769 | H2 ほぼ維持（−0.008）|
+| 新4種 f1_macro_4 | 0.416 | 0.449 | 悪化 |
+| 12種 f1_macro_12 | 0.646 | 0.662 | **H3 不成立**（−0.016）|
+| Mallard F1 | **0.674** | 0.627 | +0.047（precision 改善）|
+
+種別: Gadwall 0.850(+0.027) / ウミアイサ 0.643(−0.103) / カワアイサ 0.170(−0.057) / **カルガモ 0.000(不変)**。
+カルガモは依然 17→Mallard / 9→Goldeneye。pred=Mallard には Teal29/カルガモ17/Gadwall15 が流入し続ける。
+
+### 所見
+
+> **【2026-06-06 録音単位再評価で一部撤回】** 既存8種を録音単位クラスタ bootstrap で測ると
+> run14 は 5 run 中**最高(0.934)**で run13 との差は有意でない（→ journal 2026-06-06）。
+> 「focal で既存8種が悪化(−0.016)」は **chunk単位の誤判定**だった。**ただしカルガモ救済の失敗
+> (F1=0.000)は構造的で変わらず**＝focal の主目的(カルガモ救済)は達成できていない。
+
+- **focal はカルガモ救済に失敗。「分類層の多数派バイアスが主因」仮説は反証された**。focal（分類層を直接是正する
+  最強手）でもカルガモ 0%。Mallard precision は改善（F1 +0.047）したが、その分 ウミアイサ/カワアイサが
+  犠牲になり新4種全体は悪化（※この「全体悪化」も chunk単位依存で、録音単位では既存8種は最高）。
+- 素 pretrained の「test カルガモ 67% がカルガモ寄り」は **pretrained 限定**。fine-tune すると CE でも
+  focal でも極小マージン（重心 0.982・0.917 vs 0.915）が Mallard 多数派に潰される。
+  → **分類層では救えない＝表現力の壁が本質**（事前登録の分岐どおり）。
+- **Goldeneye song（run11 分析）と カルガモ（run13/14）が同じ「表現力の壁」に収束**。AST（AudioSet 教師あり）
+  の汎用表現は近縁カモの fine-grained 差を分離しきれない。
+- run14 は run13 を上回らないため**不採用**（models/ast-duck-v13 が 12種ベスト、ただし採用は別判断）。
+
+### 検証後の分岐（確定）
+
+データ追加（run07/13）も分類層調整（run14 focal）も近縁種の壁を破れなかった。残るは:
+1. **run15 = AudioMAE**（表現力軸。Goldeneye song + カルガモ の音響類似を分離できるか）
+2. **カルガモ/カワアイサを other に戻す**（成功2種 Gadwall/ウミアイサのみ昇格＝10種運用、確実）
+
+---
+
+## 分析タスク — 表現軸 probe 検証: AudioMAE / SSAM (2026-06-04)
+
+**ステータス:** 完了（fine-tune せず probe で結論）
+
+### 背景
+
+run11〜14 で「カルガモ / Goldeneye song は表現力の壁」と確定。AST（教師あり AudioSet）に替えて
+自己教師あり表現（AudioMAE / SSAM）が近縁カモを分離できるか検証。フル fine-tune の前に
+**linear probe**（encoder 凍結＋LogReg、MAE 論文の標準評価）で公平・低コストに表現力を比較した。
+
+### 実装メモ
+
+- AudioMAE: `timm.create_model("hf_hub:gaunernst/vit_base_patch16_1024_128.audiomae_as2m")`。
+  **前処理は kaldi.fbank(htk_compat, hanning, 128mel) + 正規化 (x-(-4.268))/(4.569*2)、1024frame 固定**。
+  3s 音声は 10s タイルで埋める（ゼロpad は埋め込み崩壊）。**特徴は CLS でなく patch mean pool**
+  （`forward_features(x)[:,1:,:].mean(1)`。global_pool=token の CLS は MAE で定数的＝崩壊）。
+- 生特徴の重心距離比較は MAE 型に不利（生 encoder は分類向けでない）と判明 → probe に切替。
+
+### 結果（test 1261, class_weight=balanced LogReg）
+
+| 指標 | AudioMAE probe | AST probe | run13 AST fine-tune |
+|---|---|---|---|
+| 既存8種 f1_macro_8 | 0.528 | **0.631** | 0.769 |
+| 新4種 f1_macro_4 | **0.208** | 0.153 | 0.449 |
+| 12種 f1_macro_12 | 0.422 | **0.472** | 0.662 |
+| **カルガモ F1** | **0.140** | 0.000 | 0.000 |
+
+### 所見
+
+- **総合表現力は AST が上**（教師あり AudioSet が分類向け）。AudioMAE 全面採用の根拠は弱い。
+- **だがカルガモは AudioMAE のみ非ゼロ（0.140 vs AST 0.000）**。AST が原理的に潰す最弱種を、自己教師あり
+  表現は微細に保持＝「芽」はある。ただし fine-tune で実用水準まで伸びる保証は弱い。
+- **SSAM は使いやすい port が無い**（timm/HF 不在、著者公開ckpt無し、`Robzy/audiomamba` は別論文）。
+  mamba-ssm ビルド＋公式コード移植が必要で AudioMAE の10倍超のコスト → **断念**。
+- 結論: **表現軸に銀の弾丸なし**。AudioMAE は総合 AST 以下、SSAM はコスト過大。実用解は
+  「成功2種(Gadwall/ウミアイサ)の10種運用」に確定するのが妥当。カルガモ/Goldeneye song は
+  「現行リソースでは分離困難な近縁ペア」として受容。
+
+---
+
+## run15 — 10種運用で確定（カルガモ/カワアイサを other へ差戻し） (2026-06-04)
+
+**ステータス:** 学習前記録（事前登録）
+**出力予定:** `models/ast-duck-v15/` / **初期化元:** pretrained / **loss:** CE（focal_gamma=0）
+
+### 背景
+
+run13/14 と表現軸 probe で、カルガモ・カワアイサは「データ追加・分類層・表現力のいずれでも
+Mallard と分離困難」と確定。実用解として**昇格成功の Gadwall/ウミアイサのみ残す10種**に確定する。
+カルガモ/カワアイサは `ood_tier1`（OOD）へ戻す。
+
+### 変更概要
+
+| 項目 | run13 | run15 |
+|---|---|---|
+| 対象種 | 12 | **10**（−カルガモ/カワアイサ）|
+| num_labels | 13 | **11**（10種 + other）|
+| loss | CE | CE（run14 focal は失敗、CE 据え置き）|
+| other tier1 | 2種 | **4種**（+カルガモ/カワアイサ）|
+| split | 12種 | 既存10種は run13 保持、2種を除去（test 1261→1196）|
+
+### 仮説と予測（学習前に固定）
+
+baseline = run13（12種）: 既存8種 f1_macro_8 **0.769** / Gadwall 0.823 / ウミアイサ 0.746 / Mallard 0.627
+
+- **H1**: 既存8種 f1_macro_8 が **run13 から回復（≥ 0.78）**。カルガモ/カワアイサの Mallard 吸引が
+  消え、Mallard precision・F1 が改善するため
+- **H2**: Gadwall/ウミアイサ F1 を維持（0.80±/0.74±）
+- **H3**: 10種 f1_macro_10 > run13 の 12種 0.662（失敗2種が抜けて上昇、**> 0.74** を期待）
+- OOD: AUROC energy が run13(0.902) 水準を維持（tier1 が 2→4種に戻る）
+
+### 検証後の分岐
+
+- H1∧H2 成立 → **10種を確定版に**。species_taxonomy.yaml を v15・閾値更新し運用モデルとする
+- 既存8種が回復しない → Mallard 吸引以外の劣化要因を再分析
+
+### 結果
+
+early stop epoch 6。test（1196, 既存10種）。
+
+| 指標 | run15 (10種) | baseline | 判定 |
+|---|---|---|---|
+| 既存8種 f1_macro_8 | **0.786** | run13 0.769 | **H1 成立**（+0.017 回復）|
+| 新2種 f1_macro_2 | 0.771 | — | H2（Gadwall 0.706 / ウミアイサ 0.836）|
+| 10種 f1_macro_10 | **0.783** | run13 12種 0.662 | **H3 成立**（>0.74）|
+| accuracy | 0.796 | — | — |
+| OOD AUROC energy | **0.899** | run13 0.902 | 維持（閾値 6.73）|
+
+**既存種の回復**: Mallard 0.627→**0.664** / Goldeneye 0.679→**0.765** / Shoveler 0.658→0.712 /
+Tufted 0.740→0.759。カルガモ/カワアイサの Mallard 吸引が消えた効果。
+
+### 所見
+
+- **10種運用（種構成は妥当）**。※**2026-06-06: 「確定版」表現は撤回**。失敗2種を other へ戻す構成判断は
+  構造的に正しい（カルガモ F1=0 を target に残す意味がない）が、「既存8種が回復」は統計的に無意味
+  （録音単位 bootstrap で v15 は 5run中**最低 0.827**・全 run と差なし＝単一シードの引きが悪かった可能性）。
+  v15 は**暫定運用モデル**で、test拡大→複数シード学習後に再選定すべき（→ experiments.md 冒頭の但し書き）。
+- **Gadwall は 0.823→0.706 に低下**（ウミアイサは +0.090）。12種→10種で混同構造が変わった/学習ランダム性。
+  新2種平均 0.771 は実用水準。
+- **最終構成**: カモ10種（既存8 + Gadwall/ウミアイサ）+ OOD energy gate（AUROC 0.899, 閾値 6.73）。
+  `species_taxonomy.yaml` を v15 に更新し運用モデルとした。
+- カルガモ/Goldeneye song は「現行リソースで分離困難な近縁ペア」として受容（→ 一連の探索で確定）。
+
+---
+
 ## メモ
 
 - baseline (`models/ast-duck/`) は常に保護する。新規 run は必ず別 output_dir へ
-- 学習中に `Win+Ctrl+Shift+B`（GPUドライバ再起動）は避ける — CUDA コンテキストが吹っ飛ぶ可能性
-- TensorBoard: `uv run tensorboard --logdir models/ast-duck-v2/runs`
+- 学習中は GPU ドライバ再起動（Linux では Ctrl+Alt+Backspace 等）を避ける
+- TensorBoard: `uv run tensorboard --logdir models/ast-duck-v11/runs`

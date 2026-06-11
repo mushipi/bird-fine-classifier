@@ -69,7 +69,7 @@ def plot_group(
             ax.axis("off")
             continue
         row = sub.iloc[i]
-        audio_path = PROJECT_ROOT / row["file_path"]
+        audio_path = PROJECT_ROOT / Path(row["file_path"].replace("\\", "/"))
         try:
             mel = mel_spec(audio_path)
         except Exception as e:

@@ -1,170 +1,327 @@
 # Architecture
 
-bird-fine-classifierの全体設計、ASTモデルの仕組み、主要な設計判断とその理由をまとめる。
+bird-fine-classifier の全体設計。
+モデル構造・データパイプライン・OOD 検知・デプロイ方針をまとめる。
 
 ---
 
-## 1. 2段階分類パイプラインの位置づけ
+## 1. システム全体像
 
 ```
-┌──────────┐    ┌────────┐    ┌──────────┐    ┌────────┐
-│ 環境音声 │ → │BirdNet │ → │ カモ類? │ → │  AST   │ → マガモ/コガモ/...
-└──────────┘    └────────┘    └──────────┘    └────────┘
-                  CNN          上位ゲート     Transformer
-                                                 (本PJ)
+フィールド録音（マイク）
+        ↓
+  Stage1: BirdNET CNN
+  （83種 or デフォルト 6000種）
+        ↓
+  Dispatcher
+  species_master.csv の en_birdnet × group を参照
+        ├─ group="duck" の種 → AST duck Stage2
+        ├─ group="crow" の種 → AST crow Stage2  ← 実装予定
+        └─ 該当なし → Stage1 の結果をそのまま記録
+               ↓
+         Stage2: AST Transformer
+         （group ごとの fine-tune モデル）
+               ↓
+         Energy Gate
+         energy = T * logsumexp(logits / T)
+               ├─ score < threshold → "unknown"（OOD 拒絶）
+               └─ score >= threshold → 種名を出力
 ```
 
-### なぜ2段階構成か
+### なぜ 2 段階か
 
-BirdNet（汎用CNN、6000種以上の対応）は**広く浅く** 分類するため、近縁種（カモ類・カモメ類・カラス類）の細分類が苦手。
-これらの近縁種に対しては：
-
-1. **音響特徴が似ている**（共通の鳴き方）
-2. **十分なクラス内バリエーション**（地域差、個体差、コール/ソング）
-3. **クラス間の差が微細**（ピッチ、テンポ、フォルマント）
-
-一方、対象カテゴリ（カモ類）に絞れば数十時間〜数百時間の事前学習を共有するAST（AudioSet 200万音声で学習済み）の方が圧倒的に有利。
-
-### 学習目的の観点
-
-このPJは**Transformer fine-tuneの体感** も狙いに含む。CNN（BirdNet）との比較で：
-
-| 観点 | CNN (BirdNet) | AST (本モデル) |
-|---|---|---|
-| 受容野 | 局所→積層で広がる | 全パッチ間のattention |
-| 周波数依存 | フィルタが局所的 | グローバルな帯域関係も学習 |
-| 事前学習 | 鳥音特化 | 汎用AudioSet（200万音声） |
-| パラメータ | ~数百万 | 86M |
-| 推論コスト | 低 | やや高 |
+BirdNET は広く浅く分類するため、近縁種（カモ類・カラス類等）の細分類が苦手。
+近縁種に特化した Transformer fine-tune モデルを Stage2 として置くことで精度を補う。
+BirdNET のラベルバイアス（欧州データ偏重でカラスをほぼミヤマガラスと出力する等）も
+Dispatcher + Stage2 で吸収できる。
 
 ---
 
-## 2. AST (Audio Spectrogram Transformer) の仕組み
+## 2. 種マスタ設計
 
-### 入力
+### species_master.csv（主マスタ）
 
-- **音声波形**（16kHz mono, 任意長）
-- 内部で**log-mel spectrogram**（128 mel bins）に変換
-- 標準入力は10秒 → メルスペクトログラム shape `(1024, 128)` 程度
+`data/species_master.csv` がシステム全体の唯一の種情報源。
+iNaturalist API から定期的に更新し、実際にフィールドに出現する種を管理する。
 
-### モデル構造
+| 列 | 内容 |
+|---|---|
+| `taxon_id` | iNaturalist taxon ID（sync で自動設定）|
+| `sci` | 学名 |
+| `en_inat` | iNaturalist 英名 |
+| `en_birdnet` | BirdNET が実際に出力するラベル（Dispatcher のキー）|
+| `ja` | 和名 |
+| `family` / `order` | 科 / 目 |
+| `obs_count` | 対象 bbox での research-grade 観察数 |
+| `last_observed` | 最終観察日（sync で自動更新）|
+| `status` | candidate / target / ood_tier1〜3 / ignore |
+| `group` | duck / crow / null |
+| `birdproject` | BirdProject CNN に収録済みか |
+| `data_source` | xeno-canto / youtube |
+| `notes` | 備考 |
+
+**種のライフサイクル:**
 
 ```
-[Audio 16kHz mono]
-        ↓
-[ASTFeatureExtractor]
-   - Mel spectrogram (128 bins)
-   - Mean/Std正規化（AudioSet統計）
-        ↓
-[Patch Embedding]
-   - 16×16のパッチに分割
-   - Linear射影 → 768次元
-        ↓
-[CLS token + Positional Embedding]
-        ↓
-[Transformer Encoder × 12]
-   - Multi-Head Self-Attention (12 heads)
-   - FFN, LayerNorm
-        ↓
-[CLS token output]
-        ↓
-[Classification Head (fine-tune対象)]
-        ↓
-[Logits (num_labels=8)]
+iNaturalist 観察記録
+        ↓ sync_species_master.py
+status="candidate"（観察あり・ML 未割当）
+        ↓ 手動でステータスを付与
+target      → Stage2 が識別する種
+ood_tier1   → Stage2 の近縁 OOD（訓練データに混ぜる）
+ood_tier2/3 → OOD テスト用
+ignore      → 監視不要
 ```
 
-### 事前学習の利用
+**master の更新:**
 
-`MIT/ast-finetuned-audioset-10-10-0.4593` は：
+```bash
+# 新規観察種を candidate として追記（既存 status は変更しない）
+uv run python -m bird_fine.data.sync_species_master --dry-run  # 件数確認
+uv run python -m bird_fine.data.sync_species_master            # 本実行
+```
 
-- ImageNetのViT重みで初期化
-- AudioSet（200万音声、527クラス）でfine-tune
-- **音響特徴の表現力が既に高い** → 少ないデータで転移学習が効きやすい
+### species_taxonomy.yaml（補完設定）
 
-本PJでは**分類ヘッドのみ初期化**して、Transformer本体は事前学習重みから学習を始める：
+モデルパス・energy 閾値・温度パラメータのみを保持。種リストは master から生成する。
+
+```yaml
+duck:
+  pipeline:
+    stage2_model: "models/ast-duck-v11"
+    energy_threshold: 10.35   # FPR<=5% での推奨値
+    energy_temperature: 1.0
+crow:
+  pipeline:
+    stage2_model: null        # TBD
+    energy_threshold: null    # TBD
+    energy_temperature: 1.0
+```
+
+**Dispatcher のルーティングテーブルは動的生成:**
 
 ```python
-ASTForAudioClassification.from_pretrained(
-    "MIT/ast-finetuned-audioset-10-10-0.4593",
-    num_labels=8,
-    ignore_mismatched_sizes=True,  # ヘッドのshapeが変わるため
-)
+triggers = master[
+    (master["group"] == group) &
+    (master["status"].isin(["target", "ood_tier1"]))
+]["en_birdnet"].tolist()
 ```
 
 ---
 
-## 3. データパイプライン設計
+## 3. AST モデル構造
+
+### 入力仕様
+
+BirdNET が 3 秒窓で処理するため、Stage2 も 3 秒チャンクを入力単位とする。
 
 ```
-Xeno-canto API
-    │
-    │ xcapi.QueryBuilder / XenoCantoClient
-    ▼
-data/raw/{Species}/XC*.mp3
-    │
-    │ librosa.load(sr=16000, mono=True)
-    │ chunk into 10s windows (zero-pad if <10s)
-    ▼
-data/processed/{Species}/XC*_chunk*.wav
-    │
-    │ split by xc_id (録音ID単位、leakage防止)
-    ▼
-data/splits/{train,val,test}.csv + label_map.csv
-    │
-    │ DuckChunkDataset → ASTFeatureExtractor
-    ▼
-PyTorch DataLoader → Trainer
+音声 (16kHz mono)
+        ↓ ASTFeatureExtractor (max_length=304)
+log-mel spectrogram (304, 128)
+        ↓ Patch Embedding (16×16 パッチ)
+350 パッチ + 2 special tokens = 352
+        ↓ Transformer Encoder × 12
+CLS token output (768次元)
+        ↓ Classification Head
+Logits (num_labels=9: 8種 + "other")
 ```
 
-### 設計判断の根拠
+**位置埋め込みのリサイズ:**
 
-| 判断 | 採用 | 不採用案 | 理由 |
-|---|---|---|---|
-| 入力長 | **10秒固定** | 5秒/20秒/可変 | ASTの事前学習仕様（10-10）に合わせる |
-| サンプリングレート | **16kHz** | 22.05/44.1kHz | AST仕様、鳥音の主要帯域も十分 |
-| split単位 | **録音ID** | チャンク単位 | チャンク単位だと同録音のtrain/test混入でleakage |
-| データ層化 | **種ごとに分割比率維持** | 全体ランダム | 不均衡データでvalがゼロになる種が出るのを防ぐ |
-| パディング | **ゼロパディング** | リフレクション/反復 | シンプル、ASTのattentionが無音を自動で軽視 |
+事前学習モデル（10s 用: 1214 次元）を 3s 用（352 次元）に線形補間でリサイズする。
+`resize_position_embeddings()` が `train.py` に実装済み。
 
----
+```python
+# ONNX エクスポート済み・数値誤差 < 1e-5 で確認済み
+# models/ast-duck-v11/model.onnx (326MB)
+```
 
-## 4. 学習設計
+### "other" クラスと Outlier Exposure
 
-### 戦略：分類ヘッドのみ初期化 + 全層fine-tune
+run11 で OOD 種を第 9 クラス（"other"）として学習に混ぜる Outlier Exposure を実施。
+目的は「"other" を正確に分類すること」ではなく、**energy 空間をキャリブレーションすること**。
 
-| 戦略 | 採用 | 不採用 | 理由 |
-|---|---|---|---|
-| 全層fine-tune | ✅ | head-onlyフリーズ | データ少なくてもAdamW + warmup + 低lrで安定。鳥音は事前学習(AudioSet)から離れた領域なので全層適応が必要 |
-| 学習率 | 5e-5 | 1e-4以上 | Transformer fine-tuneの標準値、より大きいと事前学習を壊す |
-| Warmup | 10% | なし | 序盤の勾配爆発を防ぐ |
-| 混合精度 | fp16 | bf16/fp32 | RTX 30系でfp16が高速、VRAM節約 |
-| Gradient Checkpointing | ✅ | OFF | VRAM 8GBではbatch=4でもメモリ際どい |
-
-### 最適化指標：f1_macro
-
-- accuracyだとクラス不均衡で多数派（マガモ）のスコアに引きずられる
-- F1 macroは全種を等しく評価 → 少数派の性能も反映
+詳細は `docs/ood_detection.md` 参照。
 
 ---
 
-## 5. 拡張性
+## 4. OOD 検知（Energy Gate）
 
-将来的に以下の拡張を想定：
+```python
+# 推論時
+logits = model(input_values=x).logits          # (batch, 9)
+energy = T * torch.logsumexp(logits / T, dim=-1)  # T=1.0
+# energy が高い = in-distribution（自信あり）
 
-| 拡張 | 必要な変更 |
-|---|---|
-| **対象種追加**（10種〜） | config.yamlの`target_species`に追加、再DL、再学習 |
-| **カモメ類モデル追加** | このPJを丸ごとコピー、対象種だけ差し替え |
-| **データ増強**（SpecAugment等） | Datasetクラスに前処理ステップを追加 |
-| **BirdNet統合** | `inference/`に「BirdNet出力 → 本モデル委譲」ロジックを追加 |
+if energy < energy_threshold:
+    return "unknown"   # OOD 拒絶
+else:
+    pred = logits[:, :8].argmax()  # "other" ニューロンは無視して 8 種で分類
+    return species_name[pred]
+```
 
----
-
-## 6. 既知の制約
-
-| 制約 | 影響 | 緩和策 |
+| モデル | AUROC (energy) | 閾値 (FPR≤5%) |
 |---|---|---|
-| データ少量（種あたり〜100件） | 過学習リスク | EarlyStopping, weight_decay, augmentation |
-| クラス不均衡 | 少数派の精度低下 | クラス重み or オーバーサンプリング（未実装、必要時追加） |
-| 録音条件のバイアス | 場所/機材で識別される可能性 | 多様な録音源を含める、推論時の品質を吟味 |
-| VRAM 8GB | batch_size制約 | grad_accum + fp16 + checkpointing |
+| run10（OE なし） | 0.894 | - |
+| **run11（OE あり）** | **0.932** | **10.35** |
+
+---
+
+## 5. データパイプライン
+
+### 学習データ収集
+
+```bash
+# 1. メタデータ確認
+uv run python -m bird_fine.data.download --metadata-only
+
+# 2. 本 DL
+uv run python -m bird_fine.data.download
+
+# 3. OOD 用データ収集（Outlier Exposure 用）
+uv run python -m bird_fine.data.download_ood
+```
+
+**データソース方針:**
+
+- **primary**: Xeno-canto (quality=A, Japan → worldwide フォールバック)
+- **fallback**: YouTube（日本録音が Xeno-canto で不足する種）
+  - `yt-dlp` で取得 → 16kHz mono 変換 → 鳴き声区間を人力確認
+  - `source="youtube"` を master の notes に記録して Xeno-canto と区別
+
+### 前処理パイプライン
+
+```bash
+uv run python -m bird_fine.data.preprocess          # raw → 3s WAV chunks
+uv run python -m bird_fine.data.split               # train/val/test 分割
+uv run python -m bird_fine.data.prepare_other_class # "other" クラスデータ準備
+```
+
+| 設定 | 値 | 根拠 |
+|---|---|---|
+| sample_rate | 16kHz | AST の仕様 |
+| chunk_duration | 3s | BirdNET の処理窓に合わせる |
+| split 単位 | 録音 ID | チャンク単位だと leakage が発生する |
+| train/val/test | 70/15/15% | - |
+
+---
+
+## 6. 学習設計
+
+### 通常学習（8 種、Outlier Exposure なし）
+
+```bash
+uv run python -m bird_fine.training.train --dry-run  # 動作確認
+uv run python -m bird_fine.training.train            # 本学習
+```
+
+主要ハイパーパラメータ（config.yaml）:
+
+| パラメータ | 値 | 備考 |
+|---|---|---|
+| learning_rate | 2.0e-5 | Transformer fine-tune の標準 |
+| weight_decay | 0.03 | run05 で最適点と確認 |
+| fp16 | true | RTX 3060 Ti 向け |
+| gradient_checkpointing | true | VRAM 8GB 節約 |
+| metric_for_best_model | f1_macro | クラス不均衡に強い |
+
+### Outlier Exposure 学習（9 クラス）
+
+"other" クラスを追加する場合の追加設定:
+
+```yaml
+model:
+  num_labels: 9
+  init_from: "models/ast-duck-v10"  # 既存モデルのヘッドを拡張して初期化
+
+training:
+  metric_for_best_model: "f1_macro_8class"  # "other" に引きずられない
+
+other_class:
+  loss_alpha: 1.5  # CE loss の "other" 重み（固定値のみ、Double Dipping 禁止）
+```
+
+**Double Dipping 注意**: WeightedRandomSampler か Loss 重みかの二者択一。
+両方使うと "other" の勾配が爆発して 8 種の決定境界が破壊される。
+
+---
+
+## 7. 推論
+
+```bash
+# energy gate 込みの推論（デフォルト）
+uv run python -m bird_fine.inference.predict --audio path/to/audio.wav
+
+# gate なし（8 種分類のみ）
+uv run python -m bird_fine.inference.predict --audio path/to/audio.wav --no-ood-gate
+
+# ONNX エクスポート検証
+uv run python -m bird_fine.inference.export_onnx
+```
+
+---
+
+## 8. デプロイ（Jetson Nano）
+
+ONNX エクスポートは `run11` モデルで検証済み:
+
+```
+batch=1: max_abs_diff=8.3e-06  ✓
+batch=2: max_abs_diff=4.4e-06  ✓（動的バッチ）
+energy score diff=8.3e-07      ✓
+ファイルサイズ: 326MB（FP16 化で約 160MB 見込み）
+TracerWarning: SDPA の is_causal が定数化
+    → 304 フレーム固定運用では無害
+```
+
+**次ステップ**: FP16 量子化 → TensorRT 変換 → Jetson Nano での速度測定
+
+詳細は `docs/roadmap.md` 参照。
+
+---
+
+## 9. ファイル構成
+
+```
+bird-fine-classifier/
+├── config.yaml                    # 学習・前処理ハイパーパラメータ
+├── species_taxonomy.yaml          # パイプライン設定（モデルパス・閾値）
+├── data/
+│   ├── species_master.csv         # 種主マスタ（iNaturalist ベース）
+│   ├── raw/{Species}/             # Xeno-canto 生音源（git ignore）
+│   ├── processed/{Species}/       # 3s WAV チャンク（git ignore）
+│   ├── ood/{tier}/{Species}/      # OOD 生音源（git ignore）
+│   ├── ood_processed/{tier}/{Species}/  # OOD チャンク（git ignore）
+│   └── splits/                    # train/val/test CSV + label_map
+├── models/{run-name}/             # 学習済みモデル（git ignore）
+├── outputs/                       # 評価結果・可視化（git ignore）
+├── src/bird_fine/
+│   ├── data/
+│   │   ├── download.py            # Xeno-canto DL（target_species）
+│   │   ├── download_ood.py        # OOD データ収集・前処理
+│   │   ├── preprocess.py          # raw → 3s チャンク
+│   │   ├── split.py               # train/val/test 分割
+│   │   ├── prepare_other_class.py # "other" クラス学習データ準備
+│   │   ├── dataset.py             # PyTorch Dataset（条件付き SpecAugment）
+│   │   └── sync_species_master.py # iNaturalist → species_master.csv
+│   ├── models/
+│   │   └── ast_classifier.py      # ASTForAudioClassification ラッパー
+│   ├── training/
+│   │   ├── train.py               # DuckTrainer（WeightedSampler + OE 対応）
+│   │   └── evaluate.py            # test セット評価
+│   ├── inference/
+│   │   ├── predict.py             # energy gate 込みの推論
+│   │   └── export_onnx.py         # ONNX エクスポート検証
+│   └── analysis/
+│       ├── ood_eval.py            # OOD AUROC・閾値算出
+│       └── confusion_audio.py     # 誤分類音声の可視化
+└── docs/
+    ├── architecture.md            # 本ファイル
+    ├── data_guide.md              # データ収集・前処理の詳細手順
+    ├── training_guide.md          # 学習・評価の詳細手順
+    ├── ood_detection.md           # OOD 検知手法の詳細
+    ├── roadmap.md                 # Jetson Nano 本番・横展開の課題
+    ├── experiments.md             # 実験ログ（run01〜run11）
+    └── journal.md                 # 設計判断の経緯
+```

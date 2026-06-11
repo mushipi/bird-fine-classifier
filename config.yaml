@@ -28,6 +28,13 @@ target_species:
   - en: "Common Pochard"
     sci: "Aythya ferina"
     ja: "ホシハジロ"
+  # run13→run15: 昇格成功の2種のみ target に残す（カルガモ/カワアイサは other へ差戻し）
+  - en: "Gadwall"
+    sci: "Mareca strepera"
+    ja: "オカヨシガモ"
+  - en: "Red-breasted Merganser"
+    sci: "Mergus serrator"
+    ja: "ウミアイサ"
 
 # ==================================================
 # ダウンロード設定
@@ -45,8 +52,8 @@ download:
 # ==================================================
 preprocessing:
   sample_rate: 16000               # ASTの仕様
-  chunk_duration_sec: 10.0         # ASTの標準入力長
-  min_chunk_duration_sec: 3.0      # これより短いチャンクはパディング
+  chunk_duration_sec: 3.0          # BirdNetの3s窓に合わせる
+  min_chunk_duration_sec: 1.0      # 3s切り出し後の端数チャンクを救う
   overlap_ratio: 0.0               # チャンク間のオーバーラップ（0で重複なし）
   processed_dir: "data/processed"
   splits_dir: "data/splits"
@@ -60,28 +67,31 @@ preprocessing:
 # ==================================================
 model:
   pretrained: "MIT/ast-finetuned-audioset-10-10-0.4593"
-  num_labels: 8                    # target_speciesの数と一致させる
+  num_labels: 11                   # run15: 10種 + "other"（Gadwall/ウミアイサのみ昇格成功）
+  feature_extractor_max_length: 304  # 3s×16kHz のmelフレーム数（10s=1024の3/10）
+  init_from: ""                      # run13: pretrained から初期化（12種で label 順序が変わり run11 ヘッド流用不可）
 
 # ==================================================
 # 学習設定
 # ==================================================
 training:
-  output_dir: "models/ast-duck-v9"   # run09: v8 保護のため新規ディレクトリ
+  output_dir: "models/ast-duck-v15"  # run15: 10種運用で確定、v13/v14保護
+  focal_gamma: 0.0                   # run15: 従来CEに戻す（run14 focal は失敗）
   num_train_epochs: 15
   per_device_train_batch_size: 4   # RTX 3060 Ti (VRAM 8GB) 想定
   per_device_eval_batch_size: 8
   gradient_accumulation_steps: 4   # effective batch = 16
-  learning_rate: 2.0e-5            # run07: 据え置き（固定変数）。run03 から維持
+  learning_rate: 2.0e-5
   warmup_ratio: 0.1
-  weight_decay: 0.03               # run07: 据え置き（固定変数）。run05（現行ベース）から維持
-  fp16: true                       # mixed precision
-  gradient_checkpointing: true     # VRAM節約
+  weight_decay: 0.03
+  fp16: true
+  gradient_checkpointing: true
   eval_strategy: "epoch"
   save_strategy: "epoch"
   save_total_limit: 3
   load_best_model_at_end: true
-  metric_for_best_model: "f1_macro"
-  early_stopping_patience: 4       # run07: 据え置き（固定変数）。run03 から維持
+  metric_for_best_model: "f1_macro_8class"  # 既存8種のF1でモデル選択（"other"に引きずられない）
+  early_stopping_patience: 4
   logging_steps: 20
   report_to: ["tensorboard"]
 
@@ -90,11 +100,33 @@ training:
 # ==================================================
 augmentation:
   spec_augment:
-    enabled: false                 # run07: run06 で不採用確定（test f1 0.810 で run05 0.838 を下回る）→ run05 と同条件に戻す
-    freq_mask_param: 24            # 周波数軸のマスク幅（128メル中）— run02 と同強度
-    time_mask_param: 80            # 時間軸のマスク幅
+    enabled: false                 # 8種には適用しない（run06で境界破壊を確認）
+    other_only: true               # "other"クラスにのみ適用（過学習防止）
+    freq_mask_param: 24
+    time_mask_param: 80
     num_freq_masks: 2
     num_time_masks: 2
+
+# ==================================================
+# "other" クラス設定
+# ==================================================
+other_class:
+  recordings_for_train: 20        # 種あたり train に使う録音数
+  recordings_for_eval: 10         # 種あたり val に使う録音数
+  max_chunks_per_recording: 30    # per-recording cap（run08の教訓）
+  loss_alpha: 1.5                 # CE loss の "other" クラス重み（Recall 重視）
+  seed: 42
+  # Tier1: カモ科他種（パイプライン上で最も重要なOOD）
+  # run15: カルガモ/カワアイサを other へ差戻し（Gadwall/ウミアイサのみ target 昇格成功）
+  tier1_species:
+    - "Eastern Spot-billed Duck"
+    - "Common Merganser"
+    - "Baikal Teal"
+    - "Falcated Duck"
+  # Tier2: 水辺の非カモ科（声質多様性のため）
+  tier2_species:
+    - "Eurasian Coot"
+    - "Little Grebe"
 
 # ==================================================
 # 評価設定

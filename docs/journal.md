@@ -711,3 +711,535 @@ XC488112 (45分) と XC488113 (49分) という長尺フィールド録音は、
 Tufted の test 正解 3件（XC303149, XC476421, XC760407）はいずれも **短尺録音**から。長尺2録音を削除しても **「本来の Tufted_Duck の鳴き声」は他の27録音から学べている**。これは「Tufted 27 録音で十分に種特徴を捉えられる」可能性を示唆。あとは「過剰予測しないバランス」を見つけるだけ。
 
 ---
+
+## 2026-05-31 Ubuntu移行 + 3sチャンクへのパラダイム変更
+
+### やったこと
+
+開発環境を Windows から Ubuntu（同一マシンのデュアルブート）に移行。あわせて BirdNet のソースコード（`kahst/BirdNET-Analyzer`）を確認し、チャンク長の設計上の問題を発見したため 10s→3s への変更を決定。run10 として事前登録した。
+
+### 発見: BirdNet は 3秒窓で処理している
+
+BirdNet-Analyzer の `birdnet_analyzer/model.py` に `keras.Input(shape=(144000,))` とあり、48kHz × 3秒 = 144000 サンプルが確認できた。`audio.py` の `split_signal()` もデフォルト `seconds=3.0`。
+
+本プロジェクトは「BirdNet が カモ類 を検出した 3秒音声を受け取って8種に細分類する」設計のはずなのに、**学習時は 10秒チャンクを使っていた**。推論時には 7秒分のゼロパディングが発生する設計不整合だった。
+
+### 旧 run10 計画（cap=30/50）との関係
+
+run09 終了時点で「next: run10 は長尺2録音の中間 cap を探る」としていたが、それより上位の前処理設計の問題を先に直すべきと判断した。cap 実験は 3s チャンク体制が安定してから再検討する。
+
+### Ubuntu 移行で対応した問題
+
+Windows 側で生成された `data/splits/*.csv` の `file_path` 列がバックスラッシュ区切り（`data\processed\...`）だったため Linux で動かない。対応:
+1. CSV を sed で一括修正（`\` → `/`）
+2. `dataset.py` と `confusion_audio.py` の `Path / row["file_path"]` に `.replace("\\", "/")` を追加（防御的修正）
+
+### コード変更内容
+
+- `config.yaml`: `chunk_duration_sec` 10.0→3.0、`min_chunk_duration_sec` 3.0→1.0、`feature_extractor_max_length: 304` を追加
+- `dataset.py`: `build_datasets()` に `max_length` 引数を追加、`ASTFeatureExtractor.from_pretrained()` に渡す
+- `train.py`: `build_datasets()` 呼び出し時に `model_cfg` から `feature_extractor_max_length` を読んで渡す
+
+### max_length=304 の根拠
+
+ASTFeatureExtractor は 16kHz / 25ms窓 / 10ms hop でメルスペクトログラムを作る。3秒音声のフレーム数 ≈ (48000-400)/160+1 ≈ 298。AST の慣例（10s=1024, 1s=128 ≒ 102.4フレーム/秒）から 3s ≈ 307。実装上の標準値として 304 を採用。
+
+### 次にやる
+
+`uv run python -m bird_fine.data.preprocess` → `split` → `train --dry-run` → `train` の順で実行。
+
+## 2026-05-31 run10 完了: 3sチャンク移行の結果と次のアクション
+
+### やったこと
+
+Ubuntu 移行後、3s チャーク移行（BirdNet pipeline alignment）を run10 として実行。XC488112/XC488113 を chunks_index.csv 段階で全splits から除外し re-split した上で学習。
+
+### 結果
+
+- val f1 0.806 (epoch 6) / **test f1 0.782**（run05 比 −0.056）
+- **Tufted_Duck F1: 0.389 → 0.738（+0.349）** — 最大の成果
+- Goldeneye（−0.201）・Pintail（−0.227）・Shoveler（−0.230）が大幅悪化
+
+### なぜ Tufted が改善したか
+
+XC488112/XC488113 の完全除外（run09 で仮説確証済み）に加え、3s チャンクで train 477 chunks（run09 の 161 より多い）を確保できた。「過剰予測の解消」と「適正な学習量」の両立が初めて達成された。
+
+### なぜ全体 f1 は低下したか
+
+1. **AST 位置埋め込みの適応コスト**: 10s→3s で位置埋め込みを 1214→350 に線形補間。事前学習の文脈（10s）から離れた分、汎化が落ちた
+2. **train チャンク数が少ない種の悪化**: Pintail 305/Shoveler 243 は run05 と同水準だが、3s チャンクは 1 チャンクあたりの情報量が少ない（10s の 1/3）→ 実質的な学習情報量は減少
+3. **test n の変化**: 3s 再分割で test n が変わり（例: Goldeneye 64→199）比較が難しい面もある
+
+### 技術的な落とし穴と修正
+
+位置埋め込みリサイズ後に `model.config.max_length` を更新していなかったため、保存 config.json（max_length=1024）と実際の重み（350次元）が不一致。evaluate.py でロード時にエラー。
+→ `model.config.max_length = max_length` を train.py に追加し、既存チェックポイントの config.json も手動修正。
+
+### 次にやる
+
+run10 で Tufted F1 が改善した一方、全体は低下。2つの方向性が考えられる:
+
+1. **run11: ハイパラ調整（lr, patience）で全体 f1 を底上げ** — 3s チャーク体制を維持したまま学習を安定させる
+2. **run11: Pintail/Shoveler などデータ不足種に録音追加** — チャンク数の少ない種の弱点を補う
+
+AST の 3s 適応には複数 epoch が必要な可能性があり、lr を下げて patience を増やす（より長く学習させる）のが有力。
+
+### 追記: XC488112/XC488113 の全splits除外 と re-split (2026-05-31)
+
+preprocess → split 後に Tufted_Duck val が 1032 chunks と異常に多いことを発見。XC488113（49分）が val に丸ごと入っていた。`load_best_model_at_end` がこれを基準にモデルを選ぶと run03 と同じ選択バイアスが再発する。
+
+対処: chunks_index.csv から XC488112（899 chunks）・XC488113（989 chunks）を除外し re-split。Tufted_Duck val が 1032→76 に正常化。run09 の知見（「この2録音が問題」）と一貫した処置。
+
+また dry-run で位置埋め込みの次元ミスマッチ (`tensor a=350 vs b=1214`) が判明。`resize_position_embeddings()` を train.py に実装し、事前学習済み1214次元の埋め込みを線形補間で350次元にリサイズしてから学習する方式とした。
+
+---
+
+## 2026-05-31 run11 設計：Double Dipping の罠と "other" クラス戦略
+
+### やったこと
+
+run10 の OOD 評価（AUROC softmax=0.838 / energy=0.894）を受けて、「"other" クラスを追加して再学習」する run11 の設計を行い実装した。
+
+### 最重要の設計判断：Sampler と Loss の役割分担
+
+当初「WeightedRandomSampler で均等化 + Loss に N_duck/N_other の重みを掛ける」と提案したが、これは **Double Dipping**（二重補正）だと指摘を受けた。Sampler で既にバッチ内比率が均等になっているのに、さらにデータ数ベースの Loss 重みを掛けると "other" の勾配が爆発して8種の決定境界が破壊される。
+
+**採用した設計：**
+- Sampler: WeightedRandomSampler（全9クラスを均等にサンプリング）
+- Loss: CE weight = [1.0, ..., 1.0, 1.5]（固定値。データ数ベースは捨てる）
+
+### SpecAugment の条件付き適用
+
+run06 で「8種にSpecAugment → 境界が壊れて test f1 -0.028」を確認済み。一方で "other" クラスは過学習防止のために波形の多様性が必要。→ `if label == other_label_id` の条件分岐で **"other" のみ適用**。実装コストが低い割に理論と実利が完璧に一致する解。
+
+### "other" チャンク数の設計（過学習防止）
+
+per-species 50chunk 上限では 350chunk 程度 → Sampler での複製が多く丸暗記リスク。recording 単位の train/eval 分割 + per-recording cap=30 のみにして上限を外し、1220chunk を確保。複製回数は各チャンク ~0.5回/epoch と低水準に抑えた。
+
+### metric_for_best_model の変更
+
+9クラス全体の f1_macro をモデル選択基準にすると「other が高くて8種が壊れたモデル」が選ばれるリスク。→ `f1_macro_8class`（8種のみの F1 マクロ平均）を選択基準に変更。other_recall はログに出すが選択には使わない。
+
+### 次にやる
+
+run11 の学習・評価完了後、OOD eval で AUROC と energy threshold を再測定する。
+
+## 2026-05-31 Outlier Exposure としての割り切り — 第4の選択肢への収束
+
+### 経緯
+
+run11 の結果（AUROC energy 0.932 / other_recall 0.09）を受けて、OOD 対策の最終方針を決定した。
+
+当初の選択肢は「backbone 凍結して "other" 決定境界を強制する」か「energy パイプラインを構築する」の二択だったが、正しいフレーミングはどちらでもなく——
+
+**第4の選択肢: Outlier Exposure としての割り切り**
+
+run11 でやったことは Hendrycks et al. (2018) の Outlier Exposure そのもの。「OOD データを学習に晒して energy 空間を calibrate する」ことが目的であり、"other" を正確に分類することは目的ではなかった。other_recall=0.09 は失敗ではなく「エネルギー空間が分離された結果として softmax 空間では境界が引けない」という構造的帰結。AUROC 0.932 が成功の証拠。
+
+### 決定したアーキテクチャ
+
+```
+推論時:
+  logits → energy_score = T * logsumexp(logits / T)  (T=1.0)
+  energy_score < energy_threshold → reject ("unknown duck species")
+  energy_score >= energy_threshold → argmax(logits[:8]) → 種名
+```
+
+- 閾値は `species_taxonomy.yaml` の `energy_threshold: 10.35` で管理
+- 温度は `energy_temperature: 1.0`（将来 Temperature Scaling を試す際は config だけ変える）
+- `predict.py` に energy gate を追加することで完成
+
+### なぜシステム側で解決するか
+
+- AUROC 0.932 は実運用に耐えるレベル
+- "other" をモデル側で分類しようとすると「閉世界仮定で開世界の問題を解く」矛盾を抱える
+- energy ゲートはモデルと独立しているため、閾値だけ調整すれば FPR/TPR のトレードオフを変えられる
+- run11 のモデル重みを変えずに運用設計を完成させられる
+
+### energy スコアの符号規約（コード上の注意）
+
+- ood_eval.py の convention: `score = logsumexp(logits)` → 高い = in-distribution
+- 閾値 10.35 はこの convention で calibrate されている
+- predict.py でも同じ convention を使う。論文の E(x) = -logsumexp(logits)（負値）とは符号が逆なので混同注意
+
+### 次にやる
+
+`predict.py` に energy gate を実装して動作確認し、コミットする。
+
+---
+
+## 2026-06-02 メタデータ駆動キュレーション基盤 — 耳で聞かずに長尺録音と shift を自動検出
+
+### 経緯
+
+AudioMAE/SSAM へのバックボーン差し替え検討（`docs/model_comparison_audiomae_ssam.md`）の中で「ボトルネックはアーキでなくデータキュレーション」と結論したのを受け、「データキュレーションは耳で聞く以外に手法があるか?」という問いを立てた。手法を棚卸し（メタデータ / 信号処理 / 埋め込み / モデルベース）した上で、最小コストの第一段＝**Xeno-canto メタデータの復元**に着手した。
+
+### やったこと
+
+`src/bird_fine/data/enrich_metadata.py` を実装。`data/raw/{Species}/metadata.csv`（DL時に保存済み・454録音）を結合し、split CSV に録音メタ（type/sex/stage/q/length_sec 等）を付与。`data/splits/*_enriched.csv` と `outputs/curation/recordings.csv` を出力する。
+
+### 発見1: split がメタを捨てていた / file-name 照合で100%復元
+
+現行の `data/splits/*.csv` は species/xc_id/chunk_index/file_path/duration_sec/source_file しか持たず、type/stage/length 等を保持していなかった。juvenile shift（run09）や長尺録音を「耳で」発見せざるを得なかった一因。
+
+`xc_id` から XC番号を抽出して metadata と結合（大多数）＋ **XC番号が無い古い録音（33本）は source_file を metadata の `file-name` 列と正規化照合**することで、**8種は全 split で 100% カバー（未一致0本）を API を一切叩かずに達成**した。
+
+### 発見2: API再取得は不要だった
+
+当初の全体カバー率（train 75.9%）は低く見えたが、未一致の大半（XC番号あり・metadata未収録の103録音）は**全て "other" クラス**で、8種分析には無関係。8種本体は最初からほぼ完備していた。`xcapi_runs.json` は ID リストのみで生メタを含まず補完に使えないことも確認。"other" のメタが必要になった時だけ API 取得すれば足りる。
+
+### 結果: 耳で聞かずに新しいキュレーション候補を自動検出
+
+**(1) 長尺×冗長チャンクの偏り** — train の録音あたり chunks は中央値8に対し、`Mallard XC396538`=**214ch**(10:41) / `XC717935`=194ch(9:42) / `Eurasian_Wigeon XC780288`=161ch(8:03) が突出。run09 で問題化した「特定録音が学習を支配する」構造が Mallard/Wigeon にも存在。`length_sec>10分` のフラグだけで検出できた（除外済みの XC488112=44:55 / XC488113=49:25 もこの基準で即判別できることを後追い確認）。
+
+**(2) distribution shift の定量化** — train vs test の stage 構成比クロス集計で:
+- **Tufted_Duck: juvenile / "adult,juvenile" が test に各1本あるのに train は両方ゼロ**（train は adult のみ）。run10 で Tufted F1 が改善した後も残る新発見の shift。
+- Eurasian_Teal: juvenile が train 1本のみ（run分析の「Teal juvenile 1件」をメタで裏付け）。test の uncertain 2本に対し train ゼロ。
+
+### 学び
+
+- 「データキュレーション」は主観的な傾聴に限らず、メタデータ照合で体系化・自動化できる。第一段（メタデータ復元）が最小工数で最大効果——run09 で数時間かけて耳で特定した juvenile shift / 長尺録音が、`stage` と `length_sec` のフラグで即座に出る。
+- 見かけのカバー率（75.9%）に飛びつかず「未一致の中身」を見たことで、無駄な API 再取得（全部 other）を回避できた。費用対効果は対象を分解して初めて見える。
+
+### 次にやる
+
+run12 候補（メタデータ分析が示すレバー、いずれも「特定録音のキュレーション」軸）:
+1. **Mallard/Wigeon の長尺録音に中間 cap** — run09 終了時に積み残した「長尺の中間 cap」を 3s 体制で実施。チャンク不均衡の是正。
+2. **Tufted / Teal の juvenile shift 対処** — train に juvenile 録音を追加し test との分布ギャップを埋める（独立軸）。
+
+「1 run 1 変更」の原則に従い、まず (1) か (2) のどちらかを単独で。
+
+### 追記: run12 検証分析 — Tufted juvenile shift を確証（同日）
+
+run を回す前に、run09 で機能した「分析→run」の流れに倣い、run11 の test 予測（`outputs/eval_20260531_231427/predictions.csv`）を `test_enriched.csv` と順序結合して Tufted_Duck の誤分類を stage 別に分析した。
+
+**結果（仮説の完全確証）**:
+
+| stage | chunks | recall |
+|---|---|---|
+| adult | 10 | **1.000** |
+| adult, juvenile | 21 | 0.810 |
+| (未記載) | 22 | 0.818 |
+| **juvenile** | 17 | **0.000** |
+
+- Tufted F1 低下（0.703）の主因は **juvenile distribution shift** で確定。juvenile 録音 **XC667403(17ch) が全て Eurasian_Wigeon に誤分類**（recall 0.000）。
+- adult は recall 1.000。モデルは Tufted の adult を完璧に識別できており、**juvenile の音響パターンを学習していないだけ**（train に Tufted juvenile が0本）。
+- precision 誤り（過剰予測）は13件に減少し、もはや主問題ではない。run05/08 時代の「Tufted 過剰予測」から、ボトルネックが recall 側（juvenile 未学習）へ移行した。
+- run09 の XC197026（Teal juvenile）と同じ「特定録音 × distribution shift」構造が Tufted で再現。
+
+**なぜメタデータ基盤が効いたか**: stage 列が無ければ「Tufted の誤りが juvenile に集中」とは切り分けられなかった。本日構築した enrich_metadata.py の stage 付与があって初めて、誤分類 24 件のうち 17 件が単一 juvenile 録音に由来すると即座に分かった。
+
+### 次にやる（更新）
+
+run12 = **train に Tufted juvenile 録音を追加**（test の XC667403/XC667392 を除外し汚染防止、run07 の教訓で cap 併用）。
+事前登録の予測値を立てるには Tufted juvenile の入手可能性確認が先決——`download.py --metadata-only` で Xeno-canto の在庫を調べる（stage=juvenile は希少。メタ全体で11本のみ）。在庫次第で run12 が成立するか決まる。
+
+### 追記: Tufted juvenile は Xeno-canto では枯渇 — 他公開ソースへ展開（同日）
+
+run12 の前提（juvenile 録音の入手可能性）を Xeno-canto API で確認した結果、**データ駆動（XC追加）では解決不能**と確定した。
+
+**在庫調査（read-only・保存なし）**:
+- `en:"Tufted Duck" stage:juvenile` / `gen:Aythya sp:fuligula stage:juvenile` のいずれでも**世界で2件のみ**、しかも両方 test 既存（XC667403 / XC667392）。英名・学名で結果は完全同一でクエリの取りこぼしではない。
+- type/remarks まで広げても追加候補は2件（XC668878 / XC577931）だが、いずれも q=C かつ nestling(雛)で、test の juvenile call とは発達段階が異なり代替にならない。
+- Tufted Duck 全300件の stage 分布: adult 62 / 未記載 207 / juvenile 1 / adult,juvenile 1 / uncertain 28 / adult,nestling 1。
+
+**YouTube 案の検討と保留**: 候補に挙がったが、(1) データ源異質性が run 比較を壊す、(2) 録音単位 shift の本質（test の XC667403 への汎化保証が弱い）、(3) 種同定の確度、(4) ライセンス、の4点で本流の run には不適と判断。PoC 扱いにする。
+
+**方針: 他の公開鳥類音声ソースを検討**。候補は Macaulay Library（age 記入率が高く有望／再配布制限）、iNaturalist（CC選択可）、GBIF（横断・ただし XC を集約するため重複排除必須）、Animal Sound Archive Berlin、British Library Wildlife。条件は **CC0/CC-BY 優先**と **XC-ID 照合による重複排除**、学術フィールド録音同士で異質性を抑えること。まず**無認証で叩ける GBIF + iNaturalist** から Tufted juvenile 音源の在庫を確認する。
+
+**学び**: メタデータ基盤（stage 列）があったからこそ「juvenile が枯渇している」を定量的に確定でき、効果の出ない録音追加 run（run07 の二の舞）を回避できた。データキュレーションの検証は「追加すべきデータが存在するか」の在庫確認まで含めて初めて完結する。
+
+### 次にやる（更新2）
+
+GBIF + iNaturalist の公開 API で「Aythya fuligula × 音声付き × juvenile」の在庫・ライセンス・XC重複を確認。実在すれば run12（他ソース juvenile 追加）が成立、無ければ augmentation か他弱点種（Shoveler/Goldeneye）へ軸を移す。
+
+### 追記: 無認証3ソースで Tufted juvenile 枯渇を確定（同日）
+
+GBIF / iNaturalist の公開 API（無認証・read-only）で在庫確認した:
+- **GBIF**: 音声付き Tufted で `lifeStage=Juvenile` は **1件のみ**。occurrenceID が `data.biodiversitydata.nl/xeno-canto/observation/XC667403`、media が xeno-canto.org、creator が Stichting Xeno-canto → **XC667403 の重複で test 既存**。GBIF は Xeno-canto を集約しているため新規性ゼロ。
+- **iNaturalist**: Life Stage 注釈=Juvenile かつ音声ありは **0件**（音声付き観察は44件あるが juvenile タグは皆無）。
+
+**結論**: 無認証で叩ける主要3ソース（Xeno-canto / GBIF / iNaturalist）すべてで、train に追加できる新規 Tufted juvenile 音源は **0本**。juvenile call の録音が世界的に極めて希少という分野共通の事実が3ソースで裏付けられた。**データ追加で juvenile shift を埋める路線は行き止まり**。
+
+**決定**: Macaulay Library（認証要・再配布制限）と augmentation（疑似 juvenile 合成）は将来の別 PoC に回す。run12 は **他弱点種（Shoveler 0.738 / Goldeneye 0.743）を同じ stage 別分析で切り分け、データで埋められる確実なレバーを探す**方向に確定。juvenile shift は「データ不在による解決不能問題」として確定記録した。
+
+### 次にやる（更新3）
+
+Shoveler / Goldeneye の run11 test 誤分類を enriched メタで stage 別に分析し、Tufted と同じ juvenile/特定録音 shift か、別要因（録音多様性不足・音響類似）かを切り分ける。確実に埋められるレバーがあれば run12 として事前登録。
+
+### 追記: 他弱点種の切り分け — Goldeneye は「表現力ボトルネック」と判明（同日）
+
+**Shoveler/Goldeneye は juvenile shift ではない**（stage はほぼ未記載/uncertain）。Tufted の juvenile 枯渇問題とは別物。
+
+- **Northern_Shoveler (recall 0.686)**: 誤分類が複数録音に薄く分散、誤予測先も Pochard/Teal/Mallard とバラバラ。**分散型で単一介入が効きにくい**。
+- **Common_Goldeneye (recall 0.623)**: **`song`(求愛ディスプレイ音)が Eurasian_Teal に一方向流出**。song の正解59/誤54、誤りは主に Teal へ。Teal precision=0.749 の誤吸込65件中 Goldeneye が42件で突出。`display call`(正32/誤2)や `call` は当たるのに `song` だけ詰む。
+
+**埋め込み距離による切り分け（run11=v11 の AST 最終層 mean pool, cos類似）**:
+
+| 群 | n | →GE重心 | →Teal重心 | Teal寄り割合 |
+|---|---|---|---|---|
+| 誤分類 GE song(→Teal) | 41 | 0.900 | **0.912** | **68%** |
+| 正解 GE song | 89 | **0.940** | 0.853 | 0% |
+
+重心間 cos(train GE song, train Teal song)=**0.880**（両者の song が埋め込み上ほぼ重なる）。
+
+**結論: (a) 本質的な音響類似で確定**。正解 song は train GE song に近い（Teal寄り0%）が、**誤分類 song は68%が train Teal song の方に近く、埋め込み空間で実際に Teal 領域に入り込んでいる**。train Goldeneye song は275chunk と十分あるのに分離できない → **データ追加では解決せず、現行 AST の表現力がボトルネック**。（0.900 vs 0.912 は僅差で「GE song と Teal song がほぼ重なる難境界」だが、データで埋まらない点は明確。）
+
+**メタ含意（重要）**: 一連の分析で弱点が2種類に分離した。
+- **データ不在型**（Tufted juvenile）: 世界に2録音で枯渇 → data/aug/別ソース全滅、解決不能
+- **表現力不足型**（Goldeneye song）: Teal song と音響類似でデータ十分 → **バックボーン強化が本命の解**
+
+`model_comparison_audiomae_ssam.md` の「ボトルネックはアーキでなくデータキュレーション」という結論に対し、**Goldeneye は明確な反例**（アーキ強化が本命の種が実在）。最初のドキュメントで第一候補に挙げた AudioMAE 評価が、今度は定量的根拠付きで再浮上した。
+
+### 次にやる（更新4）
+
+run12 = **AudioMAE 全体fine-tune による表現力評価**を事前登録する（model_comparison ドキュメントの Go/No-Go チェックリストに沿う）。期待: Goldeneye song ↔ Teal song の分離向上。データ系レバー（Tufted juvenile / 録音追加）は尽きたため、アーキ軸へ移行。
+
+## 2026-06-03 ドメイン整合 — 「幼鳥は冬の日本に不要」を検証し評価セットを修正
+
+### 経緯
+
+juvenile データ枯渇を延々追っていたが、ユーザーの「**そもそも幼鳥は冬の日本のモニタリングに不要では?**」という上流の問いを検証。これが一連の juvenile 議論を根本から正した。
+
+### 検証結果（決定的）
+
+- test の Tufted juvenile 録音 XC667403/667392 は **2021-08-05・フランス**＝繁殖期・繁殖地の雛(begging call)。冬の日本では遭遇しない音響パターン。
+- ドメインフィルタ別に run11 を再評価（既存 predictions）:
+  - stage=juvenile/nestling 除外 → f1_macro_8 0.798→**0.808**、Tufted **0.703→0.767(+0.064)**
+  - 月で繁殖期(5-8月)除外 → 0.764 / Tufted 0.480（adult call を巻き込み悪化）→ **stage ベースが正しい**
+- **さらに大きな発見**: train/test とも **日本録音0**（test 0/73・train 0/313）、繁殖期録音が test 18/train 92。「Japan→worldwide フォールバック」の帰結で、run01〜11 の test f1 は厳密には「冬の日本での性能」を測れていなかった。
+
+### 対処
+
+`filter_domain.py` を実装（`enrich_metadata` の照合ロジックを再利用）。**val/test から juvenile/nestling を除外**（val 1358→1285・test 1154→1038）。train は学習の音響多様性のため不変（ユーザー確定方針）。旧 split は `*.bak` 退避。run12 以降の baseline は **test v2（f1_macro_8class 0.808）**。
+
+### 学び
+
+- 「データをどう埋めるか」の前に「**その評価対象はドメインとして正しいか**」を問うべきだった。juvenile のデータ枯渇（XC/GBIF/iNat 全滅）を数時間追ったが、真の答えは「そもそも評価に入れるべきでない」だった。
+- メタデータ基盤（stage/date/cnt）があったから、ドメイン外を録音単位で即特定でき、評価を定量的に正せた。
+
+### 次にやる
+
+対象種拡張（軸2）。ood_tier1 のカモ科のうち**データ十分な4種**（Gadwall/ウミアイサ/カルガモ/カワアイサ）を target 昇格し run13 として事前登録（8→12種）。下位3種(トモエ/ヨシ/スズ)は録音不足で見送り。Goldeneye の表現力ボトルネック(run12 AudioMAE)は対象種拡張後に再評価。
+
+## 2026-06-04 run13 準備: 対象種拡張 8→12種 を実装（split まで）
+
+### やったこと
+
+4種を target 化し、split・label_map・config を 12種体制に再構築。run13 として事前登録（学習は未着手）。
+
+### データ収集と2つの落とし穴
+
+1. **カルガモが2本しか取れない** — `download.py` の `fallback_worldwide` は「指定国で**0件**のとき」のみ worldwide 検索する設計。カルガモは Japan に2件ヒットしたため worldwide(16本)に行かなかった。`_download(country=None)` を直接呼んで worldwide 追加収集し16本確保。**学び: fallback は0件時のみ。少数ヒット国があると worldwide を取り逃す。**
+2. **label_map から other が欠落** — split.py / ad-hoc 再生成は `chunks_index.csv`（other を含まない）から label_map を作るため、other が抜けた。`build_datasets` は `label_map.csv` を直接読み、`other_label_id = label_map.get("other")` で OOD 重み付けを決めるため、欠落すると other 処理が無効化される。**other=12 を手動追加して解消。**
+
+### split 戦略（既存8種を公平比較するため）
+
+- split.py の通常モードは全種再分割で既存8種の割り当てが変わり、`--preserve-existing` は新種を全て train に入れてしまう。どちらも不適。
+- → **既存8種 split（test v2）を完全保持し、新4種だけ `split_by_recording`(seed=42, 70/15/15) で分割して追記**。filter_domain を再適用し新4種の juvenile/nestling も除外（test 1299→1261）。これで run11↔run13 の既存8種比較が公平。
+
+### init は pretrained
+
+12種化で label_id のソート順が変わる（Common_Merganser 挿入等）ため、run11(v11) の9クラスヘッド重みを正しくマップできない。`init_from=""` で pretrained から初期化する。
+
+### 次にやる
+
+run13 学習 → 13クラス eval。H1（既存8種 f1_macro_8 ≥ 0.77）/ H2（新4種 macro 0.40〜0.60）/ H3（OOD AUROC ≥ 0.88）を検証。学習前に `train.py --dry-run` で VRAM・テンソル形状（13クラス・pretrained 初期化・位置埋め込み 304）を確認する。
+
+### 結果: 対象種拡張は「半分成功」（同日）
+
+- **H1 ほぼ不成立**: 既存8種 f1_macro_8 = 0.769（baseline run11 test v2 0.808 から −0.039、予測下限 0.77 を僅か割れ）。**H2 域内だが二極化**: 新4種 0.449（Gadwall 0.823 / ウミアイサ 0.746 ＝成功、カワアイサ 0.227 / **カルガモ 0.000 ＝失敗**）。**H3 成立**: OOD AUROC energy 0.902。
+- **真因は同属相互混同ではなく Mallard の「吸引ハブ」化**。カルガモ27chは18→Mallard で自種0、カワアイサも Mallard/Goldeneye へ。pred=Mallard に Teal/Gadwall/カルガモ/カワアイサが流入し Mallard precision 低下 → 既存8種を −0.039 押し下げた。
+- **学び**: (1) 「録音数が効く」を再確認（成功2種=録音30/17、失敗2種=録音11/8）。(2) カルガモは Anas 属で Mallard に酷似し、録音11でも多数派バイアスに負け全滅 → **録音追加(worldwide 16本上限)では限界。Goldeneye song と同じ「表現力/多数派バイアス」の壁**。(3) 種拡張は「データが揃う種だけ」が鉄則。
+- **次にやる**: 12種そのまま採用は見送り。候補 ①Gadwall/ウミアイサのみ昇格(10種)・カルガモ/カワアイサは other へ戻す ②Mallard 過剰予測対策(CE重み/sampler) で12種再学習 ③run14 AudioMAE で表現力を上げ音響類似を分離。`species_taxonomy.yaml` の v13 切替は採用判断後。
+
+## 2026-06-04 run14: focal loss 失敗 — カルガモの壁は分類層でなく表現力
+
+### やったこと
+
+run13 でカルガモ 0.000(Mallard吸引)。素 AST で test カルガモ 67% がカルガモ寄りだったため
+「分類層の多数派バイアス」と見立て、focal loss(gamma=2.0)で難サンプル強調を試した（loss のみ1変更）。
+
+### 結果（仮説の反証）
+
+- **カルガモ F1=0.000 のまま（H1 不成立）**。既存8種 0.761(run13 0.769)・12種 0.646(run13 0.662) と微減。
+- focal は Mallard precision を改善(F1 0.627→0.674)したが、その分 ウミアイサ(−0.103)/カワアイサ(−0.057)が犠牲。新4種全体は悪化。
+
+### なぜ反証されたか
+
+素 pretrained の「67% カルガモ寄り」は **pretrained 限定**。fine-tune すると CE でも focal でも、極小マージン（train カルガモ↔Mallard 重心 cos 0.982、test 0.917 vs 0.915）が Mallard 多数派に押し潰される。**focal=分類層を直接是正する最強手でも 0% → 分類層では救えない＝表現力の壁が本質**。
+
+### 学び
+
+- **「データ追加（run07/13）」「分類層調整（run14 focal）」のどちらでも近縁カモの壁を破れなかった**。残る軸は表現力（AudioMAE）かデータ品質（中国語斑嘴鸭録音の質）。
+- Goldeneye song（run11 分析）と カルガモ（run13/14）が同じ「表現力の壁」に収束。AST の汎用表現は fine-grained 近縁差を分離しきれない、という一貫した診断。
+- 切り分けの順序（データ→分類層→表現力）が機能した。focal の失敗は「表現力が要る」ことの確証であり、無駄ではない。
+
+### 次にやる
+
+①run15 = AudioMAE（表現力軸）で Goldeneye song + カルガモ の分離を検証、または ②カルガモ/カワアイサを other に戻し成功2種(Gadwall/ウミアイサ)のみ昇格＝10種運用で確実に前進。run14 は不採用、12種ベストは run13(v13)。
+
+## 2026-06-04 表現軸 probe 検証: AudioMAE は総合AST以下・SSAMは断念
+
+### やったこと
+
+カルガモ/Goldeneye song の「表現力の壁」に対し、自己教師あり表現(AudioMAE/SSAM)を linear probe で検証。
+
+### AudioMAE 実装の落とし穴（再利用知見）
+
+- timm で `hf_hub:gaunernst/vit_base_patch16_1024_128.audiomae_as2m` をロード。
+- **前処理が AST と全く別**: kaldi.fbank(htk_compat, hanning, 128mel) + 正規化 (x-(-4.268))/(4.569*2)、1024frame固定。ASTFeatureExtractor 流用は不可（埋め込み崩壊 std~0.01）。
+- **3s音声はゼロpadでなく10sタイル**（pad 71%が定数支配で崩壊）。
+- **特徴は CLS でなく patch mean pool**。global_pool=token の CLS は MAE で定数的＝崩壊。
+- 生特徴の重心比較は MAE型に不利（生encoderは分類向けでない）→ linear probe に切替。
+
+### 結果（probe vs probe で公平比較）
+
+| | カルガモ F1 | 既存8種 | 12種 |
+|---|---|---|---|
+| AudioMAE probe | **0.140** | 0.528 | 0.422 |
+| AST probe | 0.000 | 0.631 | 0.472 |
+| run13 AST FT | 0.000 | 0.769 | 0.662 |
+
+- **総合は AST が上**（教師あり AudioSet が分類向け）。AudioMAE 全面採用の根拠は弱い。
+- **カルガモだけ AudioMAE のみ非ゼロ(0.140)**。AST が原理的に潰す種を自己教師あり表現は微細に保持＝芽はあるが小さい。
+- **SSAM は使える port が無く断念**（mamba-ssm ビルド+公式コード移植で AudioMAE の10倍超コスト）。
+
+### 学び
+
+- **表現軸に銀の弾丸なし**。データ追加(run07/13)・分類層(run14 focal)・表現力(AudioMAE/SSAM)を一通り試し、近縁カモ(カルガモ↔Mallard, Goldeneye↔Teal song)は現行リソースで分離困難と確定。
+- linear probe は「fine-tune コスト前の表現力判定」に有効。生特徴比較が MAE型に不適だった失敗から probe へ切替えたのが効いた。
+- 検証の網羅（データ→分類層→表現力）が完了。これ以上は「近縁ペアの受容」が現実解。
+
+### 次にやる
+
+実用化: カルガモ/カワアイサを other に戻し、成功2種(Gadwall/ウミアイサ)昇格の **10種運用** で確定（run15）。カルガモ/Goldeneye song は分離困難な近縁ペアとして受容。
+
+## 2026-06-05 run15: 10種運用で確定 — 失敗種除去で既存種が回復
+
+### 結果
+
+カルガモ/カワアイサを other へ差戻し、Gadwall/ウミアイサ昇格の10種で確定:
+- 既存8種 f1_macro_8 **0.786**(run13 0.769 から +0.017 回復, H1成立)
+- 10種 f1_macro_10 **0.783**(run13 12種 0.662 を大きく上回る, H3成立)
+- OOD AUROC energy **0.899**(維持, 閾値 6.73)
+
+### なぜ既存種が回復したか
+
+run13 で カルガモ/カワアイサが Mallard に吸われ Mallard precision が落ち、それが既存8種全体を −0.039 押し下げていた。2種を除くと吸引ハブが消え、**Mallard 0.627→0.664 / Goldeneye 0.679→0.765 / Shoveler +0.054** と回復。「失敗種を抱えるコスト」が既存種に波及していたことの裏返し。
+
+### 学び（一連の探索の総括）
+
+ユーザーの「幼鳥は冬の日本に不要では?」から始まった探索の結論:
+- **ドメイン整合(juvenile除外)** = 効いた(Tufted +0.064)
+- **対象種拡張** = データが揃う種だけ成功(Gadwall/ウミアイサ)。カルガモ/カワアイサは Mallard と分離困難
+- **分類層(focal)・表現力(AudioMAE/SSAM)** = 近縁ペアの壁を破れず
+- → **実用解は「データが揃う種のみ昇格＋失敗種は other で受容」**。10種(8→10)が堅実な成果
+- 重要な一般原則: **失敗種を target に残すと既存種まで巻き添えにする**。撤退の判断が性能を上げることもある
+
+### 確定した運用構成
+
+カモ10種(マガモ/コガモ/オナガガモ/ハシビロガモ/ヒドリガモ/キンクロハジロ/ホオジロガモ/ホシハジロ/オカヨシガモ/ウミアイサ) + OOD energy gate(AUROC 0.899, threshold 6.73)。species_taxonomy.yaml = v15。
+
+## 2026-06-05 「広くカバー」の査定: 日本の観察頻度で target 候補を仕分け
+
+### やったこと
+
+run15(10種確定)後、ユーザーの「運用上カモ類を広くカバーしたい」を受け、両輪(target拡張+OOD強化)の方向を確認。worldwide 在庫だけで候補を挙げたが、ユーザーの「どれも日本じゃ少ないかも」「ツクシは必要だがアカツクシは引っ張られる」「csv の記述も参考に」の指摘で、**北部九州 iNat 観察頻度(obs_count)で査定**し直した(`sync_species_master.py` 実行、bbox 32-34N/128.5-132E)。
+
+### 査定結果（北部九州で観察されるカモ系、obs_count順）
+
+- 既存 target: マガモ195/ヒドリガモ178/ホシハジロ88/コガモ86/オナガガモ60/キンクロ36/ハシビロ28/Gadwall20/ウミアイサ17/ホオジロガモ6
+- **未登録だが観察される**: **ツクシガモ Common Shelduck 42(candidate)** / オシドリ16 / ミコアイサ9 / シマアジ5
+- ood: カルガモ131 / ヨシガモ23 / トモエ18 / スズガモ11 / カワアイサ2
+
+### 重要な気づき
+
+- **worldwide 在庫 ≠ 日本の観察実態**。worldwide で大量のアカツクシガモ(124本)・シマアジ(81)・オシドリ(64)も、北部九州 obs では圏外〜低。ユーザーの直感が正しい。**査定は obs_count を主軸にすべき**。
+- **ツクシガモ(obs 42)が target 最優先候補**。ハシビロ(28)・キンクロ(36)より観察され、形態・鳴き声が独特。しかも**近縁のアカツクシガモが日本にほぼいない＝混同相手不在で分離しやすい**(カルガモ↔Mallardの逆の好条件)。
+- **最大の運用課題: カルガモ(obs 131・観察3位)を識別できない**。「マガモ or カルガモ」は日本のカモ観察の最頻ペアなのに run15 で分離困難と確定し OOD 止まり。ここが弱点。
+
+### 次にやる（次セッション）
+
+両輪の具体化:
+1. **target 追加: ツクシガモ Common Shelduck**(Xeno-canto A品質31本)を収集→11種化。独特種なので run15 的な既存種巻き添えは起きにくい見込み。オシドリ(16)も次点候補。
+2. **OOD 強化**: カルガモ/ミコアイサ/シマアジ等を OOD tier1 に整理し「カモ類」検知を広げる。
+3. カルガモ識別は別軸の難問として継続検討(日本録音入手 or マガモ/カルガモ2値分類器 等)。
+
+## 2026-06-05 総点検: run間の精度比較はほぼ全て統計的に無意味だった
+
+### きっかけ
+
+「セッションを総点検、根本的な間違いがないか」の依頼で評価を多角的に再検証した。
+
+### 発見1: 指標の計算法で結論が逆転する
+
+既存8種 f1_macro を3通りで計算したら値も順位も変わった:
+- chunk単位・全データ(FP含む): run13 0.769 / run15 0.786（私が報告した「+0.017回復」）
+- chunk単位・8種抽出: run13 0.798 / run15 0.792（−0.006、逆）
+- 録音単位: run13 0.909 / run15 0.827（−0.082、大きく逆）
+
+chunk単位は同一録音内の一部誤分類をペナルティし**性能を過小評価**（run15 10種 0.783→録音単位 0.842）。
+クラス数の違う(9/11/13)モデルで「既存8種f1」を比べるのも誤予測先が変わり交絡していた。
+
+### 発見2: 録音単位 bootstrap で run間差は全て有意でない
+
+`compare_runs_ci.py` を作り、run11/13/15 を同一の既存8種 test(69録音)で録音単位クラスタ
+bootstrap 比較した:
+- run11 0.878[0.762,0.947] / run13 0.909[0.808,0.965] / run15 0.827[0.710,0.908]
+- **全ペア差の95%CIが0を含む**（run15-run13 −0.082[−0.183,+0.018] 等）。CI幅±0.1。
+
+→ **test 69録音では run間の微差を測る解像度が無い**。点推定の順位が指標で逆転するのは
+「全部ノイズ」の証拠。
+
+### 根本的な反省
+
+- セッション中の run比較（「種拡張で既存低下」「10種で回復」「focal失敗−0.008」等）は
+  **ことごとく統計的に無意味な差を効果と誤認**していた。run03 で「val f1スパイクの選択バイアス」
+  を学んだのに同じ罠（小サンプルのノイズを効果と誤認）に再びはまった。
+- 皮肉にも `docs/bootstrap_ci.py`（既存）の冒頭が「chunk単位の再標本化はCIを過小評価。正しくは
+  録音を塊ごと再標本化」と明記していた。それを見落として chunk単位の点推定で全 run を比較した。
+
+### 何が生き残るか
+
+- 揺るがない: カルガモ F1=0.000（明確）、失敗種除去で f1_macro が桁で動く、カルガモ↔Mallall 混同
+  （定性的）、juvenile はドメイン外（生態的妥当）、obs_count ベースの種査定。
+- 崩れた: run11/13/14/15 の精度ランキング、±0.02〜0.08 の全比較、test v2 の +0.064 も要再検証。
+
+### 確立したルール（CLAUDE.md / experiments.md に記録）
+
+1. run比較は **録音単位 + bootstrap CI**（`compare_runs_ci.py`）。chunk単位点推定で優劣を断定しない。
+2. CI が重なる差（≈±0.05未満）は「差なし」。大きな構造的差と定性的所見のみで意思決定。
+3. **test の録音数拡大が最優先課題**（現状69録音では解像度不足）。
+
+### 次にやる
+
+新機能・追加 run より先に **評価系の是正**: (a) test 録音数を増やす（種ごと最低十数録音→数十）
+(b) 今後の全 run を compare_runs_ci で CI 付き評価。これ無しの精度主張は信頼しない。
+
+## 2026-06-06 再評価2: focal「失敗」は撤回、モデル選定は運任せと判明
+
+### やったこと
+
+compare_runs_ci に run10/run14 を追加し、run10〜15 を同一の既存8種 test(69録音)で録音単位 bootstrap 再評価。
+
+### 結果（録音単位 既存8種 macro-F1）
+
+run10 0.884 / run11 0.878 / run13 0.909 / **run14 0.934(最高)** / run15 0.827(最低)。
+ペア差は10通り中**有意は run15-run14(-0.107)の1つだけ**(多重比較の偽陽性が濃厚)。他は全て CI が0を含む。
+
+### 覆った判断
+
+- **「focal は失敗(-0.016)」は誤り**。録音単位で run14 が5run中最高、run13と差なし。chunk単位の誤判定だった。ただし**カルガモ救済失敗(F1=0.000)は構造的に変わらず**＝focal の主目的は未達。
+- **「other追加で+0.011改善」も無効**(run11-run10 差なし)。
+- run10〜15 の既存8種は**統計的に区別できない**ことが確定。
+
+### モデル選定への重大な含意
+
+- **v15 は単一シードで録音単位最低(0.827, CI[0.71,0.91])**。同設定でも early stop/シードで大きく振れる。**v15 は「たまたま悪い引き」の可能性**があり、run14(0.934)が「良い引き」だったのかもしれない。
+- → **「確定版」は撤回**。v15 は暫定運用モデル。experiments.md の run14「失敗」/run15「確定」記述と species_taxonomy.yaml に注記済み。
+- **単発でモデルを作り直しても、また別の運任せの1個ができるだけ**。複数シード学習＋CI選定が要るが、それも test 69録音では選定不能。
+
+### 結論と次にやる（A: test拡大から）
+
+このプロジェクトの本質的な行き詰まりは **test の録音数不足(各種4〜14録音)で評価解像度が無いこと**。新機能・追加runより先に **(A) test 録音数の拡大** に着手する。順序: test拡大 → 複数シード学習 → compare_runs_ci で CI 付き選定。

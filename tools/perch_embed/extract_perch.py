@@ -51,8 +51,22 @@ def embed_chunk(model, chunk_32k: np.ndarray) -> np.ndarray:
     return emb.reshape(-1, emb.shape[-1]).mean(axis=0)
 
 
-def extract_split(model, df, label_map, raw_dir: Path, source: str) -> dict:
-    """1 split を抽出。録音単位で生音源を1回ロードし、各 chunk_index を埋め込む。"""
+def resolve_raw_path(raw_dir: Path, species: str, source_file: str) -> Path | None:
+    """生音源を解決。data/raw/<種>/<source_file>（直下）と
+    data/raw/<種>/<学名_>/<source_file>（学名サブディレクトリ）の両レイアウトを許容。"""
+    direct = raw_dir / species / source_file
+    if direct.exists():
+        return direct
+    hits = sorted((raw_dir / species).glob(f"*/{source_file}"))
+    return hits[0] if hits else None
+
+
+def extract_split(model, df, label_map, raw_dir: Path, source: str,
+                  chunk_sec: float, min_sec: float) -> dict:
+    """1 split を抽出。録音単位で生音源を1回ロードし、各 chunk_index を埋め込む。
+
+    raw の再分割は splits 生成時と同じ chunk_sec / min_sec で行い、chunk_index を 1:1 整合させる。
+    """
     feats: list[np.ndarray] = []
     ys, xcs, cidx, specs = [], [], [], []
     missing = 0
@@ -60,8 +74,8 @@ def extract_split(model, df, label_map, raw_dir: Path, source: str) -> dict:
     # 録音単位（species, source_file）でグループ化して I/O を最小化
     for (species, source_file), grp in df.groupby(["species", "source_file"], sort=False):
         if source == "raw":
-            audio_path = io_utils.raw_audio_path(species, source_file, raw_dir)
-            if not audio_path.exists():
+            audio_path = resolve_raw_path(raw_dir, species, source_file)
+            if audio_path is None:
                 missing += len(grp)
                 continue
             try:
@@ -70,7 +84,7 @@ def extract_split(model, df, label_map, raw_dir: Path, source: str) -> dict:
                 print(f"  [WARN] {audio_path.name}: {e}", flush=True)
                 missing += len(grp)
                 continue
-            chunks = io_utils.chunk_audio(audio, PERCH_SR, 10.0, 3.0, 0.0)
+            chunks = io_utils.chunk_audio(audio, PERCH_SR, chunk_sec, min_sec, 0.0)
             for _, row in grp.iterrows():
                 i = int(row["chunk_index"])
                 if i >= len(chunks):
@@ -108,6 +122,10 @@ def main() -> None:
     ap.add_argument("--source", choices=["raw", "processed"], default="raw",
                     help="raw=生mp3を32kHz再デコード(高忠実) / processed=既存16kHzを32kHz resample")
     ap.add_argument("--splits", nargs="+", default=["train", "val", "test"])
+    ap.add_argument("--chunk-sec", type=float, default=3.0,
+                    help="raw 再分割のチャンク長。splits 生成時と一致させる（現行3秒スキーム）")
+    ap.add_argument("--min-chunk-sec", type=float, default=3.0,
+                    help="末尾チャンクを残す最小長。splits 生成時と一致させる")
     args = ap.parse_args()
 
     splits_dir = Path(args.splits_dir)
@@ -122,7 +140,8 @@ def main() -> None:
             continue
         df = io_utils.read_split(csv)
         print(f"[{split}] {len(df)} chunks 抽出中 (source={args.source})...", flush=True)
-        res = extract_split(model, df, label_map, Path(args.raw_dir), args.source)
+        res = extract_split(model, df, label_map, Path(args.raw_dir), args.source,
+                            args.chunk_sec, args.min_chunk_sec)
         out_path = Path(args.out_dir) / f"{split}.npz"
         io_utils.save_embeddings(
             out_path, res["X"], res["y"], res["xc_id"], res["chunk_index"],

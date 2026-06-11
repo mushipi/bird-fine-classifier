@@ -77,7 +77,12 @@ def main() -> None:
     ap.add_argument("--out-dir", default=str(REPO_ROOT / "data" / "embeddings" / "birdaves"))
     ap.add_argument("--splits", nargs="+", default=["train", "val", "test"])
     ap.add_argument("--seq-tokens", type=int, default=32)
+    ap.add_argument("--device", default="auto",
+                    help="auto/cuda/cpu。auto は cuda 利用可なら cuda")
     args = ap.parse_args()
+
+    import torch
+    device = ("cuda" if torch.cuda.is_available() else "cpu") if args.device == "auto" else args.device
 
     if not MODEL.exists():
         print(f"[ERROR] {MODEL} なし。BirdAVES重みを references/weights/birdaves に置いて。")
@@ -88,8 +93,8 @@ def main() -> None:
     _LABEL_MAP = io_utils.load_label_map(splits_dir)
     label_names = io_utils.label_names_from_map(_LABEL_MAP)
 
-    print("[load] BirdAVES-biox-large (CPU)...", flush=True)
-    extractor = BirdAVESExtractor(CONFIG, MODEL, device="cpu", seq_tokens=args.seq_tokens)
+    print(f"[load] BirdAVES-biox-large (device={device})...", flush=True)
+    extractor = BirdAVESExtractor(CONFIG, MODEL, device=device, seq_tokens=args.seq_tokens)
     print("[ok] loaded", flush=True)
 
     for split in args.splits:
