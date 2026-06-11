@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>鳴き声でカモを見分けるAIを「先生から学ばせて」強くした話</title>
+<meta name="description" content="鳴き声からカモ10種を自動で見分けるAIを、知識蒸留という手法で強化した全記録。機械学習が専門でない方（とくに生態学・鳥類観察に関心のある方）向けの解説ノート。">
+<style>
+  :root{
+    --ink:#22272e; --sub:#5b6470; --line:#e6e8ec; --bg:#fbfcfd;
+    --blue:#3a7bd5; --green:#55a868; --red:#C44E52; --card:#ffffff;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;color:var(--ink);background:var(--bg);
+    font-family:"Hiragino Kaku Gothic ProN","Noto Sans JP","Yu Gothic",system-ui,sans-serif;
+    line-height:1.85;font-size:17px;-webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:760px;margin:0 auto;padding:0 22px}
+  header.hero{
+    background:linear-gradient(160deg,#eaf1fb 0%,#f4f8f4 100%);
+    border-bottom:1px solid var(--line);padding:56px 0 40px;
+  }
+  .badge{display:inline-block;font-size:13px;color:var(--blue);background:#eaf1fb;
+    border:1px solid #cfe0f7;border-radius:999px;padding:3px 12px;margin-bottom:18px;letter-spacing:.02em}
+  h1{font-size:30px;line-height:1.45;margin:.1em 0 .35em;letter-spacing:.01em}
+  .lead{color:var(--sub);font-size:16px;margin:0}
+  .meta{color:var(--sub);font-size:13.5px;margin-top:20px}
+  main{padding:8px 0 64px}
+  h2{font-size:22px;margin:48px 0 .5em;padding-top:10px;border-top:1px solid var(--line)}
+  h2 .n{color:var(--blue);font-size:15px;display:block;font-weight:600;letter-spacing:.08em;margin-bottom:2px}
+  h3{font-size:18px;margin:30px 0 .3em}
+  p{margin:.7em 0}
+  figure{margin:30px 0;text-align:center}
+  figure img{max-width:100%;height:auto;border:1px solid var(--line);border-radius:10px;background:#fff}
+  figcaption{color:var(--sub);font-size:13.5px;margin-top:10px;line-height:1.7}
+  .callout{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--blue);
+    border-radius:8px;padding:16px 20px;margin:26px 0}
+  .callout.green{border-left-color:var(--green)}
+  .callout.red{border-left-color:var(--red)}
+  .callout p:first-child{margin-top:0}.callout p:last-child{margin-bottom:0}
+  .key{font-weight:700;color:var(--blue)}
+  .green-ink{color:var(--green);font-weight:700}
+  table{width:100%;border-collapse:collapse;margin:24px 0;font-size:15px}
+  th,td{border-bottom:1px solid var(--line);padding:9px 10px;text-align:left}
+  th{color:var(--sub);font-weight:600;font-size:13.5px}
+  td.num{text-align:right;font-variant-numeric:tabular-nums}
+  .tldr{background:#fff;border:1px solid var(--line);border-radius:12px;padding:8px 24px 18px;margin:30px 0;
+    box-shadow:0 1px 0 rgba(0,0,0,.02)}
+  .tldr h2{border-top:none;margin-top:18px;padding-top:0}
+  .tldr ul{margin:.4em 0;padding-left:1.2em}.tldr li{margin:.4em 0}
+  dfn{font-style:normal;border-bottom:1px dotted #aab;cursor:help}
+  footer{border-top:1px solid var(--line);color:var(--sub);font-size:13px;padding:28px 0 60px;line-height:1.8}
+  footer a{color:var(--blue)}
+  .small{font-size:13.5px;color:var(--sub)}
+</style>
+</head>
+<body>
+<header class="hero">
+  <div class="wrap">
+    <span class="badge">フィールド × 機械学習ノート</span>
+    <h1>鳴き声でカモを見分けるAIを<br>「先生から学ばせて」強くした話</h1>
+    <p class="lead">機械学習が専門でない方——とくに生態学・鳥類観察・音響モニタリングに関わる方——に向けて、<br>
+    一連の実験で何を試し、何が分かったのかを図でたどるノートです。</p>
+    <p class="meta">対象：カモ10種・3秒の鳴き声チャンク／手法：知識蒸留（Perch を先生に）</p>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <div class="tldr">
+    <h2>このノートの要点（先に結論）</h2>
+    <ul>
+      <li>鳴き声からカモ10種を見分けるAIを、<span class="key">「鳥の声の達人AI（Perch）」を先生役にして学ばせ直す</span>と、正確さが上がった。</li>
+      <li>伸びしろの大きい小型AIでは、正確さが <b>0.45 → 0.60</b> へ明確に向上。<span class="green-ink">偶然では説明できない差</span>だと統計的に確認できた。</li>
+      <li>すでに高性能なAIでも、学習を3回やり直し・結果を平均すると <b>0.81 → 0.87</b> に。こちらも統計的に確かな上積み。</li>
+      <li>「たまたま良い結果が出ただけでは？」を避けるため、判定はすべて<dfn title="その差が偶然のばらつきで説明できる範囲を超えているかを見る区間。重ならなければ『本物の差』と言える。">信頼区間</dfn>付きで行いました。</li>
+    </ul>
+  </div>
+
+  <h2><span class="n">背景</span>なぜ鳴き声でカモを見分けたいのか</h2>
+  <p>水辺に置いたレコーダーが拾う鳴き声から、その場にいる鳥の種類を自動で判別できれば、人が常に張り付かなくても生息状況をモニタリングできます。カモの仲間はその有望な対象ですが、<b>近縁の種どうしは鳴き声がよく似ていて</b>、機械にとっても人にとっても聞き分けが難しい相手です。</p>
+  <p>今回扱うのは、3秒ごとに区切った鳴き声から<b>カモ10種</b>を当てるタスク。手元の評価用データは録音231本ぶんと、それほど多くありません。「データが少ない・種が似ている」という、フィールドではおなじみの厳しい条件です。</p>
+
+  <h2><span class="n">行き詰まり</span>「同じやり方の磨き込み」では頭打ちだった</h2>
+  <p>最初のAIは、録音1本ごとに10種を当てる正確さで <b>0.83 前後</b>。ここから設定を細かく調整しても、ほとんど数字が動かなくなりました。同じ土台のうえで磨き方を変えるアプローチは、すでに限界に来ていたのです。</p>
+  <p>そこで発想を変えます。<b>「別の知識を外から注ぎ込めないか？」</b>——これが今回の主役、<span class="key">知識蒸留（ちしきじょうりゅう）</span>です。</p>
+
+  <h2><span class="n">アイデア</span>「達人の答え方」ごと写し取る — 知識蒸留</h2>
+  <p>知識蒸留とは、<b>すでに賢いAI（先生）の判断のしかたを、これから育てるAI（生徒）に真似させる</b>手法です。ポイントは、先生の答えを「正解か不正解か」だけでなく、<b>「マガモ7割・コガモ2割…」といった“迷い方”の配分ごと</b>生徒に伝えるところ。この迷いの配分には、似た種どうしの微妙な近さといった、正解ラベルだけでは伝わらない情報が詰まっています。</p>
+
+  <figure>
+    <img src="figs/fig4_concept.png" alt="知識蒸留の概念図：鳴き声を先生Perchと生徒AIの両方に入れ、先生の確信度の配分を生徒が真似る">
+    <figcaption>知識蒸留のしくみ。先生は同じ鳴き声に対する「確信度の配分」を示し、生徒はその答え方ごと真似て学ぶ。</figcaption>
+  </figure>
+
+  <p>先生役には <b>Perch</b> という、<b>大量の鳥の鳴き声で鍛えられた“土台AI”</b>を選びました。なぜ Perch なのか——他の土台AIと並べて比べた結果がこちらです。</p>
+
+  <figure>
+    <img src="figs/fig2_foundation.png" alt="土台AIの比較。Perchが0.83、BirdAVESが0.65で、Perchが大きく上回る">
+    <figcaption>同じ条件で土台AIを比較。鳥の声で鍛えた Perch が、別系統の土台AIに 0.18 もの大差をつけた。先生役は Perch で決まり。</figcaption>
+  </figure>
+
+  <h2><span class="n">結果</span>蒸留は効いた——3人の生徒で確かめる</h2>
+  <p>蒸留が「本当に効く」のかを見極めるため、性質の違う3人の生徒AIで、<b>蒸留なし</b>と<b>蒸留あり</b>を同条件で比べました。</p>
+
+  <figure>
+    <img src="figs/fig1_headline.png" alt="3種類の生徒AIで蒸留あり・なしを比較した棒グラフ。いずれも蒸留ありが上回る">
+    <figcaption>棒の上下のヒゲは95%信頼区間。<b>ヒゲが重ならない差＝偶然では説明できない「本物の差」</b>。赤い破線は先生Perchの実力。</figcaption>
+  </figure>
+
+  <h3>① 伸びしろの大きい小型AI：はっきり効いた</h3>
+  <p>あえて事前学習のない小さなAIを生徒にすると、正確さは <b>0.45 → 0.60（+0.148）</b>。信頼区間が重ならず、<span class="green-ink">統計的に「効いた」と断言できる</span>結果です。先生との差を約4割ぶん埋めました。これが、<b>「Perch を先生にした蒸留は本当に効く」を初めて確かめた瞬間</b>です。</p>
+
+  <h3>② すでに高性能なAI：効いてはいるが、単発では埋もれる</h3>
+  <p>もともと強いAIだと <b>0.826 → 0.851（+0.025）</b>。上向きですが、もう天井近くで伸びしろが小さく、231本の録音という解像度では「偶然の範囲」と区別しきれませんでした。<b>方向は同じ・効果は本物</b>。ただ小さくて埋もれた、というわけです。</p>
+
+  <div class="callout">
+    <p><b>「埋もれた」差をどう確かめるか。</b> ②の効果が本物かどうかを、学習を3回やり直して検証しました。下のとおり<b>毎回プラス</b>。運任せの当たりではなく、安定した上積みだと分かります。</p>
+  </div>
+
+  <figure>
+    <img src="figs/fig3_seeds.png" alt="学習を3回やり直した結果。毎回、蒸留ありが蒸留なしを上回る">
+    <figcaption>学習のやり直し3回。<b>3回とも蒸留ありが勝ち</b>、上積みのばらつきはごくわずか。「たまたま」ではない。</figcaption>
+  </figure>
+
+  <h3>③ 3回の結果を平均すると、過去最高に</h3>
+  <p>3回ぶんを平均してならすと <b>0.813 → 0.871（+0.058）</b>。今度は信頼区間が重ならず、<span class="green-ink">高性能AIでも蒸留の効果を統計的に確かなものとして確認</span>できました。<b>0.871 はこのプロジェクトの過去最高</b>で、先生Perch（0.83）も大きく上回ります。良い生徒は、先生を超えるのです。</p>
+
+  <table>
+    <thead><tr><th>生徒AI</th><th class="num">蒸留なし</th><th class="num">蒸留あり</th><th class="num">差</th><th>判定</th></tr></thead>
+    <tbody>
+      <tr><td>小型AI（伸びしろ大）</td><td class="num">0.450</td><td class="num">0.598</td><td class="num">+0.148</td><td><span class="green-ink">本物の差</span></td></tr>
+      <tr><td>高性能AI（単発）</td><td class="num">0.826</td><td class="num">0.851</td><td class="num">+0.025</td><td class="small">埋もれた</td></tr>
+      <tr><td>高性能AI（3回平均）</td><td class="num">0.813</td><td class="num">0.871</td><td class="num">+0.058</td><td><span class="green-ink">本物の差</span></td></tr>
+    </tbody>
+  </table>
+
+  <h2><span class="n">まとめ</span>分かったこと・残った課題</h2>
+  <div class="callout green">
+    <p><b>確かめられたこと：</b>「鳥の声の達人AIを先生にした知識蒸留」は、鳴き声分類AIを強くする<b>信頼できる手段</b>だと統計的に確定した。実用にいちばん向くのは、もともと高性能なAIに蒸留した版（録音1本ごとの正確さ <b>0.87</b>）。</p>
+  </div>
+  <div class="callout red">
+    <p><b>残った課題：</b>評価に使える録音がまだ少なく、小さな差は見極めにくい——<b>録音データを増やすこと</b>がいちばんの近道。また、ごく近縁な一部の種は先生Perch自身も学んでおらず、蒸留だけでは聞き分けが割れない。ここはデータと種知識の両面からの工夫が要る。</p>
+  </div>
+
+  <p class="small">フィールドの音響モニタリングでは「データが少ない・種が似ている」がつきもの。そんな状況でも、<b>すでにある“達人AI”の知識を借りる</b>ことで、手元のモデルを底上げできる——というのが、このノートのいちばんの持ち帰りです。</p>
+
+</main>
+
+<footer class="wrap">
+  <p>このノートは、カモ細分類プロジェクトの実験記録を、機械学習が専門でない読者向けに書き起こしたものです。グラフの数値は録音1本ごとの10種平均の正確さ（macro-F1）で、誤差は録音単位のブートストラップ95%信頼区間によります。</p>
+  <p class="small">© 2026 mushipi — bird-fine-classifier</p>
+</footer>
+</body>
+</html>
