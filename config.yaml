@@ -135,3 +135,36 @@ evaluation:
   output_dir: "outputs"
   attention_visualization: true
   top_k: 3
+
+# ==================================================
+# Foundation Model 埋め込み＋プローブ（AST頭打ち打開の別系統）
+# 抽出は隔離環境（tools/perch_embed=TF, tools/aves_embed=torch）で .npz に出力。
+# プローブ学習/評価は tools/aves_embed の torch 環境で実行。
+# ==================================================
+embeddings:
+  cache_dir: "data/embeddings"        # {model}/{split}.npz
+  perch:
+    variant: "perch_v2"               # CPU機では perch_v2_cpu を Kaggle から自動取得
+    sample_rate: 32000
+    window_size_sec: 5.0              # Perch native（10秒チャンク→2窓→平均）
+    embedding_dim: 1536
+    source: "raw"                     # raw=生mp3を32kHz再デコード（高忠実）/ processed=16kHz resample
+  birdaves:
+    weights_dir: "references/weights/birdaves"
+    model_file: "birdaves-biox-large.torchaudio.pt"
+    config_file: "birdaves-biox-large.torchaudio.model_config.json"
+    sample_rate: 16000
+    embedding_dim: 1024
+    seq_tokens: 32                    # attentiveプローブ用に系列を固定長プーリング
+
+probe:
+  # レビュー論文(arXiv:2508.01277)準拠の既定ハイパラ
+  lr: 0.005
+  weight_decay: 0.0005
+  epochs: 50
+  batch_size: 128
+  class_weights: true                 # データ不均衡（録音数のばらつき）対策
+  mlp_hidden_dim: 256
+  mlp_dropout: 0.3
+  attentive_num_heads: 4
+  metric_for_best: "f1_macro"         # AST baseline と同指標で比較（現行ベスト test 0.838）
