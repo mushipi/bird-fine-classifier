@@ -117,8 +117,17 @@ def fit_sklearn(Xtr, ytr, C):
 
 # ----------------------------------------------------------------------------
 def main() -> None:
+    import argparse
+    ap = argparse.ArgumentParser(description=__doc__)
+    ap.add_argument("--emb-dir", default=str(PROJECT_ROOT / "data" / "embeddings" / "perch"),
+                    help="埋め込み {train,val,test}.npz のディレクトリ")
+    ap.add_argument("--tag", default="perch",
+                    help="出力/保存名のタグ（例: perch / perch_raw32k / birdaves）")
+    args = ap.parse_args()
+
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    emb_dir = PROJECT_ROOT / "data" / "embeddings" / "perch"
+    emb_dir = Path(args.emb_dir)
+    tag = args.tag
     tr = io_utils.load_embeddings(emb_dir / "train.npz")
     va = io_utils.load_embeddings(emb_dir / "val.npz")
     te = io_utils.load_embeddings(emb_dir / "test.npz")
@@ -136,6 +145,7 @@ def main() -> None:
     Xte = standardize_apply(Xte, mean, std)
     operative = sorted(np.unique(ytr).tolist())  # 実在クラスのみで macro 集計
 
+    print(f"[sweep] tag={tag}  emb_dir={emb_dir}", flush=True)
     print(f"[sweep] device={device}  C={num_classes}(運用{len(operative)})  "
           f"train={len(ytr)}/{len(np.unique(xctr))}rec  val={len(yva)}/{len(np.unique(xcva))}rec  "
           f"test={len(yte)}/{len(np.unique(xcte))}rec", flush=True)
@@ -210,14 +220,15 @@ def main() -> None:
     out_dir.mkdir(parents=True, exist_ok=True)
     ts = datetime.now().strftime("%Y%m%d_%H%M%S")
     import csv
-    csv_path = out_dir / "sweep_results.csv"
+    csv_path = out_dir / f"sweep_results_{tag}.csv"
     with open(csv_path, "w", newline="", encoding="utf-8") as f:
         wtr = csv.DictWriter(f, fieldnames=list(rows[0].keys()))
         wtr.writeheader()
         wtr.writerows(rows)
-    json_path = out_dir / "sweep_results.json"
+    json_path = out_dir / f"sweep_results_{tag}.json"
     json_path.write_text(json.dumps({
-        "timestamp": ts, "ast_baseline": AST_BASELINE,
+        "timestamp": ts, "tag": tag, "emb_dir": str(emb_dir),
+        "ast_baseline": AST_BASELINE,
         "rows": rows, "arm_best": arm_best, "champion": champion,
     }, indent=2, ensure_ascii=False), encoding="utf-8")
     print(f"\n[OK] results -> {csv_path}", flush=True)
@@ -231,18 +242,18 @@ def main() -> None:
         return
 
     save_champion(champion, keep, mean, std, label_names, num_classes,
-                  operative, PROJECT_ROOT)
-    append_journal(ts, arm_best, champion, PROJECT_ROOT)
+                  operative, PROJECT_ROOT, tag)
+    append_journal(ts, arm_best, champion, PROJECT_ROOT, tag)
 
 
 def save_champion(champion, keep, mean, std, label_names, num_classes,
-                  operative, root):
+                  operative, root, tag):
     arm, val = champion["arm"], champion["value"]
     kind, obj = keep[(arm, val)]
-    out = root / "models" / f"probe_perch_{arm}_swept"
+    out = root / "models" / f"probe_{tag}_{arm}_swept"
     out.mkdir(parents=True, exist_ok=True)
     meta = {
-        "arm": arm, "param": champion["param"], "value": val,
+        "tag": tag, "arm": arm, "param": champion["param"], "value": val,
         "num_classes": num_classes, "label_names": label_names,
         "operative": operative,
         "val_rec_f1": champion["val_rec_f1"],
@@ -262,11 +273,11 @@ def save_champion(champion, keep, mean, std, label_names, num_classes,
     print(f"[save] champion -> {out}", flush=True)
 
 
-def append_journal(ts, arm_best, champion, root):
+def append_journal(ts, arm_best, champion, root, tag):
     jp = root / "docs" / "journal.md"
     lines = [
         "\n---\n",
-        f"\n## {datetime.now().strftime('%Y-%m-%d')} Perch 正則化スイープ"
+        f"\n## {datetime.now().strftime('%Y-%m-%d')} {tag} 正則化スイープ"
         f"（A→B 一気通し）: AST 0.838 を超えた\n",
         "\n### 結果（arm-best, val_rec_f1 で選定 → test 録音単位）\n",
         "\n| arm | param | val_rec_f1 | test_rec_f1 | test_acc | test_auroc |\n",
@@ -280,7 +291,7 @@ def append_journal(ts, arm_best, champion, root):
         f"\n**champion**: {champion['arm']} {champion['param']}={champion['value']} → "
         f"test 録音単位 f1_macro={champion['test_rec_f1']:.4f} "
         f"(AST baseline 0.838 を {champion['test_rec_f1'] - AST_BASELINE:+.4f} 更新)。"
-        f"保存先 models/probe_perch_{champion['arm']}_swept/。\n")
+        f"保存先 models/probe_{tag}_{champion['arm']}_swept/。\n")
     with open(jp, "a", encoding="utf-8") as f:
         f.writelines(lines)
     print(f"[journal] appended -> {jp}", flush=True)
