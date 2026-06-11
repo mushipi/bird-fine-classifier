@@ -17,11 +17,13 @@
 # ==================================================
 duck:
   pipeline:
-    stage2_model: "models/ast-duck-v15"   # ★暫定★ 精度差は統計的に無意味(test 69録音)。
-    # test拡大→複数シード学習→CI選定 の後に正式モデルを再選定する(→ experiments.md 冒頭の但し書き)
-    # run15 ood_eval (2026-06-05): 10種運用, AUROC energy=0.899 / FPR<=5% 推奨値
-    # （旧 run11 9クラス: threshold 10.35 / AUROC 0.932。11クラス化で energy スケール変化）
-    energy_threshold: 6.73
+    stage2_model: "models/ast-duck-C-kd-soup"   # 2026-06-12: Perch→KD蒸留 3seed soup を昇格
+    # 経緯: 10種運用。Perch教師(複数arm平均,OOF)を蒸留し多seed soup で固めた。
+    # 録音単位f1(test n=231): base-soup 0.813 → KD-soup 0.871、差+0.058 95%CI[+0.018,+0.108]=有意
+    # （seed42/1/2 全てで KD>base 一貫、差+0.027±0.004）。詳細→ docs/perch_kd_report.md
+    # ood_eval (2026-06-12, KD-soup): AUROC energy=0.886 / FPR<=5% 推奨。10クラス(other無し)。
+    # 旧: v15(11クラス) threshold 6.73 / AUROC 0.899。10クラス化で energy スケール変化。
+    energy_threshold: 2.948
     energy_temperature: 1.0  # 1.0 = Temperature Scaling なし
 
 # ==================================================

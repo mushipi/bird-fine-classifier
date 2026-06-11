@@ -40,16 +40,21 @@ def load_config() -> dict:
         return yaml.safe_load(f)
 
 
-def load_ood_config() -> tuple[float | None, float]:
-    """species_taxonomy.yaml から energy_threshold と energy_temperature を読む。"""
+def load_pipeline_config(group: str = "duck") -> tuple[str | None, float | None, float]:
+    """species_taxonomy.yaml の <group>.pipeline から推論設定を読む。
+
+    推論モデルと OOD params の単一の真実。返り値 = (stage2_model, energy_threshold, energy_temperature)。
+    threshold が None の場合は energy gate 無効。
+    """
     if not TAXONOMY_PATH.exists():
-        return None, 1.0
+        return None, None, 1.0
     with open(TAXONOMY_PATH, "r", encoding="utf-8") as f:
         taxonomy = yaml.safe_load(f)
-    pipeline = taxonomy.get("pipeline", {})
+    pipeline = taxonomy.get(group, {}).get("pipeline", {})
+    stage2_model = pipeline.get("stage2_model")
     threshold = pipeline.get("energy_threshold")  # None の場合は gate 無効
     temperature = float(pipeline.get("energy_temperature", 1.0))
-    return threshold, temperature
+    return stage2_model, threshold, temperature
 
 
 def load_label_map(model_dir: Path) -> dict[int, str]:
@@ -181,10 +186,12 @@ def main() -> None:
         help="学習済みモデルディレクトリ。省略時はconfig.training.output_dir",
     )
     parser.add_argument("--top-k", type=int, default=None)
+    parser.add_argument("--group", default="duck",
+                        help="species_taxonomy.yaml のグループ（推論モデル/OOD params の参照先）")
     parser.add_argument(
         "--no-ood-gate",
         action="store_true",
-        help="OOD gate を無効化（閾値なしで8種分類のみ実行）",
+        help="OOD gate を無効化（閾値なしで分類のみ実行）",
     )
     args = parser.parse_args()
 
@@ -194,7 +201,15 @@ def main() -> None:
     train_cfg = config["training"]
     eval_cfg = config["evaluation"]
 
-    model_dir = Path(args.model_dir) if args.model_dir else PROJECT_ROOT / train_cfg["output_dir"]
+    # 推論モデル/OOD params の単一の真実 = species_taxonomy.yaml の <group>.pipeline。
+    # training.output_dir は学習の保存先専用（taxonomy 未設定時のフォールバックのみ）。
+    stage2_model, energy_threshold, energy_temperature = load_pipeline_config(args.group)
+    if args.model_dir:
+        model_dir = Path(args.model_dir)
+    elif stage2_model:
+        model_dir = PROJECT_ROOT / stage2_model
+    else:
+        model_dir = PROJECT_ROOT / train_cfg["output_dir"]
     if not model_dir.exists():
         print(f"[ERROR] {model_dir} が見つからない。先に train.py を実行して。")
         return
@@ -205,9 +220,12 @@ def main() -> None:
         return
 
     top_k = args.top_k or int(eval_cfg.get("top_k", 3))
-    energy_threshold, energy_temperature = load_ood_config()
+    gate_off_reason = None
     if args.no_ood_gate:
         energy_threshold = None
+        gate_off_reason = "--no-ood-gate"
+    elif energy_threshold is None:
+        gate_off_reason = f"taxonomy[{args.group}].pipeline に energy_threshold 未設定"
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     print(f"[DEV] device: {device}")
@@ -226,7 +244,7 @@ def main() -> None:
     if energy_threshold is not None:
         print(f"[OOD] energy gate 有効: threshold={energy_threshold} / T={energy_temperature}")
     else:
-        print("[OOD] energy gate 無効（--no-ood-gate）")
+        print(f"[OOD] energy gate 無効（{gate_off_reason}）")
 
     print(f"[AUDIO] 推論: {audio_path}")
     result = predict_audio(
