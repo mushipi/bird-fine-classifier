@@ -42,12 +42,35 @@ class DuckChunkDataset(Dataset):
         feature_extractor: ASTFeatureExtractor,
         project_root: Optional[Path] = None,
         spec_augment_cfg: Optional[dict] = None,
+        teacher_dir: Optional[Path] = None,
     ):
         self.df = pd.read_csv(split_csv).reset_index(drop=True)
         self.label_map = label_map
         self.feature_extractor = feature_extractor
         self.project_root = project_root or PROJECT_ROOT
         self.sampling_rate = feature_extractor.sampling_rate
+
+        # KD 用教師ソフトラベル（任意）。teacher_dir/{split}.npz を (xc_id, chunk_index) で整列。
+        self.teacher = None
+        self.has_teacher = None
+        if teacher_dir is not None:
+            tp = Path(teacher_dir) / f"{Path(split_csv).stem}.npz"
+            t = np.load(tp, allow_pickle=True)
+            key2row = {(str(x), int(c)): i
+                       for i, (x, c) in enumerate(zip(t["xc_id"], t["chunk_index"]))}
+            tproba = t["teacher_proba"]
+            K = tproba.shape[1]
+            n = len(self.df)
+            self.teacher = np.zeros((n, K), dtype=np.float32)
+            self.has_teacher = np.zeros(n, dtype=bool)
+            for i, row in self.df.iterrows():
+                k = (str(row["xc_id"]), int(row["chunk_index"]))
+                j = key2row.get(k)
+                if j is not None:
+                    self.teacher[i] = tproba[j]
+                    self.has_teacher[i] = True
+            print(f"[KD] {Path(split_csv).stem}: 教師 proba coverage "
+                  f"{self.has_teacher.sum()}/{n} (K={K})")
 
         self.spec_augment = None
         self.spec_augment_other_only = False
@@ -108,17 +131,25 @@ class DuckChunkDataset(Dataset):
                     x = self.spec_augment["time_mask"](x)
                 input_values = x.transpose(0, 1)
 
-        return {
+        out = {
             "input_values": input_values,
             "labels": torch.tensor(label, dtype=torch.long),
         }
+        if self.teacher is not None:
+            out["teacher_proba"] = torch.from_numpy(self.teacher[idx])
+            out["has_teacher"] = torch.tensor(bool(self.has_teacher[idx]))
+        return out
 
 
 def collate_fn(batch: list[dict]) -> dict:
-    """DataLoader用 collate. AST入力をスタック。"""
+    """DataLoader用 collate. AST入力をスタック。KD教師があれば併せてスタック。"""
     input_values = torch.stack([b["input_values"] for b in batch])
     labels = torch.stack([b["labels"] for b in batch])
-    return {"input_values": input_values, "labels": labels}
+    out = {"input_values": input_values, "labels": labels}
+    if "teacher_proba" in batch[0]:
+        out["teacher_proba"] = torch.stack([b["teacher_proba"] for b in batch])
+        out["has_teacher"] = torch.stack([b["has_teacher"] for b in batch])
+    return out
 
 
 def build_datasets(
@@ -127,19 +158,25 @@ def build_datasets(
     project_root: Optional[Path] = None,
     spec_augment_cfg: Optional[dict] = None,
     max_length: int = 1024,
+    duck_order: Optional[list[str]] = None,
+    teacher_dir: Optional[Path] = None,
 ) -> tuple[DuckChunkDataset, DuckChunkDataset, DuckChunkDataset, dict[str, int]]:
-    """train/val/test の3つのDatasetを構築して返す。SpecAugmentはtrainのみ適用。"""
+    """train/val/test の3つのDatasetを構築して返す。SpecAugmentはtrainのみ適用。
+
+    duck_order を渡すと label_map をその順（種名→index）で構成する（10カモ運用＝teacher と整列）。
+    teacher_dir を渡すと train/val に KD 教師ソフトラベルを読み込む（test は付けない）。
+    """
     project_root = project_root or PROJECT_ROOT
-    label_map = load_label_map(splits_dir)
+    label_map = {d: i for i, d in enumerate(duck_order)} if duck_order else load_label_map(splits_dir)
     feature_extractor = ASTFeatureExtractor.from_pretrained(pretrained, max_length=max_length)
 
     train_ds = DuckChunkDataset(
         splits_dir / "train.csv", label_map, feature_extractor, project_root,
-        spec_augment_cfg=spec_augment_cfg,
+        spec_augment_cfg=spec_augment_cfg, teacher_dir=teacher_dir,
     )
     val_ds = DuckChunkDataset(
         splits_dir / "val.csv", label_map, feature_extractor, project_root,
-        spec_augment_cfg=None,
+        spec_augment_cfg=None, teacher_dir=teacher_dir,
     )
     test_ds = DuckChunkDataset(
         splits_dir / "test.csv", label_map, feature_extractor, project_root,

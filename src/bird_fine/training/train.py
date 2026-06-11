@@ -103,11 +103,14 @@ class DuckTrainer(Trainer):
     """
 
     def __init__(self, *args, other_label_id: int | None = None, other_alpha: float = 1.0,
-                 focal_gamma: float = 0.0, **kwargs):
+                 focal_gamma: float = 0.0, kd_lambda: float = 0.0, kd_temp: float = 2.0,
+                 **kwargs):
         super().__init__(*args, **kwargs)
         self.other_label_id = other_label_id
         self.other_alpha = other_alpha
         self.focal_gamma = focal_gamma  # 0.0 で従来 CE と等価（後方互換）
+        self.kd_lambda = kd_lambda      # 0.0 で蒸留なし（後方互換）
+        self.kd_temp = kd_temp
 
     def _get_train_sampler(self, dataset=None) -> WeightedRandomSampler | None:
         # transformers 5.x は dataset 引数を渡してくる
@@ -126,6 +129,8 @@ class DuckTrainer(Trainer):
         )
 
     def compute_loss(self, model, inputs, return_outputs=False, **kwargs):
+        teacher = inputs.pop("teacher_proba", None)   # (B, K) or None
+        has_t = inputs.pop("has_teacher", None)        # (B,) bool or None
         labels = inputs.get("labels")
         outputs = model(**inputs)
         logits = outputs.logits
@@ -143,6 +148,24 @@ class DuckTrainer(Trainer):
             loss = ((1.0 - pt) ** self.focal_gamma * ce).mean()
         else:
             loss = nn.CrossEntropyLoss(weight=weights)(logits, labels)
+
+        # 知識蒸留: 教師(K=カモ10種)の soft label を温度付き KL で生徒に注入。
+        # KD は logits の先頭 K 列（カモ）のみ・教師ありサンプルのみ。other 列は対象外。
+        if self.kd_lambda > 0.0 and teacher is not None:
+            T = self.kd_temp
+            K = teacher.shape[-1]
+            log_p = F.log_softmax(logits[:, :K] / T, dim=-1)
+            t = teacher.float().clamp_min(1e-8)
+            t = t / t.sum(-1, keepdim=True)
+            tT = t.pow(1.0 / T)
+            tT = tT / tT.sum(-1, keepdim=True)
+            kd_per = (tT * (tT.clamp_min(1e-8).log() - log_p)).sum(-1)  # KL(tT‖p) per sample
+            if has_t is not None:
+                m = has_t.bool()
+                kd = kd_per[m].mean() if m.any() else logits.sum() * 0.0
+            else:
+                kd = kd_per.mean()
+            loss = loss + self.kd_lambda * (T * T) * kd
         return (loss, outputs) if return_outputs else loss
 
 
@@ -193,6 +216,16 @@ def main() -> None:
         action="store_true",
         help="1 epoch・サブセットで動作確認",
     )
+    parser.add_argument("--output-dir", default=None, help="config の output_dir を上書き")
+    parser.add_argument("--duck-order", default=None,
+                        help="teacher_proba/duck_order.csv のパス。指定で 10カモ運用(label順=teacher)")
+    parser.add_argument("--teacher-dir", default=None, help="KD 教師 proba ディレクトリ")
+    parser.add_argument("--distill", action="store_true", help="KD を有効化")
+    parser.add_argument("--kd-lambda", type=float, default=1.0)
+    parser.add_argument("--kd-temp", type=float, default=2.0)
+    parser.add_argument("--seed", type=int, default=42)
+    parser.add_argument("--num-workers", type=int, default=0,
+                        help="DataLoader並列数。Linuxなら8等で大幅高速化")
     args = parser.parse_args()
 
     config = load_config()
@@ -212,6 +245,14 @@ def main() -> None:
             f"time={spec_augment_cfg['time_mask_param']}×{spec_augment_cfg['num_time_masks']})"
         )
 
+    duck_order = None
+    if args.duck_order:
+        duck_order = pd.read_csv(args.duck_order)["species"].tolist()
+        print(f"[REGIME] 10カモ運用: duck_order={duck_order}")
+    teacher_dir = Path(args.teacher_dir) if (args.distill and args.teacher_dir) else None
+    if args.distill:
+        print(f"[KD] 蒸留 ON: λ={args.kd_lambda} T={args.kd_temp} teacher_dir={teacher_dir}")
+
     print("[LOAD] Dataset構築...")
     train_ds, val_ds, test_ds, label_map = build_datasets(
         splits_dir=splits_dir,
@@ -219,6 +260,8 @@ def main() -> None:
         project_root=PROJECT_ROOT,
         spec_augment_cfg=spec_augment_cfg,
         max_length=int(model_cfg.get("feature_extractor_max_length", 1024)),
+        duck_order=duck_order,
+        teacher_dir=teacher_dir,
     )
     id2label = {v: k for k, v in label_map.items()}
     label2id = label_map
@@ -230,7 +273,7 @@ def main() -> None:
 
     print(f"  train: {len(train_ds)} / val: {len(val_ds)} / test: {len(test_ds)}")
 
-    num_labels = int(model_cfg["num_labels"])
+    num_labels = len(duck_order) if duck_order else int(model_cfg["num_labels"])
     init_from = model_cfg.get("init_from")
     max_length = int(model_cfg.get("feature_extractor_max_length", 1024))
 
@@ -270,7 +313,7 @@ def main() -> None:
     if train_cfg.get("gradient_checkpointing", False):
         model.gradient_checkpointing_enable()
 
-    output_dir = str(PROJECT_ROOT / train_cfg["output_dir"])
+    output_dir = str(PROJECT_ROOT / (args.output_dir or train_cfg["output_dir"]))
     epochs = args.epochs or int(train_cfg["num_train_epochs"])
     train_bs = args.batch_size or int(train_cfg["per_device_train_batch_size"])
     if args.dry_run:
@@ -295,7 +338,8 @@ def main() -> None:
         logging_steps=int(train_cfg["logging_steps"]),
         report_to=train_cfg.get("report_to", ["tensorboard"]),
         remove_unused_columns=False,
-        dataloader_num_workers=0,  # Windowsはmultiprocessでハマりがちなので0
+        dataloader_num_workers=args.num_workers,  # Linux なら >0 で高速化
+        seed=args.seed,
     )
 
     callbacks = []
@@ -319,6 +363,8 @@ def main() -> None:
         other_label_id=other_label_id,
         other_alpha=other_alpha,
         focal_gamma=focal_gamma,
+        kd_lambda=args.kd_lambda if args.distill else 0.0,
+        kd_temp=args.kd_temp,
         train_dataset=train_ds,
         eval_dataset=val_ds,
         data_collator=collate_fn,
