@@ -154,9 +154,46 @@ def fig4_concept():
     plt.close(fig)
 
 
+def fig5_flow():
+    """全体フロー：録音 → 教師ソフトラベル → 蒸留学習 → soup → 評価 → 昇格。"""
+    fig, ax = plt.subplots(figsize=(7.4, 8.8))
+    ax.axis("off")
+    ax.set_xlim(0, 10)
+    ax.set_ylim(0, 12)
+
+    steps = [
+        ("① データ", "録音231本を3秒チャンクに分割\n（カモ10種・録音単位で評価）", "#eef3fb", C_KD),
+        ("② 教師ソフトラベル", "先生Perchの複数プローブ平均を、\n録音単位5-fold OOFで作成（過信回避）", "#fdeeee", C_TEACHER),
+        ("③ 蒸留学習", "生徒を  L = CE + λT²·KL  で学習\n（λ≈1, T≈2 が最適域）", "#eef7f0", C_GREEN),
+        ("④ model soup", "seed 42/1/2 で3回学習し、\n重みを平均（θ_soup = mean θ_s）", "#fff6e9", C_ORANGE),
+        ("⑤ 評価", "録音単位 macro-F1 ＋\nブートストラップ95%信頼区間で判定", "#eef3fb", C_KD),
+        ("⑥ 昇格", "信頼区間が0を除外 → 本物の改善\nとして運用モデルへ採用", "#eef7f0", C_GREEN),
+    ]
+    n = len(steps)
+    bh, gap = 1.35, 0.42
+    top = 11.4
+    cx, bw = 5.0, 7.6
+    for i, (title, body, fc, ec) in enumerate(steps):
+        y = top - i * (bh + gap) - bh
+        ax.add_patch(FancyBboxPatch((cx - bw / 2, y), bw, bh,
+                     boxstyle="round,pad=0.06,rounding_size=0.12", fc=fc, ec=ec, lw=1.7))
+        ax.text(cx - bw / 2 + 0.28, y + bh - 0.34, title, ha="left", va="center",
+                fontsize=12.5, fontweight="bold", color=ec)
+        ax.text(cx, y + 0.46, body, ha="center", va="center", fontsize=10.8, color="#333")
+        if i < n - 1:
+            ay = y - 0.02
+            ax.add_patch(FancyArrowPatch((cx, ay), (cx, ay - gap + 0.04),
+                         arrowstyle="-|>", mutation_scale=18, color="#9aa0a6", lw=2.0))
+
+    ax.set_title("全体フロー：先生の知識を蒸留して、確かな改善だけ採用する", fontsize=13.5, pad=14)
+    fig.savefig(OUT / "fig5_flow.png")
+    plt.close(fig)
+
+
 if __name__ == "__main__":
     fig1_headline()
     fig2_foundation()
     fig3_seeds()
     fig4_concept()
+    fig5_flow()
     print("done:", sorted(p.name for p in OUT.glob("*.png")))

@@ -54,7 +54,20 @@
   footer{border-top:1px solid var(--line);color:var(--sub);font-size:13px;padding:28px 0 60px;line-height:1.8}
   footer a{color:var(--blue)}
   .small{font-size:13.5px;color:var(--sub)}
+  .formula{background:var(--card);border:1px solid var(--line);border-radius:10px;
+    padding:6px 16px;margin:22px 0;overflow-x:auto}
+  .formula .cap{color:var(--sub);font-size:13px;margin:2px 0 8px;text-align:center}
+  dl.glossary{margin:18px 0}
+  dl.glossary dt{font-weight:700;color:var(--ink);margin-top:14px;font-size:15.5px}
+  dl.glossary dt .en{color:var(--sub);font-weight:400;font-size:13px;margin-left:6px}
+  dl.glossary dd{margin:.2em 0 0;color:#3a414b;font-size:15px}
+  mjx-container{font-size:1.02em !important}
 </style>
+<script>
+  window.MathJax = {tex:{inlineMath:[['\\(','\\)']],displayMath:[['$$','$$']]},
+    svg:{fontCache:'global'}};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
 </head>
 <body>
 <header class="hero">
@@ -95,6 +108,24 @@
     <figcaption>知識蒸留のしくみ。先生は同じ鳴き声に対する「確信度の配分」を示し、生徒はその答え方ごと真似て学ぶ。</figcaption>
   </figure>
 
+  <h3>もう少しだけ正確に：蒸留の式</h3>
+  <p>生徒の学習は、ふつうの「正解との照合」に、先生の<dfn title="正解ラベル（0/1）ではなく、各クラスへの確信度を確率で表したもの。">ソフトラベル</dfn>を真似る項を足した形になります。生徒の損失（小さいほど良い）は：</p>
+  <div class="formula">
+    <p class="cap">蒸留の損失関数</p>
+    $$\mathcal{L} \;=\; \underbrace{\mathrm{CE}\!\left(y,\,p_S\right)}_{\text{正解との照合}}
+    \;+\; \lambda\,T^{2}\,\underbrace{\mathrm{KL}\!\left(p_T^{(T)}\,\middle\|\,p_S^{(T)}\right)}_{\text{先生の“迷い方”を真似る}}$$
+  </div>
+  <p>ここで温度付きの確率分布 \(p^{(T)}\) は、AIの出力スコア \(z\) を温度 \(T\) で割ってから正規化したものです：</p>
+  <div class="formula">
+    $$p^{(T)}_i \;=\; \frac{\exp(z_i/T)}{\sum_j \exp(z_j/T)}$$
+  </div>
+  <ul>
+    <li>\(\mathrm{CE}\)：<b>交差エントロピー</b>。正解ラベル \(y\) とのふつうの「当たり/外れ」の学習。</li>
+    <li>\(\mathrm{KL}(\cdot\,\|\,\cdot)\)：<b>KLダイバージェンス</b>。先生の確率分布 \(p_T\) と生徒の \(p_S\) のズレ。これを小さくする＝先生の答え方に寄せる。</li>
+    <li>\(T\)：<b>温度</b>。大きいほど確信度の山がなだらかになり、「マガモ寄りだがコガモの可能性も…」という<b>迷い方の情報が強調</b>される。</li>
+    <li>\(\lambda\)：蒸留項の<b>重み</b>。今回は \(\lambda\approx 1,\ T\approx 2\) が最も効く帯だと、ハイパラ探索で確かめました。</li>
+  </ul>
+
   <p>先生役には <b>Perch</b> という、<b>大量の鳥の鳴き声で鍛えられた“土台AI”</b>を選びました。なぜ Perch なのか——他の土台AIと並べて比べた結果がこちらです。</p>
 
   <figure>
@@ -126,7 +157,11 @@
   </figure>
 
   <h3>③ 3回の結果を平均すると、過去最高に</h3>
-  <p>3回ぶんを平均してならすと <b>0.813 → 0.871（+0.058）</b>。今度は信頼区間が重ならず、<span class="green-ink">高性能AIでも蒸留の効果を統計的に確かなものとして確認</span>できました。<b>0.871 はこのプロジェクトの過去最高</b>で、先生Perch（0.83）も大きく上回ります。良い生徒は、先生を超えるのです。</p>
+  <p>ここで使うのが <dfn title="複数モデルの重みそのものを平均して1つのモデルにする手法。出力ではなくパラメータを平均する。">model soup</dfn>。学習し直した \(S=3\) 個のモデルの<b>重み（パラメータ）を平均</b>して1つにまとめます：</p>
+  <div class="formula">
+    $$\theta_{\text{soup}} \;=\; \frac{1}{S}\sum_{s=1}^{S}\theta_{s}\,,\qquad S=3$$
+  </div>
+  <p>こうして 3回ぶんを平均してならすと <b>0.813 → 0.871（+0.058）</b>。今度は信頼区間が重ならず、<span class="green-ink">高性能AIでも蒸留の効果を統計的に確かなものとして確認</span>できました。<b>0.871 はこのプロジェクトの過去最高</b>で、先生Perch（0.83）も大きく上回ります。良い生徒は、先生を超えるのです。</p>
 
   <table>
     <thead><tr><th>生徒AI</th><th class="num">蒸留なし</th><th class="num">蒸留あり</th><th class="num">差</th><th>判定</th></tr></thead>
@@ -137,6 +172,31 @@
     </tbody>
   </table>
 
+  <h2><span class="n">用語</span>このノートに出てきた言葉</h2>
+  <dl class="glossary">
+    <dt>知識蒸留<span class="en">knowledge distillation</span></dt>
+    <dd>賢い「先生」AIの判断のしかたを「生徒」AIに真似させる手法。正解だけでなく確信度の配分（ソフトラベル）を伝えるのが肝。</dd>
+    <dt>ソフトラベル<span class="en">soft target</span></dt>
+    <dd>「マガモ7割・コガモ2割…」のように、各種への確信度を確率で表した教師信号。0/1のハードラベルより情報が多い。</dd>
+    <dt>温度<span class="en">temperature, \(T\)</span></dt>
+    <dd>確信度の山のなだらかさを調整する数。大きいほど迷い方が強調される。今回は \(T\approx 2\)。</dd>
+    <dt>交差エントロピー / KLダイバージェンス<span class="en">cross-entropy / KL divergence</span></dt>
+    <dd>前者は「正解とどれだけ合っているか」、後者は「2つの確率分布がどれだけズレているか」を測る量。蒸留の損失はこの2つの足し算。</dd>
+    <dt>土台AI（基盤モデル）<span class="en">foundation model</span></dt>
+    <dd>大量データで前もって鍛えた汎用AI。今回の先生 Perch は<b>鳥の鳴き声</b>で鍛えた土台AI。</dd>
+    <dt>OOF（アウト・オブ・フォールド）<span class="en">out-of-fold</span></dt>
+    <dd>データを5分割し、各データの教師ラベルを「そのデータを学習に使っていないモデル」から作る作法。先生の過信（カンニング）を防ぐ。</dd>
+    <dt>macro-F1（録音単位）<span class="en">macro-averaged F1</span></dt>
+    <dd>各種ごとの当て具合（適合率 \(P_k\) と再現率 \(R_k\) の調和平均）を、種をまたいで平均した指標。少数種も等しく重みづけする。\(K=10\) 種：
+      <div class="formula" style="margin:10px 0">
+        $$\text{macro-F1} \;=\; \frac{1}{K}\sum_{k=1}^{K}\frac{2\,P_k R_k}{P_k+R_k}$$
+      </div></dd>
+    <dt>ブートストラップ信頼区間<span class="en">bootstrap confidence interval</span></dt>
+    <dd>録音を単位にデータを再抽出して何度も測り直し、数字のばらつき幅を見積もる方法。<b>区間が0をまたがない差＝偶然では説明できない「本物の差」</b>と判断する。</dd>
+    <dt>model soup<span class="en">weight averaging</span></dt>
+    <dd>学習し直した複数モデルの<b>重みそのものを平均</b>して1つにする手法。運の良し悪しをならし、安定して強いモデルにする。</dd>
+  </dl>
+
   <h2><span class="n">まとめ</span>分かったこと・残った課題</h2>
   <div class="callout green">
     <p><b>確かめられたこと：</b>「鳥の声の達人AIを先生にした知識蒸留」は、鳴き声分類AIを強くする<b>信頼できる手段</b>だと統計的に確定した。実用にいちばん向くのは、もともと高性能なAIに蒸留した版（録音1本ごとの正確さ <b>0.87</b>）。</p>
@@ -146,6 +206,16 @@
   </div>
 
   <p class="small">フィールドの音響モニタリングでは「データが少ない・種が似ている」がつきもの。そんな状況でも、<b>すでにある“達人AI”の知識を借りる</b>ことで、手元のモデルを底上げできる——というのが、このノートのいちばんの持ち帰りです。</p>
+
+  <h2><span class="n">全体フロー</span>ここまでの流れを1枚に</h2>
+  <p>最後に、このノートでたどった工程を通しで並べます。<b>録音を分割し、先生からソフトラベルを作り、生徒を蒸留学習し、複数回をならし、信頼区間で「本物の改善だけ」を採用する</b>——という一連の流れです。</p>
+  <figure>
+    <img src="figs/fig5_flow.png" alt="全体フロー図。①データ分割 ②教師ソフトラベル作成 ③蒸留学習 ④model soup ⑤評価 ⑥昇格、の6ステップ">
+    <figcaption>知識蒸留パイプラインの全体像。各ステップは前のノートの図と対応している（③＝蒸留の式、④＝3回平均、⑤＝信頼区間つき判定）。</figcaption>
+  </figure>
+  <div class="callout green">
+    <p><b>ひとことで：</b>「鳥の声の達人AIを先生に、迷い方ごと生徒へ蒸留する」。効果は小型AIで <b>0.45→0.60</b>、高性能AIでも 3回平均で <b>0.81→0.87</b>。どちらも<b>信頼区間で裏づけた本物の改善</b>でした。</p>
+  </div>
 
 </main>
 
