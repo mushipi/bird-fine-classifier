@@ -75,3 +75,8 @@ Thumbs.db
 *.bak
 /docs/qiita_figures/
 /docs/qiita_part2_draft.md
+
+# GT105 CPU推論テスト
+/.venv-cpu/
+/bench_chunks/
+/bench_ood/
