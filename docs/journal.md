@@ -1281,3 +1281,42 @@ split.py が OOD種(カルガモ/カワアイサ)も拾うので filter で除�
 
 ### 次
 Stage4 再学習(base+KD×3seed→soup, ~6h)中。Stage5でKD再現・弱種CI縮小・昇格判定。
+
+## 2026-06-13 Stage5 評価 — リーク発覚で判定が反転（運用モデルは過大評価だった）
+
+### やったこと
+Stage4(test拡大Cv2の再split+再学習, base/KD×seed42/1/2)完了→Stage5評価。6モデル+soupをtest録音単位
+f1+bootstrap CIで比較。途中で `kd_compare_ci` が新録音の KeyError で落ちた(teacher probaが旧split止まり)
+→ teacher非依存の `tools/probe_sweep/soup_ci.py` を新規作成。さらに現行運用 `ast-duck-C-kd-soup`(Cprod)も
+同一拡大testで評価し同じ物差しに乗せた。
+
+### 結果(拡大test全体 n=289)
+- 多seed: KD>base が +0.043(3/3 seed一貫, KD std0.005<base std0.012=KDは分散も縮める)。
+- だが soup同士は Cprod 0.910 ≈ Cv2BASE 0.908 ≈ Cv2KD 0.894 で**全ペア差なし**。一見「現行最強・昇格不要」。
+
+### なぜそうなったか(リーク発覚=本質)
+Cprod は**旧splitのtrainで学習**。Cv2は全データ再splitしたので、Cprodの学習録音がCv2-testに混入。
+重複カウント: **旧(train∪val) ∩ Cv2-test = 130/289 = 45.0%**。Cprodの0.910はテスト半分が学習漏れの**膨張値**。
+整合性: Cv2-train ∩ Cv2-test = 0(Cv2モデルはクリーン)。
+
+### honest再評価(リークフリー159録音=3モデルとも未学習)
+| model | f1 | 95%CI |
+|---|---|---|
+| Cv2BASEsoup | **0.897** | [0.704,0.951] |
+| Cv2KDsoup | 0.822 | [0.625,0.890] |
+| Cprod | **0.787** | [0.613,0.843] |
+
+- **Cv2BASEsoup − Cprod = +0.110 [+0.042,+0.172] 有意**(同一録音ペア検定で堅い)。
+- Cv2KDsoup − Cprod = +0.034 [−0.051,+0.108] 差なし。
+- Cv2KDsoup − Cv2BASEsoup = −0.076 [−0.164,−0.015] 有意(clean では蒸留なしが上)。
+
+### 学び
+- **運用モデルCprodのhonestはΔ≈0.12も低い(0.910→0.787)**。リークは静かに性能を盛る。**昇格判定は必ず
+  「候補が見てない録音」で**。今回ユーザーの「重複カウントしとこう」が無ければ偽の現状維持で終わってた。
+- **効いたのはデータ(1020→1288録音/B級worldwide)とクリーンsplitで、蒸留ではない**。KDの価値は確定済の
+  「弱い生徒(素CNN +0.148)・seed分散低減」に限定。**天井近いAST最終soupでは base soup が勝つ**(clean有意)。
+- soup段の点推定は signal小×n小で振れる。**ペア差(同一録音resample)を主証拠にする**のが正しい読み方。
+
+### 次
+**Cv2BASEsoup を新運用へ昇格(別ステップ)**: 運用名で登録→`species_taxonomy.yaml` stage2_model差し替え→
+**OOD energy閾値の再キャリブレ必須**(モデル変更でenergy分布が変わる, 現2.717は旧モデル用)。記録は本コミットで先行。

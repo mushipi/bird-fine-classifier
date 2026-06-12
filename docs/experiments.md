@@ -1696,6 +1696,34 @@ Tufted 0.740→0.759。カルガモ/カワアイサの Mallard 吸引が消え�
 
 ---
 
+## Cv2 — test拡大(再split+再学習) / リーク発覚で運用モデルを honest 再評価 (2026-06-13)
+
+**狙い**: 弱種の評価解像度不足(ヒドリ n=7 等)を、B級worldwide収集→**全データ再split**→**再学習**で底上げ。
+test録音 69/231 → **289**(3743chunk)。弱種support改善(ヒドリ7→**35**, 最小でもウミアイサ11/キンクロ17)。
+
+**学習**: base/KD ×3seed(42/1/2) → soup。KD recipe λ≈1/T≈2(確定レシピ)。出力 `models/ast-duck-Cv2-{base,kd}-s*`, soup 2本。
+
+**評価(録音単位f1+bootstrap CI, `tools/probe_sweep/soup_ci.py`)**:
+| 比較 | base | KD | KD−base |
+|---|---|---|---|
+| 多seed(拡大test全体 n=289) | 0.856 | 0.899 | +0.043 (3/3 seed有意傾向, KD std0.005<0.012) |
+
+soup同士は拡大test全体では Cprod0.910≈BASE0.908≈KD0.894(全差なし)に見えた。**だが Cprod は旧train学習→
+Cv2-test に 130/289=45%リーク**。整合性 Cv2-train∩Cv2-test=0。
+
+**honest(リークフリー159録音, 3モデル未学習)**:
+| model | f1 | 95%CI | 対Cprod差 |
+|---|---|---|---|
+| **Cv2BASEsoup** | **0.897** | [0.704,0.951] | **+0.110 [+0.042,+0.172] 有意** |
+| Cv2KDsoup | 0.822 | [0.625,0.890] | +0.034 [−0.051,+0.108] 差なし |
+| Cprod(現行) | 0.787 | [0.613,0.843] | — |
+
+**所見**: ①現行運用 `ast-duck-C-kd-soup` の0.871/0.910は**リーク膨張**, honest≈0.787。②**Cv2BASEsoup(蒸留なし)が
+現行を有意に上回る唯一の候補**。効いたのはデータ拡大とクリーンsplit。③**AST最終soupでは蒸留が乗らない**(clean有意で base>KD)。
+**判定: Cv2BASEsoup を昇格候補に確定(別ステップ=登録+taxonomy差替+OOD閾値再キャリブレ)。** 詳細→ journal 2026-06-13 / perch_kd_report §13。
+
+---
+
 ## メモ
 
 - baseline (`models/ast-duck/`) は常に保護する。新規 run は必ず別 output_dir へ
