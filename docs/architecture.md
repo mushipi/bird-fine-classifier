@@ -1,5 +1,7 @@
 # Architecture
 
+> ⚠ 旧8種/10秒前提の記述を含む。現状=10種/3秒/KD-soup/OODゲート/複合クラス。最新は docs/perch_kd_report.md と CLAUDE.md 参照。
+
 bird-fine-classifier の全体設計。
 モデル構造・データパイプライン・OOD 検知・デプロイ方針をまとめる。
 

@@ -1,6 +1,6 @@
 # bird-fine-classifier
 
-カモ8種の鳴き声を分類する AST (Audio Spectrogram Transformer) ベースの fine-grained classifier。Xeno-canto から音源収集し、HuggingFace の事前学習済み AST を fine-tune する。
+カモ**10種**の鳴き声を分類する fine-grained classifier（**BirdNET後段・3秒固定チャンク**）。Xeno-canto 音源で AST を fine-tune。別系統で Perch2.0 凍結埋め込み＋軽量プローブも持ち、**Perch→AST 知識蒸留＋多seed soup** で運用モデル `models/ast-duck-C-kd-soup` を構築。OOD energy ゲート＋複合クラス出力（マガモ/カルガモ）を備える。**詳細・最新は `docs/perch_kd_report.md`**。
 
 ## プロジェクト構成
 
@@ -8,7 +8,9 @@
 - `main.py` — メインエントリ
 - `src/` — 実装本体（dataset, training, evaluation など）
 - `data/raw/` — Xeno-canto 生音源（git ignore）
-- `data/processed/` — 16kHz / 10秒チャンクに変換済み
+- `data/processed/` — 16kHz / **3秒チャンク**（BirdNET 3s 窓に整合）
+- `data/embeddings/` — Perch/BirdAVES 凍結埋め込み・教師proba（git ignore）
+- `species_taxonomy.yaml` — **推論の単一の真実**: グループ別 stage2_model / OOD閾値 / 複合表示(display_groups)
 - `data/splits/` — train/val/test = 0.70/0.15/0.15
 - `models/<run-name>/` — 各 run の出力。checkpoint-*, model.safetensors, trainer_state.json, runs/（TensorBoard）
 - `docs/experiments.md` — **実験 run の記録**（ハイパラ・結果・所見）。1 run 1 セクションで時系列追記
@@ -76,22 +78,15 @@
 - `data/raw/` は容量大。git ignore 対象、コミットしない
 - SpecAugment は **train_ds のみに適用**。val/test に漏れていないか実装確認すること
 
-## 現状サマリ（更新: 2026-05-24）
+## 現状サマリ（更新: 2026-06-12）
 
-- run01 baseline: f1_macro **0.848** (epoch 4)。明確な overfit
-- run02: ハイパラ4点 + SpecAugment 同時変更で f1_macro **0.826** に悪化（失敗）
-- run03: lr 単独評価。f1_macro **0.875** (epoch 2)。学習直後のシステム異常終了で成果物が一部破損 → checkpoint-252 から復旧済み（journal 2026-05-21）
-- run04: weight_decay 単独評価（0.01→0.05）。f1_macro **0.850** (epoch 5)。wd↑ で overfit ピークが後退（H1 成立）も f1 低下
-- run05: weight_decay 中間点評価（0.03）。val f1_macro **0.840** (epoch 6)。wd 0.01/0.03/0.05 → val f1 0.875/0.840/0.850 で dose-response 非単調
-- **test 評価 (2026-05-22)**: run03/04/05 を未使用 test 338件で評価。test f1 は 0.775 / 0.806 / **0.838** で val 順位が逆転。val 最良の run03 が test 最低 = `load_best_model_at_end` が noisy な val f1 のスパイクを掴む選択バイアス。**現行ベストは run05（test f1 0.838）**
-- 種別分析 (2026-05-22): test F1 は train 録音数と連動（録音20本の Tufted_Duck / Eurasian_Wigeon が最弱）。Tufted_Duck は trainチャンク最多694だが録音20本＝多様性不足＋チャンク不均衡。「少数種のデータ不足」は誤り
-- **run06 (2026-05-24)**: SpecAugment クリーン単独評価。val f1 **0.846** (epoch 2) / **test f1 0.810**（run05 比 −0.028）。H1a 成立（train_loss が桁単位で上振れ）も H1b/H2 不成立 — best_epoch が逆に早期化し val ピーク選択バイアスを引き戻した。Tufted_Duck +0.05 も Northern_Shoveler −0.19 で全体下落。**現行ベストは引き続き run05**
-- 学び: 「train 暗記の抑制」は汎化を保証しない。正則化系手法は val 曲線の形状を変えて `load_best_model_at_end` との相性が悪い場合がある
-- **run07 (2026-05-24)**: 弱2種に quality=B 録音を +10 ずつ追加（test 固定）。val f1 **0.8446** (epoch 4) / **test f1 0.8268**（run05 比 −0.011）。H1〜H4 不成立。Tufted_Duck precision 0.269→0.296 で過剰予測未解決、Mallard −0.029 / Northern_Shoveler −0.108（小サンプルでバイアス）と他種へ負の波及。**現行ベストは引き続き run05**
-- 学び: 録音追加でチャンクも増え（Tufted train 694→728）チャンク不均衡が悪化、録音多様性向上の効果を打ち消した。**録音追加とチャンク上限は同時にやるべき**
-- **run08 (2026-05-24)**: cap=100 で Tufted train chunks 728→361（−50%）、他種不変。val f1 **0.8381** (epoch 6) / **test f1 0.8203**（run05 比 −0.018）。**Tufted precision が run05 と完全同値 0.269（小数第3位まで一致）**、誤吸引の構成（Teal 13/Wigeon 4 件）もほぼ run05 と同じ。**「chunks 不均衡 = Tufted 過剰予測」仮説が完全に崩れた**
-- 学び: 真のボトルネックは音響的類似性 / モデル容量の可能性。**chunks 介入では永遠に解決しない**。介入していない他種（Mallard −0.069 / Wigeon −0.049）が大幅悪化、学習ダイナミクスは局所介入でも全体に波及
-- **分析タスク (2026-05-24)**: 誤分類の音響分析を実施。**Tufted と誤判定された Teal 13件中12件が同じ XC197026 (juvenile call) から、Wigeon 4件は全て XC349677 (オスメス掛け合い) から**。誤分類は録音単位で異常集中。train の Teal stage=juvenile は 1件のみ → distribution shift も発覚。仮説更新: 「Tufted の長尺2録音 XC488112 (45分) / XC488113 (49分) が決定境界を歪めている」
-- **run09 (2026-05-24)**: XC488112 / XC488113 を train から完全削除（Tufted chunks 361→161）。val f1 **0.8436** (epoch 5) / **test f1 0.8098**（run05 比 −0.028）。**仮説の核は確証**: XC197026 の Tufted 予測 13→4、XC349677 の Tufted 予測 5→0。run08 で動かなかった現象が完全削除で動いた。**副作用**: Tufted train 不足で recall 0.700→0.300 崩壊、distribution shift で XC197026 の半数が Pochard に流れた（juvenile 問題は別軸）
-- 学び: chunks の数でなく **「特定録音が学習させる音響パターンの幅」** が真因。「過剰予測の解消」と「適正な学習」の両立点が必要。run08 の反証 → 分析 → run09 の確証 の流れが機能
-- 次: run10 で長尺2録音の **中間 cap**（cap=30/50）を試して用量反応を探る。並行で run11 候補は **Teal juvenile 録音追加**（distribution shift の独立対処）。「データ・ハイパラ・モデル」より「**特定録音のキュレーション**」が真のレバー
+**運用モデル** = `models/ast-duck-C-kd-soup`（Perch→KD蒸留 3seed soup）。test 録音単位 macro-f1 **0.871**。
+
+- **系統2つ**: ①AST fine-tune（運用本線, `train.py` が KD/`--distill` 対応）②Perch2.0/BirdAVES 凍結埋め込み＋軽量プローブ（比較・**蒸留の教師**）。
+- **蒸留**: Perch教師(複数arm平均, train OOF)を AST に温度付きKL蒸留→**多seed soup**で固める。素CNNで有効性を統計確認(+0.148 有意)、AST soupで有意化(base-soup0.813→**0.871**, +0.058 有意)。レシピ λ≈1/T≈2。
+- **OOD energy ゲート**: `predict.py` が `species_taxonomy.yaml` の閾値で判定（**録音平均energy**）。現 **2.717**（録音単位再キャリブレ, 真カモ保持0.90）。正準ツール= `tools/ood_fp_audit.py`（`ood_eval.py` の chunk単位閾値は本番に使わない）。
+- **複合クラス**: カルガモ↔マガモは **Perch本体でも分離不能(0/30)＝音響的に本質的**→ `display_groups` で Mallard を「マガモ/カルガモ」表示（再学習ゼロ・カルガモ受容）。`tools/perch_native_confusion.py` が実証。
+- **評価規律**: 録音単位 macro-f1 ＋ 録音クラスタ bootstrap CI（`analysis/compare_runs_ci.py`）。test n=231。**CI が重なる差(≈±0.05)は「差なし」**。chunk単位の点推定で優劣を断定しない。
+- **構造的事実**: 10種内に混同ペア無し（弱種=小標本振れ, ヒドリ n=7 等）。残る伸びしろは **test拡大とデータ**（モデル/蒸留は天井近く）。
+- **環境/git**: 学習はmainPC(`tailscale ssh mushipi-mainpc-ubuntu`)。push は GT105 リレー（mainPC token無効）。
+- 旧 AST run01-09（8種/10秒, ~2026-05）の詳細は `docs/journal.md`/`experiments.md`。**本系統の全経緯は `docs/perch_kd_report.md`**。

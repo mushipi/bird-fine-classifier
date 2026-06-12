@@ -1,5 +1,7 @@
 # Data Guide
 
+> ⚠ 旧8種/10秒前提の記述を含む。現状=10種/3秒/KD-soup/OODゲート/複合クラス。最新は docs/perch_kd_report.md と CLAUDE.md 参照。
+
 データ収集 → 前処理 → 分割 の各ステップの仕様と運用方法。
 
 ---
