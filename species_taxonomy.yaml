@@ -21,9 +21,13 @@ duck:
     # 経緯: 10種運用。Perch教師(複数arm平均,OOF)を蒸留し多seed soup で固めた。
     # 録音単位f1(test n=231): base-soup 0.813 → KD-soup 0.871、差+0.058 95%CI[+0.018,+0.108]=有意
     # （seed42/1/2 全てで KD>base 一貫、差+0.027±0.004）。詳細→ docs/perch_kd_report.md
-    # ood_eval (2026-06-12, KD-soup): AUROC energy=0.886 / FPR<=5% 推奨。10クラス(other無し)。
-    # 旧: v15(11クラス) threshold 6.73 / AUROC 0.899。10クラス化で energy スケール変化。
-    energy_threshold: 2.948
+    # 2026-06-12 OOD/FP監査で録音単位再キャリブレ（tools/ood_fp_audit.py）:
+    #   predict は録音平均energyを使うのに旧2.948はchunk単位FPR5%導出で不整合→真カモ32%誤棄却だった。
+    #   録音単位AUROC(真カモvs非カモ)=0.932。動作点=「真カモ最優先・保持>=0.90」を採用:
+    #   閾値2.717で 真カモ保持0.90 / 非カモ類FP0.22 / 対象外カモ漏れ0.43。
+    #   対象外カモ類(カルガモ等)の漏れは分類側の構造課題として受容。詳細→docs/perch_kd_report.md
+    # 旧: chunk導出2.948(保持0.68), v15(11クラス)6.73。
+    energy_threshold: 2.717
     energy_temperature: 1.0  # 1.0 = Temperature Scaling なし
 
 # ==================================================

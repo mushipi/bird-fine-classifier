@@ -1,7 +1,11 @@
-"""学習済み AST モデルを OOD テストセットで評価する。
+"""学習済み AST モデルを OOD テストセットで評価する（chunk単位・参考用）。
 
 in-distribution (test.csv) と OOD (data/ood_processed/) の confidence 分布を比較し、
 誤吸引先・ROC 曲線・推奨しきい値を出力する。
+
+⚠ 本ツールの推奨閾値は **chunk単位** 導出。predict.py は **録音平均energy** で判定するため、
+   本番の energy_threshold には使わないこと（2026-06-12 にこの不整合で真カモ32%誤棄却が判明）。
+   本番の録音単位キャリブレ／3層(真カモ/対象外カモ/非カモ)監査は tools/ood_fp_audit.py を使う。
 
 使い方:
     uv run python -m bird_fine.analysis.ood_eval
