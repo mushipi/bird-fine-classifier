@@ -70,15 +70,21 @@ def _download(
     max_recordings: int,
     exclude_ids: set[str] | None = None,
 ) -> int:
-    query = _build_query(species_en, quality, country)
     scope = country if country else "worldwide"
-    print(f"  query({scope}): {query}")
-
-    try:
-        recordings = client.search(query)
-    except Exception as e:
-        print(f"  [WARN] search error: {e}")
-        return 0
+    # quality は単一グレード前提（Xeno-canto は q:"A B" を受け付けず常に0件）。
+    # 複数グレード（"A B"）はグレード毎に検索し、XCID で統合（dedup）する。
+    merged: dict[str, dict] = {}
+    for grade in quality.split():
+        q = _build_query(species_en, grade, country)
+        print(f"  query({scope}): {q}")
+        try:
+            recs = client.search(q)
+        except Exception as e:
+            print(f"  [WARN] search error: {e}")
+            recs = []
+        for r in (recs or []):
+            merged[str(r.get("id"))] = r
+    recordings = list(merged.values())
 
     if not recordings:
         print(f"  -> no recordings")
