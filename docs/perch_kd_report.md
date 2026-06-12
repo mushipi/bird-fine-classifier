@@ -219,6 +219,12 @@ BirdNET後段では非カモがレアな実態から **保持≥0.90 を採用 �
 - Phase2 を「精度で殴る」から「**割れないペアを属/複合クラスに束ねる出力設計**」へ転換。
 - 副次: カルガモOOD録音の 12/30 がヒヨドリ(brebul1)にargmax＝`data/ood_processed`の品質低（Phase3で要再生成）。
 
+**実装（複合クラス出力, 再学習ゼロ）**: in-dist混同行列(C-kd-soup)を確認 → **10種内に構造的混同ペア無し**
+（弱種は小標本振れ）＝**必要な複合はマガモ/カルガモの1個のみ**。`species_taxonomy.yaml` に
+`display_groups`（Mallard→「マガモ/カルガモ」, slash分類群）、`predict.py` で出力を和名/学名＋複合へ解決
+（`species_master` の ja/sci、複合override）。10種はそのまま個別、Mallard出力＝複合（カルガモ受容）。
+「カモ科 sp.」後退（低信頼）は次段（信頼閾値の要キャリブレ）。
+
 ## 12. 次手
 
 - **昇格（完了）**: KD-soup を運用 stage2 モデルへ昇格済み（commit 33e1bdd）。

@@ -29,6 +29,14 @@ duck:
     # 旧: chunk導出2.948(保持0.68), v15(11クラス)6.73。
     energy_threshold: 2.717
     energy_temperature: 1.0  # 1.0 = Temperature Scaling なし
+  # 出力タクソノミ: 音響的に分離不能な種を複合(slash分類群)で出す（適応的解像度・再学習不要）。
+  # 内部クラス→複合表示。記載の無い種は species_master の和名で素通り。
+  # 2026-06-12: Perch2.0本体でもカルガモ↔マガモ分離不能(0/30)と実証→複合化(tools/perch_native_confusion.py)。
+  # カルガモはモデル上Mallardに化けるので、Mallard予測=この複合を表す。最頻種カルガモを捨てない。
+  display_groups:
+    Mallard:
+      label: "マガモ/カルガモ"
+      sci: "Anas platyrhynchos/zonorhyncha"
 
 # ==================================================
 # カラス類グループ（実装予定）

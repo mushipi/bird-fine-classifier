@@ -57,6 +57,40 @@ def load_pipeline_config(group: str = "duck") -> tuple[str | None, float | None,
     return stage2_model, threshold, temperature
 
 
+def load_display_groups(group: str = "duck") -> dict:
+    """species_taxonomy.yaml の <group>.display_groups（内部クラス→複合表示）を読む。"""
+    if not TAXONOMY_PATH.exists():
+        return {}
+    with open(TAXONOMY_PATH, "r", encoding="utf-8") as f:
+        taxonomy = yaml.safe_load(f)
+    return taxonomy.get(group, {}).get("display_groups", {}) or {}
+
+
+def load_species_display() -> dict[str, dict]:
+    """data/species_master.csv から 内部英名(正規化)→{ja, sci} を作る（和名/学名表示用）。"""
+    csv = PROJECT_ROOT / "data" / "species_master.csv"
+    out: dict[str, dict] = {}
+    if not csv.exists():
+        return out
+    df = pd.read_csv(csv)
+    for _, r in df.iterrows():
+        info = {"ja": str(r.get("ja", "")), "sci": str(r.get("sci", ""))}
+        for col in ("en_inat", "en_birdnet"):
+            v = r.get(col)
+            if pd.notna(v):
+                out[str(v).replace(" ", "_")] = info
+    return out
+
+
+def resolve_display(internal: str, groups: dict, sp_disp: dict) -> tuple[str, str]:
+    """内部英名 → (表示ラベル, 学名)。複合(groups)優先、なければ species_master の和名/学名。"""
+    if internal in groups:
+        g = groups[internal]
+        return str(g.get("label", internal)), str(g.get("sci", ""))
+    info = sp_disp.get(internal, {})
+    return info.get("ja") or internal, info.get("sci", "")
+
+
 def load_label_map(model_dir: Path) -> dict[int, str]:
     """学習時に保存した label_map.csv を読む。"""
     df = pd.read_csv(model_dir / "label_map.csv")
@@ -275,10 +309,15 @@ def main() -> None:
         print("  → BirdNet の誤検出またはカモ科以外の音声の可能性があります")
         return
 
+    groups = load_display_groups(args.group)
+    sp_disp = load_species_display()
     print(f"\n[INFO] Top-{top_k} 予測:")
     for p in result["predictions"]:
+        label, sci = resolve_display(p["species"], groups, sp_disp)
+        p["label"], p["sci"] = label, sci  # 結果dictにも表示ラベルを付与
         bar = "█" * int(p["probability"] * 40)
-        print(f"  {p['rank']}. {p['species']:25s} {p['probability']:6.2%}  {bar}")
+        disp = f"{label}（{sci}）" if sci else label
+        print(f"  {p['rank']}. {disp:28s} {p['probability']:6.2%}  {bar}")
 
 
 if __name__ == "__main__":
