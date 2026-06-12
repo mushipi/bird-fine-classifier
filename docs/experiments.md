@@ -1722,6 +1722,10 @@ Cv2-test に 130/289=45%リーク**。整合性 Cv2-train∩Cv2-test=0。
 現行を有意に上回る唯一の候補**。効いたのはデータ拡大とクリーンsplit。③**AST最終soupでは蒸留が乗らない**(clean有意で base>KD)。
 **判定: Cv2BASEsoup を昇格候補に確定(別ステップ=登録+taxonomy差替+OOD閾値再キャリブレ)。** 詳細→ journal 2026-06-13 / perch_kd_report §13。
 
+**昇格完了(2026-06-13)**: 運用名 `ast-duck-D-base-soup` で登録→`species_taxonomy.yaml` stage2_model 差替(C-kd-soup退役)。
+OOD閾値 新モデルで再導出 **2.717→3.081**(保持>=0.90, 旧2.717は新モデルで非カモFP0.88=ゲート無効化のため必須だった,
+録音AUROC0.901)。GT105 CPU実走検証OK(マガモ→複合通過/コガモ通過/カイツブリ→棄却)。詳細→ perch_kd_report §13.4。
+
 ---
 
 ## メモ

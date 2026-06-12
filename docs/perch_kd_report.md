@@ -17,6 +17,8 @@
   クリーン再学習した **`Cv2BASEsoup`(蒸留なし) が 0.897 で現行を +0.110[+0.042,+0.172] 有意に上回る**。
   伸びの主因は**データ拡大とクリーンsplit**で、蒸留ではない（**AST最終soupでは KD が乗らず clean では base>KD 有意**）。
   → 詳細 **§13**。KDの価値は「弱い生徒(素CNN)・seed分散低減」に限定という理解に更新。
+- **【2026-06-13 昇格】現運用 = `ast-duck-D-base-soup`**（Cv2BASEsoup, 蒸留なし）。OOD energy 閾値は新モデルで
+  再導出し **2.717→3.081**（保持>=0.90, T=1.0）。旧 `ast-duck-C-kd-soup` は退役。CPU実走検証済（§13.4）。
 
 ---
 
@@ -270,6 +272,17 @@ B級worldwide収集→**全データ再split**→**base/KD×3seed再学習→sou
 3. **天井近いAST最終soupではKDが乗らない**(clean有意で base>KD)。KDの価値は§6の弱い生徒(素CNN)・seed分散低減に限定。
 4. **判定: Cv2BASEsoup を新運用へ昇格(別ステップ)** ＝ 運用名登録→`species_taxonomy.yaml` stage2_model差替→
    **OOD energy閾値の再キャリブレ必須**(モデル変更でenergy分布が変わる, 現2.717は旧モデル用)。本コミットは記録の先行。
+
+### 13.4 昇格完了（2026-06-13）
+- **運用名 `ast-duck-D-base-soup`** で登録（Cv2-base-soup を cp）。`species_taxonomy.yaml` の
+  `duck.pipeline.stage2_model` を C-kd-soup から差し替え。**現運用 = D-base-soup**（C-kd-soup 退役）。
+- **OOD閾値 再キャリブレ**（`ood_fp_audit.py --ast-model ast-duck-D-base-soup`）: 新モデルは energy 分布が上方シフトし、
+  **旧2.717では非カモFP0.88＝ゲート実質無効**だった（再導出必須を裏付け）。録音単位AUROC(真カモvs非カモ)=**0.901**
+  （※旧kd-soupの0.932よりゲート性能は微減＝分類向上とのトレードオフ）。動作点「真カモ最優先・保持>=0.90」で
+  **閾値 2.717→3.081**（真カモ保持0.90 / 非カモFP0.33 / 対象外カモ漏れ0.48, T=1.0）。閾値はXeno-canto域の暫定。
+- **CPU実走検証（GT105 `.venv-cpu`, 新閾値）**: マガモ→「マガモ/カルガモ」96.5%(energy5.14)通過 / コガモ77.9%(3.61)通過 /
+  カイツブリ類(OOD) energy2.996<3.081 で**棄却**。複合表示・in-dist通過・OODゲートが新閾値で機能。
+- **残**: フィールド閾値再キャリブレ(デプロイ後必須・§9), OODデータ再生成(Phase3), process.py 実統合(全体設計書§7)。
 
 ---
 

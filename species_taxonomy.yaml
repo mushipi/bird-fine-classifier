@@ -17,17 +17,19 @@
 # ==================================================
 duck:
   pipeline:
-    stage2_model: "models/ast-duck-C-kd-soup"   # 2026-06-12: Perch→KD蒸留 3seed soup を昇格
-    # 経緯: 10種運用。Perch教師(複数arm平均,OOF)を蒸留し多seed soup で固めた。
-    # 録音単位f1(test n=231): base-soup 0.813 → KD-soup 0.871、差+0.058 95%CI[+0.018,+0.108]=有意
-    # （seed42/1/2 全てで KD>base 一貫、差+0.027±0.004）。詳細→ docs/perch_kd_report.md
-    # 2026-06-12 OOD/FP監査で録音単位再キャリブレ（tools/ood_fp_audit.py）:
-    #   predict は録音平均energyを使うのに旧2.948はchunk単位FPR5%導出で不整合→真カモ32%誤棄却だった。
-    #   録音単位AUROC(真カモvs非カモ)=0.932。動作点=「真カモ最優先・保持>=0.90」を採用:
-    #   閾値2.717で 真カモ保持0.90 / 非カモ類FP0.22 / 対象外カモ漏れ0.43。
-    #   対象外カモ類(カルガモ等)の漏れは分類側の構造課題として受容。詳細→docs/perch_kd_report.md
-    # 旧: chunk導出2.948(保持0.68), v15(11クラス)6.73。
-    energy_threshold: 2.717
+    stage2_model: "models/ast-duck-D-base-soup"   # 2026-06-13: test拡大Cv2 の base soup(蒸留なし)を昇格
+    # 経緯: 10種運用。前運用 C-kd-soup の従来値(0.871/0.910)は test への学習リーク(45%)膨張で、
+    #   honest 再評価(リークフリー159録音)では C-kd-soup 0.787 < D-base-soup 0.897(+0.110 95%CI[+0.042,+0.172]=有意)。
+    #   伸びの主因は test拡大(再split+B級worldwide, 1020→1288録音)とクリーンsplitで、蒸留ではない
+    #   (AST最終soupでは KD 乗らず clean で base>KD 有意)。詳細→ docs/perch_kd_report.md §13。
+    # 2026-06-13 新モデルで OOD energy ゲート再キャリブレ(tools/ood_fp_audit.py, 録音平均energy):
+    #   モデル変更で energy 分布が上方シフト→旧2.717では非カモFP0.88(ゲート実質無効)。再導出必須だった。
+    #   録音単位AUROC(真カモvs非カモ)=0.901。動作点=「真カモ最優先・保持>=0.90」を採用:
+    #   閾値3.081で 真カモ保持0.90 / 非カモ類FP0.33 / 対象外カモ漏れ0.48。
+    #   対象外カモ類(カルガモ等)の漏れは分類側の構造課題として受容。
+    #   閾値はXeno-canto域の暫定=デプロイ後フィールド再キャリブレ必須(全体設計書 §9)。
+    # 旧: C-kd-soup 2.717(保持0.90,FP0.22,AUROC0.932), chunk導出2.948, v15(11クラス)6.73。
+    energy_threshold: 3.081
     energy_temperature: 1.0  # 1.0 = Temperature Scaling なし
   # 出力タクソノミ: 音響的に分離不能な種を複合(slash分類群)で出す（適応的解像度・再学習不要）。
   # 内部クラス→複合表示。記載の無い種は species_master の和名で素通り。
