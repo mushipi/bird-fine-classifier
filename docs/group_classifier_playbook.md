@@ -5,6 +5,33 @@
 
 最終更新: 2026-06-13 / 由来: duck（完成・運用中 `ast-duck-D-base-soup`）＋ crow（Phase1.5 進行中）。
 
+> **コマンド表記の約束**: 本文中の `download.py` 等は**略記**。実体は段階型ドライバ
+> `scripts/build_group.sh <stage>` か `uv run python -m bird_fine.<module>` / `tools/*.py`。
+> 通しで回すときはドライバを使う（下記）。
+
+---
+
+## 実行: 段階型ドライバ `scripts/build_group.sh`（✅確定）
+
+各段は独立に再実行可能・冪等寄り。**判断点ではドライバは止まって情報を出すだけで決めない**
+（薄種補填 / grade緩和 / 複合クラス / OOD動作点 / 昇格可否 は人間が判断＝本 playbook の規律を守る）。
+
+```bash
+# 群固有値は config から導出: GROUP=config名, SPLITS=config の splits_dir, モデル名=ast-<group>[-<tag>]-<arm>-s<seed>
+scripts/build_group.sh data  --config config-<group>.yaml                       # §2 収集→判断
+scripts/build_group.sh prep  --config config-<group>.yaml [--grade-ablate "<種>"] # §3 前処理+split
+scripts/build_group.sh train --config config-<group>.yaml --arm lean --seeds "42 1 2" [--tag AB --splits-dir <d>]  # §4 Lean
+scripts/build_group.sh embed --config config-<group>.yaml [--tag AB]             # §4 Perch埋め込み+教師proba(lean s42 前提)
+scripts/build_group.sh train --config config-<group>.yaml --arm kd --seeds "42 1 2" [--tag AB]                     # §4 Full(KD)
+scripts/build_group.sh eval  --config config-<group>.yaml [--tag AB --eval-splits-dir <共通test>]                  # §4 録音単位CI
+scripts/build_group.sh ood   --config config-<group>.yaml [--tag AB]            # §6 OOD閾値→人間が動作点選択
+scripts/build_group.sh confusion --config config-<group>.yaml                   # §5 混同→複合は実測してから
+scripts/build_group.sh register  --config config-<group>.yaml                   # §7 taxonomy追記スニペット出力
+```
+- `--dry-run` で発行コマンドのみ表示（実行前確認）。`PY` / `PERCHPY` 環境変数で venv 上書き可。
+- `--tag`＝モデル名識別子（grade変種 AB 等）、`--splits-dir`＝学習データ（tag と独立）。grade ablation 時は `--tag AB --splits-dir data/splits-<group>-AB` のように両方指定。
+- 学習は mainPC(GPU)、編集/commit は GT105（§8 配布規律）。
+
 ---
 
 ## 0. 設計思想
@@ -94,4 +121,9 @@
   （crow 4種は声が明確に違い少データで天井 ~0.90。カモの「薄種は録音増やせ」と逆）。grade-C は微マイナス傾向＝ノイズ混入。
   **但し書き**: clean(grade-A)test 上の結論。**フィールドのノイズ頑健性は別問題**（B/C 学習が field で効く可能性→現地評価要, 設計書 domain gap）。
   単一seed・小nゆえ「差なし」は検出力にも依る。→ grade緩和の既定方針: **まず worldwide A+B、Cまでは基本不要**。
+- 2026-06-13 **段階型ドライバ `scripts/build_group.sh` 新設**（再現性: 執行可能性の回収）:
+  crow 専用ベタ書き `crow_full_pipeline.sh`（mainPCの`~/`・群ハードコード・git管理外）を、群名を `--config` から
+  導出する汎用ドライバへ昇格。8段（data/prep/embed/train/eval/ood/confusion/register）をサブコマンド化し、
+  判断点では止まって情報を出すだけ（自動化しない）。`--dry-run` 全段検証済、発行コマンドは今夜の crow バッチと一致。
+  ＋ `config-template.yaml`（新群の差替箇所を TODO 化）を追加。**新群は config 作成→各段を順に回すだけ**で配線まで。
 - （以後: crow Lean vs Full(KD) / 混同・複合 / OOD / 登録 / gull 展開 … を追記）

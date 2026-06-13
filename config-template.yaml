@@ -1,0 +1,138 @@
+# bird-fine-classifier: 新群 Stage2 分類器 設定テンプレート
+# 使い方: 本ファイルを config-<group>.yaml にコピーし、[TODO] 行だけ差し替える。
+# 共有部（前処理 3s/16k・AST基盤・学習ハイパラ・embeddings・probe）は基本いじらない。
+# 詳細な判断則は docs/group_classifier_playbook.md。実行は scripts/build_group.sh。
+
+# ==================================================
+# [TODO] 対象種（Xeno-canto英名 ↔ 学名 ↔ 日本語名）= species_master.csv の group==<group> target
+#        ・en は BirdNET 英名と一致させる（dispatcher のトリガキー）
+#        ・地域不在種は worldwide のみ。タクソンズレ(en検索の別種混入)に注意し記録する
+# ==================================================
+target_species:
+  - en: "<English name>"      # [TODO]
+    sci: "<Genus species>"    # [TODO]
+    ja: "<和名>"              # [TODO]
+  # - ... 種数ぶん追加
+
+# ==================================================
+# ダウンロード設定（A B 両grade。grade緩和 C は基本不要＝playbook §2）
+# ==================================================
+download:
+  output_dir: "data/raw"             # 種サブディレクトリ共有（群間で同居）
+  quality: "A B"                     # multigrade（q:A / q:B 別投げ統合）
+  max_recordings_per_species: 100
+  countries: ["Japan"]
+  fallback_worldwide: true           # Japan=0 の種のみ自動で worldwide
+
+# ==================================================
+# 前処理設定（共有。splits_dir だけ群別）
+# ==================================================
+preprocessing:
+  sample_rate: 16000
+  chunk_duration_sec: 3.0            # BirdNET 3s窓に整合（全群遵守）
+  min_chunk_duration_sec: 1.0
+  overlap_ratio: 0.0
+  processed_dir: "data/processed"    # 種サブディレクトリ共有
+  splits_dir: "data/splits-<group>"  # [TODO] 群別（他群と分離）。ドライバの SPLITS 既定値
+  train_ratio: 0.70
+  val_ratio: 0.15
+  test_ratio: 0.15
+  random_seed: 42
+
+# ==================================================
+# モデル設定
+# ==================================================
+model:
+  pretrained: "MIT/ast-finetuned-audioset-10-10-0.4593"
+  num_labels: 0                      # [TODO] = 対象種数 + 1("other")。ヘッドは label_map で自動再初期化（これは上限指定）
+  feature_extractor_max_length: 304  # 3s×16kHz
+  init_from: ""
+
+# ==================================================
+# 学習設定（共有ハイパラ。output_dir/seed は --output-dir/--seed で上書き＝ドライバが管理）
+# ==================================================
+training:
+  output_dir: "models/ast-<group>-base"  # [TODO] 既定置き場（実run名はドライバが付与）
+  focal_gamma: 0.0
+  num_train_epochs: 15
+  per_device_train_batch_size: 4
+  per_device_eval_batch_size: 8
+  gradient_accumulation_steps: 4
+  learning_rate: 2.0e-5
+  warmup_ratio: 0.1
+  weight_decay: 0.03
+  fp16: true
+  gradient_checkpointing: true
+  eval_strategy: "epoch"
+  save_strategy: "epoch"
+  save_total_limit: 3
+  load_best_model_at_end: true
+  metric_for_best_model: "f1_macro"  # 群非依存の汎用指標
+  early_stopping_patience: 4
+  logging_steps: 20
+  report_to: ["tensorboard"]
+
+# ==================================================
+# データ拡張（train_dsのみ。既定 off）
+# ==================================================
+augmentation:
+  spec_augment:
+    enabled: false
+    other_only: true
+    freq_mask_param: 24
+    time_mask_param: 80
+    num_freq_masks: 2
+    num_time_masks: 2
+
+# ==================================================
+# [TODO] "other" クラス = OOD（対象外同科 + 近接非同科）。playbook §1/§6
+#        tier1=同科他種（最重要OOD）, tier2=非同科の近接音（声質多様性）
+# ==================================================
+other_class:
+  recordings_for_train: 20
+  recordings_for_eval: 10
+  max_chunks_per_recording: 30
+  loss_alpha: 1.5
+  seed: 42
+  tier1_species:
+    - "<同科他種>"        # [TODO]
+  tier2_species:
+    - "<非同科の近接音>"  # [TODO]
+
+# ==================================================
+# 評価設定
+# ==================================================
+evaluation:
+  output_dir: "outputs"
+  attention_visualization: true
+  top_k: 3
+
+# ==================================================
+# Foundation Model 埋め込み（Full手法=Perch蒸留用。共有・基本いじらない）
+# ==================================================
+embeddings:
+  cache_dir: "data/embeddings"
+  perch:
+    variant: "perch_v2"
+    sample_rate: 32000
+    window_size_sec: 5.0
+    embedding_dim: 1536
+    source: "raw"
+  birdaves:
+    weights_dir: "references/weights/birdaves"
+    model_file: "birdaves-biox-large.torchaudio.pt"
+    config_file: "birdaves-biox-large.torchaudio.model_config.json"
+    sample_rate: 16000
+    embedding_dim: 1024
+    seq_tokens: 32
+
+probe:
+  lr: 0.005
+  weight_decay: 0.0005
+  epochs: 50
+  batch_size: 128
+  class_weights: true
+  mlp_hidden_dim: 256
+  mlp_dropout: 0.3
+  attentive_num_heads: 4
+  metric_for_best: "f1_macro"
