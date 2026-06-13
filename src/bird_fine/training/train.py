@@ -229,6 +229,8 @@ def main() -> None:
                         help="DataLoader並列数。Linuxなら8等で大幅高速化")
     parser.add_argument("--config", default=None,
                         help="設定ファイル（省略時 config.yaml）。群別は config-<group>.yaml")
+    parser.add_argument("--splits-dir", default=None,
+                        help="splits ディレクトリ上書き（config の splits_dir を無視）。grade アブレーション等で使う")
     args = parser.parse_args()
 
     config = load_config(args.config)
@@ -236,7 +238,7 @@ def main() -> None:
     model_cfg = config["model"]
     train_cfg = config["training"]
 
-    splits_dir = PROJECT_ROOT / pp["splits_dir"]
+    splits_dir = Path(args.splits_dir) if args.splits_dir else PROJECT_ROOT / pp["splits_dir"]
     if not (splits_dir / "train.csv").exists():
         print(f"[ERROR] {splits_dir / 'train.csv'} が見つからない。先に split.py を実行して。")
         return

@@ -131,6 +131,7 @@ def main() -> None:
     parser.add_argument("--batch-size", type=int, default=8)
     parser.add_argument("--config", default=None,
                         help="設定ファイル（省略時 config.yaml）。群別は config-<group>.yaml")
+    parser.add_argument("--splits-dir", default=None, help="splits ディレクトリ上書き")
     args = parser.parse_args()
 
     config = load_config(args.config)
@@ -144,7 +145,7 @@ def main() -> None:
         print(f"[ERROR] {model_dir} が見つからない。先に train.py を実行して。")
         return
 
-    splits_dir = PROJECT_ROOT / pp["splits_dir"]
+    splits_dir = Path(args.splits_dir) if args.splits_dir else PROJECT_ROOT / pp["splits_dir"]
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
     out_dir = PROJECT_ROOT / eval_cfg["output_dir"] / f"eval_{timestamp}"
     out_dir.mkdir(parents=True, exist_ok=True)

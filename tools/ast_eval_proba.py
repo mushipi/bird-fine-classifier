@@ -31,14 +31,16 @@ def main() -> None:
     ap.add_argument("--split", default="test", choices=["train", "val", "test"])
     ap.add_argument("--batch-size", type=int, default=16)
     ap.add_argument("--out-dir", default=str(PROJECT_ROOT / "outputs" / "ast_proba"))
+    ap.add_argument("--config", default="config.yaml", help="設定ファイル（前処理/モデル基盤）")
+    ap.add_argument("--splits-dir", default="data/splits", help="splits ディレクトリ（群/アーム別）")
     args = ap.parse_args()
 
-    cfg = yaml.safe_load((PROJECT_ROOT / "config.yaml").read_text(encoding="utf-8"))
+    cfg = yaml.safe_load((PROJECT_ROOT / args.config).read_text(encoding="utf-8"))
     model_cfg = cfg["model"]
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
     train_ds, val_ds, test_ds, _ = build_datasets(
-        splits_dir=PROJECT_ROOT / "data" / "splits",
+        splits_dir=PROJECT_ROOT / args.splits_dir,
         pretrained=model_cfg["pretrained"],
         project_root=PROJECT_ROOT,
         max_length=int(model_cfg.get("feature_extractor_max_length", 1024)),
