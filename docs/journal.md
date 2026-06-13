@@ -1326,3 +1326,18 @@ Cprod は**旧splitのtrainで学習**。Cv2は全データ再splitしたので�
 **旧2.717だと非カモFP0.88=ゲート無効**(再導出が必須だった裏付け)→保持>=0.90で **2.717→3.081**(録音AUROC0.901,
 旧kd-soup0.932より微減=分類向上とのトレードオフ)。GT105 CPUで predict 実走: マガモ→「マガモ/カルガモ」96.5%通過/
 コガモ77.9%通過/カイツブリ類 2.996<3.081 棄却=ゲート機能。閾値はXC域暫定でフィールド再キャリブレはデプロイ後。
+
+## 2026-06-13 crow KD夜間ジョブ — teacher proba val.npz 欠落で KD枝が全滅（根本原因と修正）
+
+schedule-run.sh 経由の夜間 crow-full(Lean vs Full KD) が 22:31 JST「完了」表示だが、後半KD枝は全滅していた。
+
+### 切り分け
+- 前半 grade ラダー(crowA/AB/ABC)は 12:11 完走・無傷。録音macro-F1(n=51): crowA 0.903 = crowAB 0.903、crowABC 0.881、全ペア有意差なし（grade緩和不要、docs c8d1c3f 済）。lean-soup 生成・評価もOK。
+- 後半KDは crow_full.log 987行以降で `teacher_proba-crow/val.npz` の FileNotFoundError が3 seed連発 → 以降 HF Hub フォールバックの 401/RepoNotFound と最終 soup_ci の `crow_kd_test.npz` 欠落まで連鎖。
+
+### 根本原因（1点）
+`data/embeddings/teacher_proba-crow/` に train.npz しか無く **val.npz が欠落**。crow_full_pipeline.sh の教師proba export が `--splits train` 固定で、KD学習が監視に使う val 教師probaを出していなかった（多群化で旧カモ版の val/test 出力を取りこぼし）。test teacher proba は不要（最終 crow_kd_test.npz は kd-soup *モデル*の test推論で作る別物。Perch test 抽出も不要）。欠けていたのは val.npz 一個だけ。
+
+### 修正
+- crow_full_pipeline.sh: 教師proba export を `--splits train` → `--splits train val`（根本修正、再発防止）。
+- 復旧手順: teacher_proba-crow/val.npz を再エクスポート → KD枝(step3-6: KD学習×3seed→soup→eval→soup_ci)を再走。
