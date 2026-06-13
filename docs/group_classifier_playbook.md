@@ -107,8 +107,8 @@ scripts/build_group.sh register  --config config-<group>.yaml                   
 
 ## 9. 各群の状態
 - **duck** ✅運用中: `ast-duck-D-base-soup`(honest 0.897), OOD 3.081, 複合=マガモ/カルガモ。BirdProject 統合済(settings既定disabled)。
-- **crow** 🔬Phase1.5: 4種(ハシブト164/ハシボソ102/ミヤマ97/カササギ100)収集済, grade ラダー(A/AB/ABC)学習中。
-  → 結果で「worldwide A+B vs grade-C 追加」の是非を確定予定。
+- **crow** 🔬Phase3完了→Phase4へ: 4種(ハシブト164/ハシボソ102/ミヤマ97/カササギ100), **A+B lean soup 採用**(KD効果ゼロ・grade緩和不要・複合不要)。録音f1≈0.88(Carrion最弱0.80)。残=Phase4 OOD→Phase5 登録(crow)。
+  → grade緩和/KD/複合 すべて不要が実測で確定。
 - **gull** ⬜未着手（本 playbook ＋ config-gull.yaml で展開予定）。
 
 ---
@@ -127,3 +127,15 @@ scripts/build_group.sh register  --config config-<group>.yaml                   
   判断点では止まって情報を出すだけ（自動化しない）。`--dry-run` 全段検証済、発行コマンドは今夜の crow バッチと一致。
   ＋ `config-template.yaml`（新群の差替箇所を TODO 化）を追加。**新群は config 作成→各段を順に回すだけ**で配線まで。
 - （以後: crow Lean vs Full(KD) / 混同・複合 / OOD / 登録 / gull 展開 … を追記）
+- 2026-06-14 **crow Lean vs Full(KD) 決着＋夜間ジョブ不具合の教訓**:
+  夜間自動(schedule-run crow-full)は前半 grade ラダー無傷も、**後半KD枝が `teacher_proba-crow/val.npz` 欠落で全滅**。
+  原因＝`crow_full_pipeline.sh` の教師proba export が `--splits train` 固定で、KD学習が監視に使う val 教師proba を出さず
+  → KD学習 FileNotFoundError → 以降 HF Hub 401 / soup_ci npz欠落の連鎖。**根治: export を `--splits train val` に修正**。
+  欠落 val.npz 再生成 → KD枝のみ再走で復旧。**結果(録音f1, n=51): lean-soup 0.8815 vs kd-soup 0.8833, 差+0.0018[−0.053,+0.056]=★差なし**。
+  → **§4/§5 判断則: 天井近い群(crow)では KD は乗らない。KD価値は弱い生徒/seed分散低減に限定（duck で確認済の再現）。crow=lean soup 採用**。
+  **教訓(§8 落とし穴)**: 教師proba export は **train(OOF)＋val(direct) の両方**が必須（KD学習の val監視用）。`--splits train` 単独は KD を静かに全滅させる。template/ドライバは val を必須にすること。
+- 2026-06-14 **crow Phase3 混同分析（lean-soup, 録音単位 n=51）**:
+  種別 f1: Magpie 0.960 / Rook 0.897 / Large-billed 0.870 / **Carrion 0.800(最弱)**。
+  Carrion の誤りは Rook2/Large-billed2/Magpie1 と**3クラスに散逸**（precision 1.00＝他種は Carrion に化けない）。
+  → **カモのカルガモ壁（非対称全崩壊）とは別物。crow に音響的に割れる種ペア無し → display_groups（複合）不要、4種そのまま出力**。
+  Carrion の recall 0.67 は support15 の小標本振れ＋データ律速で、複合でなくデータ増でしか動かない（据え置き）。
