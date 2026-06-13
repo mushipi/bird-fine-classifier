@@ -25,8 +25,9 @@ OOD_PROCESSED_DIR = PROJECT_ROOT / "data" / "ood_processed"
 TAXONOMY_PATH = PROJECT_ROOT / "species_taxonomy.yaml"
 
 
-def load_config() -> dict:
-    with open(PROJECT_ROOT / "config.yaml", encoding="utf-8") as f:
+def load_config(config_path=None) -> dict:
+    path = config_path or (PROJECT_ROOT / "config.yaml")
+    with open(path, encoding="utf-8") as f:
         return yaml.safe_load(f)
 
 
@@ -100,9 +101,11 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--dry-run", action="store_true", help="件数確認のみ（CSV 書き換えなし）")
     parser.add_argument("--reset", action="store_true", help="既追記の other 行を削除してやり直し")
+    parser.add_argument("--config", default=None,
+                        help="設定ファイル（省略時 config.yaml）。群別は config-<group>.yaml")
     args = parser.parse_args()
 
-    config = load_config()
+    config = load_config(args.config)
     taxonomy = load_taxonomy()
     pp = config["preprocessing"]
     oc = config.get("other_class", {})

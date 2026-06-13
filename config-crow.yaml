@@ -1,0 +1,148 @@
+# bird-fine-classifier: カラス類(crow) AST分類器の設定
+# 多群化の2例目。duck の config.yaml を雛形に、群固有部(対象種/splits/output/OOD tiers)だけ差し替え。
+# 前処理(3s/16k)・モデル基盤(AST)・学習ハイパラは duck と共有方針。
+# 群=crow。species_master.csv の group==crow と整合。
+
+# ==================================================
+# 対象種（Xeno-canto英名 ↔ 学名 ↔ 日本語名）= species_master の crow target 4種
+# ==================================================
+target_species:
+  - en: "Large-billed Crow"
+    sci: "Corvus macrorhynchos"
+    ja: "ハシブトガラス"
+  - en: "Carrion Crow"
+    sci: "Corvus corone"
+    ja: "ハシボソガラス"
+  - en: "Rook"
+    sci: "Corvus frugilegus"
+    ja: "ミヤマガラス"
+  - en: "Eurasian Magpie"
+    sci: "Pica serica"
+    ja: "カササギ"
+
+# ==================================================
+# ダウンロード設定（カラスはデータ豊富な想定だが A B 両grade で確実に）
+# ==================================================
+download:
+  output_dir: "data/raw"             # 種サブディレクトリ共有（duck と同居）
+  quality: "A B"                     # multigrade（download.py 修正済 = q:A / q:B 別投げ統合）
+  max_recordings_per_species: 100
+  countries: ["Japan"]
+  fallback_worldwide: true
+
+# ==================================================
+# 前処理設定（duck と共有。splits だけ群別）
+# ==================================================
+preprocessing:
+  sample_rate: 16000
+  chunk_duration_sec: 3.0
+  min_chunk_duration_sec: 1.0
+  overlap_ratio: 0.0
+  processed_dir: "data/processed"    # 種サブディレクトリ共有
+  splits_dir: "data/splits-crow"     # 群別（duck の data/splits と分離）
+  train_ratio: 0.70
+  val_ratio: 0.15
+  test_ratio: 0.15
+  random_seed: 42
+
+# ==================================================
+# モデル設定（4種 + other）
+# ==================================================
+model:
+  pretrained: "MIT/ast-finetuned-audioset-10-10-0.4593"
+  num_labels: 5                      # 4カラス + "other"
+  feature_extractor_max_length: 304  # 3s×16kHz
+  init_from: ""
+
+# ==================================================
+# 学習設定（duck と同ハイパラ。output_dir は run/seed ごとに --output-dir で上書き）
+# ==================================================
+training:
+  output_dir: "models/ast-crow-base"
+  focal_gamma: 0.0
+  num_train_epochs: 15
+  per_device_train_batch_size: 4
+  per_device_eval_batch_size: 8
+  gradient_accumulation_steps: 4
+  learning_rate: 2.0e-5
+  warmup_ratio: 0.1
+  weight_decay: 0.03
+  fp16: true
+  gradient_checkpointing: true
+  eval_strategy: "epoch"
+  save_strategy: "epoch"
+  save_total_limit: 3
+  load_best_model_at_end: true
+  metric_for_best_model: "f1_macro"  # 群非依存の汎用指標（duck の f1_macro_8class はカモ専用）
+  early_stopping_patience: 4
+  logging_steps: 20
+  report_to: ["tensorboard"]
+
+# ==================================================
+# データ拡張（train_dsのみ）
+# ==================================================
+augmentation:
+  spec_augment:
+    enabled: false
+    other_only: true
+    freq_mask_param: 24
+    time_mask_param: 80
+    num_freq_masks: 2
+    num_time_masks: 2
+
+# ==================================================
+# "other" クラス設定（OOD = 非対象コルビッド + 非カラス）
+# ==================================================
+other_class:
+  recordings_for_train: 20
+  recordings_for_eval: 10
+  max_chunks_per_recording: 30
+  loss_alpha: 1.5
+  seed: 42
+  # Tier1: 同科他種（最重要OOD = 対象外コルビッド）
+  tier1_species:
+    - "Daurian Jackdaw"
+    - "Eurasian Jay"
+    - "Azure-winged Magpie"
+  # Tier2: 非カラスの近接音（声質多様性）
+  tier2_species:
+    - "Brown-eared Bulbul"
+    - "Eurasian Tree Sparrow"
+
+# ==================================================
+# 評価設定
+# ==================================================
+evaluation:
+  output_dir: "outputs"
+  attention_visualization: true
+  top_k: 3
+
+# ==================================================
+# Foundation Model 埋め込み（Full手法=Perch蒸留 用。duck と共有）
+# ==================================================
+embeddings:
+  cache_dir: "data/embeddings"
+  perch:
+    variant: "perch_v2"
+    sample_rate: 32000
+    window_size_sec: 5.0
+    embedding_dim: 1536
+    source: "raw"
+  birdaves:
+    weights_dir: "references/weights/birdaves"
+    model_file: "birdaves-biox-large.torchaudio.pt"
+    config_file: "birdaves-biox-large.torchaudio.model_config.json"
+    sample_rate: 16000
+    embedding_dim: 1024
+    seq_tokens: 32
+
+probe:
+  lr: 0.005
+  weight_decay: 0.0005
+  epochs: 50
+  batch_size: 128
+  class_weights: true
+  mlp_hidden_dim: 256
+  mlp_dropout: 0.3
+  attentive_num_heads: 4
+  metric_for_best: "f1_macro"

@@ -23,8 +23,9 @@ from tqdm import tqdm
 PROJECT_ROOT = Path(__file__).resolve().parents[3]
 
 
-def load_config() -> dict:
-    with open(PROJECT_ROOT / "config.yaml", "r", encoding="utf-8") as f:
+def load_config(config_path=None) -> dict:
+    path = config_path or (PROJECT_ROOT / "config.yaml")
+    with open(path, "r", encoding="utf-8") as f:
         return yaml.safe_load(f)
 
 
@@ -147,9 +148,11 @@ def main() -> None:
         action="store_true",
         help="既存チャンクを上書き再生成",
     )
+    parser.add_argument("--config", default=None,
+                        help="設定ファイル（省略時 config.yaml）。群別は config-<group>.yaml")
     args = parser.parse_args()
 
-    config = load_config()
+    config = load_config(args.config)
     pp = config["preprocessing"]
     sample_rate = int(pp["sample_rate"])
     chunk_duration = float(pp["chunk_duration_sec"])

@@ -81,10 +81,13 @@ def main() -> None:
     ap.add_argument("--ood-emb", default="data/embeddings/perch_ood/ood.npz")
     ap.add_argument("--ood-root", default="data/ood_processed")
     ap.add_argument("--duck-order", default="data/embeddings/teacher_proba/duck_order.csv")
+    ap.add_argument("--config", default=None,
+                    help="設定ファイル（省略時 config.yaml）。群別は config-<group>.yaml")
     args = ap.parse_args()
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    cfg = yaml.safe_load((PROJECT_ROOT / "config.yaml").read_text())
+    cfg = yaml.safe_load(Path(args.config).read_text() if args.config
+                         else (PROJECT_ROOT / "config.yaml").read_text())
     duck_order = pd.read_csv(PROJECT_ROOT / args.duck_order)["species"].tolist()
 
     # ===== AST =====

@@ -31,8 +31,9 @@ from xcapi.downloader import Downloader
 from xcapi.query import QueryBuilder
 
 
-def load_config() -> dict:
-    with open(PROJECT_ROOT / "config.yaml", "r", encoding="utf-8") as f:
+def load_config(config_path=None) -> dict:
+    path = config_path or (PROJECT_ROOT / "config.yaml")
+    with open(path, "r", encoding="utf-8") as f:
         return yaml.safe_load(f)
 
 
@@ -158,9 +159,14 @@ def main() -> None:
         action="store_true",
         help="Japan を試さず worldwide だけ叩く。追加収集で地域多様性を取りたい時に使う",
     )
+    parser.add_argument(
+        "--config",
+        default=None,
+        help="設定ファイル（省略時 config.yaml）。群別は config-<group>.yaml を指定",
+    )
     args = parser.parse_args()
 
-    config = load_config()
+    config = load_config(args.config)
     dl_cfg = config["download"]
     output_dir = str(PROJECT_ROOT / dl_cfg["output_dir"])
     quality = args.quality if args.quality else dl_cfg["quality"]
