@@ -1,14 +1,18 @@
 # bird-fine-classifier
 
-BirdNET の後段として動作する、**カモ類細分類**の音声分類プロジェクト。
-2段階パイプラインの第2段（Stage2）として、カモ類10種を識別する。
+BirdNET の後段として動作する、**群専用 細分類**の音声分類プロジェクト（2段パイプラインの第2段＝Stage2）。
+**群汎用**に組んであり、新しい分類群は config を作って標準フロー（後述）で展開する。
 
 ```
-音声 → BirdNET (CNN) → 「カモ類」検出 → 本モデル → マガモ/コガモ/… ＋ OOD棄却
+音声 → BirdNET (CNN) → 群（カモ/カラス/…）検出 → 群専用モデル → 種/複合 ＋ OOD棄却
 ```
+
+- **duck（カモ類10種）**: ✅運用モデル完成（`models/ast-duck-D-base-soup`）。
+- **crow（カラス類4種）**: 🔬構築中（Phase1.5, 標準フローで展開中）。
+- **gull**: ⬜予定。
 
 BirdNET は近縁種の細分類が苦手なため、**上位カテゴリで絞り込んだ後の専門識別器**として
-本モデルを位置づける。BirdNET の 3秒窓に合わせ、本モデルも **3秒固定チャンク**で運用する。
+本モデル群を位置づける。BirdNET の 3秒窓に合わせ、**3秒固定チャンク**で運用する。
 
 ## 対象種（運用10種）
 
@@ -36,18 +40,19 @@ BirdNET は近縁種の細分類が苦手なため、**上位カテゴリで絞�
 | **AST fine-tune** | `MIT/ast-finetuned-audioset` を10種にfine-tune | **運用本線**（Stage2モデル） |
 | **Foundation埋め込み + 軽量プローブ** | Perch2.0 / BirdAVES の凍結埋め込み上に線形/MLP/sklearnプローブ | 比較・**蒸留の教師**として活用 |
 
-両系統は同水準（録音単位f1 ≈ 0.83）。**Perch を教師に AST へ知識蒸留（KD）**し、多seed soup で
-固めた `models/ast-duck-C-kd-soup` を運用モデルに昇格している。
+両系統は同水準（録音単位f1 ≈ 0.83）。Foundation 系統（Perch）は **蒸留の教師**として使う。
+**KD（Perch→AST 知識蒸留）は弱い生徒・低データで効く条件付き手法**であり、天井近い AST 最終 soup には乗らない。
 
-### 現行モデルと性能（test 録音単位 macro-F1, n=231）
+### 現行モデルと性能（duck, test 録音単位 macro-F1）
 
-- **運用モデル**: `models/ast-duck-C-kd-soup`（Perch→KD蒸留 3seed soup）= **0.871**
-- ベースライン（蒸留なし soup）= 0.813（差 +0.058, 95%CI[+0.018, +0.108]＝有意）
-- OOD energy ゲート: AUROC 0.886 / 推奨閾値 2.948（FPR≤5%）
-- 詳細・経緯 → **[docs/perch_kd_report.md](docs/perch_kd_report.md)**
+- **運用モデル**: `models/ast-duck-D-base-soup`（多seed BASE soup）= **honest 0.897**
+- OOD energy ゲート: 真カモ保持 0.90 動作点で **閾値 3.081**（モデル更新時は必ず再導出＝energy分布シフト）
+- 経緯（重要）: 旧 `ast-duck-C-kd-soup`(0.871) は **リーク込み評価が膨張**していた。test拡大＋クリーンsplitで
+  honest 再評価した結果、**効いたのはデータ拡大であり蒸留ではない**（clean では BASE soup > KD soup が有意）→ BASE soup を昇格。
+- 詳細・全経緯 → **[docs/perch_kd_report.md](docs/perch_kd_report.md)**
 
 評価は **録音単位 macro-F1 ＋ 録音クラスタ bootstrap CI** を規律とする
-（チャンク単位の点推定は小サンプルで CI を過小評価するため使わない。`analysis/compare_runs_ci.py`）。
+（チャンク単位の点推定は小サンプルで CI を過小評価するため使わない。リーク厳禁＝候補が学習で見た録音を test に入れない）。
 
 ## クイックスタート
 
@@ -88,8 +93,8 @@ tools/perch_embed/.venv/bin/python tools/perch_embed/extract_perch.py --source r
 ```bash
 .venv/bin/python tools/ast_eval_proba.py --model-dir models/ast-duck-XX --tag XX  # test proba
 .venv/bin/python tools/probe_sweep/kd_compare_ci.py --base <A> --kd <B>           # 録音単位CI
-.venv/bin/python tools/soup_ast.py --out models/ast-duck-C-kd-soup <kd1> <kd2> <kd3>  # 重み平均
-uv run python -m bird_fine.analysis.ood_eval --model-dir models/ast-duck-C-kd-soup    # OOD閾値
+.venv/bin/python tools/soup_ast.py --out models/ast-<group>-<arm>-soup <s1> <s2> <s3>  # 重み平均
+.venv/bin/python tools/ood_fp_audit.py --config config-<group>.yaml --ast-model <soup> # OOD閾値(正準)
 ```
 
 ### 推論（OODゲート込み）
@@ -104,19 +109,42 @@ uv run python -m bird_fine.inference.predict --audio path/to/duck.wav
 ```yaml
 duck:
   pipeline:
-    stage2_model: "models/ast-duck-C-kd-soup"
-    energy_threshold: 2.948      # energy < 閾値 → OOD棄却
+    stage2_model: "models/ast-duck-D-base-soup"
+    energy_threshold: 3.081      # energy < 閾値 → OOD棄却
     energy_temperature: 1.0
 ```
 `predict.py` は `--group`（既定 duck）でこのブロックを参照する。
+
+## 群の追加（標準作成フロー）
+
+新しい分類群（crow / gull …）の Stage2 を作る手順は **標準化済み**。duck で確立し crow で再演している。
+
+- **判断則の本体（生きた文書）** → [`docs/group_classifier_playbook.md`](docs/group_classifier_playbook.md)
+  （データ収集の薄種対応／grade緩和の是非／評価規律＝録音単位CI・リーク厳禁／複合化＝実測してから／OOD動作点）。
+- **実行（段階型ドライバ）** → `scripts/build_group.sh <stage> --config config-<group>.yaml`
+  ```bash
+  scripts/build_group.sh data  --config config-crow.yaml      # 収集→判断
+  scripts/build_group.sh prep  --config config-crow.yaml      # 前処理+split
+  scripts/build_group.sh train --config config-crow.yaml --arm lean --seeds "42 1 2"
+  scripts/build_group.sh embed --config config-crow.yaml      # Perch+教師proba(KD用)
+  scripts/build_group.sh train --config config-crow.yaml --arm kd --seeds "42 1 2"
+  scripts/build_group.sh eval  --config config-crow.yaml      # 録音単位CI(Lean vs Full)
+  scripts/build_group.sh ood   --config config-crow.yaml      # OOD閾値→動作点は人間が選ぶ
+  scripts/build_group.sh register --config config-crow.yaml   # taxonomy追記スニペット出力
+  ```
+  `--dry-run` で発行コマンドのみ表示。**判断点ではドライバは止まって情報を出すだけ**（自動化しない＝上の判断則を守る）。
+- **雛形** → `config-template.yaml`（差替箇所を `[TODO]` 化）。新群は config を作って各段を回し、taxonomy に1行登録するだけ。
 
 ## ディレクトリ構成
 
 ```
 bird-fine-classifier/
-├── config.yaml                 # 種・前処理・学習ハイパラ
+├── config.yaml                 # duck の種・前処理・学習ハイパラ
+├── config-crow.yaml            # crow 群の設定（多群展開）
+├── config-template.yaml        # 新群の雛形（[TODO]差替）
+├── scripts/build_group.sh      # 群作成 段階型ドライバ（標準フロー実行部）
 ├── species_taxonomy.yaml       # 推論モデル/OOD params（グループ別）
-├── docs/                       # ドキュメント（perch_kd_report.md 等）
+├── docs/                       # ドキュメント（group_classifier_playbook.md / perch_kd_report.md 等）
 ├── data/                       # gitignore: raw/ processed/ ood/ embeddings/ + splits/
 ├── models/ outputs/            # gitignore
 ├── src/bird_fine/
@@ -137,6 +165,7 @@ bird-fine-classifier/
 
 | ファイル | 内容 |
 |---|---|
+| [docs/group_classifier_playbook.md](docs/group_classifier_playbook.md) | **群分類器 作成プレイブック（標準フロー・判断則）**。新群を作る時の起点 |
 | [docs/perch_kd_report.md](docs/perch_kd_report.md) | **Perch蒸留による強化の全記録**（手法・多seed soup・昇格） |
 | [docs/architecture.md](docs/architecture.md) | パイプライン全体、AST の仕組み |
 | [docs/data_guide.md](docs/data_guide.md) | DL戦略、チャンク化仕様、leakage対策split |
