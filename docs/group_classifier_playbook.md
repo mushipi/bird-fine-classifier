@@ -26,7 +26,8 @@
 - **判断則（薄種対応, 優先順）**:
   1. **worldwide 補填**: フォールバックは Japan が**0件の時しか**発動しない。Japan が少数(>0)で止まった種は
      `--species "<種>" --worldwide-only --exclude-existing` で追加収集。← 最も効く（crow ハシボソ 2→102）。
-  2. **grade 緩和**: それでも薄ければ `--quality "A B C"`（C以下）。ただし**効果は周辺的**（crow ハシブトで C は14録音のみ）。
+  2. **grade 緩和**: それでも薄ければ `--quality "A B C"`（C以下）。**ただし基本不要**（✅crow 実測: A/A+B/A+B+C で
+     clean-test f1 差なし, C は微減傾向）。**分離容易な群＋データ非枯渇では grade緩和は効かない**。field ノイズ頑健性は別途要評価。
   3. **複合化/縮小**: どうしても集まらなければ複合クラス（§5）か対象種から外す。
 - **地域不在種**は worldwide のみ（crow ミヤマ/カササギは Japan ゼロ）。タクソンズレに注意
   （例: XC "Eurasian Magpie"=Pica pica 欧州種 ≠ 日本の Pica serica）。記録に残す。
@@ -87,4 +88,10 @@
 
 ## 追記ログ（確定知見をここに足す）
 - 2026-06-13 初版。duck 完成＋crow Phase0-1.5 までの手順・判断則を集約。
-- （以後: crow grade ラダー結果 / Lean vs Full / 混同・複合 / OOD / 登録 / gull 展開 … を追記）
+- 2026-06-13 **crow grade ラダー結果（A / A+B / A+B+C, 単一seed, 共通test n=51 grade-A）**:
+  録音単位f1 = A 0.903 / A+B 0.903 / A+B+C 0.881。ペア差は全て★差なし（A+B−A=−0.0001, A+B+C−A+B=−0.022 微減傾向）。
+  → **§2 判断則に追記**: **分離容易な群＋データ非枯渇では grade緩和(B/C)は clean-test を改善しない**
+  （crow 4種は声が明確に違い少データで天井 ~0.90。カモの「薄種は録音増やせ」と逆）。grade-C は微マイナス傾向＝ノイズ混入。
+  **但し書き**: clean(grade-A)test 上の結論。**フィールドのノイズ頑健性は別問題**（B/C 学習が field で効く可能性→現地評価要, 設計書 domain gap）。
+  単一seed・小nゆえ「差なし」は検出力にも依る。→ grade緩和の既定方針: **まず worldwide A+B、Cまでは基本不要**。
+- （以後: crow Lean vs Full(KD) / 混同・複合 / OOD / 登録 / gull 展開 … を追記）
