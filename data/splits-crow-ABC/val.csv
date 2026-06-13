@@ -1,0 +1,623 @@
+species,xc_id,chunk_index,file_path,duration_sec,source_file
+Large-billed_Crow,XC1016632-large-billed-crow-ueno-park-tokyo-250624_1227,0,data/processed/Large-billed_Crow/XC1016632-large-billed-crow-ueno-park-tokyo-250624_1227_chunk000.wav,3.0,XC1016632-large-billed-crow-ueno-park-tokyo-250624_1227.mp3
+Large-billed_Crow,XC1016632-large-billed-crow-ueno-park-tokyo-250624_1227,1,data/processed/Large-billed_Crow/XC1016632-large-billed-crow-ueno-park-tokyo-250624_1227_chunk001.wav,3.0,XC1016632-large-billed-crow-ueno-park-tokyo-250624_1227.mp3
+Large-billed_Crow,XC1016632-large-billed-crow-ueno-park-tokyo-250624_1227,2,data/processed/Large-billed_Crow/XC1016632-large-billed-crow-ueno-park-tokyo-250624_1227_chunk002.wav,3.0,XC1016632-large-billed-crow-ueno-park-tokyo-250624_1227.mp3
+Large-billed_Crow,XC1016633-large-billed-crow-ueno-park-tokyo-250624_1228,0,data/processed/Large-billed_Crow/XC1016633-large-billed-crow-ueno-park-tokyo-250624_1228_chunk000.wav,3.0,XC1016633-large-billed-crow-ueno-park-tokyo-250624_1228.mp3
+Large-billed_Crow,XC1016633-large-billed-crow-ueno-park-tokyo-250624_1228,1,data/processed/Large-billed_Crow/XC1016633-large-billed-crow-ueno-park-tokyo-250624_1228_chunk001.wav,3.0,XC1016633-large-billed-crow-ueno-park-tokyo-250624_1228.mp3
+Large-billed_Crow,XC1016633-large-billed-crow-ueno-park-tokyo-250624_1228,2,data/processed/Large-billed_Crow/XC1016633-large-billed-crow-ueno-park-tokyo-250624_1228_chunk002.wav,3.0,XC1016633-large-billed-crow-ueno-park-tokyo-250624_1228.mp3
+Large-billed_Crow,XC1016633-large-billed-crow-ueno-park-tokyo-250624_1228,3,data/processed/Large-billed_Crow/XC1016633-large-billed-crow-ueno-park-tokyo-250624_1228_chunk003.wav,3.0,XC1016633-large-billed-crow-ueno-park-tokyo-250624_1228.mp3
+Large-billed_Crow,XC1016633-large-billed-crow-ueno-park-tokyo-250624_1228,4,data/processed/Large-billed_Crow/XC1016633-large-billed-crow-ueno-park-tokyo-250624_1228_chunk004.wav,3.0,XC1016633-large-billed-crow-ueno-park-tokyo-250624_1228.mp3
+Large-billed_Crow,XC1016633-large-billed-crow-ueno-park-tokyo-250624_1228,5,data/processed/Large-billed_Crow/XC1016633-large-billed-crow-ueno-park-tokyo-250624_1228_chunk005.wav,3.0,XC1016633-large-billed-crow-ueno-park-tokyo-250624_1228.mp3
+Large-billed_Crow,XC1016633-large-billed-crow-ueno-park-tokyo-250624_1228,6,data/processed/Large-billed_Crow/XC1016633-large-billed-crow-ueno-park-tokyo-250624_1228_chunk006.wav,3.0,XC1016633-large-billed-crow-ueno-park-tokyo-250624_1228.mp3
+Large-billed_Crow,XC1016633-large-billed-crow-ueno-park-tokyo-250624_1228,7,data/processed/Large-billed_Crow/XC1016633-large-billed-crow-ueno-park-tokyo-250624_1228_chunk007.wav,3.0,XC1016633-large-billed-crow-ueno-park-tokyo-250624_1228.mp3
+Large-billed_Crow,XC1016633-large-billed-crow-ueno-park-tokyo-250624_1228,8,data/processed/Large-billed_Crow/XC1016633-large-billed-crow-ueno-park-tokyo-250624_1228_chunk008.wav,3.0,XC1016633-large-billed-crow-ueno-park-tokyo-250624_1228.mp3
+Large-billed_Crow,XC1016633-large-billed-crow-ueno-park-tokyo-250624_1228,9,data/processed/Large-billed_Crow/XC1016633-large-billed-crow-ueno-park-tokyo-250624_1228_chunk009.wav,3.0,XC1016633-large-billed-crow-ueno-park-tokyo-250624_1228.mp3
+Large-billed_Crow,XC1016633-large-billed-crow-ueno-park-tokyo-250624_1228,10,data/processed/Large-billed_Crow/XC1016633-large-billed-crow-ueno-park-tokyo-250624_1228_chunk010.wav,3.0,XC1016633-large-billed-crow-ueno-park-tokyo-250624_1228.mp3
+Large-billed_Crow,XC1016633-large-billed-crow-ueno-park-tokyo-250624_1228,11,data/processed/Large-billed_Crow/XC1016633-large-billed-crow-ueno-park-tokyo-250624_1228_chunk011.wav,3.0,XC1016633-large-billed-crow-ueno-park-tokyo-250624_1228.mp3
+Large-billed_Crow,XC1016633-large-billed-crow-ueno-park-tokyo-250624_1228,12,data/processed/Large-billed_Crow/XC1016633-large-billed-crow-ueno-park-tokyo-250624_1228_chunk012.wav,3.0,XC1016633-large-billed-crow-ueno-park-tokyo-250624_1228.mp3
+Large-billed_Crow,XC1016633-large-billed-crow-ueno-park-tokyo-250624_1228,13,data/processed/Large-billed_Crow/XC1016633-large-billed-crow-ueno-park-tokyo-250624_1228_chunk013.wav,3.0,XC1016633-large-billed-crow-ueno-park-tokyo-250624_1228.mp3
+Large-billed_Crow,XC1016633-large-billed-crow-ueno-park-tokyo-250624_1228,14,data/processed/Large-billed_Crow/XC1016633-large-billed-crow-ueno-park-tokyo-250624_1228_chunk014.wav,3.0,XC1016633-large-billed-crow-ueno-park-tokyo-250624_1228.mp3
+Large-billed_Crow,XC1016633-large-billed-crow-ueno-park-tokyo-250624_1228,15,data/processed/Large-billed_Crow/XC1016633-large-billed-crow-ueno-park-tokyo-250624_1228_chunk015.wav,3.0,XC1016633-large-billed-crow-ueno-park-tokyo-250624_1228.mp3
+Large-billed_Crow,XC1016633-large-billed-crow-ueno-park-tokyo-250624_1228,16,data/processed/Large-billed_Crow/XC1016633-large-billed-crow-ueno-park-tokyo-250624_1228_chunk016.wav,3.0,XC1016633-large-billed-crow-ueno-park-tokyo-250624_1228.mp3
+Large-billed_Crow,XC1016633-large-billed-crow-ueno-park-tokyo-250624_1228,17,data/processed/Large-billed_Crow/XC1016633-large-billed-crow-ueno-park-tokyo-250624_1228_chunk017.wav,3.0,XC1016633-large-billed-crow-ueno-park-tokyo-250624_1228.mp3
+Large-billed_Crow,XC1016633-large-billed-crow-ueno-park-tokyo-250624_1228,18,data/processed/Large-billed_Crow/XC1016633-large-billed-crow-ueno-park-tokyo-250624_1228_chunk018.wav,3.0,XC1016633-large-billed-crow-ueno-park-tokyo-250624_1228.mp3
+Large-billed_Crow,XC1016633-large-billed-crow-ueno-park-tokyo-250624_1228,19,data/processed/Large-billed_Crow/XC1016633-large-billed-crow-ueno-park-tokyo-250624_1228_chunk019.wav,3.0,XC1016633-large-billed-crow-ueno-park-tokyo-250624_1228.mp3
+Large-billed_Crow,XC1016633-large-billed-crow-ueno-park-tokyo-250624_1228,20,data/processed/Large-billed_Crow/XC1016633-large-billed-crow-ueno-park-tokyo-250624_1228_chunk020.wav,3.0,XC1016633-large-billed-crow-ueno-park-tokyo-250624_1228.mp3
+Large-billed_Crow,XC1016633-large-billed-crow-ueno-park-tokyo-250624_1228,21,data/processed/Large-billed_Crow/XC1016633-large-billed-crow-ueno-park-tokyo-250624_1228_chunk021.wav,3.0,XC1016633-large-billed-crow-ueno-park-tokyo-250624_1228.mp3
+Large-billed_Crow,"XC116709-Crow,",0,"data/processed/Large-billed_Crow/XC116709-Crow,_chunk000.wav",3.0,"XC116709-Crow, Large-billed_1.mp3"
+Large-billed_Crow,"XC116709-Crow,",1,"data/processed/Large-billed_Crow/XC116709-Crow,_chunk001.wav",3.0,"XC116709-Crow, Large-billed_1.mp3"
+Large-billed_Crow,"XC116709-Crow,",2,"data/processed/Large-billed_Crow/XC116709-Crow,_chunk002.wav",3.0,"XC116709-Crow, Large-billed_1.mp3"
+Large-billed_Crow,"XC116709-Crow,",3,"data/processed/Large-billed_Crow/XC116709-Crow,_chunk003.wav",3.0,"XC116709-Crow, Large-billed_1.mp3"
+Large-billed_Crow,"XC116709-Crow,",4,"data/processed/Large-billed_Crow/XC116709-Crow,_chunk004.wav",3.0,"XC116709-Crow, Large-billed_1.mp3"
+Large-billed_Crow,"XC116709-Crow,",5,"data/processed/Large-billed_Crow/XC116709-Crow,_chunk005.wav",3.0,"XC116709-Crow, Large-billed_1.mp3"
+Large-billed_Crow,"XC116709-Crow,",6,"data/processed/Large-billed_Crow/XC116709-Crow,_chunk006.wav",3.0,"XC116709-Crow, Large-billed_1.mp3"
+Large-billed_Crow,"XC116709-Crow,",7,"data/processed/Large-billed_Crow/XC116709-Crow,_chunk007.wav",3.0,"XC116709-Crow, Large-billed_1.mp3"
+Large-billed_Crow,"XC116709-Crow,",8,"data/processed/Large-billed_Crow/XC116709-Crow,_chunk008.wav",3.0,"XC116709-Crow, Large-billed_1.mp3"
+Large-billed_Crow,"XC116709-Crow,",9,"data/processed/Large-billed_Crow/XC116709-Crow,_chunk009.wav",3.0,"XC116709-Crow, Large-billed_1.mp3"
+Large-billed_Crow,"XC116709-Crow,",10,"data/processed/Large-billed_Crow/XC116709-Crow,_chunk010.wav",3.0,"XC116709-Crow, Large-billed_1.mp3"
+Large-billed_Crow,"XC116709-Crow,",11,"data/processed/Large-billed_Crow/XC116709-Crow,_chunk011.wav",3.0,"XC116709-Crow, Large-billed_1.mp3"
+Large-billed_Crow,"XC116709-Crow,",12,"data/processed/Large-billed_Crow/XC116709-Crow,_chunk012.wav",3.0,"XC116709-Crow, Large-billed_1.mp3"
+Large-billed_Crow,"XC116709-Crow,",13,"data/processed/Large-billed_Crow/XC116709-Crow,_chunk013.wav",3.0,"XC116709-Crow, Large-billed_1.mp3"
+Large-billed_Crow,"XC116709-Crow,",14,"data/processed/Large-billed_Crow/XC116709-Crow,_chunk014.wav",3.0,"XC116709-Crow, Large-billed_1.mp3"
+Large-billed_Crow,"XC116709-Crow,",15,"data/processed/Large-billed_Crow/XC116709-Crow,_chunk015.wav",3.0,"XC116709-Crow, Large-billed_1.mp3"
+Large-billed_Crow,"XC116709-Crow,",16,"data/processed/Large-billed_Crow/XC116709-Crow,_chunk016.wav",3.0,"XC116709-Crow, Large-billed_1.mp3"
+Large-billed_Crow,"XC116709-Crow,",17,"data/processed/Large-billed_Crow/XC116709-Crow,_chunk017.wav",3.0,"XC116709-Crow, Large-billed_1.mp3"
+Large-billed_Crow,"XC116709-Crow,",18,"data/processed/Large-billed_Crow/XC116709-Crow,_chunk018.wav",3.0,"XC116709-Crow, Large-billed_1.mp3"
+Large-billed_Crow,"XC116709-Crow,",19,"data/processed/Large-billed_Crow/XC116709-Crow,_chunk019.wav",3.0,"XC116709-Crow, Large-billed_1.mp3"
+Large-billed_Crow,"XC116709-Crow,",20,"data/processed/Large-billed_Crow/XC116709-Crow,_chunk020.wav",3.0,"XC116709-Crow, Large-billed_1.mp3"
+Large-billed_Crow,"XC116709-Crow,",21,"data/processed/Large-billed_Crow/XC116709-Crow,_chunk021.wav",3.0,"XC116709-Crow, Large-billed_1.mp3"
+Large-billed_Crow,"XC116709-Crow,",22,"data/processed/Large-billed_Crow/XC116709-Crow,_chunk022.wav",3.0,"XC116709-Crow, Large-billed_1.mp3"
+Large-billed_Crow,"XC116709-Crow,",23,"data/processed/Large-billed_Crow/XC116709-Crow,_chunk023.wav",3.0,"XC116709-Crow, Large-billed_1.mp3"
+Large-billed_Crow,"XC116709-Crow,",24,"data/processed/Large-billed_Crow/XC116709-Crow,_chunk024.wav",3.0,"XC116709-Crow, Large-billed_1.mp3"
+Large-billed_Crow,XC155859-Corvus_macrorhynchos-FL,0,data/processed/Large-billed_Crow/XC155859-Corvus_macrorhynchos-FL_chunk000.wav,3.0,"XC155859-Corvus_macrorhynchos-FL flight  lake,Miyakejima 18Jun13 12.05pm LS115508.mp3"
+Large-billed_Crow,XC155859-Corvus_macrorhynchos-FL,1,data/processed/Large-billed_Crow/XC155859-Corvus_macrorhynchos-FL_chunk001.wav,3.0,"XC155859-Corvus_macrorhynchos-FL flight  lake,Miyakejima 18Jun13 12.05pm LS115508.mp3"
+Large-billed_Crow,XC155859-Corvus_macrorhynchos-FL,2,data/processed/Large-billed_Crow/XC155859-Corvus_macrorhynchos-FL_chunk002.wav,3.0,"XC155859-Corvus_macrorhynchos-FL flight  lake,Miyakejima 18Jun13 12.05pm LS115508.mp3"
+Large-billed_Crow,XC156027-Corvus_macrorhynchos_connectens-FL,0,data/processed/Large-billed_Crow/XC156027-Corvus_macrorhynchos_connectens-FL_chunk000.wav,3.0,XC156027-Corvus_macrorhynchos_connectens-FL calls Amami 16June13 6.46am LS115396.mp3
+Large-billed_Crow,XC156027-Corvus_macrorhynchos_connectens-FL,1,data/processed/Large-billed_Crow/XC156027-Corvus_macrorhynchos_connectens-FL_chunk001.wav,3.0,XC156027-Corvus_macrorhynchos_connectens-FL calls Amami 16June13 6.46am LS115396.mp3
+Large-billed_Crow,XC156027-Corvus_macrorhynchos_connectens-FL,2,data/processed/Large-billed_Crow/XC156027-Corvus_macrorhynchos_connectens-FL_chunk002.wav,3.0,XC156027-Corvus_macrorhynchos_connectens-FL calls Amami 16June13 6.46am LS115396.mp3
+Large-billed_Crow,XC156027-Corvus_macrorhynchos_connectens-FL,3,data/processed/Large-billed_Crow/XC156027-Corvus_macrorhynchos_connectens-FL_chunk003.wav,3.0,XC156027-Corvus_macrorhynchos_connectens-FL calls Amami 16June13 6.46am LS115396.mp3
+Large-billed_Crow,XC156027-Corvus_macrorhynchos_connectens-FL,4,data/processed/Large-billed_Crow/XC156027-Corvus_macrorhynchos_connectens-FL_chunk004.wav,3.0,XC156027-Corvus_macrorhynchos_connectens-FL calls Amami 16June13 6.46am LS115396.mp3
+Large-billed_Crow,XC156027-Corvus_macrorhynchos_connectens-FL,5,data/processed/Large-billed_Crow/XC156027-Corvus_macrorhynchos_connectens-FL_chunk005.wav,3.0,XC156027-Corvus_macrorhynchos_connectens-FL calls Amami 16June13 6.46am LS115396.mp3
+Large-billed_Crow,XC156027-Corvus_macrorhynchos_connectens-FL,6,data/processed/Large-billed_Crow/XC156027-Corvus_macrorhynchos_connectens-FL_chunk006.wav,3.0,XC156027-Corvus_macrorhynchos_connectens-FL calls Amami 16June13 6.46am LS115396.mp3
+Large-billed_Crow,XC156027-Corvus_macrorhynchos_connectens-FL,7,data/processed/Large-billed_Crow/XC156027-Corvus_macrorhynchos_connectens-FL_chunk007.wav,3.0,XC156027-Corvus_macrorhynchos_connectens-FL calls Amami 16June13 6.46am LS115396.mp3
+Large-billed_Crow,XC156027-Corvus_macrorhynchos_connectens-FL,8,data/processed/Large-billed_Crow/XC156027-Corvus_macrorhynchos_connectens-FL_chunk008.wav,3.0,XC156027-Corvus_macrorhynchos_connectens-FL calls Amami 16June13 6.46am LS115396.mp3
+Large-billed_Crow,XC156027-Corvus_macrorhynchos_connectens-FL,9,data/processed/Large-billed_Crow/XC156027-Corvus_macrorhynchos_connectens-FL_chunk009.wav,3.0,XC156027-Corvus_macrorhynchos_connectens-FL calls Amami 16June13 6.46am LS115396.mp3
+Large-billed_Crow,XC156027-Corvus_macrorhynchos_connectens-FL,10,data/processed/Large-billed_Crow/XC156027-Corvus_macrorhynchos_connectens-FL_chunk010.wav,3.0,XC156027-Corvus_macrorhynchos_connectens-FL calls Amami 16June13 6.46am LS115396.mp3
+Large-billed_Crow,XC212125-northern-raven-1,0,data/processed/Large-billed_Crow/XC212125-northern-raven-1_chunk000.wav,3.0,XC212125-northern-raven-1.mp3
+Large-billed_Crow,XC212125-northern-raven-1,1,data/processed/Large-billed_Crow/XC212125-northern-raven-1_chunk001.wav,3.0,XC212125-northern-raven-1.mp3
+Large-billed_Crow,XC212125-northern-raven-1,2,data/processed/Large-billed_Crow/XC212125-northern-raven-1_chunk002.wav,3.0,XC212125-northern-raven-1.mp3
+Large-billed_Crow,XC212125-northern-raven-1,3,data/processed/Large-billed_Crow/XC212125-northern-raven-1_chunk003.wav,3.0,XC212125-northern-raven-1.mp3
+Large-billed_Crow,XC212125-northern-raven-1,4,data/processed/Large-billed_Crow/XC212125-northern-raven-1_chunk004.wav,3.0,XC212125-northern-raven-1.mp3
+Large-billed_Crow,XC265731-Corvus,0,data/processed/Large-billed_Crow/XC265731-Corvus_chunk000.wav,3.0,"XC265731-Corvus macror 150528_005,AAAA+.MP3"
+Large-billed_Crow,XC265731-Corvus,1,data/processed/Large-billed_Crow/XC265731-Corvus_chunk001.wav,3.0,"XC265731-Corvus macror 150528_005,AAAA+.MP3"
+Large-billed_Crow,XC265731-Corvus,2,data/processed/Large-billed_Crow/XC265731-Corvus_chunk002.wav,3.0,"XC265731-Corvus macror 150528_005,AAAA+.MP3"
+Large-billed_Crow,XC265731-Corvus,3,data/processed/Large-billed_Crow/XC265731-Corvus_chunk003.wav,3.0,"XC265731-Corvus macror 150528_005,AAAA+.MP3"
+Large-billed_Crow,XC267643-Corvus,0,data/processed/Large-billed_Crow/XC267643-Corvus_chunk000.wav,3.0,"XC267643-Corvus macror 150517_029,AAAA.MP3"
+Large-billed_Crow,XC267643-Corvus,1,data/processed/Large-billed_Crow/XC267643-Corvus_chunk001.wav,3.0,"XC267643-Corvus macror 150517_029,AAAA.MP3"
+Large-billed_Crow,XC267643-Corvus,2,data/processed/Large-billed_Crow/XC267643-Corvus_chunk002.wav,3.0,"XC267643-Corvus macror 150517_029,AAAA.MP3"
+Large-billed_Crow,XC267643-Corvus,3,data/processed/Large-billed_Crow/XC267643-Corvus_chunk003.wav,3.0,"XC267643-Corvus macror 150517_029,AAAA.MP3"
+Large-billed_Crow,XC285911-LS_58444,0,data/processed/Large-billed_Crow/XC285911-LS_58444_chunk000.wav,3.0,XC285911-LS_58444 Large-billed Crow soft call.mp3
+Large-billed_Crow,XC285911-LS_58444,1,data/processed/Large-billed_Crow/XC285911-LS_58444_chunk001.wav,3.0,XC285911-LS_58444 Large-billed Crow soft call.mp3
+Large-billed_Crow,XC285911-LS_58444,2,data/processed/Large-billed_Crow/XC285911-LS_58444_chunk002.wav,3.0,XC285911-LS_58444 Large-billed Crow soft call.mp3
+Large-billed_Crow,XC285911-LS_58444,3,data/processed/Large-billed_Crow/XC285911-LS_58444_chunk003.wav,3.0,XC285911-LS_58444 Large-billed Crow soft call.mp3
+Large-billed_Crow,XC285911-LS_58444,4,data/processed/Large-billed_Crow/XC285911-LS_58444_chunk004.wav,3.0,XC285911-LS_58444 Large-billed Crow soft call.mp3
+Large-billed_Crow,XC285911-LS_58444,5,data/processed/Large-billed_Crow/XC285911-LS_58444_chunk005.wav,3.0,XC285911-LS_58444 Large-billed Crow soft call.mp3
+Large-billed_Crow,XC285911-LS_58444,6,data/processed/Large-billed_Crow/XC285911-LS_58444_chunk006.wav,3.0,XC285911-LS_58444 Large-billed Crow soft call.mp3
+Large-billed_Crow,XC285911-LS_58444,7,data/processed/Large-billed_Crow/XC285911-LS_58444_chunk007.wav,3.0,XC285911-LS_58444 Large-billed Crow soft call.mp3
+Large-billed_Crow,XC285911-LS_58444,8,data/processed/Large-billed_Crow/XC285911-LS_58444_chunk008.wav,3.0,XC285911-LS_58444 Large-billed Crow soft call.mp3
+Large-billed_Crow,XC285911-LS_58444,9,data/processed/Large-billed_Crow/XC285911-LS_58444_chunk009.wav,3.0,XC285911-LS_58444 Large-billed Crow soft call.mp3
+Large-billed_Crow,XC285911-LS_58444,10,data/processed/Large-billed_Crow/XC285911-LS_58444_chunk010.wav,3.0,XC285911-LS_58444 Large-billed Crow soft call.mp3
+Large-billed_Crow,XC285911-LS_58444,11,data/processed/Large-billed_Crow/XC285911-LS_58444_chunk011.wav,3.0,XC285911-LS_58444 Large-billed Crow soft call.mp3
+Large-billed_Crow,XC285911-LS_58444,12,data/processed/Large-billed_Crow/XC285911-LS_58444_chunk012.wav,3.0,XC285911-LS_58444 Large-billed Crow soft call.mp3
+Large-billed_Crow,XC285911-LS_58444,13,data/processed/Large-billed_Crow/XC285911-LS_58444_chunk013.wav,3.0,XC285911-LS_58444 Large-billed Crow soft call.mp3
+Large-billed_Crow,XC285911-LS_58444,14,data/processed/Large-billed_Crow/XC285911-LS_58444_chunk014.wav,3.0,XC285911-LS_58444 Large-billed Crow soft call.mp3
+Large-billed_Crow,XC285911-LS_58444,15,data/processed/Large-billed_Crow/XC285911-LS_58444_chunk015.wav,3.0,XC285911-LS_58444 Large-billed Crow soft call.mp3
+Large-billed_Crow,XC285911-LS_58444,16,data/processed/Large-billed_Crow/XC285911-LS_58444_chunk016.wav,3.0,XC285911-LS_58444 Large-billed Crow soft call.mp3
+Large-billed_Crow,XC285911-LS_58444,17,data/processed/Large-billed_Crow/XC285911-LS_58444_chunk017.wav,3.0,XC285911-LS_58444 Large-billed Crow soft call.mp3
+Large-billed_Crow,XC285911-LS_58444,18,data/processed/Large-billed_Crow/XC285911-LS_58444_chunk018.wav,3.0,XC285911-LS_58444 Large-billed Crow soft call.mp3
+Large-billed_Crow,XC285911-LS_58444,19,data/processed/Large-billed_Crow/XC285911-LS_58444_chunk019.wav,3.0,XC285911-LS_58444 Large-billed Crow soft call.mp3
+Large-billed_Crow,XC285911-LS_58444,20,data/processed/Large-billed_Crow/XC285911-LS_58444_chunk020.wav,3.0,XC285911-LS_58444 Large-billed Crow soft call.mp3
+Large-billed_Crow,XC285911-LS_58444,21,data/processed/Large-billed_Crow/XC285911-LS_58444_chunk021.wav,3.0,XC285911-LS_58444 Large-billed Crow soft call.mp3
+Large-billed_Crow,XC285911-LS_58444,22,data/processed/Large-billed_Crow/XC285911-LS_58444_chunk022.wav,3.0,XC285911-LS_58444 Large-billed Crow soft call.mp3
+Large-billed_Crow,XC285911-LS_58444,23,data/processed/Large-billed_Crow/XC285911-LS_58444_chunk023.wav,3.0,XC285911-LS_58444 Large-billed Crow soft call.mp3
+Large-billed_Crow,XC285911-LS_58444,24,data/processed/Large-billed_Crow/XC285911-LS_58444_chunk024.wav,3.0,XC285911-LS_58444 Large-billed Crow soft call.mp3
+Large-billed_Crow,XC285911-LS_58444,25,data/processed/Large-billed_Crow/XC285911-LS_58444_chunk025.wav,3.0,XC285911-LS_58444 Large-billed Crow soft call.mp3
+Large-billed_Crow,XC285911-LS_58444,26,data/processed/Large-billed_Crow/XC285911-LS_58444_chunk026.wav,3.0,XC285911-LS_58444 Large-billed Crow soft call.mp3
+Large-billed_Crow,XC285911-LS_58444,27,data/processed/Large-billed_Crow/XC285911-LS_58444_chunk027.wav,3.0,XC285911-LS_58444 Large-billed Crow soft call.mp3
+Large-billed_Crow,XC285911-LS_58444,28,data/processed/Large-billed_Crow/XC285911-LS_58444_chunk028.wav,3.0,XC285911-LS_58444 Large-billed Crow soft call.mp3
+Large-billed_Crow,XC285911-LS_58444,29,data/processed/Large-billed_Crow/XC285911-LS_58444_chunk029.wav,3.0,XC285911-LS_58444 Large-billed Crow soft call.mp3
+Large-billed_Crow,XC285911-LS_58444,30,data/processed/Large-billed_Crow/XC285911-LS_58444_chunk030.wav,3.0,XC285911-LS_58444 Large-billed Crow soft call.mp3
+Large-billed_Crow,XC285911-LS_58444,31,data/processed/Large-billed_Crow/XC285911-LS_58444_chunk031.wav,3.0,XC285911-LS_58444 Large-billed Crow soft call.mp3
+Large-billed_Crow,XC285911-LS_58444,32,data/processed/Large-billed_Crow/XC285911-LS_58444_chunk032.wav,3.0,XC285911-LS_58444 Large-billed Crow soft call.mp3
+Large-billed_Crow,XC285911-LS_58444,33,data/processed/Large-billed_Crow/XC285911-LS_58444_chunk033.wav,3.0,XC285911-LS_58444 Large-billed Crow soft call.mp3
+Large-billed_Crow,XC285911-LS_58444,34,data/processed/Large-billed_Crow/XC285911-LS_58444_chunk034.wav,3.0,XC285911-LS_58444 Large-billed Crow soft call.mp3
+Large-billed_Crow,XC285911-LS_58444,35,data/processed/Large-billed_Crow/XC285911-LS_58444_chunk035.wav,3.0,XC285911-LS_58444 Large-billed Crow soft call.mp3
+Large-billed_Crow,XC285911-LS_58444,36,data/processed/Large-billed_Crow/XC285911-LS_58444_chunk036.wav,3.0,XC285911-LS_58444 Large-billed Crow soft call.mp3
+Large-billed_Crow,XC285911-LS_58444,37,data/processed/Large-billed_Crow/XC285911-LS_58444_chunk037.wav,3.0,XC285911-LS_58444 Large-billed Crow soft call.mp3
+Large-billed_Crow,XC285911-LS_58444,38,data/processed/Large-billed_Crow/XC285911-LS_58444_chunk038.wav,3.0,XC285911-LS_58444 Large-billed Crow soft call.mp3
+Large-billed_Crow,XC285911-LS_58444,39,data/processed/Large-billed_Crow/XC285911-LS_58444_chunk039.wav,3.0,XC285911-LS_58444 Large-billed Crow soft call.mp3
+Large-billed_Crow,XC285911-LS_58444,40,data/processed/Large-billed_Crow/XC285911-LS_58444_chunk040.wav,3.0,XC285911-LS_58444 Large-billed Crow soft call.mp3
+Large-billed_Crow,XC285913-LS_58446,0,data/processed/Large-billed_Crow/XC285913-LS_58446_chunk000.wav,3.0,XC285913-LS_58446 Large-billed Crow call A.mp3
+Large-billed_Crow,XC285913-LS_58446,1,data/processed/Large-billed_Crow/XC285913-LS_58446_chunk001.wav,3.0,XC285913-LS_58446 Large-billed Crow call A.mp3
+Large-billed_Crow,XC285913-LS_58446,2,data/processed/Large-billed_Crow/XC285913-LS_58446_chunk002.wav,3.0,XC285913-LS_58446 Large-billed Crow call A.mp3
+Rook,XC114504-Corvus_frugilegus_pastinator-FL,0,data/processed/Rook/XC114504-Corvus_frugilegus_pastinator-FL_chunk000.wav,3.0,"XC114504-Corvus_frugilegus_pastinator-FL calls  nr Tumuji town, Inner Mongolia, 9Jul12 LS112003.mp3"
+Rook,XC114504-Corvus_frugilegus_pastinator-FL,1,data/processed/Rook/XC114504-Corvus_frugilegus_pastinator-FL_chunk001.wav,3.0,"XC114504-Corvus_frugilegus_pastinator-FL calls  nr Tumuji town, Inner Mongolia, 9Jul12 LS112003.mp3"
+Rook,XC114504-Corvus_frugilegus_pastinator-FL,2,data/processed/Rook/XC114504-Corvus_frugilegus_pastinator-FL_chunk002.wav,3.0,"XC114504-Corvus_frugilegus_pastinator-FL calls  nr Tumuji town, Inner Mongolia, 9Jul12 LS112003.mp3"
+Rook,XC114504-Corvus_frugilegus_pastinator-FL,3,data/processed/Rook/XC114504-Corvus_frugilegus_pastinator-FL_chunk003.wav,3.0,"XC114504-Corvus_frugilegus_pastinator-FL calls  nr Tumuji town, Inner Mongolia, 9Jul12 LS112003.mp3"
+Rook,XC114504-Corvus_frugilegus_pastinator-FL,4,data/processed/Rook/XC114504-Corvus_frugilegus_pastinator-FL_chunk004.wav,3.0,"XC114504-Corvus_frugilegus_pastinator-FL calls  nr Tumuji town, Inner Mongolia, 9Jul12 LS112003.mp3"
+Rook,XC133929-RookSC2,0,data/processed/Rook/XC133929-RookSC2_chunk000.wav,3.0,XC133929-RookSC2.mp3
+Rook,XC133929-RookSC2,1,data/processed/Rook/XC133929-RookSC2_chunk001.wav,3.0,XC133929-RookSC2.mp3
+Rook,XC133929-RookSC2,2,data/processed/Rook/XC133929-RookSC2_chunk002.wav,3.0,XC133929-RookSC2.mp3
+Rook,XC133929-RookSC2,3,data/processed/Rook/XC133929-RookSC2_chunk003.wav,3.0,XC133929-RookSC2.mp3
+Rook,XC133929-RookSC2,4,data/processed/Rook/XC133929-RookSC2_chunk004.wav,3.0,XC133929-RookSC2.mp3
+Rook,XC133929-RookSC2,5,data/processed/Rook/XC133929-RookSC2_chunk005.wav,3.0,XC133929-RookSC2.mp3
+Rook,XC133929-RookSC2,6,data/processed/Rook/XC133929-RookSC2_chunk006.wav,3.0,XC133929-RookSC2.mp3
+Rook,XC133929-RookSC2,7,data/processed/Rook/XC133929-RookSC2_chunk007.wav,3.0,XC133929-RookSC2.mp3
+Rook,XC133929-RookSC2,8,data/processed/Rook/XC133929-RookSC2_chunk008.wav,3.0,XC133929-RookSC2.mp3
+Rook,XC133929-RookSC2,9,data/processed/Rook/XC133929-RookSC2_chunk009.wav,3.0,XC133929-RookSC2.mp3
+Rook,XC133929-RookSC2,10,data/processed/Rook/XC133929-RookSC2_chunk010.wav,3.0,XC133929-RookSC2.mp3
+Rook,XC133929-RookSC2,11,data/processed/Rook/XC133929-RookSC2_chunk011.wav,3.0,XC133929-RookSC2.mp3
+Rook,XC133929-RookSC2,12,data/processed/Rook/XC133929-RookSC2_chunk012.wav,3.0,XC133929-RookSC2.mp3
+Rook,XC134058-SaatkraehHortobagye8-5-13_18-40,0,data/processed/Rook/XC134058-SaatkraehHortobagye8-5-13_18-40_chunk000.wav,3.0,XC134058-SaatkraehHortobagye8-5-13_18-40.mp3
+Rook,XC134058-SaatkraehHortobagye8-5-13_18-40,1,data/processed/Rook/XC134058-SaatkraehHortobagye8-5-13_18-40_chunk001.wav,3.0,XC134058-SaatkraehHortobagye8-5-13_18-40.mp3
+Rook,XC134058-SaatkraehHortobagye8-5-13_18-40,2,data/processed/Rook/XC134058-SaatkraehHortobagye8-5-13_18-40_chunk002.wav,3.0,XC134058-SaatkraehHortobagye8-5-13_18-40.mp3
+Rook,XC134058-SaatkraehHortobagye8-5-13_18-40,3,data/processed/Rook/XC134058-SaatkraehHortobagye8-5-13_18-40_chunk003.wav,3.0,XC134058-SaatkraehHortobagye8-5-13_18-40.mp3
+Rook,XC134058-SaatkraehHortobagye8-5-13_18-40,4,data/processed/Rook/XC134058-SaatkraehHortobagye8-5-13_18-40_chunk004.wav,3.0,XC134058-SaatkraehHortobagye8-5-13_18-40.mp3
+Rook,XC134058-SaatkraehHortobagye8-5-13_18-40,5,data/processed/Rook/XC134058-SaatkraehHortobagye8-5-13_18-40_chunk005.wav,3.0,XC134058-SaatkraehHortobagye8-5-13_18-40.mp3
+Rook,XC134058-SaatkraehHortobagye8-5-13_18-40,6,data/processed/Rook/XC134058-SaatkraehHortobagye8-5-13_18-40_chunk006.wav,3.0,XC134058-SaatkraehHortobagye8-5-13_18-40.mp3
+Rook,XC134058-SaatkraehHortobagye8-5-13_18-40,7,data/processed/Rook/XC134058-SaatkraehHortobagye8-5-13_18-40_chunk007.wav,3.0,XC134058-SaatkraehHortobagye8-5-13_18-40.mp3
+Rook,XC134058-SaatkraehHortobagye8-5-13_18-40,8,data/processed/Rook/XC134058-SaatkraehHortobagye8-5-13_18-40_chunk008.wav,3.0,XC134058-SaatkraehHortobagye8-5-13_18-40.mp3
+Rook,XC134058-SaatkraehHortobagye8-5-13_18-40,9,data/processed/Rook/XC134058-SaatkraehHortobagye8-5-13_18-40_chunk009.wav,3.0,XC134058-SaatkraehHortobagye8-5-13_18-40.mp3
+Rook,XC134058-SaatkraehHortobagye8-5-13_18-40,10,data/processed/Rook/XC134058-SaatkraehHortobagye8-5-13_18-40_chunk010.wav,3.0,XC134058-SaatkraehHortobagye8-5-13_18-40.mp3
+Rook,XC134058-SaatkraehHortobagye8-5-13_18-40,11,data/processed/Rook/XC134058-SaatkraehHortobagye8-5-13_18-40_chunk011.wav,3.0,XC134058-SaatkraehHortobagye8-5-13_18-40.mp3
+Rook,XC134058-SaatkraehHortobagye8-5-13_18-40,12,data/processed/Rook/XC134058-SaatkraehHortobagye8-5-13_18-40_chunk012.wav,3.0,XC134058-SaatkraehHortobagye8-5-13_18-40.mp3
+Rook,XC134058-SaatkraehHortobagye8-5-13_18-40,13,data/processed/Rook/XC134058-SaatkraehHortobagye8-5-13_18-40_chunk013.wav,3.0,XC134058-SaatkraehHortobagye8-5-13_18-40.mp3
+Rook,XC134058-SaatkraehHortobagye8-5-13_18-40,14,data/processed/Rook/XC134058-SaatkraehHortobagye8-5-13_18-40_chunk014.wav,3.0,XC134058-SaatkraehHortobagye8-5-13_18-40.mp3
+Rook,XC134058-SaatkraehHortobagye8-5-13_18-40,15,data/processed/Rook/XC134058-SaatkraehHortobagye8-5-13_18-40_chunk015.wav,3.0,XC134058-SaatkraehHortobagye8-5-13_18-40.mp3
+Rook,XC134058-SaatkraehHortobagye8-5-13_18-40,16,data/processed/Rook/XC134058-SaatkraehHortobagye8-5-13_18-40_chunk016.wav,3.0,XC134058-SaatkraehHortobagye8-5-13_18-40.mp3
+Rook,XC134058-SaatkraehHortobagye8-5-13_18-40,17,data/processed/Rook/XC134058-SaatkraehHortobagye8-5-13_18-40_chunk017.wav,3.0,XC134058-SaatkraehHortobagye8-5-13_18-40.mp3
+Rook,XC134058-SaatkraehHortobagye8-5-13_18-40,18,data/processed/Rook/XC134058-SaatkraehHortobagye8-5-13_18-40_chunk018.wav,3.0,XC134058-SaatkraehHortobagye8-5-13_18-40.mp3
+Rook,XC134058-SaatkraehHortobagye8-5-13_18-40,19,data/processed/Rook/XC134058-SaatkraehHortobagye8-5-13_18-40_chunk019.wav,3.0,XC134058-SaatkraehHortobagye8-5-13_18-40.mp3
+Rook,XC134058-SaatkraehHortobagye8-5-13_18-40,20,data/processed/Rook/XC134058-SaatkraehHortobagye8-5-13_18-40_chunk020.wav,3.0,XC134058-SaatkraehHortobagye8-5-13_18-40.mp3
+Rook,XC134058-SaatkraehHortobagye8-5-13_18-40,21,data/processed/Rook/XC134058-SaatkraehHortobagye8-5-13_18-40_chunk021.wav,3.0,XC134058-SaatkraehHortobagye8-5-13_18-40.mp3
+Rook,XC134058-SaatkraehHortobagye8-5-13_18-40,22,data/processed/Rook/XC134058-SaatkraehHortobagye8-5-13_18-40_chunk022.wav,3.0,XC134058-SaatkraehHortobagye8-5-13_18-40.mp3
+Rook,XC134058-SaatkraehHortobagye8-5-13_18-40,23,data/processed/Rook/XC134058-SaatkraehHortobagye8-5-13_18-40_chunk023.wav,3.0,XC134058-SaatkraehHortobagye8-5-13_18-40.mp3
+Rook,XC134058-SaatkraehHortobagye8-5-13_18-40,24,data/processed/Rook/XC134058-SaatkraehHortobagye8-5-13_18-40_chunk024.wav,3.0,XC134058-SaatkraehHortobagye8-5-13_18-40.mp3
+Rook,XC134058-SaatkraehHortobagye8-5-13_18-40,25,data/processed/Rook/XC134058-SaatkraehHortobagye8-5-13_18-40_chunk025.wav,3.0,XC134058-SaatkraehHortobagye8-5-13_18-40.mp3
+Rook,XC134058-SaatkraehHortobagye8-5-13_18-40,26,data/processed/Rook/XC134058-SaatkraehHortobagye8-5-13_18-40_chunk026.wav,3.0,XC134058-SaatkraehHortobagye8-5-13_18-40.mp3
+Rook,XC134058-SaatkraehHortobagye8-5-13_18-40,27,data/processed/Rook/XC134058-SaatkraehHortobagye8-5-13_18-40_chunk027.wav,3.0,XC134058-SaatkraehHortobagye8-5-13_18-40.mp3
+Rook,XC134058-SaatkraehHortobagye8-5-13_18-40,28,data/processed/Rook/XC134058-SaatkraehHortobagye8-5-13_18-40_chunk028.wav,3.0,XC134058-SaatkraehHortobagye8-5-13_18-40.mp3
+Rook,XC134058-SaatkraehHortobagye8-5-13_18-40,29,data/processed/Rook/XC134058-SaatkraehHortobagye8-5-13_18-40_chunk029.wav,3.0,XC134058-SaatkraehHortobagye8-5-13_18-40.mp3
+Rook,XC134058-SaatkraehHortobagye8-5-13_18-40,30,data/processed/Rook/XC134058-SaatkraehHortobagye8-5-13_18-40_chunk030.wav,3.0,XC134058-SaatkraehHortobagye8-5-13_18-40.mp3
+Rook,XC134058-SaatkraehHortobagye8-5-13_18-40,31,data/processed/Rook/XC134058-SaatkraehHortobagye8-5-13_18-40_chunk031.wav,3.0,XC134058-SaatkraehHortobagye8-5-13_18-40.mp3
+Rook,XC134058-SaatkraehHortobagye8-5-13_18-40,32,data/processed/Rook/XC134058-SaatkraehHortobagye8-5-13_18-40_chunk032.wav,3.0,XC134058-SaatkraehHortobagye8-5-13_18-40.mp3
+Rook,XC134058-SaatkraehHortobagye8-5-13_18-40,33,data/processed/Rook/XC134058-SaatkraehHortobagye8-5-13_18-40_chunk033.wav,3.0,XC134058-SaatkraehHortobagye8-5-13_18-40.mp3
+Rook,XC134058-SaatkraehHortobagye8-5-13_18-40,34,data/processed/Rook/XC134058-SaatkraehHortobagye8-5-13_18-40_chunk034.wav,3.0,XC134058-SaatkraehHortobagye8-5-13_18-40.mp3
+Rook,XC134058-SaatkraehHortobagye8-5-13_18-40,35,data/processed/Rook/XC134058-SaatkraehHortobagye8-5-13_18-40_chunk035.wav,3.0,XC134058-SaatkraehHortobagye8-5-13_18-40.mp3
+Rook,XC134058-SaatkraehHortobagye8-5-13_18-40,36,data/processed/Rook/XC134058-SaatkraehHortobagye8-5-13_18-40_chunk036.wav,3.0,XC134058-SaatkraehHortobagye8-5-13_18-40.mp3
+Rook,XC134058-SaatkraehHortobagye8-5-13_18-40,37,data/processed/Rook/XC134058-SaatkraehHortobagye8-5-13_18-40_chunk037.wav,3.0,XC134058-SaatkraehHortobagye8-5-13_18-40.mp3
+Rook,XC134058-SaatkraehHortobagye8-5-13_18-40,38,data/processed/Rook/XC134058-SaatkraehHortobagye8-5-13_18-40_chunk038.wav,3.0,XC134058-SaatkraehHortobagye8-5-13_18-40.mp3
+Rook,XC134058-SaatkraehHortobagye8-5-13_18-40,39,data/processed/Rook/XC134058-SaatkraehHortobagye8-5-13_18-40_chunk039.wav,3.0,XC134058-SaatkraehHortobagye8-5-13_18-40.mp3
+Rook,XC134058-SaatkraehHortobagye8-5-13_18-40,40,data/processed/Rook/XC134058-SaatkraehHortobagye8-5-13_18-40_chunk040.wav,3.0,XC134058-SaatkraehHortobagye8-5-13_18-40.mp3
+Rook,XC134058-SaatkraehHortobagye8-5-13_18-40,41,data/processed/Rook/XC134058-SaatkraehHortobagye8-5-13_18-40_chunk041.wav,3.0,XC134058-SaatkraehHortobagye8-5-13_18-40.mp3
+Rook,XC134058-SaatkraehHortobagye8-5-13_18-40,42,data/processed/Rook/XC134058-SaatkraehHortobagye8-5-13_18-40_chunk042.wav,3.0,XC134058-SaatkraehHortobagye8-5-13_18-40.mp3
+Rook,XC134058-SaatkraehHortobagye8-5-13_18-40,43,data/processed/Rook/XC134058-SaatkraehHortobagye8-5-13_18-40_chunk043.wav,3.0,XC134058-SaatkraehHortobagye8-5-13_18-40.mp3
+Rook,XC134058-SaatkraehHortobagye8-5-13_18-40,44,data/processed/Rook/XC134058-SaatkraehHortobagye8-5-13_18-40_chunk044.wav,3.0,XC134058-SaatkraehHortobagye8-5-13_18-40.mp3
+Rook,XC134058-SaatkraehHortobagye8-5-13_18-40,45,data/processed/Rook/XC134058-SaatkraehHortobagye8-5-13_18-40_chunk045.wav,3.0,XC134058-SaatkraehHortobagye8-5-13_18-40.mp3
+Rook,XC134058-SaatkraehHortobagye8-5-13_18-40,46,data/processed/Rook/XC134058-SaatkraehHortobagye8-5-13_18-40_chunk046.wav,3.0,XC134058-SaatkraehHortobagye8-5-13_18-40.mp3
+Rook,XC134058-SaatkraehHortobagye8-5-13_18-40,47,data/processed/Rook/XC134058-SaatkraehHortobagye8-5-13_18-40_chunk047.wav,3.0,XC134058-SaatkraehHortobagye8-5-13_18-40.mp3
+Rook,XC134058-SaatkraehHortobagye8-5-13_18-40,48,data/processed/Rook/XC134058-SaatkraehHortobagye8-5-13_18-40_chunk048.wav,3.0,XC134058-SaatkraehHortobagye8-5-13_18-40.mp3
+Rook,XC134058-SaatkraehHortobagye8-5-13_18-40,49,data/processed/Rook/XC134058-SaatkraehHortobagye8-5-13_18-40_chunk049.wav,3.0,XC134058-SaatkraehHortobagye8-5-13_18-40.mp3
+Rook,XC134058-SaatkraehHortobagye8-5-13_18-40,50,data/processed/Rook/XC134058-SaatkraehHortobagye8-5-13_18-40_chunk050.wav,3.0,XC134058-SaatkraehHortobagye8-5-13_18-40.mp3
+Rook,XC134058-SaatkraehHortobagye8-5-13_18-40,51,data/processed/Rook/XC134058-SaatkraehHortobagye8-5-13_18-40_chunk051.wav,3.0,XC134058-SaatkraehHortobagye8-5-13_18-40.mp3
+Rook,XC134058-SaatkraehHortobagye8-5-13_18-40,52,data/processed/Rook/XC134058-SaatkraehHortobagye8-5-13_18-40_chunk052.wav,3.0,XC134058-SaatkraehHortobagye8-5-13_18-40.mp3
+Rook,XC134058-SaatkraehHortobagye8-5-13_18-40,53,data/processed/Rook/XC134058-SaatkraehHortobagye8-5-13_18-40_chunk053.wav,3.0,XC134058-SaatkraehHortobagye8-5-13_18-40.mp3
+Rook,XC134058-SaatkraehHortobagye8-5-13_18-40,54,data/processed/Rook/XC134058-SaatkraehHortobagye8-5-13_18-40_chunk054.wav,3.0,XC134058-SaatkraehHortobagye8-5-13_18-40.mp3
+Rook,XC134058-SaatkraehHortobagye8-5-13_18-40,55,data/processed/Rook/XC134058-SaatkraehHortobagye8-5-13_18-40_chunk055.wav,3.0,XC134058-SaatkraehHortobagye8-5-13_18-40.mp3
+Rook,XC134058-SaatkraehHortobagye8-5-13_18-40,56,data/processed/Rook/XC134058-SaatkraehHortobagye8-5-13_18-40_chunk056.wav,3.0,XC134058-SaatkraehHortobagye8-5-13_18-40.mp3
+Rook,XC134058-SaatkraehHortobagye8-5-13_18-40,57,data/processed/Rook/XC134058-SaatkraehHortobagye8-5-13_18-40_chunk057.wav,3.0,XC134058-SaatkraehHortobagye8-5-13_18-40.mp3
+Rook,XC134058-SaatkraehHortobagye8-5-13_18-40,58,data/processed/Rook/XC134058-SaatkraehHortobagye8-5-13_18-40_chunk058.wav,3.0,XC134058-SaatkraehHortobagye8-5-13_18-40.mp3
+Rook,XC134058-SaatkraehHortobagye8-5-13_18-40,59,data/processed/Rook/XC134058-SaatkraehHortobagye8-5-13_18-40_chunk059.wav,3.0,XC134058-SaatkraehHortobagye8-5-13_18-40.mp3
+Rook,XC134058-SaatkraehHortobagye8-5-13_18-40,60,data/processed/Rook/XC134058-SaatkraehHortobagye8-5-13_18-40_chunk060.wav,3.0,XC134058-SaatkraehHortobagye8-5-13_18-40.mp3
+Rook,XC134058-SaatkraehHortobagye8-5-13_18-40,61,data/processed/Rook/XC134058-SaatkraehHortobagye8-5-13_18-40_chunk061.wav,3.0,XC134058-SaatkraehHortobagye8-5-13_18-40.mp3
+Rook,XC134058-SaatkraehHortobagye8-5-13_18-40,62,data/processed/Rook/XC134058-SaatkraehHortobagye8-5-13_18-40_chunk062.wav,3.0,XC134058-SaatkraehHortobagye8-5-13_18-40.mp3
+Rook,XC134058-SaatkraehHortobagye8-5-13_18-40,63,data/processed/Rook/XC134058-SaatkraehHortobagye8-5-13_18-40_chunk063.wav,3.0,XC134058-SaatkraehHortobagye8-5-13_18-40.mp3
+Rook,XC134058-SaatkraehHortobagye8-5-13_18-40,64,data/processed/Rook/XC134058-SaatkraehHortobagye8-5-13_18-40_chunk064.wav,3.0,XC134058-SaatkraehHortobagye8-5-13_18-40.mp3
+Rook,XC134058-SaatkraehHortobagye8-5-13_18-40,65,data/processed/Rook/XC134058-SaatkraehHortobagye8-5-13_18-40_chunk065.wav,3.0,XC134058-SaatkraehHortobagye8-5-13_18-40.mp3
+Rook,XC134058-SaatkraehHortobagye8-5-13_18-40,66,data/processed/Rook/XC134058-SaatkraehHortobagye8-5-13_18-40_chunk066.wav,3.0,XC134058-SaatkraehHortobagye8-5-13_18-40.mp3
+Rook,XC134058-SaatkraehHortobagye8-5-13_18-40,67,data/processed/Rook/XC134058-SaatkraehHortobagye8-5-13_18-40_chunk067.wav,3.0,XC134058-SaatkraehHortobagye8-5-13_18-40.mp3
+Rook,XC134058-SaatkraehHortobagye8-5-13_18-40,68,data/processed/Rook/XC134058-SaatkraehHortobagye8-5-13_18-40_chunk068.wav,3.0,XC134058-SaatkraehHortobagye8-5-13_18-40.mp3
+Rook,XC134058-SaatkraehHortobagye8-5-13_18-40,69,data/processed/Rook/XC134058-SaatkraehHortobagye8-5-13_18-40_chunk069.wav,3.0,XC134058-SaatkraehHortobagye8-5-13_18-40.mp3
+Rook,XC134058-SaatkraehHortobagye8-5-13_18-40,70,data/processed/Rook/XC134058-SaatkraehHortobagye8-5-13_18-40_chunk070.wav,3.0,XC134058-SaatkraehHortobagye8-5-13_18-40.mp3
+Rook,XC134058-SaatkraehHortobagye8-5-13_18-40,71,data/processed/Rook/XC134058-SaatkraehHortobagye8-5-13_18-40_chunk071.wav,3.0,XC134058-SaatkraehHortobagye8-5-13_18-40.mp3
+Rook,XC134058-SaatkraehHortobagye8-5-13_18-40,72,data/processed/Rook/XC134058-SaatkraehHortobagye8-5-13_18-40_chunk072.wav,3.0,XC134058-SaatkraehHortobagye8-5-13_18-40.mp3
+Rook,XC134058-SaatkraehHortobagye8-5-13_18-40,73,data/processed/Rook/XC134058-SaatkraehHortobagye8-5-13_18-40_chunk073.wav,3.0,XC134058-SaatkraehHortobagye8-5-13_18-40.mp3
+Rook,XC134058-SaatkraehHortobagye8-5-13_18-40,74,data/processed/Rook/XC134058-SaatkraehHortobagye8-5-13_18-40_chunk074.wav,3.0,XC134058-SaatkraehHortobagye8-5-13_18-40.mp3
+Rook,XC143993-2006040413,0,data/processed/Rook/XC143993-2006040413_chunk000.wav,3.0,XC143993-2006040413 Corvus frugilegus_C_F Deroussen.mp3
+Rook,XC143993-2006040413,1,data/processed/Rook/XC143993-2006040413_chunk001.wav,3.0,XC143993-2006040413 Corvus frugilegus_C_F Deroussen.mp3
+Rook,XC143993-2006040413,2,data/processed/Rook/XC143993-2006040413_chunk002.wav,3.0,XC143993-2006040413 Corvus frugilegus_C_F Deroussen.mp3
+Rook,XC143993-2006040413,3,data/processed/Rook/XC143993-2006040413_chunk003.wav,3.0,XC143993-2006040413 Corvus frugilegus_C_F Deroussen.mp3
+Rook,XC143993-2006040413,4,data/processed/Rook/XC143993-2006040413_chunk004.wav,3.0,XC143993-2006040413 Corvus frugilegus_C_F Deroussen.mp3
+Rook,XC143993-2006040413,5,data/processed/Rook/XC143993-2006040413_chunk005.wav,3.0,XC143993-2006040413 Corvus frugilegus_C_F Deroussen.mp3
+Rook,XC143993-2006040413,6,data/processed/Rook/XC143993-2006040413_chunk006.wav,3.0,XC143993-2006040413 Corvus frugilegus_C_F Deroussen.mp3
+Rook,XC143993-2006040413,7,data/processed/Rook/XC143993-2006040413_chunk007.wav,3.0,XC143993-2006040413 Corvus frugilegus_C_F Deroussen.mp3
+Rook,XC143993-2006040413,8,data/processed/Rook/XC143993-2006040413_chunk008.wav,3.0,XC143993-2006040413 Corvus frugilegus_C_F Deroussen.mp3
+Rook,XC143993-2006040413,9,data/processed/Rook/XC143993-2006040413_chunk009.wav,3.0,XC143993-2006040413 Corvus frugilegus_C_F Deroussen.mp3
+Rook,XC143993-2006040413,10,data/processed/Rook/XC143993-2006040413_chunk010.wav,3.0,XC143993-2006040413 Corvus frugilegus_C_F Deroussen.mp3
+Rook,XC156787-B57,0,data/processed/Rook/XC156787-B57_chunk000.wav,3.0,XC156787-B57 Corfreux LPO.mp3
+Rook,XC156787-B57,1,data/processed/Rook/XC156787-B57_chunk001.wav,3.0,XC156787-B57 Corfreux LPO.mp3
+Rook,XC156787-B57,2,data/processed/Rook/XC156787-B57_chunk002.wav,3.0,XC156787-B57 Corfreux LPO.mp3
+Rook,XC156787-B57,3,data/processed/Rook/XC156787-B57_chunk003.wav,3.0,XC156787-B57 Corfreux LPO.mp3
+Rook,XC156787-B57,4,data/processed/Rook/XC156787-B57_chunk004.wav,3.0,XC156787-B57 Corfreux LPO.mp3
+Rook,XC156787-B57,5,data/processed/Rook/XC156787-B57_chunk005.wav,3.0,XC156787-B57 Corfreux LPO.mp3
+Rook,XC156787-B57,6,data/processed/Rook/XC156787-B57_chunk006.wav,3.0,XC156787-B57 Corfreux LPO.mp3
+Rook,XC156787-B57,7,data/processed/Rook/XC156787-B57_chunk007.wav,3.0,XC156787-B57 Corfreux LPO.mp3
+Rook,XC156787-B57,8,data/processed/Rook/XC156787-B57_chunk008.wav,3.0,XC156787-B57 Corfreux LPO.mp3
+Rook,XC156787-B57,9,data/processed/Rook/XC156787-B57_chunk009.wav,3.0,XC156787-B57 Corfreux LPO.mp3
+Rook,XC156787-B57,10,data/processed/Rook/XC156787-B57_chunk010.wav,3.0,XC156787-B57 Corfreux LPO.mp3
+Rook,XC156787-B57,11,data/processed/Rook/XC156787-B57_chunk011.wav,3.0,XC156787-B57 Corfreux LPO.mp3
+Rook,XC156787-B57,12,data/processed/Rook/XC156787-B57_chunk012.wav,3.0,XC156787-B57 Corfreux LPO.mp3
+Rook,XC156787-B57,13,data/processed/Rook/XC156787-B57_chunk013.wav,3.0,XC156787-B57 Corfreux LPO.mp3
+Rook,XC156787-B57,14,data/processed/Rook/XC156787-B57_chunk014.wav,3.0,XC156787-B57 Corfreux LPO.mp3
+Rook,XC156787-B57,15,data/processed/Rook/XC156787-B57_chunk015.wav,3.0,XC156787-B57 Corfreux LPO.mp3
+Rook,XC156787-B57,16,data/processed/Rook/XC156787-B57_chunk016.wav,3.0,XC156787-B57 Corfreux LPO.mp3
+Rook,XC156787-B57,17,data/processed/Rook/XC156787-B57_chunk017.wav,3.0,XC156787-B57 Corfreux LPO.mp3
+Rook,XC156787-B57,18,data/processed/Rook/XC156787-B57_chunk018.wav,3.0,XC156787-B57 Corfreux LPO.mp3
+Rook,XC189516-,0,data/processed/Rook/XC189516-_chunk000.wav,3.0,"XC189516- 140802_029,АА.MP3"
+Rook,XC189516-,1,data/processed/Rook/XC189516-_chunk001.wav,3.0,"XC189516- 140802_029,АА.MP3"
+Rook,XC189516-,2,data/processed/Rook/XC189516-_chunk002.wav,3.0,"XC189516- 140802_029,АА.MP3"
+Rook,XC189516-,3,data/processed/Rook/XC189516-_chunk003.wav,3.0,"XC189516- 140802_029,АА.MP3"
+Rook,XC189516-,4,data/processed/Rook/XC189516-_chunk004.wav,3.0,"XC189516- 140802_029,АА.MP3"
+Rook,XC189516-,5,data/processed/Rook/XC189516-_chunk005.wav,3.0,"XC189516- 140802_029,АА.MP3"
+Rook,XC189516-,6,data/processed/Rook/XC189516-_chunk006.wav,3.0,"XC189516- 140802_029,АА.MP3"
+Rook,XC189516-,7,data/processed/Rook/XC189516-_chunk007.wav,3.0,"XC189516- 140802_029,АА.MP3"
+Rook,XC189516-,8,data/processed/Rook/XC189516-_chunk008.wav,3.0,"XC189516- 140802_029,АА.MP3"
+Rook,XC189516-,9,data/processed/Rook/XC189516-_chunk009.wav,3.0,"XC189516- 140802_029,АА.MP3"
+Rook,XC189516-,10,data/processed/Rook/XC189516-_chunk010.wav,3.0,"XC189516- 140802_029,АА.MP3"
+Rook,XC189516-,11,data/processed/Rook/XC189516-_chunk011.wav,3.0,"XC189516- 140802_029,АА.MP3"
+Rook,XC189516-,12,data/processed/Rook/XC189516-_chunk012.wav,3.0,"XC189516- 140802_029,АА.MP3"
+Rook,XC189516-,13,data/processed/Rook/XC189516-_chunk013.wav,3.0,"XC189516- 140802_029,АА.MP3"
+Rook,XC189516-,14,data/processed/Rook/XC189516-_chunk014.wav,3.0,"XC189516- 140802_029,АА.MP3"
+Rook,XC189516-,15,data/processed/Rook/XC189516-_chunk015.wav,3.0,"XC189516- 140802_029,АА.MP3"
+Rook,XC189516-,16,data/processed/Rook/XC189516-_chunk016.wav,3.0,"XC189516- 140802_029,АА.MP3"
+Rook,XC189516-,17,data/processed/Rook/XC189516-_chunk017.wav,3.0,"XC189516- 140802_029,АА.MP3"
+Rook,XC189516-,18,data/processed/Rook/XC189516-_chunk018.wav,3.0,"XC189516- 140802_029,АА.MP3"
+Rook,XC189516-,19,data/processed/Rook/XC189516-_chunk019.wav,3.0,"XC189516- 140802_029,АА.MP3"
+Rook,XC189516-,20,data/processed/Rook/XC189516-_chunk020.wav,3.0,"XC189516- 140802_029,АА.MP3"
+Rook,XC189516-,21,data/processed/Rook/XC189516-_chunk021.wav,3.0,"XC189516- 140802_029,АА.MP3"
+Rook,XC189516-,22,data/processed/Rook/XC189516-_chunk022.wav,3.0,"XC189516- 140802_029,АА.MP3"
+Rook,XC189516-,23,data/processed/Rook/XC189516-_chunk023.wav,3.0,"XC189516- 140802_029,АА.MP3"
+Rook,XC189516-,24,data/processed/Rook/XC189516-_chunk024.wav,3.0,"XC189516- 140802_029,АА.MP3"
+Rook,XC189516-,25,data/processed/Rook/XC189516-_chunk025.wav,3.0,"XC189516- 140802_029,АА.MP3"
+Rook,XC189516-,26,data/processed/Rook/XC189516-_chunk026.wav,3.0,"XC189516- 140802_029,АА.MP3"
+Rook,XC189516-,27,data/processed/Rook/XC189516-_chunk027.wav,3.0,"XC189516- 140802_029,АА.MP3"
+Rook,XC189516-,28,data/processed/Rook/XC189516-_chunk028.wav,3.0,"XC189516- 140802_029,АА.MP3"
+Rook,XC189516-,29,data/processed/Rook/XC189516-_chunk029.wav,3.0,"XC189516- 140802_029,АА.MP3"
+Rook,XC189516-,30,data/processed/Rook/XC189516-_chunk030.wav,3.0,"XC189516- 140802_029,АА.MP3"
+Rook,XC189516-,31,data/processed/Rook/XC189516-_chunk031.wav,3.0,"XC189516- 140802_029,АА.MP3"
+Rook,XC189516-,32,data/processed/Rook/XC189516-_chunk032.wav,3.0,"XC189516- 140802_029,АА.MP3"
+Rook,XC189516-,33,data/processed/Rook/XC189516-_chunk033.wav,3.0,"XC189516- 140802_029,АА.MP3"
+Rook,XC189516-,34,data/processed/Rook/XC189516-_chunk034.wav,3.0,"XC189516- 140802_029,АА.MP3"
+Rook,XC189520-,0,data/processed/Rook/XC189520-_chunk000.wav,3.0,"XC189520- 140802_029,ААА1.MP3"
+Rook,XC189520-,1,data/processed/Rook/XC189520-_chunk001.wav,3.0,"XC189520- 140802_029,ААА1.MP3"
+Rook,XC189520-,2,data/processed/Rook/XC189520-_chunk002.wav,3.0,"XC189520- 140802_029,ААА1.MP3"
+Rook,XC189520-,3,data/processed/Rook/XC189520-_chunk003.wav,3.0,"XC189520- 140802_029,ААА1.MP3"
+Rook,XC189520-,4,data/processed/Rook/XC189520-_chunk004.wav,3.0,"XC189520- 140802_029,ААА1.MP3"
+Rook,XC189520-,5,data/processed/Rook/XC189520-_chunk005.wav,3.0,"XC189520- 140802_029,ААА1.MP3"
+Rook,XC189520-,6,data/processed/Rook/XC189520-_chunk006.wav,3.0,"XC189520- 140802_029,ААА1.MP3"
+Rook,XC189520-,7,data/processed/Rook/XC189520-_chunk007.wav,3.0,"XC189520- 140802_029,ААА1.MP3"
+Rook,XC194042-Rook,0,data/processed/Rook/XC194042-Rook_chunk000.wav,3.0,"XC194042-Rook juv to 23 s, then ad. 2014-07-14 1521hrs.mp3"
+Rook,XC194042-Rook,1,data/processed/Rook/XC194042-Rook_chunk001.wav,3.0,"XC194042-Rook juv to 23 s, then ad. 2014-07-14 1521hrs.mp3"
+Rook,XC194042-Rook,2,data/processed/Rook/XC194042-Rook_chunk002.wav,3.0,"XC194042-Rook juv to 23 s, then ad. 2014-07-14 1521hrs.mp3"
+Rook,XC194042-Rook,3,data/processed/Rook/XC194042-Rook_chunk003.wav,3.0,"XC194042-Rook juv to 23 s, then ad. 2014-07-14 1521hrs.mp3"
+Rook,XC194042-Rook,4,data/processed/Rook/XC194042-Rook_chunk004.wav,3.0,"XC194042-Rook juv to 23 s, then ad. 2014-07-14 1521hrs.mp3"
+Rook,XC194042-Rook,5,data/processed/Rook/XC194042-Rook_chunk005.wav,3.0,"XC194042-Rook juv to 23 s, then ad. 2014-07-14 1521hrs.mp3"
+Rook,XC194042-Rook,6,data/processed/Rook/XC194042-Rook_chunk006.wav,3.0,"XC194042-Rook juv to 23 s, then ad. 2014-07-14 1521hrs.mp3"
+Rook,XC194042-Rook,7,data/processed/Rook/XC194042-Rook_chunk007.wav,3.0,"XC194042-Rook juv to 23 s, then ad. 2014-07-14 1521hrs.mp3"
+Rook,XC194042-Rook,8,data/processed/Rook/XC194042-Rook_chunk008.wav,3.0,"XC194042-Rook juv to 23 s, then ad. 2014-07-14 1521hrs.mp3"
+Rook,XC194042-Rook,9,data/processed/Rook/XC194042-Rook_chunk009.wav,3.0,"XC194042-Rook juv to 23 s, then ad. 2014-07-14 1521hrs.mp3"
+Rook,XC201512-C.,0,data/processed/Rook/XC201512-C._chunk000.wav,3.0,"XC201512-C. frugil 141010_001,BB.MP3"
+Rook,XC201512-C.,1,data/processed/Rook/XC201512-C._chunk001.wav,3.0,"XC201512-C. frugil 141010_001,BB.MP3"
+Rook,XC201512-C.,2,data/processed/Rook/XC201512-C._chunk002.wav,3.0,"XC201512-C. frugil 141010_001,BB.MP3"
+Rook,XC201512-C.,3,data/processed/Rook/XC201512-C._chunk003.wav,3.0,"XC201512-C. frugil 141010_001,BB.MP3"
+Rook,XC201512-C.,4,data/processed/Rook/XC201512-C._chunk004.wav,3.0,"XC201512-C. frugil 141010_001,BB.MP3"
+Rook,XC201512-C.,5,data/processed/Rook/XC201512-C._chunk005.wav,3.0,"XC201512-C. frugil 141010_001,BB.MP3"
+Rook,XC201512-C.,6,data/processed/Rook/XC201512-C._chunk006.wav,3.0,"XC201512-C. frugil 141010_001,BB.MP3"
+Rook,XC201512-C.,7,data/processed/Rook/XC201512-C._chunk007.wav,3.0,"XC201512-C. frugil 141010_001,BB.MP3"
+Rook,XC201512-C.,8,data/processed/Rook/XC201512-C._chunk008.wav,3.0,"XC201512-C. frugil 141010_001,BB.MP3"
+Rook,XC201512-C.,9,data/processed/Rook/XC201512-C._chunk009.wav,3.0,"XC201512-C. frugil 141010_001,BB.MP3"
+Rook,XC201512-C.,10,data/processed/Rook/XC201512-C._chunk010.wav,3.0,"XC201512-C. frugil 141010_001,BB.MP3"
+Rook,XC201512-C.,11,data/processed/Rook/XC201512-C._chunk011.wav,3.0,"XC201512-C. frugil 141010_001,BB.MP3"
+Rook,XC201512-C.,12,data/processed/Rook/XC201512-C._chunk012.wav,3.0,"XC201512-C. frugil 141010_001,BB.MP3"
+Rook,XC201512-C.,13,data/processed/Rook/XC201512-C._chunk013.wav,3.0,"XC201512-C. frugil 141010_001,BB.MP3"
+Rook,XC201512-C.,14,data/processed/Rook/XC201512-C._chunk014.wav,3.0,"XC201512-C. frugil 141010_001,BB.MP3"
+Rook,XC201512-C.,15,data/processed/Rook/XC201512-C._chunk015.wav,3.0,"XC201512-C. frugil 141010_001,BB.MP3"
+Rook,XC201512-C.,16,data/processed/Rook/XC201512-C._chunk016.wav,3.0,"XC201512-C. frugil 141010_001,BB.MP3"
+Rook,XC201512-C.,17,data/processed/Rook/XC201512-C._chunk017.wav,3.0,"XC201512-C. frugil 141010_001,BB.MP3"
+Rook,XC201512-C.,18,data/processed/Rook/XC201512-C._chunk018.wav,3.0,"XC201512-C. frugil 141010_001,BB.MP3"
+Rook,XC201512-C.,19,data/processed/Rook/XC201512-C._chunk019.wav,3.0,"XC201512-C. frugil 141010_001,BB.MP3"
+Rook,XC201512-C.,20,data/processed/Rook/XC201512-C._chunk020.wav,3.0,"XC201512-C. frugil 141010_001,BB.MP3"
+Rook,XC201512-C.,21,data/processed/Rook/XC201512-C._chunk021.wav,3.0,"XC201512-C. frugil 141010_001,BB.MP3"
+Rook,XC201512-C.,22,data/processed/Rook/XC201512-C._chunk022.wav,3.0,"XC201512-C. frugil 141010_001,BB.MP3"
+Rook,XC201512-C.,23,data/processed/Rook/XC201512-C._chunk023.wav,3.0,"XC201512-C. frugil 141010_001,BB.MP3"
+Rook,XC201512-C.,24,data/processed/Rook/XC201512-C._chunk024.wav,3.0,"XC201512-C. frugil 141010_001,BB.MP3"
+Rook,XC201512-C.,25,data/processed/Rook/XC201512-C._chunk025.wav,3.0,"XC201512-C. frugil 141010_001,BB.MP3"
+Rook,XC201512-C.,26,data/processed/Rook/XC201512-C._chunk026.wav,3.0,"XC201512-C. frugil 141010_001,BB.MP3"
+Rook,XC201512-C.,27,data/processed/Rook/XC201512-C._chunk027.wav,3.0,"XC201512-C. frugil 141010_001,BB.MP3"
+Rook,XC201512-C.,28,data/processed/Rook/XC201512-C._chunk028.wav,3.0,"XC201512-C. frugil 141010_001,BB.MP3"
+Rook,XC201512-C.,29,data/processed/Rook/XC201512-C._chunk029.wav,3.0,"XC201512-C. frugil 141010_001,BB.MP3"
+Rook,XC201512-C.,30,data/processed/Rook/XC201512-C._chunk030.wav,3.0,"XC201512-C. frugil 141010_001,BB.MP3"
+Rook,XC201512-C.,31,data/processed/Rook/XC201512-C._chunk031.wav,3.0,"XC201512-C. frugil 141010_001,BB.MP3"
+Rook,XC201512-C.,32,data/processed/Rook/XC201512-C._chunk032.wav,3.0,"XC201512-C. frugil 141010_001,BB.MP3"
+Rook,XC201512-C.,33,data/processed/Rook/XC201512-C._chunk033.wav,3.0,"XC201512-C. frugil 141010_001,BB.MP3"
+Rook,XC201512-C.,34,data/processed/Rook/XC201512-C._chunk034.wav,3.0,"XC201512-C. frugil 141010_001,BB.MP3"
+Rook,XC240292-Saatkraehe,0,data/processed/Rook/XC240292-Saatkraehe_chunk000.wav,3.0,XC240292-Saatkraehe.mp3
+Rook,XC282960-CORFRU,0,data/processed/Rook/XC282960-CORFRU_chunk000.wav,3.0,XC282960-CORFRU TARTU 27.9.2015.mp3
+Rook,XC282960-CORFRU,1,data/processed/Rook/XC282960-CORFRU_chunk001.wav,3.0,XC282960-CORFRU TARTU 27.9.2015.mp3
+Rook,XC282960-CORFRU,2,data/processed/Rook/XC282960-CORFRU_chunk002.wav,3.0,XC282960-CORFRU TARTU 27.9.2015.mp3
+Rook,XC282960-CORFRU,3,data/processed/Rook/XC282960-CORFRU_chunk003.wav,3.0,XC282960-CORFRU TARTU 27.9.2015.mp3
+Rook,XC282960-CORFRU,4,data/processed/Rook/XC282960-CORFRU_chunk004.wav,3.0,XC282960-CORFRU TARTU 27.9.2015.mp3
+Rook,XC282960-CORFRU,5,data/processed/Rook/XC282960-CORFRU_chunk005.wav,3.0,XC282960-CORFRU TARTU 27.9.2015.mp3
+Rook,XC282960-CORFRU,6,data/processed/Rook/XC282960-CORFRU_chunk006.wav,3.0,XC282960-CORFRU TARTU 27.9.2015.mp3
+Rook,XC282960-CORFRU,7,data/processed/Rook/XC282960-CORFRU_chunk007.wav,3.0,XC282960-CORFRU TARTU 27.9.2015.mp3
+Rook,XC282960-CORFRU,8,data/processed/Rook/XC282960-CORFRU_chunk008.wav,3.0,XC282960-CORFRU TARTU 27.9.2015.mp3
+Rook,XC282960-CORFRU,9,data/processed/Rook/XC282960-CORFRU_chunk009.wav,3.0,XC282960-CORFRU TARTU 27.9.2015.mp3
+Rook,XC282960-CORFRU,10,data/processed/Rook/XC282960-CORFRU_chunk010.wav,3.0,XC282960-CORFRU TARTU 27.9.2015.mp3
+Rook,XC313342-,0,data/processed/Rook/XC313342-_chunk000.wav,3.0,"XC313342- 160318_002,А1.MP3"
+Rook,XC313342-,1,data/processed/Rook/XC313342-_chunk001.wav,3.0,"XC313342- 160318_002,А1.MP3"
+Rook,XC313342-,2,data/processed/Rook/XC313342-_chunk002.wav,3.0,"XC313342- 160318_002,А1.MP3"
+Rook,XC313342-,3,data/processed/Rook/XC313342-_chunk003.wav,3.0,"XC313342- 160318_002,А1.MP3"
+Rook,XC313342-,4,data/processed/Rook/XC313342-_chunk004.wav,3.0,"XC313342- 160318_002,А1.MP3"
+Rook,XC313342-,5,data/processed/Rook/XC313342-_chunk005.wav,3.0,"XC313342- 160318_002,А1.MP3"
+Rook,XC357075-MVI_5048,0,data/processed/Rook/XC357075-MVI_5048_chunk000.wav,3.0,XC357075-MVI_5048.mp3
+Rook,XC357075-MVI_5048,1,data/processed/Rook/XC357075-MVI_5048_chunk001.wav,3.0,XC357075-MVI_5048.mp3
+Rook,XC357075-MVI_5048,2,data/processed/Rook/XC357075-MVI_5048_chunk002.wav,3.0,XC357075-MVI_5048.mp3
+Rook,XC357075-MVI_5048,3,data/processed/Rook/XC357075-MVI_5048_chunk003.wav,3.0,XC357075-MVI_5048.mp3
+Rook,XC357075-MVI_5048,4,data/processed/Rook/XC357075-MVI_5048_chunk004.wav,3.0,XC357075-MVI_5048.mp3
+Rook,XC364926-Corvus,0,data/processed/Rook/XC364926-Corvus_chunk000.wav,3.0,XC364926-Corvus frugilegus_Norwich_1383.mp3
+Rook,XC364926-Corvus,1,data/processed/Rook/XC364926-Corvus_chunk001.wav,3.0,XC364926-Corvus frugilegus_Norwich_1383.mp3
+Rook,XC364926-Corvus,2,data/processed/Rook/XC364926-Corvus_chunk002.wav,3.0,XC364926-Corvus frugilegus_Norwich_1383.mp3
+Rook,XC364926-Corvus,3,data/processed/Rook/XC364926-Corvus_chunk003.wav,3.0,XC364926-Corvus frugilegus_Norwich_1383.mp3
+Eurasian_Magpie,B05h26m09s20may2010_magpie_whiteThroat_2,0,data/processed/Eurasian_Magpie/B05h26m09s20may2010_magpie_whiteThroat_2_chunk000.wav,3.0,B05h26m09s20may2010_magpie_whiteThroat_2.mp3
+Eurasian_Magpie,B05h26m09s20may2010_magpie_whiteThroat_2,1,data/processed/Eurasian_Magpie/B05h26m09s20may2010_magpie_whiteThroat_2_chunk001.wav,3.0,B05h26m09s20may2010_magpie_whiteThroat_2.mp3
+Eurasian_Magpie,B05h26m09s20may2010_magpie_whiteThroat_2,2,data/processed/Eurasian_Magpie/B05h26m09s20may2010_magpie_whiteThroat_2_chunk002.wav,3.0,B05h26m09s20may2010_magpie_whiteThroat_2.mp3
+Eurasian_Magpie,B05h26m09s20may2010_magpie_whiteThroat_2,3,data/processed/Eurasian_Magpie/B05h26m09s20may2010_magpie_whiteThroat_2_chunk003.wav,3.0,B05h26m09s20may2010_magpie_whiteThroat_2.mp3
+Eurasian_Magpie,B05h26m09s20may2010_magpie_whiteThroat_2,4,data/processed/Eurasian_Magpie/B05h26m09s20may2010_magpie_whiteThroat_2_chunk004.wav,3.0,B05h26m09s20may2010_magpie_whiteThroat_2.mp3
+Eurasian_Magpie,B05h26m09s20may2010_magpie_whiteThroat_2,5,data/processed/Eurasian_Magpie/B05h26m09s20may2010_magpie_whiteThroat_2_chunk005.wav,3.0,B05h26m09s20may2010_magpie_whiteThroat_2.mp3
+Eurasian_Magpie,B05h26m09s20may2010_magpie_whiteThroat_2,6,data/processed/Eurasian_Magpie/B05h26m09s20may2010_magpie_whiteThroat_2_chunk006.wav,3.0,B05h26m09s20may2010_magpie_whiteThroat_2.mp3
+Eurasian_Magpie,B05h26m09s20may2010_magpie_whiteThroat_2,7,data/processed/Eurasian_Magpie/B05h26m09s20may2010_magpie_whiteThroat_2_chunk007.wav,3.0,B05h26m09s20may2010_magpie_whiteThroat_2.mp3
+Eurasian_Magpie,B05h26m09s20may2010_magpie_whiteThroat_2,8,data/processed/Eurasian_Magpie/B05h26m09s20may2010_magpie_whiteThroat_2_chunk008.wav,3.0,B05h26m09s20may2010_magpie_whiteThroat_2.mp3
+Eurasian_Magpie,B05h26m09s20may2010_magpie_whiteThroat_2,9,data/processed/Eurasian_Magpie/B05h26m09s20may2010_magpie_whiteThroat_2_chunk009.wav,3.0,B05h26m09s20may2010_magpie_whiteThroat_2.mp3
+Eurasian_Magpie,B05h26m09s20may2010_magpie_whiteThroat_2,10,data/processed/Eurasian_Magpie/B05h26m09s20may2010_magpie_whiteThroat_2_chunk010.wav,3.0,B05h26m09s20may2010_magpie_whiteThroat_2.mp3
+Eurasian_Magpie,B05h26m09s20may2010_magpie_whiteThroat_2,11,data/processed/Eurasian_Magpie/B05h26m09s20may2010_magpie_whiteThroat_2_chunk011.wav,3.0,B05h26m09s20may2010_magpie_whiteThroat_2.mp3
+Eurasian_Magpie,B05h26m09s20may2010_magpie_whiteThroat_2,12,data/processed/Eurasian_Magpie/B05h26m09s20may2010_magpie_whiteThroat_2_chunk012.wav,3.0,B05h26m09s20may2010_magpie_whiteThroat_2.mp3
+Eurasian_Magpie,ElsterRuesdorfS2-8-12_12-18,0,data/processed/Eurasian_Magpie/ElsterRuesdorfS2-8-12_12-18_chunk000.wav,3.0,ElsterRuesdorfS2-8-12_12-18.mp3
+Eurasian_Magpie,ElsterRuesdorfS2-8-12_12-18,1,data/processed/Eurasian_Magpie/ElsterRuesdorfS2-8-12_12-18_chunk001.wav,3.0,ElsterRuesdorfS2-8-12_12-18.mp3
+Eurasian_Magpie,MAGPIEEurasian-FL,0,data/processed/Eurasian_Magpie/MAGPIEEurasian-FL_chunk000.wav,3.0,MAGPIEEurasian-FL Brighton 14JAug2010 50m R09_0001xc.mp3
+Eurasian_Magpie,MAGPIEEurasian-FL,1,data/processed/Eurasian_Magpie/MAGPIEEurasian-FL_chunk001.wav,3.0,MAGPIEEurasian-FL Brighton 14JAug2010 50m R09_0001xc.mp3
+Eurasian_Magpie,MAGPIEEurasian-FL,2,data/processed/Eurasian_Magpie/MAGPIEEurasian-FL_chunk002.wav,3.0,MAGPIEEurasian-FL Brighton 14JAug2010 50m R09_0001xc.mp3
+Eurasian_Magpie,MAGPIEEurasian-FL,3,data/processed/Eurasian_Magpie/MAGPIEEurasian-FL_chunk003.wav,3.0,MAGPIEEurasian-FL Brighton 14JAug2010 50m R09_0001xc.mp3
+Eurasian_Magpie,MAGPIEEurasian-FL,4,data/processed/Eurasian_Magpie/MAGPIEEurasian-FL_chunk004.wav,3.0,MAGPIEEurasian-FL Brighton 14JAug2010 50m R09_0001xc.mp3
+Eurasian_Magpie,Magpie,0,data/processed/Eurasian_Magpie/Magpie_chunk000.wav,3.0,Magpie roost.mp3
+Eurasian_Magpie,Magpie,1,data/processed/Eurasian_Magpie/Magpie_chunk001.wav,3.0,Magpie roost.mp3
+Eurasian_Magpie,Magpie,2,data/processed/Eurasian_Magpie/Magpie_chunk002.wav,3.0,Magpie roost.mp3
+Eurasian_Magpie,Magpie,3,data/processed/Eurasian_Magpie/Magpie_chunk003.wav,3.0,Magpie roost.mp3
+Eurasian_Magpie,Magpie,4,data/processed/Eurasian_Magpie/Magpie_chunk004.wav,3.0,Magpie roost.mp3
+Eurasian_Magpie,Magpie,5,data/processed/Eurasian_Magpie/Magpie_chunk005.wav,3.0,Magpie roost.mp3
+Eurasian_Magpie,Magpie,6,data/processed/Eurasian_Magpie/Magpie_chunk006.wav,3.0,Magpie roost.mp3
+Eurasian_Magpie,Magpie,7,data/processed/Eurasian_Magpie/Magpie_chunk007.wav,3.0,Magpie roost.mp3
+Eurasian_Magpie,Magpie,8,data/processed/Eurasian_Magpie/Magpie_chunk008.wav,3.0,Magpie roost.mp3
+Eurasian_Magpie,Magpie,9,data/processed/Eurasian_Magpie/Magpie_chunk009.wav,3.0,Magpie roost.mp3
+Eurasian_Magpie,Magpie,10,data/processed/Eurasian_Magpie/Magpie_chunk010.wav,3.0,Magpie roost.mp3
+Eurasian_Magpie,Magpie,11,data/processed/Eurasian_Magpie/Magpie_chunk011.wav,3.0,Magpie roost.mp3
+Eurasian_Magpie,Magpie,12,data/processed/Eurasian_Magpie/Magpie_chunk012.wav,3.0,Magpie roost.mp3
+Eurasian_Magpie,Magpie,13,data/processed/Eurasian_Magpie/Magpie_chunk013.wav,3.0,Magpie roost.mp3
+Eurasian_Magpie,Magpie,14,data/processed/Eurasian_Magpie/Magpie_chunk014.wav,3.0,Magpie roost.mp3
+Eurasian_Magpie,Magpie,0,data/processed/Eurasian_Magpie/Magpie_chunk000.wav,3.0,Magpie.mp3
+Eurasian_Magpie,Magpie,1,data/processed/Eurasian_Magpie/Magpie_chunk001.wav,3.0,Magpie.mp3
+Eurasian_Magpie,Magpie,2,data/processed/Eurasian_Magpie/Magpie_chunk002.wav,3.0,Magpie.mp3
+Eurasian_Magpie,Magpie24,0,data/processed/Eurasian_Magpie/Magpie24_chunk000.wav,3.0,Magpie24.mp3
+Eurasian_Magpie,Magpie24,1,data/processed/Eurasian_Magpie/Magpie24_chunk001.wav,3.0,Magpie24.mp3
+Eurasian_Magpie,Magpie24,2,data/processed/Eurasian_Magpie/Magpie24_chunk002.wav,3.0,Magpie24.mp3
+Eurasian_Magpie,Magpie24,3,data/processed/Eurasian_Magpie/Magpie24_chunk003.wav,3.0,Magpie24.mp3
+Eurasian_Magpie,Magpie24,4,data/processed/Eurasian_Magpie/Magpie24_chunk004.wav,3.0,Magpie24.mp3
+Eurasian_Magpie,Magpie24,5,data/processed/Eurasian_Magpie/Magpie24_chunk005.wav,3.0,Magpie24.mp3
+Eurasian_Magpie,Magpie24,6,data/processed/Eurasian_Magpie/Magpie24_chunk006.wav,3.0,Magpie24.mp3
+Eurasian_Magpie,XC112426-Magpie22Okt2012OostpuntVlieland,0,data/processed/Eurasian_Magpie/XC112426-Magpie22Okt2012OostpuntVlieland_chunk000.wav,3.0,XC112426-Magpie22Okt2012OostpuntVlieland.mp3
+Eurasian_Magpie,XC112426-Magpie22Okt2012OostpuntVlieland,1,data/processed/Eurasian_Magpie/XC112426-Magpie22Okt2012OostpuntVlieland_chunk001.wav,3.0,XC112426-Magpie22Okt2012OostpuntVlieland.mp3
+Eurasian_Magpie,XC112426-Magpie22Okt2012OostpuntVlieland,2,data/processed/Eurasian_Magpie/XC112426-Magpie22Okt2012OostpuntVlieland_chunk002.wav,3.0,XC112426-Magpie22Okt2012OostpuntVlieland.mp3
+Eurasian_Magpie,XC112426-Magpie22Okt2012OostpuntVlieland,3,data/processed/Eurasian_Magpie/XC112426-Magpie22Okt2012OostpuntVlieland_chunk003.wav,3.0,XC112426-Magpie22Okt2012OostpuntVlieland.mp3
+Eurasian_Magpie,XC112426-Magpie22Okt2012OostpuntVlieland,4,data/processed/Eurasian_Magpie/XC112426-Magpie22Okt2012OostpuntVlieland_chunk004.wav,3.0,XC112426-Magpie22Okt2012OostpuntVlieland.mp3
+Eurasian_Magpie,XC112426-Magpie22Okt2012OostpuntVlieland,5,data/processed/Eurasian_Magpie/XC112426-Magpie22Okt2012OostpuntVlieland_chunk005.wav,3.0,XC112426-Magpie22Okt2012OostpuntVlieland.mp3
+Eurasian_Magpie,XC112426-Magpie22Okt2012OostpuntVlieland,6,data/processed/Eurasian_Magpie/XC112426-Magpie22Okt2012OostpuntVlieland_chunk006.wav,3.0,XC112426-Magpie22Okt2012OostpuntVlieland.mp3
+Eurasian_Magpie,XC112426-Magpie22Okt2012OostpuntVlieland,7,data/processed/Eurasian_Magpie/XC112426-Magpie22Okt2012OostpuntVlieland_chunk007.wav,3.0,XC112426-Magpie22Okt2012OostpuntVlieland.mp3
+Eurasian_Magpie,XC112426-Magpie22Okt2012OostpuntVlieland,8,data/processed/Eurasian_Magpie/XC112426-Magpie22Okt2012OostpuntVlieland_chunk008.wav,3.0,XC112426-Magpie22Okt2012OostpuntVlieland.mp3
+Eurasian_Magpie,XC112426-Magpie22Okt2012OostpuntVlieland,9,data/processed/Eurasian_Magpie/XC112426-Magpie22Okt2012OostpuntVlieland_chunk009.wav,3.0,XC112426-Magpie22Okt2012OostpuntVlieland.mp3
+Eurasian_Magpie,XC112426-Magpie22Okt2012OostpuntVlieland,10,data/processed/Eurasian_Magpie/XC112426-Magpie22Okt2012OostpuntVlieland_chunk010.wav,3.0,XC112426-Magpie22Okt2012OostpuntVlieland.mp3
+Eurasian_Magpie,XC112426-Magpie22Okt2012OostpuntVlieland,11,data/processed/Eurasian_Magpie/XC112426-Magpie22Okt2012OostpuntVlieland_chunk011.wav,3.0,XC112426-Magpie22Okt2012OostpuntVlieland.mp3
+Eurasian_Magpie,XC112426-Magpie22Okt2012OostpuntVlieland,12,data/processed/Eurasian_Magpie/XC112426-Magpie22Okt2012OostpuntVlieland_chunk012.wav,3.0,XC112426-Magpie22Okt2012OostpuntVlieland.mp3
+Eurasian_Magpie,XC116935-Pica,0,data/processed/Eurasian_Magpie/XC116935-Pica_chunk000.wav,3.0,XC116935-Pica pica sroka call.mp3
+Eurasian_Magpie,XC118514-gazza13,0,data/processed/Eurasian_Magpie/XC118514-gazza13_chunk000.wav,3.0,XC118514-gazza13.mp3
+Eurasian_Magpie,XC118514-gazza13,1,data/processed/Eurasian_Magpie/XC118514-gazza13_chunk001.wav,3.0,XC118514-gazza13.mp3
+Eurasian_Magpie,XC118514-gazza13,2,data/processed/Eurasian_Magpie/XC118514-gazza13_chunk002.wav,3.0,XC118514-gazza13.mp3
+Eurasian_Magpie,XC118514-gazza13,3,data/processed/Eurasian_Magpie/XC118514-gazza13_chunk003.wav,3.0,XC118514-gazza13.mp3
+Eurasian_Magpie,XC118514-gazza13,4,data/processed/Eurasian_Magpie/XC118514-gazza13_chunk004.wav,3.0,XC118514-gazza13.mp3
+Eurasian_Magpie,XC118514-gazza13,5,data/processed/Eurasian_Magpie/XC118514-gazza13_chunk005.wav,3.0,XC118514-gazza13.mp3
+Eurasian_Magpie,XC118514-gazza13,6,data/processed/Eurasian_Magpie/XC118514-gazza13_chunk006.wav,3.0,XC118514-gazza13.mp3
+Eurasian_Magpie,XC118514-gazza13,7,data/processed/Eurasian_Magpie/XC118514-gazza13_chunk007.wav,3.0,XC118514-gazza13.mp3
+Eurasian_Magpie,XC118514-gazza13,8,data/processed/Eurasian_Magpie/XC118514-gazza13_chunk008.wav,3.0,XC118514-gazza13.mp3
+Eurasian_Magpie,XC118514-gazza13,9,data/processed/Eurasian_Magpie/XC118514-gazza13_chunk009.wav,3.0,XC118514-gazza13.mp3
+Eurasian_Magpie,XC118514-gazza13,10,data/processed/Eurasian_Magpie/XC118514-gazza13_chunk010.wav,3.0,XC118514-gazza13.mp3
+Eurasian_Magpie,XC118514-gazza13,11,data/processed/Eurasian_Magpie/XC118514-gazza13_chunk011.wav,3.0,XC118514-gazza13.mp3
+Eurasian_Magpie,XC118514-gazza13,12,data/processed/Eurasian_Magpie/XC118514-gazza13_chunk012.wav,3.0,XC118514-gazza13.mp3
+Eurasian_Magpie,XC118514-gazza13,13,data/processed/Eurasian_Magpie/XC118514-gazza13_chunk013.wav,3.0,XC118514-gazza13.mp3
+Eurasian_Magpie,XC128888-PICPIC-Andujar-20130204-000032-Renaudier,0,data/processed/Eurasian_Magpie/XC128888-PICPIC-Andujar-20130204-000032-Renaudier_chunk000.wav,3.0,XC128888-PICPIC-Andujar-20130204-000032-Renaudier.mp3
+Eurasian_Magpie,XC128888-PICPIC-Andujar-20130204-000032-Renaudier,1,data/processed/Eurasian_Magpie/XC128888-PICPIC-Andujar-20130204-000032-Renaudier_chunk001.wav,3.0,XC128888-PICPIC-Andujar-20130204-000032-Renaudier.mp3
+Eurasian_Magpie,XC128888-PICPIC-Andujar-20130204-000032-Renaudier,2,data/processed/Eurasian_Magpie/XC128888-PICPIC-Andujar-20130204-000032-Renaudier_chunk002.wav,3.0,XC128888-PICPIC-Andujar-20130204-000032-Renaudier.mp3
+Eurasian_Magpie,XC128888-PICPIC-Andujar-20130204-000032-Renaudier,3,data/processed/Eurasian_Magpie/XC128888-PICPIC-Andujar-20130204-000032-Renaudier_chunk003.wav,3.0,XC128888-PICPIC-Andujar-20130204-000032-Renaudier.mp3
+Eurasian_Magpie,XC128888-PICPIC-Andujar-20130204-000032-Renaudier,4,data/processed/Eurasian_Magpie/XC128888-PICPIC-Andujar-20130204-000032-Renaudier_chunk004.wav,3.0,XC128888-PICPIC-Andujar-20130204-000032-Renaudier.mp3
+Eurasian_Magpie,XC142112-Gazza,0,data/processed/Eurasian_Magpie/XC142112-Gazza_chunk000.wav,3.0,XC142112-Gazza.mp3
+Eurasian_Magpie,XC142112-Gazza,1,data/processed/Eurasian_Magpie/XC142112-Gazza_chunk001.wav,3.0,XC142112-Gazza.mp3
+Eurasian_Magpie,XC142112-Gazza,2,data/processed/Eurasian_Magpie/XC142112-Gazza_chunk002.wav,3.0,XC142112-Gazza.mp3
+Eurasian_Magpie,XC142112-Gazza,3,data/processed/Eurasian_Magpie/XC142112-Gazza_chunk003.wav,3.0,XC142112-Gazza.mp3
+Eurasian_Magpie,XC142112-Gazza,4,data/processed/Eurasian_Magpie/XC142112-Gazza_chunk004.wav,3.0,XC142112-Gazza.mp3
+Eurasian_Magpie,XC145690-Picpic_Venasque_20130817_075354_edited,0,data/processed/Eurasian_Magpie/XC145690-Picpic_Venasque_20130817_075354_edited_chunk000.wav,3.0,XC145690-Picpic_Venasque_20130817_075354_edited.mp3
+Eurasian_Magpie,XC145690-Picpic_Venasque_20130817_075354_edited,1,data/processed/Eurasian_Magpie/XC145690-Picpic_Venasque_20130817_075354_edited_chunk001.wav,3.0,XC145690-Picpic_Venasque_20130817_075354_edited.mp3
+Eurasian_Magpie,XC145690-Picpic_Venasque_20130817_075354_edited,2,data/processed/Eurasian_Magpie/XC145690-Picpic_Venasque_20130817_075354_edited_chunk002.wav,3.0,XC145690-Picpic_Venasque_20130817_075354_edited.mp3
+Eurasian_Magpie,XC149957-LS110116.Ekster.alarmroep,0,data/processed/Eurasian_Magpie/XC149957-LS110116.Ekster.alarmroep_chunk000.wav,3.0,XC149957-LS110116.Ekster.alarmroep.MP3
+Eurasian_Magpie,XC149957-LS110116.Ekster.alarmroep,1,data/processed/Eurasian_Magpie/XC149957-LS110116.Ekster.alarmroep_chunk001.wav,3.0,XC149957-LS110116.Ekster.alarmroep.MP3
+Eurasian_Magpie,XC149957-LS110116.Ekster.alarmroep,2,data/processed/Eurasian_Magpie/XC149957-LS110116.Ekster.alarmroep_chunk002.wav,3.0,XC149957-LS110116.Ekster.alarmroep.MP3
+Eurasian_Magpie,XC149957-LS110116.Ekster.alarmroep,3,data/processed/Eurasian_Magpie/XC149957-LS110116.Ekster.alarmroep_chunk003.wav,3.0,XC149957-LS110116.Ekster.alarmroep.MP3
+Eurasian_Magpie,XC149957-LS110116.Ekster.alarmroep,4,data/processed/Eurasian_Magpie/XC149957-LS110116.Ekster.alarmroep_chunk004.wav,3.0,XC149957-LS110116.Ekster.alarmroep.MP3
+Eurasian_Magpie,"XC168545-0301_173322,чеб,сорока,самец,В",0,"data/processed/Eurasian_Magpie/XC168545-0301_173322,чеб,сорока,самец,В_chunk000.wav",3.0,"XC168545-0301_173322,чеб,сорока,самец,В.MP3"
+Eurasian_Magpie,"XC168545-0301_173322,чеб,сорока,самец,В",1,"data/processed/Eurasian_Magpie/XC168545-0301_173322,чеб,сорока,самец,В_chunk001.wav",3.0,"XC168545-0301_173322,чеб,сорока,самец,В.MP3"
+Eurasian_Magpie,"XC168545-0301_173322,чеб,сорока,самец,В",2,"data/processed/Eurasian_Magpie/XC168545-0301_173322,чеб,сорока,самец,В_chunk002.wav",3.0,"XC168545-0301_173322,чеб,сорока,самец,В.MP3"
+Eurasian_Magpie,"XC168545-0301_173322,чеб,сорока,самец,В",3,"data/processed/Eurasian_Magpie/XC168545-0301_173322,чеб,сорока,самец,В_chunk003.wav",3.0,"XC168545-0301_173322,чеб,сорока,самец,В.MP3"
+Eurasian_Magpie,"XC168545-0301_173322,чеб,сорока,самец,В",4,"data/processed/Eurasian_Magpie/XC168545-0301_173322,чеб,сорока,самец,В_chunk004.wav",3.0,"XC168545-0301_173322,чеб,сорока,самец,В.MP3"
+Eurasian_Magpie,"XC168545-0301_173322,чеб,сорока,самец,В",5,"data/processed/Eurasian_Magpie/XC168545-0301_173322,чеб,сорока,самец,В_chunk005.wav",3.0,"XC168545-0301_173322,чеб,сорока,самец,В.MP3"
+Eurasian_Magpie,"XC168545-0301_173322,чеб,сорока,самец,В",6,"data/processed/Eurasian_Magpie/XC168545-0301_173322,чеб,сорока,самец,В_chunk006.wav",3.0,"XC168545-0301_173322,чеб,сорока,самец,В.MP3"
+Eurasian_Magpie,"XC168545-0301_173322,чеб,сорока,самец,В",7,"data/processed/Eurasian_Magpie/XC168545-0301_173322,чеб,сорока,самец,В_chunk007.wav",3.0,"XC168545-0301_173322,чеб,сорока,самец,В.MP3"
+Eurasian_Magpie,"XC168545-0301_173322,чеб,сорока,самец,В",8,"data/processed/Eurasian_Magpie/XC168545-0301_173322,чеб,сорока,самец,В_chunk008.wav",3.0,"XC168545-0301_173322,чеб,сорока,самец,В.MP3"
+Eurasian_Magpie,"XC168545-0301_173322,чеб,сорока,самец,В",9,"data/processed/Eurasian_Magpie/XC168545-0301_173322,чеб,сорока,самец,В_chunk009.wav",3.0,"XC168545-0301_173322,чеб,сорока,самец,В.MP3"
+Eurasian_Magpie,"XC168545-0301_173322,чеб,сорока,самец,В",10,"data/processed/Eurasian_Magpie/XC168545-0301_173322,чеб,сорока,самец,В_chunk010.wav",3.0,"XC168545-0301_173322,чеб,сорока,самец,В.MP3"
+Eurasian_Magpie,"XC168545-0301_173322,чеб,сорока,самец,В",11,"data/processed/Eurasian_Magpie/XC168545-0301_173322,чеб,сорока,самец,В_chunk011.wav",3.0,"XC168545-0301_173322,чеб,сорока,самец,В.MP3"
+Eurasian_Magpie,"XC168545-0301_173322,чеб,сорока,самец,В",12,"data/processed/Eurasian_Magpie/XC168545-0301_173322,чеб,сорока,самец,В_chunk012.wav",3.0,"XC168545-0301_173322,чеб,сорока,самец,В.MP3"
+Eurasian_Magpie,"XC168545-0301_173322,чеб,сорока,самец,В",13,"data/processed/Eurasian_Magpie/XC168545-0301_173322,чеб,сорока,самец,В_chunk013.wav",3.0,"XC168545-0301_173322,чеб,сорока,самец,В.MP3"
+Eurasian_Magpie,"XC168545-0301_173322,чеб,сорока,самец,В",14,"data/processed/Eurasian_Magpie/XC168545-0301_173322,чеб,сорока,самец,В_chunk014.wav",3.0,"XC168545-0301_173322,чеб,сорока,самец,В.MP3"
+Eurasian_Magpie,"XC168545-0301_173322,чеб,сорока,самец,В",15,"data/processed/Eurasian_Magpie/XC168545-0301_173322,чеб,сорока,самец,В_chunk015.wav",3.0,"XC168545-0301_173322,чеб,сорока,самец,В.MP3"
+Eurasian_Magpie,"XC168545-0301_173322,чеб,сорока,самец,В",16,"data/processed/Eurasian_Magpie/XC168545-0301_173322,чеб,сорока,самец,В_chunk016.wav",3.0,"XC168545-0301_173322,чеб,сорока,самец,В.MP3"
+Eurasian_Magpie,"XC168545-0301_173322,чеб,сорока,самец,В",17,"data/processed/Eurasian_Magpie/XC168545-0301_173322,чеб,сорока,самец,В_chunk017.wav",3.0,"XC168545-0301_173322,чеб,сорока,самец,В.MP3"
+Eurasian_Magpie,"XC168545-0301_173322,чеб,сорока,самец,В",18,"data/processed/Eurasian_Magpie/XC168545-0301_173322,чеб,сорока,самец,В_chunk018.wav",3.0,"XC168545-0301_173322,чеб,сорока,самец,В.MP3"
+Eurasian_Magpie,"XC168545-0301_173322,чеб,сорока,самец,В",19,"data/processed/Eurasian_Magpie/XC168545-0301_173322,чеб,сорока,самец,В_chunk019.wav",3.0,"XC168545-0301_173322,чеб,сорока,самец,В.MP3"
+Eurasian_Magpie,"XC168545-0301_173322,чеб,сорока,самец,В",20,"data/processed/Eurasian_Magpie/XC168545-0301_173322,чеб,сорока,самец,В_chunk020.wav",3.0,"XC168545-0301_173322,чеб,сорока,самец,В.MP3"
+Eurasian_Magpie,"XC168545-0301_173322,чеб,сорока,самец,В",21,"data/processed/Eurasian_Magpie/XC168545-0301_173322,чеб,сорока,самец,В_chunk021.wav",3.0,"XC168545-0301_173322,чеб,сорока,самец,В.MP3"
+Eurasian_Magpie,"XC168545-0301_173322,чеб,сорока,самец,В",22,"data/processed/Eurasian_Magpie/XC168545-0301_173322,чеб,сорока,самец,В_chunk022.wav",3.0,"XC168545-0301_173322,чеб,сорока,самец,В.MP3"
+Eurasian_Magpie,"XC168545-0301_173322,чеб,сорока,самец,В",23,"data/processed/Eurasian_Magpie/XC168545-0301_173322,чеб,сорока,самец,В_chunk023.wav",3.0,"XC168545-0301_173322,чеб,сорока,самец,В.MP3"
+Eurasian_Magpie,"XC168545-0301_173322,чеб,сорока,самец,В",24,"data/processed/Eurasian_Magpie/XC168545-0301_173322,чеб,сорока,самец,В_chunk024.wav",3.0,"XC168545-0301_173322,чеб,сорока,самец,В.MP3"
+Eurasian_Magpie,"XC170923-0323_090117,Устье",0,"data/processed/Eurasian_Magpie/XC170923-0323_090117,Устье_chunk000.wav",3.0,"XC170923-0323_090117,Устье Цивиля,сорока,В1.MP3"
+Eurasian_Magpie,"XC170923-0323_090117,Устье",1,"data/processed/Eurasian_Magpie/XC170923-0323_090117,Устье_chunk001.wav",3.0,"XC170923-0323_090117,Устье Цивиля,сорока,В1.MP3"
+Eurasian_Magpie,"XC170923-0323_090117,Устье",2,"data/processed/Eurasian_Magpie/XC170923-0323_090117,Устье_chunk002.wav",3.0,"XC170923-0323_090117,Устье Цивиля,сорока,В1.MP3"
+Eurasian_Magpie,"XC170923-0323_090117,Устье",3,"data/processed/Eurasian_Magpie/XC170923-0323_090117,Устье_chunk003.wav",3.0,"XC170923-0323_090117,Устье Цивиля,сорока,В1.MP3"
+Eurasian_Magpie,"XC170923-0323_090117,Устье",4,"data/processed/Eurasian_Magpie/XC170923-0323_090117,Устье_chunk004.wav",3.0,"XC170923-0323_090117,Устье Цивиля,сорока,В1.MP3"
+Eurasian_Magpie,"XC170923-0323_090117,Устье",5,"data/processed/Eurasian_Magpie/XC170923-0323_090117,Устье_chunk005.wav",3.0,"XC170923-0323_090117,Устье Цивиля,сорока,В1.MP3"
+Eurasian_Magpie,"XC170923-0323_090117,Устье",6,"data/processed/Eurasian_Magpie/XC170923-0323_090117,Устье_chunk006.wav",3.0,"XC170923-0323_090117,Устье Цивиля,сорока,В1.MP3"
+Eurasian_Magpie,"XC170923-0323_090117,Устье",7,"data/processed/Eurasian_Magpie/XC170923-0323_090117,Устье_chunk007.wav",3.0,"XC170923-0323_090117,Устье Цивиля,сорока,В1.MP3"
+Eurasian_Magpie,"XC170923-0323_090117,Устье",8,"data/processed/Eurasian_Magpie/XC170923-0323_090117,Устье_chunk008.wav",3.0,"XC170923-0323_090117,Устье Цивиля,сорока,В1.MP3"
+Eurasian_Magpie,"XC170923-0323_090117,Устье",9,"data/processed/Eurasian_Magpie/XC170923-0323_090117,Устье_chunk009.wav",3.0,"XC170923-0323_090117,Устье Цивиля,сорока,В1.MP3"
+Eurasian_Magpie,"XC170923-0323_090117,Устье",10,"data/processed/Eurasian_Magpie/XC170923-0323_090117,Устье_chunk010.wav",3.0,"XC170923-0323_090117,Устье Цивиля,сорока,В1.MP3"
+Eurasian_Magpie,"XC170923-0323_090117,Устье",11,"data/processed/Eurasian_Magpie/XC170923-0323_090117,Устье_chunk011.wav",3.0,"XC170923-0323_090117,Устье Цивиля,сорока,В1.MP3"
+Eurasian_Magpie,"XC170923-0323_090117,Устье",12,"data/processed/Eurasian_Magpie/XC170923-0323_090117,Устье_chunk012.wav",3.0,"XC170923-0323_090117,Устье Цивиля,сорока,В1.MP3"
+Eurasian_Magpie,"XC170923-0323_090117,Устье",13,"data/processed/Eurasian_Magpie/XC170923-0323_090117,Устье_chunk013.wav",3.0,"XC170923-0323_090117,Устье Цивиля,сорока,В1.MP3"
+Eurasian_Magpie,"XC170923-0323_090117,Устье",14,"data/processed/Eurasian_Magpie/XC170923-0323_090117,Устье_chunk014.wav",3.0,"XC170923-0323_090117,Устье Цивиля,сорока,В1.MP3"
+Eurasian_Magpie,"XC170923-0323_090117,Устье",15,"data/processed/Eurasian_Magpie/XC170923-0323_090117,Устье_chunk015.wav",3.0,"XC170923-0323_090117,Устье Цивиля,сорока,В1.MP3"
+Carrion_Crow,15062010_02_zwarte_kraai,0,data/processed/Carrion_Crow/15062010_02_zwarte_kraai_chunk000.wav,3.0,15062010_02_zwarte_kraai.mp3
+Carrion_Crow,15062010_02_zwarte_kraai,1,data/processed/Carrion_Crow/15062010_02_zwarte_kraai_chunk001.wav,3.0,15062010_02_zwarte_kraai.mp3
+Carrion_Crow,15062010_02_zwarte_kraai,2,data/processed/Carrion_Crow/15062010_02_zwarte_kraai_chunk002.wav,3.0,15062010_02_zwarte_kraai.mp3
+Carrion_Crow,15062010_02_zwarte_kraai,3,data/processed/Carrion_Crow/15062010_02_zwarte_kraai_chunk003.wav,3.0,15062010_02_zwarte_kraai.mp3
+Carrion_Crow,15062010_02_zwarte_kraai,4,data/processed/Carrion_Crow/15062010_02_zwarte_kraai_chunk004.wav,3.0,15062010_02_zwarte_kraai.mp3
+Carrion_Crow,15062010_02_zwarte_kraai,5,data/processed/Carrion_Crow/15062010_02_zwarte_kraai_chunk005.wav,3.0,15062010_02_zwarte_kraai.mp3
+Carrion_Crow,15062010_02_zwarte_kraai,6,data/processed/Carrion_Crow/15062010_02_zwarte_kraai_chunk006.wav,3.0,15062010_02_zwarte_kraai.mp3
+Carrion_Crow,2012_02_12_Corvus_corone_Collinist_07Uhr10,0,data/processed/Carrion_Crow/2012_02_12_Corvus_corone_Collinist_07Uhr10_chunk000.wav,3.0,2012_02_12_Corvus_corone_Collinist_07Uhr10.mp3
+Carrion_Crow,2012_02_12_Corvus_corone_Collinist_07Uhr10,1,data/processed/Carrion_Crow/2012_02_12_Corvus_corone_Collinist_07Uhr10_chunk001.wav,3.0,2012_02_12_Corvus_corone_Collinist_07Uhr10.mp3
+Carrion_Crow,2012_02_12_Corvus_corone_Collinist_07Uhr10,2,data/processed/Carrion_Crow/2012_02_12_Corvus_corone_Collinist_07Uhr10_chunk002.wav,3.0,2012_02_12_Corvus_corone_Collinist_07Uhr10.mp3
+Carrion_Crow,2012_02_12_Corvus_corone_Collinist_07Uhr10,3,data/processed/Carrion_Crow/2012_02_12_Corvus_corone_Collinist_07Uhr10_chunk003.wav,3.0,2012_02_12_Corvus_corone_Collinist_07Uhr10.mp3
+Carrion_Crow,2012_02_12_Corvus_corone_Collinist_07Uhr10,4,data/processed/Carrion_Crow/2012_02_12_Corvus_corone_Collinist_07Uhr10_chunk004.wav,3.0,2012_02_12_Corvus_corone_Collinist_07Uhr10.mp3
+Carrion_Crow,2012_02_12_Corvus_corone_Collinist_07Uhr10,5,data/processed/Carrion_Crow/2012_02_12_Corvus_corone_Collinist_07Uhr10_chunk005.wav,3.0,2012_02_12_Corvus_corone_Collinist_07Uhr10.mp3
+Carrion_Crow,2012_02_12_Corvus_corone_Collinist_07Uhr10,6,data/processed/Carrion_Crow/2012_02_12_Corvus_corone_Collinist_07Uhr10_chunk006.wav,3.0,2012_02_12_Corvus_corone_Collinist_07Uhr10.mp3
+Carrion_Crow,2012_02_12_Corvus_corone_Collinist_07Uhr10,7,data/processed/Carrion_Crow/2012_02_12_Corvus_corone_Collinist_07Uhr10_chunk007.wav,3.0,2012_02_12_Corvus_corone_Collinist_07Uhr10.mp3
+Carrion_Crow,2012_02_12_Corvus_corone_Collinist_07Uhr10,8,data/processed/Carrion_Crow/2012_02_12_Corvus_corone_Collinist_07Uhr10_chunk008.wav,3.0,2012_02_12_Corvus_corone_Collinist_07Uhr10.mp3
+Carrion_Crow,2012_02_12_Corvus_corone_Collinist_07Uhr21,0,data/processed/Carrion_Crow/2012_02_12_Corvus_corone_Collinist_07Uhr21_chunk000.wav,3.0,2012_02_12_Corvus_corone_Collinist_07Uhr21.mp3
+Carrion_Crow,2012_02_12_Corvus_corone_Collinist_07Uhr21,1,data/processed/Carrion_Crow/2012_02_12_Corvus_corone_Collinist_07Uhr21_chunk001.wav,3.0,2012_02_12_Corvus_corone_Collinist_07Uhr21.mp3
+Carrion_Crow,2012_02_12_Corvus_corone_Collinist_07Uhr21,2,data/processed/Carrion_Crow/2012_02_12_Corvus_corone_Collinist_07Uhr21_chunk002.wav,3.0,2012_02_12_Corvus_corone_Collinist_07Uhr21.mp3
+Carrion_Crow,BLUEROBIN_ZwarteKraai_Panneland_Vogelenzang_ArnoldMeijer_140309_LS100538,0,data/processed/Carrion_Crow/BLUEROBIN_ZwarteKraai_Panneland_Vogelenzang_ArnoldMeijer_140309_LS100538_chunk000.wav,3.0,BLUEROBIN_ZwarteKraai_Panneland_Vogelenzang_ArnoldMeijer_140309_LS100538.mp3
+Carrion_Crow,BLUEROBIN_ZwarteKraai_Panneland_Vogelenzang_ArnoldMeijer_140309_LS100538,1,data/processed/Carrion_Crow/BLUEROBIN_ZwarteKraai_Panneland_Vogelenzang_ArnoldMeijer_140309_LS100538_chunk001.wav,3.0,BLUEROBIN_ZwarteKraai_Panneland_Vogelenzang_ArnoldMeijer_140309_LS100538.mp3
+Carrion_Crow,BLUEROBIN_ZwarteKraai_Panneland_Vogelenzang_ArnoldMeijer_140309_LS100538,2,data/processed/Carrion_Crow/BLUEROBIN_ZwarteKraai_Panneland_Vogelenzang_ArnoldMeijer_140309_LS100538_chunk002.wav,3.0,BLUEROBIN_ZwarteKraai_Panneland_Vogelenzang_ArnoldMeijer_140309_LS100538.mp3
+Carrion_Crow,Corvus-corone-Collinistr-05-03-2010-6-00,0,data/processed/Carrion_Crow/Corvus-corone-Collinistr-05-03-2010-6-00_chunk000.wav,3.0,Corvus-corone-Collinistr-05-03-2010-6-00.mp3
+Carrion_Crow,Corvus-corone-Collinistr-05-03-2010-6-00,1,data/processed/Carrion_Crow/Corvus-corone-Collinistr-05-03-2010-6-00_chunk001.wav,3.0,Corvus-corone-Collinistr-05-03-2010-6-00.mp3
+Carrion_Crow,Corvus-corone-Collinistr-05-03-2010-6-00,2,data/processed/Carrion_Crow/Corvus-corone-Collinistr-05-03-2010-6-00_chunk002.wav,3.0,Corvus-corone-Collinistr-05-03-2010-6-00.mp3
+Carrion_Crow,Corvus-corone-Collinistr-05-03-2010-6-00,3,data/processed/Carrion_Crow/Corvus-corone-Collinistr-05-03-2010-6-00_chunk003.wav,3.0,Corvus-corone-Collinistr-05-03-2010-6-00.mp3
+Carrion_Crow,Corvus-corone-Collinistr-05-03-2010-6-00,4,data/processed/Carrion_Crow/Corvus-corone-Collinistr-05-03-2010-6-00_chunk004.wav,3.0,Corvus-corone-Collinistr-05-03-2010-6-00.mp3
+Carrion_Crow,Corvus-corone-Collinistr-05-03-2010-6-00,5,data/processed/Carrion_Crow/Corvus-corone-Collinistr-05-03-2010-6-00_chunk005.wav,3.0,Corvus-corone-Collinistr-05-03-2010-6-00.mp3
+Carrion_Crow,Corvus-corone-Collinistr-05-03-2010-6-00,6,data/processed/Carrion_Crow/Corvus-corone-Collinistr-05-03-2010-6-00_chunk006.wav,3.0,Corvus-corone-Collinistr-05-03-2010-6-00.mp3
+Carrion_Crow,Corvus-corone-Collinistr-05-03-2010-6-00,7,data/processed/Carrion_Crow/Corvus-corone-Collinistr-05-03-2010-6-00_chunk007.wav,3.0,Corvus-corone-Collinistr-05-03-2010-6-00.mp3
+Carrion_Crow,Crowbedlandfill,0,data/processed/Carrion_Crow/Crowbedlandfill_chunk000.wav,3.0,Crowbedlandfill.mp3
+Carrion_Crow,Crowbedlandfill,1,data/processed/Carrion_Crow/Crowbedlandfill_chunk001.wav,3.0,Crowbedlandfill.mp3
+Carrion_Crow,Crowbedlandfill,2,data/processed/Carrion_Crow/Crowbedlandfill_chunk002.wav,3.0,Crowbedlandfill.mp3
+Carrion_Crow,Crowbedlandfill,3,data/processed/Carrion_Crow/Crowbedlandfill_chunk003.wav,3.0,Crowbedlandfill.mp3
+Carrion_Crow,Crowbedlandfill,4,data/processed/Carrion_Crow/Crowbedlandfill_chunk004.wav,3.0,Crowbedlandfill.mp3
+Carrion_Crow,Crowbedlandfill,5,data/processed/Carrion_Crow/Crowbedlandfill_chunk005.wav,3.0,Crowbedlandfill.mp3
+Carrion_Crow,Crowbedlandfill,6,data/processed/Carrion_Crow/Crowbedlandfill_chunk006.wav,3.0,Crowbedlandfill.mp3
+Carrion_Crow,Crowbedlandfill,7,data/processed/Carrion_Crow/Crowbedlandfill_chunk007.wav,3.0,Crowbedlandfill.mp3
+Carrion_Crow,Crowbedlandfill,8,data/processed/Carrion_Crow/Crowbedlandfill_chunk008.wav,3.0,Crowbedlandfill.mp3
+Carrion_Crow,Crowbedlandfill,9,data/processed/Carrion_Crow/Crowbedlandfill_chunk009.wav,3.0,Crowbedlandfill.mp3
+Carrion_Crow,Crowbedlandfill,10,data/processed/Carrion_Crow/Crowbedlandfill_chunk010.wav,3.0,Crowbedlandfill.mp3
+Carrion_Crow,Crowbedlandfill,11,data/processed/Carrion_Crow/Crowbedlandfill_chunk011.wav,3.0,Crowbedlandfill.mp3
+Carrion_Crow,Crowbedlandfill,12,data/processed/Carrion_Crow/Crowbedlandfill_chunk012.wav,3.0,Crowbedlandfill.mp3
+Carrion_Crow,Crowbedlandfill,13,data/processed/Carrion_Crow/Crowbedlandfill_chunk013.wav,3.0,Crowbedlandfill.mp3
+Carrion_Crow,Crowbedlandfill,14,data/processed/Carrion_Crow/Crowbedlandfill_chunk014.wav,3.0,Crowbedlandfill.mp3
+Carrion_Crow,Crowbedlandfill,15,data/processed/Carrion_Crow/Crowbedlandfill_chunk015.wav,3.0,Crowbedlandfill.mp3
+Carrion_Crow,Crowbedlandfill,16,data/processed/Carrion_Crow/Crowbedlandfill_chunk016.wav,3.0,Crowbedlandfill.mp3
+Carrion_Crow,Crowbedlandfill,17,data/processed/Carrion_Crow/Crowbedlandfill_chunk017.wav,3.0,Crowbedlandfill.mp3
+Carrion_Crow,Crowbedlandfill,18,data/processed/Carrion_Crow/Crowbedlandfill_chunk018.wav,3.0,Crowbedlandfill.mp3
+Carrion_Crow,Crowbedlandfill,19,data/processed/Carrion_Crow/Crowbedlandfill_chunk019.wav,3.0,Crowbedlandfill.mp3
+Carrion_Crow,Crowbedlandfill,20,data/processed/Carrion_Crow/Crowbedlandfill_chunk020.wav,3.0,Crowbedlandfill.mp3
+Carrion_Crow,Crowbedlandfill,21,data/processed/Carrion_Crow/Crowbedlandfill_chunk021.wav,3.0,Crowbedlandfill.mp3
+Carrion_Crow,Crowbedlandfill,22,data/processed/Carrion_Crow/Crowbedlandfill_chunk022.wav,3.0,Crowbedlandfill.mp3
+Carrion_Crow,Crowbedlandfill,23,data/processed/Carrion_Crow/Crowbedlandfill_chunk023.wav,3.0,Crowbedlandfill.mp3
+Carrion_Crow,Crowbedlandfill,24,data/processed/Carrion_Crow/Crowbedlandfill_chunk024.wav,3.0,Crowbedlandfill.mp3
+Carrion_Crow,Crowbedlandfill,25,data/processed/Carrion_Crow/Crowbedlandfill_chunk025.wav,3.0,Crowbedlandfill.mp3
+Carrion_Crow,Crowbedlandfill,26,data/processed/Carrion_Crow/Crowbedlandfill_chunk026.wav,3.0,Crowbedlandfill.mp3
+Carrion_Crow,Kraai_Norf_110417-03xc,0,data/processed/Carrion_Crow/Kraai_Norf_110417-03xc_chunk000.wav,3.0,Kraai_Norf_110417-03xc.mp3
+Carrion_Crow,Kraai_Norf_110417-03xc,1,data/processed/Carrion_Crow/Kraai_Norf_110417-03xc_chunk001.wav,3.0,Kraai_Norf_110417-03xc.mp3
+Carrion_Crow,Kraai_Norf_110417-03xc,2,data/processed/Carrion_Crow/Kraai_Norf_110417-03xc_chunk002.wav,3.0,Kraai_Norf_110417-03xc.mp3
+Carrion_Crow,Kraai_Norf_110417-03xc,3,data/processed/Carrion_Crow/Kraai_Norf_110417-03xc_chunk003.wav,3.0,Kraai_Norf_110417-03xc.mp3
+Carrion_Crow,Kraai_Norf_110417-03xc,4,data/processed/Carrion_Crow/Kraai_Norf_110417-03xc_chunk004.wav,3.0,Kraai_Norf_110417-03xc.mp3
+Carrion_Crow,Kraai_ZHav_110328-01xc,0,data/processed/Carrion_Crow/Kraai_ZHav_110328-01xc_chunk000.wav,3.0,Kraai_ZHav_110328-01xc.mp3
+Carrion_Crow,Kraai_ZHav_110328-01xc,1,data/processed/Carrion_Crow/Kraai_ZHav_110328-01xc_chunk001.wav,3.0,Kraai_ZHav_110328-01xc.mp3
+Carrion_Crow,Kraai_ZHav_110328-01xc,2,data/processed/Carrion_Crow/Kraai_ZHav_110328-01xc_chunk002.wav,3.0,Kraai_ZHav_110328-01xc.mp3
+Carrion_Crow,Kraai_ZHav_110328-01xc,3,data/processed/Carrion_Crow/Kraai_ZHav_110328-01xc_chunk003.wav,3.0,Kraai_ZHav_110328-01xc.mp3
+Carrion_Crow,Kraai_ZHav_110328-01xc,4,data/processed/Carrion_Crow/Kraai_ZHav_110328-01xc_chunk004.wav,3.0,Kraai_ZHav_110328-01xc.mp3
+Carrion_Crow,Kraai_ZHav_110328-01xc,5,data/processed/Carrion_Crow/Kraai_ZHav_110328-01xc_chunk005.wav,3.0,Kraai_ZHav_110328-01xc.mp3
+Carrion_Crow,Kraai_ZHav_110328-01xc,6,data/processed/Carrion_Crow/Kraai_ZHav_110328-01xc_chunk006.wav,3.0,Kraai_ZHav_110328-01xc.mp3
+Carrion_Crow,Kraai_ZHav_110328-01xc,7,data/processed/Carrion_Crow/Kraai_ZHav_110328-01xc_chunk007.wav,3.0,Kraai_ZHav_110328-01xc.mp3
+Carrion_Crow,Kraai_ZHav_110328-01xc,8,data/processed/Carrion_Crow/Kraai_ZHav_110328-01xc_chunk008.wav,3.0,Kraai_ZHav_110328-01xc.mp3
+Carrion_Crow,Kraai_ZHav_110328-01xc,9,data/processed/Carrion_Crow/Kraai_ZHav_110328-01xc_chunk009.wav,3.0,Kraai_ZHav_110328-01xc.mp3
+Carrion_Crow,Kraai_ZHav_110328-01xc,10,data/processed/Carrion_Crow/Kraai_ZHav_110328-01xc_chunk010.wav,3.0,Kraai_ZHav_110328-01xc.mp3
+Carrion_Crow,Kraai_ZHav_110328-01xc,11,data/processed/Carrion_Crow/Kraai_ZHav_110328-01xc_chunk011.wav,3.0,Kraai_ZHav_110328-01xc.mp3
+Carrion_Crow,Kraai_ZHav_110328-01xc,12,data/processed/Carrion_Crow/Kraai_ZHav_110328-01xc_chunk012.wav,3.0,Kraai_ZHav_110328-01xc.mp3
+Carrion_Crow,Kraai_ZHav_110328-01xc,13,data/processed/Carrion_Crow/Kraai_ZHav_110328-01xc_chunk013.wav,3.0,Kraai_ZHav_110328-01xc.mp3
+Carrion_Crow,RabenkrRabeBussWiemGeh8-4-12_16-20,0,data/processed/Carrion_Crow/RabenkrRabeBussWiemGeh8-4-12_16-20_chunk000.wav,3.0,RabenkrRabeBussWiemGeh8-4-12_16-20.mp3
+Carrion_Crow,RabenkrRabeBussWiemGeh8-4-12_16-20,1,data/processed/Carrion_Crow/RabenkrRabeBussWiemGeh8-4-12_16-20_chunk001.wav,3.0,RabenkrRabeBussWiemGeh8-4-12_16-20.mp3
+Carrion_Crow,RabenkrRabeBussWiemGeh8-4-12_16-20,2,data/processed/Carrion_Crow/RabenkrRabeBussWiemGeh8-4-12_16-20_chunk002.wav,3.0,RabenkrRabeBussWiemGeh8-4-12_16-20.mp3
+Carrion_Crow,RabenkrRabeBussWiemGeh8-4-12_16-20,3,data/processed/Carrion_Crow/RabenkrRabeBussWiemGeh8-4-12_16-20_chunk003.wav,3.0,RabenkrRabeBussWiemGeh8-4-12_16-20.mp3
+Carrion_Crow,RabenkrRabeBussWiemGeh8-4-12_16-20,4,data/processed/Carrion_Crow/RabenkrRabeBussWiemGeh8-4-12_16-20_chunk004.wav,3.0,RabenkrRabeBussWiemGeh8-4-12_16-20.mp3
+Carrion_Crow,RabenkrRabeBussWiemGeh8-4-12_16-20,5,data/processed/Carrion_Crow/RabenkrRabeBussWiemGeh8-4-12_16-20_chunk005.wav,3.0,RabenkrRabeBussWiemGeh8-4-12_16-20.mp3
+Carrion_Crow,RabenkrRabeBussWiemGeh8-4-12_16-20,6,data/processed/Carrion_Crow/RabenkrRabeBussWiemGeh8-4-12_16-20_chunk006.wav,3.0,RabenkrRabeBussWiemGeh8-4-12_16-20.mp3
+Carrion_Crow,RabenkrRabeBussWiemGeh8-4-12_16-20,7,data/processed/Carrion_Crow/RabenkrRabeBussWiemGeh8-4-12_16-20_chunk007.wav,3.0,RabenkrRabeBussWiemGeh8-4-12_16-20.mp3
+Carrion_Crow,RabenkrRabeBussWiemGeh8-4-12_16-20,8,data/processed/Carrion_Crow/RabenkrRabeBussWiemGeh8-4-12_16-20_chunk008.wav,3.0,RabenkrRabeBussWiemGeh8-4-12_16-20.mp3
+Carrion_Crow,RabenkrRabeBussWiemGeh8-4-12_16-20,9,data/processed/Carrion_Crow/RabenkrRabeBussWiemGeh8-4-12_16-20_chunk009.wav,3.0,RabenkrRabeBussWiemGeh8-4-12_16-20.mp3
+Carrion_Crow,RabenkrRabeBussWiemGeh8-4-12_16-20,10,data/processed/Carrion_Crow/RabenkrRabeBussWiemGeh8-4-12_16-20_chunk010.wav,3.0,RabenkrRabeBussWiemGeh8-4-12_16-20.mp3
+Carrion_Crow,RabenkrRabeBussWiemGeh8-4-12_16-20,11,data/processed/Carrion_Crow/RabenkrRabeBussWiemGeh8-4-12_16-20_chunk011.wav,3.0,RabenkrRabeBussWiemGeh8-4-12_16-20.mp3
+Carrion_Crow,RabenkrRabeBussWiemGeh8-4-12_16-20,12,data/processed/Carrion_Crow/RabenkrRabeBussWiemGeh8-4-12_16-20_chunk012.wav,3.0,RabenkrRabeBussWiemGeh8-4-12_16-20.mp3
+Carrion_Crow,RabenkrRabeBussWiemGeh8-4-12_16-20,13,data/processed/Carrion_Crow/RabenkrRabeBussWiemGeh8-4-12_16-20_chunk013.wav,3.0,RabenkrRabeBussWiemGeh8-4-12_16-20.mp3
+Carrion_Crow,RabenkrRabeBussWiemGeh8-4-12_16-20,14,data/processed/Carrion_Crow/RabenkrRabeBussWiemGeh8-4-12_16-20_chunk014.wav,3.0,RabenkrRabeBussWiemGeh8-4-12_16-20.mp3
+Carrion_Crow,RabenkrRabeBussWiemGeh8-4-12_16-20,15,data/processed/Carrion_Crow/RabenkrRabeBussWiemGeh8-4-12_16-20_chunk015.wav,3.0,RabenkrRabeBussWiemGeh8-4-12_16-20.mp3
+Carrion_Crow,RabenkrRabeBussWiemGeh8-4-12_16-20,16,data/processed/Carrion_Crow/RabenkrRabeBussWiemGeh8-4-12_16-20_chunk016.wav,3.0,RabenkrRabeBussWiemGeh8-4-12_16-20.mp3
+Carrion_Crow,RabenkrRabeBussWiemGeh8-4-12_16-20,17,data/processed/Carrion_Crow/RabenkrRabeBussWiemGeh8-4-12_16-20_chunk017.wav,3.0,RabenkrRabeBussWiemGeh8-4-12_16-20.mp3
+Carrion_Crow,RabenkrRabeBussWiemGeh8-4-12_16-20,18,data/processed/Carrion_Crow/RabenkrRabeBussWiemGeh8-4-12_16-20_chunk018.wav,3.0,RabenkrRabeBussWiemGeh8-4-12_16-20.mp3
+Carrion_Crow,RabenkrRabeBussWiemGeh8-4-12_16-20,19,data/processed/Carrion_Crow/RabenkrRabeBussWiemGeh8-4-12_16-20_chunk019.wav,3.0,RabenkrRabeBussWiemGeh8-4-12_16-20.mp3
+Carrion_Crow,RabenkrRabeBussWiemGeh8-4-12_16-20,20,data/processed/Carrion_Crow/RabenkrRabeBussWiemGeh8-4-12_16-20_chunk020.wav,3.0,RabenkrRabeBussWiemGeh8-4-12_16-20.mp3
+Carrion_Crow,RabenkrRabeBussWiemGeh8-4-12_16-20,21,data/processed/Carrion_Crow/RabenkrRabeBussWiemGeh8-4-12_16-20_chunk021.wav,3.0,RabenkrRabeBussWiemGeh8-4-12_16-20.mp3
+Carrion_Crow,RabenkrRabeBussWiemGeh8-4-12_16-20,22,data/processed/Carrion_Crow/RabenkrRabeBussWiemGeh8-4-12_16-20_chunk022.wav,3.0,RabenkrRabeBussWiemGeh8-4-12_16-20.mp3
+Carrion_Crow,RabenkrRabeBussWiemGeh8-4-12_16-20,23,data/processed/Carrion_Crow/RabenkrRabeBussWiemGeh8-4-12_16-20_chunk023.wav,3.0,RabenkrRabeBussWiemGeh8-4-12_16-20.mp3
+Carrion_Crow,RabenkrRabeBussWiemGeh8-4-12_16-20,24,data/processed/Carrion_Crow/RabenkrRabeBussWiemGeh8-4-12_16-20_chunk024.wav,3.0,RabenkrRabeBussWiemGeh8-4-12_16-20.mp3
+Carrion_Crow,RabenkrRabeBussWiemGeh8-4-12_16-20,25,data/processed/Carrion_Crow/RabenkrRabeBussWiemGeh8-4-12_16-20_chunk025.wav,3.0,RabenkrRabeBussWiemGeh8-4-12_16-20.mp3
+Carrion_Crow,RabenkrRabeBussWiemGeh8-4-12_16-20,26,data/processed/Carrion_Crow/RabenkrRabeBussWiemGeh8-4-12_16-20_chunk026.wav,3.0,RabenkrRabeBussWiemGeh8-4-12_16-20.mp3
+Carrion_Crow,RabenkrRabeBussWiemGeh8-4-12_16-20,27,data/processed/Carrion_Crow/RabenkrRabeBussWiemGeh8-4-12_16-20_chunk027.wav,3.0,RabenkrRabeBussWiemGeh8-4-12_16-20.mp3
+Carrion_Crow,RabenkrRabeBussWiemGeh8-4-12_16-20,28,data/processed/Carrion_Crow/RabenkrRabeBussWiemGeh8-4-12_16-20_chunk028.wav,3.0,RabenkrRabeBussWiemGeh8-4-12_16-20.mp3
+Carrion_Crow,RabenkraeheBerl61-13-2-11_7-53,0,data/processed/Carrion_Crow/RabenkraeheBerl61-13-2-11_7-53_chunk000.wav,3.0,RabenkraeheBerl61-13-2-11_7-53.mp3
+Carrion_Crow,RabenkraeheBerl61-13-2-11_7-53,1,data/processed/Carrion_Crow/RabenkraeheBerl61-13-2-11_7-53_chunk001.wav,3.0,RabenkraeheBerl61-13-2-11_7-53.mp3
+Carrion_Crow,XC115894-2012_12_28_Corvus-corone_Collinistr_07Uhr20,0,data/processed/Carrion_Crow/XC115894-2012_12_28_Corvus-corone_Collinistr_07Uhr20_chunk000.wav,3.0,XC115894-2012_12_28_Corvus-corone_Collinistr_07Uhr20.mp3
+Carrion_Crow,XC115894-2012_12_28_Corvus-corone_Collinistr_07Uhr20,1,data/processed/Carrion_Crow/XC115894-2012_12_28_Corvus-corone_Collinistr_07Uhr20_chunk001.wav,3.0,XC115894-2012_12_28_Corvus-corone_Collinistr_07Uhr20.mp3
+Carrion_Crow,XC115894-2012_12_28_Corvus-corone_Collinistr_07Uhr20,2,data/processed/Carrion_Crow/XC115894-2012_12_28_Corvus-corone_Collinistr_07Uhr20_chunk002.wav,3.0,XC115894-2012_12_28_Corvus-corone_Collinistr_07Uhr20.mp3
+Carrion_Crow,XC115894-2012_12_28_Corvus-corone_Collinistr_07Uhr20,3,data/processed/Carrion_Crow/XC115894-2012_12_28_Corvus-corone_Collinistr_07Uhr20_chunk003.wav,3.0,XC115894-2012_12_28_Corvus-corone_Collinistr_07Uhr20.mp3
+Carrion_Crow,XC115894-2012_12_28_Corvus-corone_Collinistr_07Uhr20,4,data/processed/Carrion_Crow/XC115894-2012_12_28_Corvus-corone_Collinistr_07Uhr20_chunk004.wav,3.0,XC115894-2012_12_28_Corvus-corone_Collinistr_07Uhr20.mp3
+Carrion_Crow,XC120326-05124_pfranke_110405_rkrae_orientalis_C_B,0,data/processed/Carrion_Crow/XC120326-05124_pfranke_110405_rkrae_orientalis_C_B_chunk000.wav,3.0,XC120326-05124_pfranke_110405_rkrae_orientalis_C_B.mp3
+Carrion_Crow,XC120326-05124_pfranke_110405_rkrae_orientalis_C_B,1,data/processed/Carrion_Crow/XC120326-05124_pfranke_110405_rkrae_orientalis_C_B_chunk001.wav,3.0,XC120326-05124_pfranke_110405_rkrae_orientalis_C_B.mp3
+Carrion_Crow,XC120326-05124_pfranke_110405_rkrae_orientalis_C_B,2,data/processed/Carrion_Crow/XC120326-05124_pfranke_110405_rkrae_orientalis_C_B_chunk002.wav,3.0,XC120326-05124_pfranke_110405_rkrae_orientalis_C_B.mp3
+Carrion_Crow,XC121745-RabenkrRuesdS16-2-13_16-11,0,data/processed/Carrion_Crow/XC121745-RabenkrRuesdS16-2-13_16-11_chunk000.wav,3.0,XC121745-RabenkrRuesdS16-2-13_16-11.mp3
+Carrion_Crow,XC121745-RabenkrRuesdS16-2-13_16-11,1,data/processed/Carrion_Crow/XC121745-RabenkrRuesdS16-2-13_16-11_chunk001.wav,3.0,XC121745-RabenkrRuesdS16-2-13_16-11.mp3
+Carrion_Crow,XC121745-RabenkrRuesdS16-2-13_16-11,2,data/processed/Carrion_Crow/XC121745-RabenkrRuesdS16-2-13_16-11_chunk002.wav,3.0,XC121745-RabenkrRuesdS16-2-13_16-11.mp3
+Carrion_Crow,XC121745-RabenkrRuesdS16-2-13_16-11,3,data/processed/Carrion_Crow/XC121745-RabenkrRuesdS16-2-13_16-11_chunk003.wav,3.0,XC121745-RabenkrRuesdS16-2-13_16-11.mp3
+Carrion_Crow,XC121745-RabenkrRuesdS16-2-13_16-11,4,data/processed/Carrion_Crow/XC121745-RabenkrRuesdS16-2-13_16-11_chunk004.wav,3.0,XC121745-RabenkrRuesdS16-2-13_16-11.mp3
+Carrion_Crow,XC121745-RabenkrRuesdS16-2-13_16-11,5,data/processed/Carrion_Crow/XC121745-RabenkrRuesdS16-2-13_16-11_chunk005.wav,3.0,XC121745-RabenkrRuesdS16-2-13_16-11.mp3
+Carrion_Crow,XC121745-RabenkrRuesdS16-2-13_16-11,6,data/processed/Carrion_Crow/XC121745-RabenkrRuesdS16-2-13_16-11_chunk006.wav,3.0,XC121745-RabenkrRuesdS16-2-13_16-11.mp3
+Carrion_Crow,XC121745-RabenkrRuesdS16-2-13_16-11,7,data/processed/Carrion_Crow/XC121745-RabenkrRuesdS16-2-13_16-11_chunk007.wav,3.0,XC121745-RabenkrRuesdS16-2-13_16-11.mp3
+Carrion_Crow,XC123174-RabenkrBesBerl61-25-2-11_8-21,0,data/processed/Carrion_Crow/XC123174-RabenkrBesBerl61-25-2-11_8-21_chunk000.wav,3.0,XC123174-RabenkrBesBerl61-25-2-11_8-21.mp3
+Carrion_Crow,XC123174-RabenkrBesBerl61-25-2-11_8-21,1,data/processed/Carrion_Crow/XC123174-RabenkrBesBerl61-25-2-11_8-21_chunk001.wav,3.0,XC123174-RabenkrBesBerl61-25-2-11_8-21.mp3
+Carrion_Crow,XC128100-RabenkrKahlbuethN29-3-13_8-04,0,data/processed/Carrion_Crow/XC128100-RabenkrKahlbuethN29-3-13_8-04_chunk000.wav,3.0,XC128100-RabenkrKahlbuethN29-3-13_8-04.mp3
+Carrion_Crow,XC128100-RabenkrKahlbuethN29-3-13_8-04,1,data/processed/Carrion_Crow/XC128100-RabenkrKahlbuethN29-3-13_8-04_chunk001.wav,3.0,XC128100-RabenkrKahlbuethN29-3-13_8-04.mp3
+Carrion_Crow,XC128100-RabenkrKahlbuethN29-3-13_8-04,2,data/processed/Carrion_Crow/XC128100-RabenkrKahlbuethN29-3-13_8-04_chunk002.wav,3.0,XC128100-RabenkrKahlbuethN29-3-13_8-04.mp3
+Carrion_Crow,XC128100-RabenkrKahlbuethN29-3-13_8-04,3,data/processed/Carrion_Crow/XC128100-RabenkrKahlbuethN29-3-13_8-04_chunk003.wav,3.0,XC128100-RabenkrKahlbuethN29-3-13_8-04.mp3
+Carrion_Crow,XC128100-RabenkrKahlbuethN29-3-13_8-04,4,data/processed/Carrion_Crow/XC128100-RabenkrKahlbuethN29-3-13_8-04_chunk004.wav,3.0,XC128100-RabenkrKahlbuethN29-3-13_8-04.mp3
+Carrion_Crow,XC128100-RabenkrKahlbuethN29-3-13_8-04,5,data/processed/Carrion_Crow/XC128100-RabenkrKahlbuethN29-3-13_8-04_chunk005.wav,3.0,XC128100-RabenkrKahlbuethN29-3-13_8-04.mp3
