@@ -227,6 +227,11 @@ def main() -> None:
         action="store_true",
         help="OOD gate を無効化（閾値なしで分類のみ実行）",
     )
+    parser.add_argument(
+        "--json",
+        action="store_true",
+        help="結果を1行JSONで stdout 出力（process.py 等のプログラム連携用。人間向け print は抑制）",
+    )
     args = parser.parse_args()
 
     config = load_config()
@@ -261,10 +266,14 @@ def main() -> None:
     elif energy_threshold is None:
         gate_off_reason = f"taxonomy[{args.group}].pipeline に energy_threshold 未設定"
 
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    print(f"[DEV] device: {device}")
+    import sys
+    # --json 時は診断ログを stderr に流し、stdout は1行JSONだけにする（subprocess 連携用）。
+    log = (lambda *a, **k: print(*a, file=sys.stderr, **k)) if args.json else print
 
-    print(f"[LOAD] モデル: {model_dir}")
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    log(f"[DEV] device: {device}")
+
+    log(f"[LOAD] モデル: {model_dir}")
     max_length = int(model_cfg.get("feature_extractor_max_length", 1024))
     feature_extractor = ASTFeatureExtractor.from_pretrained(
         model_cfg["pretrained"], max_length=max_length
@@ -276,11 +285,11 @@ def main() -> None:
     id2label = load_label_map(model_dir)
 
     if energy_threshold is not None:
-        print(f"[OOD] energy gate 有効: threshold={energy_threshold} / T={energy_temperature}")
+        log(f"[OOD] energy gate 有効: threshold={energy_threshold} / T={energy_temperature}")
     else:
-        print(f"[OOD] energy gate 無効（{gate_off_reason}）")
+        log(f"[OOD] energy gate 無効（{gate_off_reason}）")
 
-    print(f"[AUDIO] 推論: {audio_path}")
+    log(f"[AUDIO] 推論: {audio_path}")
     result = predict_audio(
         audio_path=audio_path,
         model=model,
@@ -293,6 +302,31 @@ def main() -> None:
         energy_threshold=energy_threshold,
         energy_temperature=energy_temperature,
     )
+
+    # 表示ラベル（複合・和名/学名）を予測に付与
+    groups = load_display_groups(args.group)
+    sp_disp = load_species_display()
+    for p in result.get("predictions", []):
+        label, sci = resolve_display(p["species"], groups, sp_disp)
+        p["label"], p["sci"] = label, sci
+
+    # --json: 機械可読な1行を stdout へ
+    if args.json:
+        preds = result.get("predictions", [])
+        out = {
+            "group": args.group,
+            "model": model_dir.name,
+            "audio": str(audio_path),
+            "energy_score": result.get("energy_score"),
+            "energy_threshold": energy_threshold,
+            "ood_rejected": bool(result.get("ood_rejected")),
+            "error": result.get("error"),
+            "predictions": preds,
+            "top": preds[0] if preds else None,
+        }
+        import json as _json
+        print(_json.dumps(out, ensure_ascii=False))
+        return
 
     if "error" in result:
         print(f"[ERROR] {result['error']}")
@@ -309,14 +343,10 @@ def main() -> None:
         print("  → BirdNet の誤検出またはカモ科以外の音声の可能性があります")
         return
 
-    groups = load_display_groups(args.group)
-    sp_disp = load_species_display()
     print(f"\n[INFO] Top-{top_k} 予測:")
     for p in result["predictions"]:
-        label, sci = resolve_display(p["species"], groups, sp_disp)
-        p["label"], p["sci"] = label, sci  # 結果dictにも表示ラベルを付与
         bar = "█" * int(p["probability"] * 40)
-        disp = f"{label}（{sci}）" if sci else label
+        disp = f"{p['label']}（{p['sci']}）" if p['sci'] else p['label']
         print(f"  {p['rank']}. {disp:28s} {p['probability']:6.2%}  {bar}")
 
 
