@@ -1,0 +1,934 @@
+species,xc_id,chunk_index,file_path,duration_sec,source_file
+Vega_Gull,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445,0,data/processed/Vega_Gull/XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445_chunk000.wav,3.0,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445.mp3
+Vega_Gull,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445,1,data/processed/Vega_Gull/XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445_chunk001.wav,3.0,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445.mp3
+Vega_Gull,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445,2,data/processed/Vega_Gull/XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445_chunk002.wav,3.0,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445.mp3
+Vega_Gull,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445,3,data/processed/Vega_Gull/XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445_chunk003.wav,3.0,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445.mp3
+Vega_Gull,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445,4,data/processed/Vega_Gull/XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445_chunk004.wav,3.0,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445.mp3
+Vega_Gull,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445,5,data/processed/Vega_Gull/XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445_chunk005.wav,3.0,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445.mp3
+Vega_Gull,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445,6,data/processed/Vega_Gull/XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445_chunk006.wav,3.0,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445.mp3
+Vega_Gull,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445,7,data/processed/Vega_Gull/XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445_chunk007.wav,3.0,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445.mp3
+Vega_Gull,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445,8,data/processed/Vega_Gull/XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445_chunk008.wav,3.0,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445.mp3
+Vega_Gull,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445,9,data/processed/Vega_Gull/XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445_chunk009.wav,3.0,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445.mp3
+Vega_Gull,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445,10,data/processed/Vega_Gull/XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445_chunk010.wav,3.0,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445.mp3
+Vega_Gull,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445,11,data/processed/Vega_Gull/XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445_chunk011.wav,3.0,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445.mp3
+Vega_Gull,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445,12,data/processed/Vega_Gull/XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445_chunk012.wav,3.0,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445.mp3
+Vega_Gull,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445,13,data/processed/Vega_Gull/XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445_chunk013.wav,3.0,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445.mp3
+Vega_Gull,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445,14,data/processed/Vega_Gull/XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445_chunk014.wav,3.0,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445.mp3
+Vega_Gull,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445,15,data/processed/Vega_Gull/XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445_chunk015.wav,3.0,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445.mp3
+Vega_Gull,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445,16,data/processed/Vega_Gull/XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445_chunk016.wav,3.0,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445.mp3
+Vega_Gull,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445,17,data/processed/Vega_Gull/XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445_chunk017.wav,3.0,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445.mp3
+Vega_Gull,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445,18,data/processed/Vega_Gull/XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445_chunk018.wav,3.0,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445.mp3
+Vega_Gull,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445,19,data/processed/Vega_Gull/XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445_chunk019.wav,3.0,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445.mp3
+Vega_Gull,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445,20,data/processed/Vega_Gull/XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445_chunk020.wav,3.0,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445.mp3
+Vega_Gull,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445,21,data/processed/Vega_Gull/XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445_chunk021.wav,3.0,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445.mp3
+Vega_Gull,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445,22,data/processed/Vega_Gull/XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445_chunk022.wav,3.0,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445.mp3
+Vega_Gull,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445,23,data/processed/Vega_Gull/XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445_chunk023.wav,3.0,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445.mp3
+Vega_Gull,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445,24,data/processed/Vega_Gull/XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445_chunk024.wav,3.0,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445.mp3
+Vega_Gull,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445,25,data/processed/Vega_Gull/XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445_chunk025.wav,3.0,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445.mp3
+Vega_Gull,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445,26,data/processed/Vega_Gull/XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445_chunk026.wav,3.0,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445.mp3
+Vega_Gull,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445,27,data/processed/Vega_Gull/XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445_chunk027.wav,3.0,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445.mp3
+Vega_Gull,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445,28,data/processed/Vega_Gull/XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445_chunk028.wav,3.0,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445.mp3
+Vega_Gull,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445,29,data/processed/Vega_Gull/XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445_chunk029.wav,3.0,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445.mp3
+Vega_Gull,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445,30,data/processed/Vega_Gull/XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445_chunk030.wav,3.0,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445.mp3
+Vega_Gull,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445,31,data/processed/Vega_Gull/XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445_chunk031.wav,3.0,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445.mp3
+Vega_Gull,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445,32,data/processed/Vega_Gull/XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445_chunk032.wav,3.0,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445.mp3
+Vega_Gull,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445,33,data/processed/Vega_Gull/XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445_chunk033.wav,3.0,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445.mp3
+Vega_Gull,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445,34,data/processed/Vega_Gull/XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445_chunk034.wav,3.0,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445.mp3
+Vega_Gull,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445,35,data/processed/Vega_Gull/XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445_chunk035.wav,3.0,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445.mp3
+Vega_Gull,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445,36,data/processed/Vega_Gull/XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445_chunk036.wav,3.0,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445.mp3
+Vega_Gull,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445,37,data/processed/Vega_Gull/XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445_chunk037.wav,3.0,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445.mp3
+Vega_Gull,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445,38,data/processed/Vega_Gull/XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445_chunk038.wav,3.0,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445.mp3
+Vega_Gull,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445,39,data/processed/Vega_Gull/XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445_chunk039.wav,3.0,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445.mp3
+Vega_Gull,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445,40,data/processed/Vega_Gull/XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445_chunk040.wav,3.0,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445.mp3
+Vega_Gull,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445,41,data/processed/Vega_Gull/XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445_chunk041.wav,3.0,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445.mp3
+Vega_Gull,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445,42,data/processed/Vega_Gull/XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445_chunk042.wav,3.0,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445.mp3
+Vega_Gull,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445,43,data/processed/Vega_Gull/XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445_chunk043.wav,3.0,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445.mp3
+Vega_Gull,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445,44,data/processed/Vega_Gull/XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445_chunk044.wav,3.0,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445.mp3
+Vega_Gull,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445,45,data/processed/Vega_Gull/XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445_chunk045.wav,3.0,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445.mp3
+Vega_Gull,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445,46,data/processed/Vega_Gull/XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445_chunk046.wav,3.0,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445.mp3
+Vega_Gull,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445,47,data/processed/Vega_Gull/XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445_chunk047.wav,3.0,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445.mp3
+Vega_Gull,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445,48,data/processed/Vega_Gull/XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445_chunk048.wav,3.0,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445.mp3
+Vega_Gull,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445,49,data/processed/Vega_Gull/XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445_chunk049.wav,3.0,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445.mp3
+Vega_Gull,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445,50,data/processed/Vega_Gull/XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445_chunk050.wav,3.0,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445.mp3
+Vega_Gull,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445,51,data/processed/Vega_Gull/XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445_chunk051.wav,3.0,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445.mp3
+Vega_Gull,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445,52,data/processed/Vega_Gull/XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445_chunk052.wav,3.0,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445.mp3
+Vega_Gull,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445,53,data/processed/Vega_Gull/XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445_chunk053.wav,3.0,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445.mp3
+Vega_Gull,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445,54,data/processed/Vega_Gull/XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445_chunk054.wav,3.0,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445.mp3
+Vega_Gull,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445,55,data/processed/Vega_Gull/XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445_chunk055.wav,3.0,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445.mp3
+Vega_Gull,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445,56,data/processed/Vega_Gull/XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445_chunk056.wav,3.0,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445.mp3
+Vega_Gull,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445,57,data/processed/Vega_Gull/XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445_chunk057.wav,3.0,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445.mp3
+Vega_Gull,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445,58,data/processed/Vega_Gull/XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445_chunk058.wav,3.0,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445.mp3
+Vega_Gull,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445,59,data/processed/Vega_Gull/XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445_chunk059.wav,3.0,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445.mp3
+Vega_Gull,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445,60,data/processed/Vega_Gull/XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445_chunk060.wav,3.0,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445.mp3
+Vega_Gull,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445,61,data/processed/Vega_Gull/XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445_chunk061.wav,3.0,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445.mp3
+Vega_Gull,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445,62,data/processed/Vega_Gull/XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445_chunk062.wav,3.0,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445.mp3
+Vega_Gull,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445,63,data/processed/Vega_Gull/XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445_chunk063.wav,3.0,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445.mp3
+Vega_Gull,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445,64,data/processed/Vega_Gull/XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445_chunk064.wav,3.0,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445.mp3
+Vega_Gull,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445,65,data/processed/Vega_Gull/XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445_chunk065.wav,3.0,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445.mp3
+Vega_Gull,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445,66,data/processed/Vega_Gull/XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445_chunk066.wav,3.0,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445.mp3
+Vega_Gull,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445,67,data/processed/Vega_Gull/XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445_chunk067.wav,3.0,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445.mp3
+Vega_Gull,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445,68,data/processed/Vega_Gull/XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445_chunk068.wav,3.0,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445.mp3
+Vega_Gull,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445,69,data/processed/Vega_Gull/XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445_chunk069.wav,3.0,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445.mp3
+Vega_Gull,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445,70,data/processed/Vega_Gull/XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445_chunk070.wav,3.0,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445.mp3
+Vega_Gull,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445,71,data/processed/Vega_Gull/XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445_chunk071.wav,3.0,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445.mp3
+Vega_Gull,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445,72,data/processed/Vega_Gull/XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445_chunk072.wav,3.0,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445.mp3
+Vega_Gull,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445,73,data/processed/Vega_Gull/XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445_chunk073.wav,3.0,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445.mp3
+Vega_Gull,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445,74,data/processed/Vega_Gull/XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445_chunk074.wav,3.0,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445.mp3
+Vega_Gull,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445,75,data/processed/Vega_Gull/XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445_chunk075.wav,3.0,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445.mp3
+Vega_Gull,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445,76,data/processed/Vega_Gull/XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445_chunk076.wav,3.0,XC1029523-GULL_Mongolian_colony-Khukh-Nuur-2600m-060425-0445.mp3
+Vega_Gull,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830,0,data/processed/Vega_Gull/XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830_chunk000.wav,3.0,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830.mp3
+Vega_Gull,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830,1,data/processed/Vega_Gull/XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830_chunk001.wav,3.0,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830.mp3
+Vega_Gull,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830,2,data/processed/Vega_Gull/XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830_chunk002.wav,3.0,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830.mp3
+Vega_Gull,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830,3,data/processed/Vega_Gull/XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830_chunk003.wav,3.0,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830.mp3
+Vega_Gull,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830,4,data/processed/Vega_Gull/XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830_chunk004.wav,3.0,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830.mp3
+Vega_Gull,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830,5,data/processed/Vega_Gull/XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830_chunk005.wav,3.0,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830.mp3
+Vega_Gull,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830,6,data/processed/Vega_Gull/XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830_chunk006.wav,3.0,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830.mp3
+Vega_Gull,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830,7,data/processed/Vega_Gull/XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830_chunk007.wav,3.0,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830.mp3
+Vega_Gull,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830,8,data/processed/Vega_Gull/XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830_chunk008.wav,3.0,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830.mp3
+Vega_Gull,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830,9,data/processed/Vega_Gull/XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830_chunk009.wav,3.0,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830.mp3
+Vega_Gull,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830,10,data/processed/Vega_Gull/XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830_chunk010.wav,3.0,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830.mp3
+Vega_Gull,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830,11,data/processed/Vega_Gull/XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830_chunk011.wav,3.0,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830.mp3
+Vega_Gull,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830,12,data/processed/Vega_Gull/XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830_chunk012.wav,3.0,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830.mp3
+Vega_Gull,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830,13,data/processed/Vega_Gull/XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830_chunk013.wav,3.0,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830.mp3
+Vega_Gull,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830,14,data/processed/Vega_Gull/XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830_chunk014.wav,3.0,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830.mp3
+Vega_Gull,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830,15,data/processed/Vega_Gull/XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830_chunk015.wav,3.0,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830.mp3
+Vega_Gull,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830,16,data/processed/Vega_Gull/XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830_chunk016.wav,3.0,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830.mp3
+Vega_Gull,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830,17,data/processed/Vega_Gull/XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830_chunk017.wav,3.0,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830.mp3
+Vega_Gull,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830,18,data/processed/Vega_Gull/XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830_chunk018.wav,3.0,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830.mp3
+Vega_Gull,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830,19,data/processed/Vega_Gull/XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830_chunk019.wav,3.0,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830.mp3
+Vega_Gull,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830,20,data/processed/Vega_Gull/XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830_chunk020.wav,3.0,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830.mp3
+Vega_Gull,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830,21,data/processed/Vega_Gull/XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830_chunk021.wav,3.0,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830.mp3
+Vega_Gull,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830,22,data/processed/Vega_Gull/XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830_chunk022.wav,3.0,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830.mp3
+Vega_Gull,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830,23,data/processed/Vega_Gull/XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830_chunk023.wav,3.0,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830.mp3
+Vega_Gull,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830,24,data/processed/Vega_Gull/XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830_chunk024.wav,3.0,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830.mp3
+Vega_Gull,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830,25,data/processed/Vega_Gull/XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830_chunk025.wav,3.0,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830.mp3
+Vega_Gull,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830,26,data/processed/Vega_Gull/XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830_chunk026.wav,3.0,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830.mp3
+Vega_Gull,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830,27,data/processed/Vega_Gull/XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830_chunk027.wav,3.0,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830.mp3
+Vega_Gull,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830,28,data/processed/Vega_Gull/XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830_chunk028.wav,3.0,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830.mp3
+Vega_Gull,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830,29,data/processed/Vega_Gull/XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830_chunk029.wav,3.0,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830.mp3
+Vega_Gull,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830,30,data/processed/Vega_Gull/XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830_chunk030.wav,3.0,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830.mp3
+Vega_Gull,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830,31,data/processed/Vega_Gull/XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830_chunk031.wav,3.0,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830.mp3
+Vega_Gull,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830,32,data/processed/Vega_Gull/XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830_chunk032.wav,3.0,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830.mp3
+Vega_Gull,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830,33,data/processed/Vega_Gull/XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830_chunk033.wav,3.0,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830.mp3
+Vega_Gull,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830,34,data/processed/Vega_Gull/XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830_chunk034.wav,3.0,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830.mp3
+Vega_Gull,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830,35,data/processed/Vega_Gull/XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830_chunk035.wav,3.0,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830.mp3
+Vega_Gull,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830,36,data/processed/Vega_Gull/XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830_chunk036.wav,3.0,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830.mp3
+Vega_Gull,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830,37,data/processed/Vega_Gull/XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830_chunk037.wav,3.0,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830.mp3
+Vega_Gull,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830,38,data/processed/Vega_Gull/XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830_chunk038.wav,3.0,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830.mp3
+Vega_Gull,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830,39,data/processed/Vega_Gull/XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830_chunk039.wav,3.0,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830.mp3
+Vega_Gull,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830,40,data/processed/Vega_Gull/XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830_chunk040.wav,3.0,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830.mp3
+Vega_Gull,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830,41,data/processed/Vega_Gull/XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830_chunk041.wav,3.0,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830.mp3
+Vega_Gull,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830,42,data/processed/Vega_Gull/XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830_chunk042.wav,3.0,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830.mp3
+Vega_Gull,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830,43,data/processed/Vega_Gull/XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830_chunk043.wav,3.0,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830.mp3
+Vega_Gull,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830,44,data/processed/Vega_Gull/XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830_chunk044.wav,3.0,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830.mp3
+Vega_Gull,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830,45,data/processed/Vega_Gull/XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830_chunk045.wav,3.0,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830.mp3
+Vega_Gull,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830,46,data/processed/Vega_Gull/XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830_chunk046.wav,3.0,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830.mp3
+Vega_Gull,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830,47,data/processed/Vega_Gull/XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830_chunk047.wav,3.0,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830.mp3
+Vega_Gull,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830,48,data/processed/Vega_Gull/XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830_chunk048.wav,3.0,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830.mp3
+Vega_Gull,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830,49,data/processed/Vega_Gull/XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830_chunk049.wav,3.0,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830.mp3
+Vega_Gull,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830,50,data/processed/Vega_Gull/XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830_chunk050.wav,3.0,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830.mp3
+Vega_Gull,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830,51,data/processed/Vega_Gull/XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830_chunk051.wav,3.0,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830.mp3
+Vega_Gull,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830,52,data/processed/Vega_Gull/XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830_chunk052.wav,3.0,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830.mp3
+Vega_Gull,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830,53,data/processed/Vega_Gull/XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830_chunk053.wav,3.0,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830.mp3
+Vega_Gull,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830,54,data/processed/Vega_Gull/XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830_chunk054.wav,3.0,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830.mp3
+Vega_Gull,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830,55,data/processed/Vega_Gull/XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830_chunk055.wav,3.0,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830.mp3
+Vega_Gull,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830,56,data/processed/Vega_Gull/XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830_chunk056.wav,3.0,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830.mp3
+Vega_Gull,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830,57,data/processed/Vega_Gull/XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830_chunk057.wav,3.0,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830.mp3
+Vega_Gull,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830,58,data/processed/Vega_Gull/XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830_chunk058.wav,3.0,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830.mp3
+Vega_Gull,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830,59,data/processed/Vega_Gull/XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830_chunk059.wav,3.0,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830.mp3
+Vega_Gull,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830,60,data/processed/Vega_Gull/XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830_chunk060.wav,3.0,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830.mp3
+Vega_Gull,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830,61,data/processed/Vega_Gull/XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830_chunk061.wav,3.0,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830.mp3
+Vega_Gull,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830,62,data/processed/Vega_Gull/XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830_chunk062.wav,3.0,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830.mp3
+Vega_Gull,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830,63,data/processed/Vega_Gull/XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830_chunk063.wav,3.0,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830.mp3
+Vega_Gull,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830,64,data/processed/Vega_Gull/XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830_chunk064.wav,3.0,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830.mp3
+Vega_Gull,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830,65,data/processed/Vega_Gull/XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830_chunk065.wav,3.0,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830.mp3
+Vega_Gull,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830,66,data/processed/Vega_Gull/XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830_chunk066.wav,3.0,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830.mp3
+Vega_Gull,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830,67,data/processed/Vega_Gull/XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830_chunk067.wav,3.0,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830.mp3
+Vega_Gull,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830,68,data/processed/Vega_Gull/XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830_chunk068.wav,3.0,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830.mp3
+Vega_Gull,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830,69,data/processed/Vega_Gull/XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830_chunk069.wav,3.0,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830.mp3
+Vega_Gull,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830,70,data/processed/Vega_Gull/XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830_chunk070.wav,3.0,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830.mp3
+Vega_Gull,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830,71,data/processed/Vega_Gull/XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830_chunk071.wav,3.0,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830.mp3
+Vega_Gull,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830,72,data/processed/Vega_Gull/XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830_chunk072.wav,3.0,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830.mp3
+Vega_Gull,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830,73,data/processed/Vega_Gull/XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830_chunk073.wav,3.0,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830.mp3
+Vega_Gull,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830,74,data/processed/Vega_Gull/XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830_chunk074.wav,3.0,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830.mp3
+Vega_Gull,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830,75,data/processed/Vega_Gull/XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830_chunk075.wav,3.0,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830.mp3
+Vega_Gull,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830,76,data/processed/Vega_Gull/XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830_chunk076.wav,3.0,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830.mp3
+Vega_Gull,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830,77,data/processed/Vega_Gull/XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830_chunk077.wav,3.0,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830.mp3
+Vega_Gull,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830,78,data/processed/Vega_Gull/XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830_chunk078.wav,3.0,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830.mp3
+Vega_Gull,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830,79,data/processed/Vega_Gull/XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830_chunk079.wav,3.0,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830.mp3
+Vega_Gull,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830,80,data/processed/Vega_Gull/XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830_chunk080.wav,3.0,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830.mp3
+Vega_Gull,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830,81,data/processed/Vega_Gull/XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830_chunk081.wav,3.0,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830.mp3
+Vega_Gull,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830,82,data/processed/Vega_Gull/XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830_chunk082.wav,3.0,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830.mp3
+Vega_Gull,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830,83,data/processed/Vega_Gull/XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830_chunk083.wav,3.0,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830.mp3
+Vega_Gull,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830,84,data/processed/Vega_Gull/XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830_chunk084.wav,3.0,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830.mp3
+Vega_Gull,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830,85,data/processed/Vega_Gull/XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830_chunk085.wav,3.0,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830.mp3
+Vega_Gull,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830,86,data/processed/Vega_Gull/XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830_chunk086.wav,3.0,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830.mp3
+Vega_Gull,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830,87,data/processed/Vega_Gull/XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830_chunk087.wav,3.0,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830.mp3
+Vega_Gull,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830,88,data/processed/Vega_Gull/XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830_chunk088.wav,3.0,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830.mp3
+Vega_Gull,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830,89,data/processed/Vega_Gull/XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830_chunk089.wav,3.0,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830.mp3
+Vega_Gull,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830,90,data/processed/Vega_Gull/XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830_chunk090.wav,3.0,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830.mp3
+Vega_Gull,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830,91,data/processed/Vega_Gull/XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830_chunk091.wav,3.0,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830.mp3
+Vega_Gull,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830,92,data/processed/Vega_Gull/XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830_chunk092.wav,3.0,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830.mp3
+Vega_Gull,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830,93,data/processed/Vega_Gull/XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830_chunk093.wav,3.0,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830.mp3
+Vega_Gull,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830,94,data/processed/Vega_Gull/XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830_chunk094.wav,3.0,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830.mp3
+Vega_Gull,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830,95,data/processed/Vega_Gull/XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830_chunk095.wav,3.0,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830.mp3
+Vega_Gull,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830,96,data/processed/Vega_Gull/XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830_chunk096.wav,3.0,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830.mp3
+Vega_Gull,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830,97,data/processed/Vega_Gull/XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830_chunk097.wav,3.0,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830.mp3
+Vega_Gull,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830,98,data/processed/Vega_Gull/XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830_chunk098.wav,3.0,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830.mp3
+Vega_Gull,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830,99,data/processed/Vega_Gull/XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830_chunk099.wav,3.0,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830.mp3
+Vega_Gull,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830,100,data/processed/Vega_Gull/XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830_chunk100.wav,3.0,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830.mp3
+Vega_Gull,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830,101,data/processed/Vega_Gull/XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830_chunk101.wav,3.0,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830.mp3
+Vega_Gull,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830,102,data/processed/Vega_Gull/XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830_chunk102.wav,3.0,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830.mp3
+Vega_Gull,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830,103,data/processed/Vega_Gull/XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830_chunk103.wav,3.0,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830.mp3
+Vega_Gull,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830,104,data/processed/Vega_Gull/XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830_chunk104.wav,3.0,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830.mp3
+Vega_Gull,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830,105,data/processed/Vega_Gull/XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830_chunk105.wav,3.0,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830.mp3
+Vega_Gull,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830,106,data/processed/Vega_Gull/XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830_chunk106.wav,3.0,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830.mp3
+Vega_Gull,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830,107,data/processed/Vega_Gull/XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830_chunk107.wav,3.0,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830.mp3
+Vega_Gull,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830,108,data/processed/Vega_Gull/XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830_chunk108.wav,3.0,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830.mp3
+Vega_Gull,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830,109,data/processed/Vega_Gull/XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830_chunk109.wav,3.0,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830.mp3
+Vega_Gull,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830,110,data/processed/Vega_Gull/XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830_chunk110.wav,3.0,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830.mp3
+Vega_Gull,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830,111,data/processed/Vega_Gull/XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830_chunk111.wav,3.0,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830.mp3
+Vega_Gull,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830,112,data/processed/Vega_Gull/XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830_chunk112.wav,3.0,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830.mp3
+Vega_Gull,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830,113,data/processed/Vega_Gull/XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830_chunk113.wav,3.0,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830.mp3
+Vega_Gull,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830,114,data/processed/Vega_Gull/XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830_chunk114.wav,3.0,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830.mp3
+Vega_Gull,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830,115,data/processed/Vega_Gull/XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830_chunk115.wav,3.0,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830.mp3
+Vega_Gull,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830,116,data/processed/Vega_Gull/XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830_chunk116.wav,3.0,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830.mp3
+Vega_Gull,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830,117,data/processed/Vega_Gull/XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830_chunk117.wav,3.0,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830.mp3
+Vega_Gull,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830,118,data/processed/Vega_Gull/XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830_chunk118.wav,3.0,XC1029525-GULL_Mongolian_colony-Khukh-Nuur-2600m-060525-0830.mp3
+Vega_Gull,XC1142900-Mongolian-Gull_Buir1,0,data/processed/Vega_Gull/XC1142900-Mongolian-Gull_Buir1_chunk000.wav,3.0,XC1142900-Mongolian-Gull_Buir1.mp3
+Vega_Gull,XC1142900-Mongolian-Gull_Buir1,1,data/processed/Vega_Gull/XC1142900-Mongolian-Gull_Buir1_chunk001.wav,3.0,XC1142900-Mongolian-Gull_Buir1.mp3
+Vega_Gull,XC1142900-Mongolian-Gull_Buir1,2,data/processed/Vega_Gull/XC1142900-Mongolian-Gull_Buir1_chunk002.wav,3.0,XC1142900-Mongolian-Gull_Buir1.mp3
+Vega_Gull,XC1142900-Mongolian-Gull_Buir1,3,data/processed/Vega_Gull/XC1142900-Mongolian-Gull_Buir1_chunk003.wav,3.0,XC1142900-Mongolian-Gull_Buir1.mp3
+Vega_Gull,XC1142900-Mongolian-Gull_Buir1,4,data/processed/Vega_Gull/XC1142900-Mongolian-Gull_Buir1_chunk004.wav,3.0,XC1142900-Mongolian-Gull_Buir1.mp3
+Vega_Gull,XC1142900-Mongolian-Gull_Buir1,5,data/processed/Vega_Gull/XC1142900-Mongolian-Gull_Buir1_chunk005.wav,3.0,XC1142900-Mongolian-Gull_Buir1.mp3
+Vega_Gull,XC1142900-Mongolian-Gull_Buir1,6,data/processed/Vega_Gull/XC1142900-Mongolian-Gull_Buir1_chunk006.wav,3.0,XC1142900-Mongolian-Gull_Buir1.mp3
+Vega_Gull,XC1142900-Mongolian-Gull_Buir1,7,data/processed/Vega_Gull/XC1142900-Mongolian-Gull_Buir1_chunk007.wav,3.0,XC1142900-Mongolian-Gull_Buir1.mp3
+Vega_Gull,XC526936-Mongolian,0,data/processed/Vega_Gull/XC526936-Mongolian_chunk000.wav,3.0,XC526936-Mongolian Gull Bayan Nuur 6170529_3152.mp3
+Vega_Gull,XC526936-Mongolian,1,data/processed/Vega_Gull/XC526936-Mongolian_chunk001.wav,3.0,XC526936-Mongolian Gull Bayan Nuur 6170529_3152.mp3
+Vega_Gull,XC526936-Mongolian,2,data/processed/Vega_Gull/XC526936-Mongolian_chunk002.wav,3.0,XC526936-Mongolian Gull Bayan Nuur 6170529_3152.mp3
+Vega_Gull,XC526936-Mongolian,3,data/processed/Vega_Gull/XC526936-Mongolian_chunk003.wav,3.0,XC526936-Mongolian Gull Bayan Nuur 6170529_3152.mp3
+Vega_Gull,XC526936-Mongolian,4,data/processed/Vega_Gull/XC526936-Mongolian_chunk004.wav,3.0,XC526936-Mongolian Gull Bayan Nuur 6170529_3152.mp3
+Vega_Gull,XC526936-Mongolian,5,data/processed/Vega_Gull/XC526936-Mongolian_chunk005.wav,3.0,XC526936-Mongolian Gull Bayan Nuur 6170529_3152.mp3
+Vega_Gull,XC526936-Mongolian,6,data/processed/Vega_Gull/XC526936-Mongolian_chunk006.wav,3.0,XC526936-Mongolian Gull Bayan Nuur 6170529_3152.mp3
+Vega_Gull,XC526936-Mongolian,7,data/processed/Vega_Gull/XC526936-Mongolian_chunk007.wav,3.0,XC526936-Mongolian Gull Bayan Nuur 6170529_3152.mp3
+Vega_Gull,XC526936-Mongolian,8,data/processed/Vega_Gull/XC526936-Mongolian_chunk008.wav,3.0,XC526936-Mongolian Gull Bayan Nuur 6170529_3152.mp3
+Vega_Gull,XC526936-Mongolian,9,data/processed/Vega_Gull/XC526936-Mongolian_chunk009.wav,3.0,XC526936-Mongolian Gull Bayan Nuur 6170529_3152.mp3
+Vega_Gull,XC676033-Larus,0,data/processed/Vega_Gull/XC676033-Larus_chunk000.wav,3.0,"XC676033-Larus vegae 210709_003.k.Тас Юрях,B alarm.MP3"
+Vega_Gull,XC676033-Larus,1,data/processed/Vega_Gull/XC676033-Larus_chunk001.wav,3.0,"XC676033-Larus vegae 210709_003.k.Тас Юрях,B alarm.MP3"
+Vega_Gull,XC676033-Larus,2,data/processed/Vega_Gull/XC676033-Larus_chunk002.wav,3.0,"XC676033-Larus vegae 210709_003.k.Тас Юрях,B alarm.MP3"
+Vega_Gull,XC676033-Larus,3,data/processed/Vega_Gull/XC676033-Larus_chunk003.wav,3.0,"XC676033-Larus vegae 210709_003.k.Тас Юрях,B alarm.MP3"
+Vega_Gull,XC676033-Larus,4,data/processed/Vega_Gull/XC676033-Larus_chunk004.wav,3.0,"XC676033-Larus vegae 210709_003.k.Тас Юрях,B alarm.MP3"
+Vega_Gull,XC676156-Larus,0,data/processed/Vega_Gull/XC676156-Larus_chunk000.wav,3.0,"XC676156-Larus vegae 210718_001, Хонуу.MP3"
+Vega_Gull,XC676156-Larus,1,data/processed/Vega_Gull/XC676156-Larus_chunk001.wav,3.0,"XC676156-Larus vegae 210718_001, Хонуу.MP3"
+Vega_Gull,XC676156-Larus,2,data/processed/Vega_Gull/XC676156-Larus_chunk002.wav,3.0,"XC676156-Larus vegae 210718_001, Хонуу.MP3"
+Vega_Gull,XC676156-Larus,3,data/processed/Vega_Gull/XC676156-Larus_chunk003.wav,3.0,"XC676156-Larus vegae 210718_001, Хонуу.MP3"
+Vega_Gull,XC676156-Larus,4,data/processed/Vega_Gull/XC676156-Larus_chunk004.wav,3.0,"XC676156-Larus vegae 210718_001, Хонуу.MP3"
+Vega_Gull,XC676156-Larus,5,data/processed/Vega_Gull/XC676156-Larus_chunk005.wav,3.0,"XC676156-Larus vegae 210718_001, Хонуу.MP3"
+Vega_Gull,XC676156-Larus,6,data/processed/Vega_Gull/XC676156-Larus_chunk006.wav,3.0,"XC676156-Larus vegae 210718_001, Хонуу.MP3"
+Vega_Gull,XC676156-Larus,7,data/processed/Vega_Gull/XC676156-Larus_chunk007.wav,3.0,"XC676156-Larus vegae 210718_001, Хонуу.MP3"
+Vega_Gull,XC676156-Larus,8,data/processed/Vega_Gull/XC676156-Larus_chunk008.wav,3.0,"XC676156-Larus vegae 210718_001, Хонуу.MP3"
+Vega_Gull,XC676156-Larus,9,data/processed/Vega_Gull/XC676156-Larus_chunk009.wav,3.0,"XC676156-Larus vegae 210718_001, Хонуу.MP3"
+Vega_Gull,XC676156-Larus,10,data/processed/Vega_Gull/XC676156-Larus_chunk010.wav,3.0,"XC676156-Larus vegae 210718_001, Хонуу.MP3"
+Vega_Gull,XC676156-Larus,11,data/processed/Vega_Gull/XC676156-Larus_chunk011.wav,3.0,"XC676156-Larus vegae 210718_001, Хонуу.MP3"
+Vega_Gull,XC676156-Larus,12,data/processed/Vega_Gull/XC676156-Larus_chunk012.wav,3.0,"XC676156-Larus vegae 210718_001, Хонуу.MP3"
+Vega_Gull,XC676156-Larus,13,data/processed/Vega_Gull/XC676156-Larus_chunk013.wav,3.0,"XC676156-Larus vegae 210718_001, Хонуу.MP3"
+Vega_Gull,XC676156-Larus,14,data/processed/Vega_Gull/XC676156-Larus_chunk014.wav,3.0,"XC676156-Larus vegae 210718_001, Хонуу.MP3"
+Vega_Gull,XC766047-Goéland-de-Mongolie-et-Ichtyaète-envol-d-un-groupe-+-2,0,data/processed/Vega_Gull/XC766047-Goéland-de-Mongolie-et-Ichtyaète-envol-d-un-groupe-+-2_chunk000.wav,3.0,XC766047-Goéland-de-Mongolie-et-Ichtyaète-envol-d-un-groupe-+-2.mp3
+Vega_Gull,XC766047-Goéland-de-Mongolie-et-Ichtyaète-envol-d-un-groupe-+-2,1,data/processed/Vega_Gull/XC766047-Goéland-de-Mongolie-et-Ichtyaète-envol-d-un-groupe-+-2_chunk001.wav,3.0,XC766047-Goéland-de-Mongolie-et-Ichtyaète-envol-d-un-groupe-+-2.mp3
+Vega_Gull,XC766047-Goéland-de-Mongolie-et-Ichtyaète-envol-d-un-groupe-+-2,2,data/processed/Vega_Gull/XC766047-Goéland-de-Mongolie-et-Ichtyaète-envol-d-un-groupe-+-2_chunk002.wav,3.0,XC766047-Goéland-de-Mongolie-et-Ichtyaète-envol-d-un-groupe-+-2.mp3
+Vega_Gull,XC766047-Goéland-de-Mongolie-et-Ichtyaète-envol-d-un-groupe-+-2,3,data/processed/Vega_Gull/XC766047-Goéland-de-Mongolie-et-Ichtyaète-envol-d-un-groupe-+-2_chunk003.wav,3.0,XC766047-Goéland-de-Mongolie-et-Ichtyaète-envol-d-un-groupe-+-2.mp3
+Vega_Gull,XC766047-Goéland-de-Mongolie-et-Ichtyaète-envol-d-un-groupe-+-2,4,data/processed/Vega_Gull/XC766047-Goéland-de-Mongolie-et-Ichtyaète-envol-d-un-groupe-+-2_chunk004.wav,3.0,XC766047-Goéland-de-Mongolie-et-Ichtyaète-envol-d-un-groupe-+-2.mp3
+Vega_Gull,XC766047-Goéland-de-Mongolie-et-Ichtyaète-envol-d-un-groupe-+-2,5,data/processed/Vega_Gull/XC766047-Goéland-de-Mongolie-et-Ichtyaète-envol-d-un-groupe-+-2_chunk005.wav,3.0,XC766047-Goéland-de-Mongolie-et-Ichtyaète-envol-d-un-groupe-+-2.mp3
+Vega_Gull,XC766047-Goéland-de-Mongolie-et-Ichtyaète-envol-d-un-groupe-+-2,6,data/processed/Vega_Gull/XC766047-Goéland-de-Mongolie-et-Ichtyaète-envol-d-un-groupe-+-2_chunk006.wav,3.0,XC766047-Goéland-de-Mongolie-et-Ichtyaète-envol-d-un-groupe-+-2.mp3
+Vega_Gull,XC766047-Goéland-de-Mongolie-et-Ichtyaète-envol-d-un-groupe-+-2,7,data/processed/Vega_Gull/XC766047-Goéland-de-Mongolie-et-Ichtyaète-envol-d-un-groupe-+-2_chunk007.wav,3.0,XC766047-Goéland-de-Mongolie-et-Ichtyaète-envol-d-un-groupe-+-2.mp3
+Vega_Gull,XC766047-Goéland-de-Mongolie-et-Ichtyaète-envol-d-un-groupe-+-2,8,data/processed/Vega_Gull/XC766047-Goéland-de-Mongolie-et-Ichtyaète-envol-d-un-groupe-+-2_chunk008.wav,3.0,XC766047-Goéland-de-Mongolie-et-Ichtyaète-envol-d-un-groupe-+-2.mp3
+Vega_Gull,XC766047-Goéland-de-Mongolie-et-Ichtyaète-envol-d-un-groupe-+-2,9,data/processed/Vega_Gull/XC766047-Goéland-de-Mongolie-et-Ichtyaète-envol-d-un-groupe-+-2_chunk009.wav,3.0,XC766047-Goéland-de-Mongolie-et-Ichtyaète-envol-d-un-groupe-+-2.mp3
+Vega_Gull,XC766047-Goéland-de-Mongolie-et-Ichtyaète-envol-d-un-groupe-+-2,10,data/processed/Vega_Gull/XC766047-Goéland-de-Mongolie-et-Ichtyaète-envol-d-un-groupe-+-2_chunk010.wav,3.0,XC766047-Goéland-de-Mongolie-et-Ichtyaète-envol-d-un-groupe-+-2.mp3
+Vega_Gull,XC766047-Goéland-de-Mongolie-et-Ichtyaète-envol-d-un-groupe-+-2,11,data/processed/Vega_Gull/XC766047-Goéland-de-Mongolie-et-Ichtyaète-envol-d-un-groupe-+-2_chunk011.wav,3.0,XC766047-Goéland-de-Mongolie-et-Ichtyaète-envol-d-un-groupe-+-2.mp3
+Vega_Gull,XC766047-Goéland-de-Mongolie-et-Ichtyaète-envol-d-un-groupe-+-2,12,data/processed/Vega_Gull/XC766047-Goéland-de-Mongolie-et-Ichtyaète-envol-d-un-groupe-+-2_chunk012.wav,3.0,XC766047-Goéland-de-Mongolie-et-Ichtyaète-envol-d-un-groupe-+-2.mp3
+Vega_Gull,XC766047-Goéland-de-Mongolie-et-Ichtyaète-envol-d-un-groupe-+-2,13,data/processed/Vega_Gull/XC766047-Goéland-de-Mongolie-et-Ichtyaète-envol-d-un-groupe-+-2_chunk013.wav,3.0,XC766047-Goéland-de-Mongolie-et-Ichtyaète-envol-d-un-groupe-+-2.mp3
+Vega_Gull,XC766047-Goéland-de-Mongolie-et-Ichtyaète-envol-d-un-groupe-+-2,14,data/processed/Vega_Gull/XC766047-Goéland-de-Mongolie-et-Ichtyaète-envol-d-un-groupe-+-2_chunk014.wav,3.0,XC766047-Goéland-de-Mongolie-et-Ichtyaète-envol-d-un-groupe-+-2.mp3
+Vega_Gull,XC766047-Goéland-de-Mongolie-et-Ichtyaète-envol-d-un-groupe-+-2,15,data/processed/Vega_Gull/XC766047-Goéland-de-Mongolie-et-Ichtyaète-envol-d-un-groupe-+-2_chunk015.wav,3.0,XC766047-Goéland-de-Mongolie-et-Ichtyaète-envol-d-un-groupe-+-2.mp3
+Vega_Gull,XC766047-Goéland-de-Mongolie-et-Ichtyaète-envol-d-un-groupe-+-2,16,data/processed/Vega_Gull/XC766047-Goéland-de-Mongolie-et-Ichtyaète-envol-d-un-groupe-+-2_chunk016.wav,3.0,XC766047-Goéland-de-Mongolie-et-Ichtyaète-envol-d-un-groupe-+-2.mp3
+Vega_Gull,XC766047-Goéland-de-Mongolie-et-Ichtyaète-envol-d-un-groupe-+-2,17,data/processed/Vega_Gull/XC766047-Goéland-de-Mongolie-et-Ichtyaète-envol-d-un-groupe-+-2_chunk017.wav,3.0,XC766047-Goéland-de-Mongolie-et-Ichtyaète-envol-d-un-groupe-+-2.mp3
+Vega_Gull,XC766047-Goéland-de-Mongolie-et-Ichtyaète-envol-d-un-groupe-+-2,18,data/processed/Vega_Gull/XC766047-Goéland-de-Mongolie-et-Ichtyaète-envol-d-un-groupe-+-2_chunk018.wav,3.0,XC766047-Goéland-de-Mongolie-et-Ichtyaète-envol-d-un-groupe-+-2.mp3
+Vega_Gull,XC766047-Goéland-de-Mongolie-et-Ichtyaète-envol-d-un-groupe-+-2,19,data/processed/Vega_Gull/XC766047-Goéland-de-Mongolie-et-Ichtyaète-envol-d-un-groupe-+-2_chunk019.wav,3.0,XC766047-Goéland-de-Mongolie-et-Ichtyaète-envol-d-un-groupe-+-2.mp3
+Vega_Gull,XC766047-Goéland-de-Mongolie-et-Ichtyaète-envol-d-un-groupe-+-2,20,data/processed/Vega_Gull/XC766047-Goéland-de-Mongolie-et-Ichtyaète-envol-d-un-groupe-+-2_chunk020.wav,3.0,XC766047-Goéland-de-Mongolie-et-Ichtyaète-envol-d-un-groupe-+-2.mp3
+Vega_Gull,XC768280-220816_05-mongoolse-meeuw,0,data/processed/Vega_Gull/XC768280-220816_05-mongoolse-meeuw_chunk000.wav,3.0,XC768280-220816_05-mongoolse-meeuw.wav
+Vega_Gull,XC768280-220816_05-mongoolse-meeuw,1,data/processed/Vega_Gull/XC768280-220816_05-mongoolse-meeuw_chunk001.wav,3.0,XC768280-220816_05-mongoolse-meeuw.wav
+Vega_Gull,XC768280-220816_05-mongoolse-meeuw,2,data/processed/Vega_Gull/XC768280-220816_05-mongoolse-meeuw_chunk002.wav,3.0,XC768280-220816_05-mongoolse-meeuw.wav
+Vega_Gull,XC768280-220816_05-mongoolse-meeuw,3,data/processed/Vega_Gull/XC768280-220816_05-mongoolse-meeuw_chunk003.wav,3.0,XC768280-220816_05-mongoolse-meeuw.wav
+Vega_Gull,XC768280-220816_05-mongoolse-meeuw,4,data/processed/Vega_Gull/XC768280-220816_05-mongoolse-meeuw_chunk004.wav,3.0,XC768280-220816_05-mongoolse-meeuw.wav
+Vega_Gull,XC835960-2023-05-28_21h40_goéland-de-mongolie_2,0,data/processed/Vega_Gull/XC835960-2023-05-28_21h40_goéland-de-mongolie_2_chunk000.wav,3.0,XC835960-2023-05-28_21h40_goéland-de-mongolie_2.wav
+Vega_Gull,XC835960-2023-05-28_21h40_goéland-de-mongolie_2,1,data/processed/Vega_Gull/XC835960-2023-05-28_21h40_goéland-de-mongolie_2_chunk001.wav,3.0,XC835960-2023-05-28_21h40_goéland-de-mongolie_2.wav
+Vega_Gull,XC835960-2023-05-28_21h40_goéland-de-mongolie_2,2,data/processed/Vega_Gull/XC835960-2023-05-28_21h40_goéland-de-mongolie_2_chunk002.wav,3.0,XC835960-2023-05-28_21h40_goéland-de-mongolie_2.wav
+Vega_Gull,XC835960-2023-05-28_21h40_goéland-de-mongolie_2,3,data/processed/Vega_Gull/XC835960-2023-05-28_21h40_goéland-de-mongolie_2_chunk003.wav,3.0,XC835960-2023-05-28_21h40_goéland-de-mongolie_2.wav
+Vega_Gull,XC835961-2023-05-28_21h40_goéland-de-mongolie,0,data/processed/Vega_Gull/XC835961-2023-05-28_21h40_goéland-de-mongolie_chunk000.wav,3.0,XC835961-2023-05-28_21h40_goéland-de-mongolie.wav
+Vega_Gull,XC835961-2023-05-28_21h40_goéland-de-mongolie,1,data/processed/Vega_Gull/XC835961-2023-05-28_21h40_goéland-de-mongolie_chunk001.wav,3.0,XC835961-2023-05-28_21h40_goéland-de-mongolie.wav
+Vega_Gull,XC835961-2023-05-28_21h40_goéland-de-mongolie,2,data/processed/Vega_Gull/XC835961-2023-05-28_21h40_goéland-de-mongolie_chunk002.wav,3.0,XC835961-2023-05-28_21h40_goéland-de-mongolie.wav
+Vega_Gull,XC835961-2023-05-28_21h40_goéland-de-mongolie,3,data/processed/Vega_Gull/XC835961-2023-05-28_21h40_goéland-de-mongolie_chunk003.wav,3.0,XC835961-2023-05-28_21h40_goéland-de-mongolie.wav
+Vega_Gull,XC835961-2023-05-28_21h40_goéland-de-mongolie,4,data/processed/Vega_Gull/XC835961-2023-05-28_21h40_goéland-de-mongolie_chunk004.wav,3.0,XC835961-2023-05-28_21h40_goéland-de-mongolie.wav
+Vega_Gull,XC835961-2023-05-28_21h40_goéland-de-mongolie,5,data/processed/Vega_Gull/XC835961-2023-05-28_21h40_goéland-de-mongolie_chunk005.wav,3.0,XC835961-2023-05-28_21h40_goéland-de-mongolie.wav
+Vega_Gull,XC835961-2023-05-28_21h40_goéland-de-mongolie,6,data/processed/Vega_Gull/XC835961-2023-05-28_21h40_goéland-de-mongolie_chunk006.wav,3.0,XC835961-2023-05-28_21h40_goéland-de-mongolie.wav
+Vega_Gull,XC835961-2023-05-28_21h40_goéland-de-mongolie,7,data/processed/Vega_Gull/XC835961-2023-05-28_21h40_goéland-de-mongolie_chunk007.wav,3.0,XC835961-2023-05-28_21h40_goéland-de-mongolie.wav
+Vega_Gull,XC835961-2023-05-28_21h40_goéland-de-mongolie,8,data/processed/Vega_Gull/XC835961-2023-05-28_21h40_goéland-de-mongolie_chunk008.wav,3.0,XC835961-2023-05-28_21h40_goéland-de-mongolie.wav
+Vega_Gull,XC835961-2023-05-28_21h40_goéland-de-mongolie,9,data/processed/Vega_Gull/XC835961-2023-05-28_21h40_goéland-de-mongolie_chunk009.wav,3.0,XC835961-2023-05-28_21h40_goéland-de-mongolie.wav
+Saunders's_Gull,XC1064939-saundersgull_1424,0,data/processed/Saunders's_Gull/XC1064939-saundersgull_1424_chunk000.wav,3.0,XC1064939-saundersgull_1424.wav
+Saunders's_Gull,XC1136584-제목-없는-세션-59-믹스다운-1,0,data/processed/Saunders's_Gull/XC1136584-제목-없는-세션-59-믹스다운-1_chunk000.wav,3.0,XC1136584-제목-없는-세션-59-믹스다운-1.wav
+Saunders's_Gull,XC1136584-제목-없는-세션-59-믹스다운-1,1,data/processed/Saunders's_Gull/XC1136584-제목-없는-세션-59-믹스다운-1_chunk001.wav,3.0,XC1136584-제목-없는-세션-59-믹스다운-1.wav
+Saunders's_Gull,XC1136584-제목-없는-세션-59-믹스다운-1,2,data/processed/Saunders's_Gull/XC1136584-제목-없는-세션-59-믹스다운-1_chunk002.wav,3.0,XC1136584-제목-없는-세션-59-믹스다운-1.wav
+Saunders's_Gull,XC1136584-제목-없는-세션-59-믹스다운-1,3,data/processed/Saunders's_Gull/XC1136584-제목-없는-세션-59-믹스다운-1_chunk003.wav,3.0,XC1136584-제목-없는-세션-59-믹스다운-1.wav
+Saunders's_Gull,XC1136584-제목-없는-세션-59-믹스다운-1,4,data/processed/Saunders's_Gull/XC1136584-제목-없는-세션-59-믹스다운-1_chunk004.wav,3.0,XC1136584-제목-없는-세션-59-믹스다운-1.wav
+Saunders's_Gull,XC1136584-제목-없는-세션-59-믹스다운-1,5,data/processed/Saunders's_Gull/XC1136584-제목-없는-세션-59-믹스다운-1_chunk005.wav,3.0,XC1136584-제목-없는-세션-59-믹스다운-1.wav
+Saunders's_Gull,XC1136584-제목-없는-세션-59-믹스다운-1,6,data/processed/Saunders's_Gull/XC1136584-제목-없는-세션-59-믹스다운-1_chunk006.wav,3.0,XC1136584-제목-없는-세션-59-믹스다운-1.wav
+Saunders's_Gull,XC1136584-제목-없는-세션-59-믹스다운-1,7,data/processed/Saunders's_Gull/XC1136584-제목-없는-세션-59-믹스다운-1_chunk007.wav,3.0,XC1136584-제목-없는-세션-59-믹스다운-1.wav
+Saunders's_Gull,XC1136584-제목-없는-세션-59-믹스다운-1,8,data/processed/Saunders's_Gull/XC1136584-제목-없는-세션-59-믹스다운-1_chunk008.wav,3.0,XC1136584-제목-없는-세션-59-믹스다운-1.wav
+Saunders's_Gull,XC1136584-제목-없는-세션-59-믹스다운-1,9,data/processed/Saunders's_Gull/XC1136584-제목-없는-세션-59-믹스다운-1_chunk009.wav,3.0,XC1136584-제목-없는-세션-59-믹스다운-1.wav
+Saunders's_Gull,XC1136584-제목-없는-세션-59-믹스다운-1,10,data/processed/Saunders's_Gull/XC1136584-제목-없는-세션-59-믹스다운-1_chunk010.wav,3.0,XC1136584-제목-없는-세션-59-믹스다운-1.wav
+Saunders's_Gull,XC1136584-제목-없는-세션-59-믹스다운-1,11,data/processed/Saunders's_Gull/XC1136584-제목-없는-세션-59-믹스다운-1_chunk011.wav,3.0,XC1136584-제목-없는-세션-59-믹스다운-1.wav
+Saunders's_Gull,XC1136584-제목-없는-세션-59-믹스다운-1,12,data/processed/Saunders's_Gull/XC1136584-제목-없는-세션-59-믹스다운-1_chunk012.wav,3.0,XC1136584-제목-없는-세션-59-믹스다운-1.wav
+Saunders's_Gull,XC1136584-제목-없는-세션-59-믹스다운-1,13,data/processed/Saunders's_Gull/XC1136584-제목-없는-세션-59-믹스다운-1_chunk013.wav,3.0,XC1136584-제목-없는-세션-59-믹스다운-1.wav
+Saunders's_Gull,XC1136584-제목-없는-세션-59-믹스다운-1,14,data/processed/Saunders's_Gull/XC1136584-제목-없는-세션-59-믹스다운-1_chunk014.wav,3.0,XC1136584-제목-없는-세션-59-믹스다운-1.wav
+Saunders's_Gull,XC1136584-제목-없는-세션-59-믹스다운-1,15,data/processed/Saunders's_Gull/XC1136584-제목-없는-세션-59-믹스다운-1_chunk015.wav,3.0,XC1136584-제목-없는-세션-59-믹스다운-1.wav
+Saunders's_Gull,XC1136584-제목-없는-세션-59-믹스다운-1,16,data/processed/Saunders's_Gull/XC1136584-제목-없는-세션-59-믹스다운-1_chunk016.wav,3.0,XC1136584-제목-없는-세션-59-믹스다운-1.wav
+Saunders's_Gull,XC1136584-제목-없는-세션-59-믹스다운-1,17,data/processed/Saunders's_Gull/XC1136584-제목-없는-세션-59-믹스다운-1_chunk017.wav,3.0,XC1136584-제목-없는-세션-59-믹스다운-1.wav
+Saunders's_Gull,XC1136584-제목-없는-세션-59-믹스다운-1,18,data/processed/Saunders's_Gull/XC1136584-제목-없는-세션-59-믹스다운-1_chunk018.wav,3.0,XC1136584-제목-없는-세션-59-믹스다운-1.wav
+Saunders's_Gull,XC1136584-제목-없는-세션-59-믹스다운-1,19,data/processed/Saunders's_Gull/XC1136584-제목-없는-세션-59-믹스다운-1_chunk019.wav,3.0,XC1136584-제목-없는-세션-59-믹스다운-1.wav
+Saunders's_Gull,XC1136584-제목-없는-세션-59-믹스다운-1,20,data/processed/Saunders's_Gull/XC1136584-제목-없는-세션-59-믹스다운-1_chunk020.wav,3.0,XC1136584-제목-없는-세션-59-믹스다운-1.wav
+Saunders's_Gull,XC1136584-제목-없는-세션-59-믹스다운-1,21,data/processed/Saunders's_Gull/XC1136584-제목-없는-세션-59-믹스다운-1_chunk021.wav,3.0,XC1136584-제목-없는-세션-59-믹스다운-1.wav
+Saunders's_Gull,XC414476-Chroicocephalus_saundersi-FL,0,data/processed/Saunders's_Gull/XC414476-Chroicocephalus_saundersi-FL_chunk000.wav,3.0,XC414476-Chroicocephalus_saundersi-FL flight Yangkou 5May16 12.55pm LS110140a.mp3
+Saunders's_Gull,XC414476-Chroicocephalus_saundersi-FL,1,data/processed/Saunders's_Gull/XC414476-Chroicocephalus_saundersi-FL_chunk001.wav,3.0,XC414476-Chroicocephalus_saundersi-FL flight Yangkou 5May16 12.55pm LS110140a.mp3
+Saunders's_Gull,XC414476-Chroicocephalus_saundersi-FL,2,data/processed/Saunders's_Gull/XC414476-Chroicocephalus_saundersi-FL_chunk002.wav,3.0,XC414476-Chroicocephalus_saundersi-FL flight Yangkou 5May16 12.55pm LS110140a.mp3
+Saunders's_Gull,XC414476-Chroicocephalus_saundersi-FL,3,data/processed/Saunders's_Gull/XC414476-Chroicocephalus_saundersi-FL_chunk003.wav,3.0,XC414476-Chroicocephalus_saundersi-FL flight Yangkou 5May16 12.55pm LS110140a.mp3
+Saunders's_Gull,XC414476-Chroicocephalus_saundersi-FL,4,data/processed/Saunders's_Gull/XC414476-Chroicocephalus_saundersi-FL_chunk004.wav,3.0,XC414476-Chroicocephalus_saundersi-FL flight Yangkou 5May16 12.55pm LS110140a.mp3
+Saunders's_Gull,XC414476-Chroicocephalus_saundersi-FL,5,data/processed/Saunders's_Gull/XC414476-Chroicocephalus_saundersi-FL_chunk005.wav,3.0,XC414476-Chroicocephalus_saundersi-FL flight Yangkou 5May16 12.55pm LS110140a.mp3
+Saunders's_Gull,XC414476-Chroicocephalus_saundersi-FL,6,data/processed/Saunders's_Gull/XC414476-Chroicocephalus_saundersi-FL_chunk006.wav,3.0,XC414476-Chroicocephalus_saundersi-FL flight Yangkou 5May16 12.55pm LS110140a.mp3
+Saunders's_Gull,XC414476-Chroicocephalus_saundersi-FL,7,data/processed/Saunders's_Gull/XC414476-Chroicocephalus_saundersi-FL_chunk007.wav,3.0,XC414476-Chroicocephalus_saundersi-FL flight Yangkou 5May16 12.55pm LS110140a.mp3
+Saunders's_Gull,XC414476-Chroicocephalus_saundersi-FL,8,data/processed/Saunders's_Gull/XC414476-Chroicocephalus_saundersi-FL_chunk008.wav,3.0,XC414476-Chroicocephalus_saundersi-FL flight Yangkou 5May16 12.55pm LS110140a.mp3
+Saunders's_Gull,XC414476-Chroicocephalus_saundersi-FL,9,data/processed/Saunders's_Gull/XC414476-Chroicocephalus_saundersi-FL_chunk009.wav,3.0,XC414476-Chroicocephalus_saundersi-FL flight Yangkou 5May16 12.55pm LS110140a.mp3
+Saunders's_Gull,XC414476-Chroicocephalus_saundersi-FL,10,data/processed/Saunders's_Gull/XC414476-Chroicocephalus_saundersi-FL_chunk010.wav,3.0,XC414476-Chroicocephalus_saundersi-FL flight Yangkou 5May16 12.55pm LS110140a.mp3
+Saunders's_Gull,XC414476-Chroicocephalus_saundersi-FL,11,data/processed/Saunders's_Gull/XC414476-Chroicocephalus_saundersi-FL_chunk011.wav,3.0,XC414476-Chroicocephalus_saundersi-FL flight Yangkou 5May16 12.55pm LS110140a.mp3
+Saunders's_Gull,XC414476-Chroicocephalus_saundersi-FL,12,data/processed/Saunders's_Gull/XC414476-Chroicocephalus_saundersi-FL_chunk012.wav,3.0,XC414476-Chroicocephalus_saundersi-FL flight Yangkou 5May16 12.55pm LS110140a.mp3
+Saunders's_Gull,XC414479-Chroicocephalus_saundersi-FL,0,data/processed/Saunders's_Gull/XC414479-Chroicocephalus_saundersi-FL_chunk000.wav,3.0,XC414479-Chroicocephalus_saundersi-FL flight Yangkou 5May16 12.44pm LS110135a.mp3
+Saunders's_Gull,XC911485-Saunders-s-Gull-黑嘴鸥-call-占区求偶-崇明东滩-CICADA-2403200707_0404----A,0,data/processed/Saunders's_Gull/XC911485-Saunders-s-Gull-黑嘴鸥-call-占区求偶-崇明东滩-CICADA-2403200707_0404----A_chunk000.wav,3.0,XC911485-Saunders-s-Gull-黑嘴鸥-call-占区求偶-崇明东滩-CICADA-2403200707_0404----A.mp3
+Saunders's_Gull,XC911485-Saunders-s-Gull-黑嘴鸥-call-占区求偶-崇明东滩-CICADA-2403200707_0404----A,1,data/processed/Saunders's_Gull/XC911485-Saunders-s-Gull-黑嘴鸥-call-占区求偶-崇明东滩-CICADA-2403200707_0404----A_chunk001.wav,3.0,XC911485-Saunders-s-Gull-黑嘴鸥-call-占区求偶-崇明东滩-CICADA-2403200707_0404----A.mp3
+Saunders's_Gull,XC911485-Saunders-s-Gull-黑嘴鸥-call-占区求偶-崇明东滩-CICADA-2403200707_0404----A,2,data/processed/Saunders's_Gull/XC911485-Saunders-s-Gull-黑嘴鸥-call-占区求偶-崇明东滩-CICADA-2403200707_0404----A_chunk002.wav,3.0,XC911485-Saunders-s-Gull-黑嘴鸥-call-占区求偶-崇明东滩-CICADA-2403200707_0404----A.mp3
+Saunders's_Gull,XC911485-Saunders-s-Gull-黑嘴鸥-call-占区求偶-崇明东滩-CICADA-2403200707_0404----A,3,data/processed/Saunders's_Gull/XC911485-Saunders-s-Gull-黑嘴鸥-call-占区求偶-崇明东滩-CICADA-2403200707_0404----A_chunk003.wav,3.0,XC911485-Saunders-s-Gull-黑嘴鸥-call-占区求偶-崇明东滩-CICADA-2403200707_0404----A.mp3
+Saunders's_Gull,XC911485-Saunders-s-Gull-黑嘴鸥-call-占区求偶-崇明东滩-CICADA-2403200707_0404----A,4,data/processed/Saunders's_Gull/XC911485-Saunders-s-Gull-黑嘴鸥-call-占区求偶-崇明东滩-CICADA-2403200707_0404----A_chunk004.wav,3.0,XC911485-Saunders-s-Gull-黑嘴鸥-call-占区求偶-崇明东滩-CICADA-2403200707_0404----A.mp3
+Saunders's_Gull,XC911485-Saunders-s-Gull-黑嘴鸥-call-占区求偶-崇明东滩-CICADA-2403200707_0404----A,5,data/processed/Saunders's_Gull/XC911485-Saunders-s-Gull-黑嘴鸥-call-占区求偶-崇明东滩-CICADA-2403200707_0404----A_chunk005.wav,3.0,XC911485-Saunders-s-Gull-黑嘴鸥-call-占区求偶-崇明东滩-CICADA-2403200707_0404----A.mp3
+Saunders's_Gull,XC911485-Saunders-s-Gull-黑嘴鸥-call-占区求偶-崇明东滩-CICADA-2403200707_0404----A,6,data/processed/Saunders's_Gull/XC911485-Saunders-s-Gull-黑嘴鸥-call-占区求偶-崇明东滩-CICADA-2403200707_0404----A_chunk006.wav,3.0,XC911485-Saunders-s-Gull-黑嘴鸥-call-占区求偶-崇明东滩-CICADA-2403200707_0404----A.mp3
+Saunders's_Gull,XC911485-Saunders-s-Gull-黑嘴鸥-call-占区求偶-崇明东滩-CICADA-2403200707_0404----A,7,data/processed/Saunders's_Gull/XC911485-Saunders-s-Gull-黑嘴鸥-call-占区求偶-崇明东滩-CICADA-2403200707_0404----A_chunk007.wav,3.0,XC911485-Saunders-s-Gull-黑嘴鸥-call-占区求偶-崇明东滩-CICADA-2403200707_0404----A.mp3
+Saunders's_Gull,XC911485-Saunders-s-Gull-黑嘴鸥-call-占区求偶-崇明东滩-CICADA-2403200707_0404----A,8,data/processed/Saunders's_Gull/XC911485-Saunders-s-Gull-黑嘴鸥-call-占区求偶-崇明东滩-CICADA-2403200707_0404----A_chunk008.wav,3.0,XC911485-Saunders-s-Gull-黑嘴鸥-call-占区求偶-崇明东滩-CICADA-2403200707_0404----A.mp3
+Saunders's_Gull,XC911485-Saunders-s-Gull-黑嘴鸥-call-占区求偶-崇明东滩-CICADA-2403200707_0404----A,9,data/processed/Saunders's_Gull/XC911485-Saunders-s-Gull-黑嘴鸥-call-占区求偶-崇明东滩-CICADA-2403200707_0404----A_chunk009.wav,3.0,XC911485-Saunders-s-Gull-黑嘴鸥-call-占区求偶-崇明东滩-CICADA-2403200707_0404----A.mp3
+Saunders's_Gull,XC911485-Saunders-s-Gull-黑嘴鸥-call-占区求偶-崇明东滩-CICADA-2403200707_0404----A,10,data/processed/Saunders's_Gull/XC911485-Saunders-s-Gull-黑嘴鸥-call-占区求偶-崇明东滩-CICADA-2403200707_0404----A_chunk010.wav,3.0,XC911485-Saunders-s-Gull-黑嘴鸥-call-占区求偶-崇明东滩-CICADA-2403200707_0404----A.mp3
+Saunders's_Gull,XC911485-Saunders-s-Gull-黑嘴鸥-call-占区求偶-崇明东滩-CICADA-2403200707_0404----A,11,data/processed/Saunders's_Gull/XC911485-Saunders-s-Gull-黑嘴鸥-call-占区求偶-崇明东滩-CICADA-2403200707_0404----A_chunk011.wav,3.0,XC911485-Saunders-s-Gull-黑嘴鸥-call-占区求偶-崇明东滩-CICADA-2403200707_0404----A.mp3
+Saunders's_Gull,XC911485-Saunders-s-Gull-黑嘴鸥-call-占区求偶-崇明东滩-CICADA-2403200707_0404----A,12,data/processed/Saunders's_Gull/XC911485-Saunders-s-Gull-黑嘴鸥-call-占区求偶-崇明东滩-CICADA-2403200707_0404----A_chunk012.wav,3.0,XC911485-Saunders-s-Gull-黑嘴鸥-call-占区求偶-崇明东滩-CICADA-2403200707_0404----A.mp3
+Saunders's_Gull,XC911485-Saunders-s-Gull-黑嘴鸥-call-占区求偶-崇明东滩-CICADA-2403200707_0404----A,13,data/processed/Saunders's_Gull/XC911485-Saunders-s-Gull-黑嘴鸥-call-占区求偶-崇明东滩-CICADA-2403200707_0404----A_chunk013.wav,3.0,XC911485-Saunders-s-Gull-黑嘴鸥-call-占区求偶-崇明东滩-CICADA-2403200707_0404----A.mp3
+Saunders's_Gull,XC911485-Saunders-s-Gull-黑嘴鸥-call-占区求偶-崇明东滩-CICADA-2403200707_0404----A,14,data/processed/Saunders's_Gull/XC911485-Saunders-s-Gull-黑嘴鸥-call-占区求偶-崇明东滩-CICADA-2403200707_0404----A_chunk014.wav,3.0,XC911485-Saunders-s-Gull-黑嘴鸥-call-占区求偶-崇明东滩-CICADA-2403200707_0404----A.mp3
+Black-headed_Gull,1250,0,data/processed/Black-headed_Gull/1250_chunk000.wav,3.0,1250.mp3
+Black-headed_Gull,1250,1,data/processed/Black-headed_Gull/1250_chunk001.wav,3.0,1250.mp3
+Black-headed_Gull,1250,2,data/processed/Black-headed_Gull/1250_chunk002.wav,3.0,1250.mp3
+Black-headed_Gull,1250,3,data/processed/Black-headed_Gull/1250_chunk003.wav,3.0,1250.mp3
+Black-headed_Gull,1250,4,data/processed/Black-headed_Gull/1250_chunk004.wav,3.0,1250.mp3
+Black-headed_Gull,56,0,data/processed/Black-headed_Gull/56_chunk000.wav,3.0,"56 Larus ridibundus (colony), Hortobagy Nal Park (Hungary), 10-05-10.mp3"
+Black-headed_Gull,56,1,data/processed/Black-headed_Gull/56_chunk001.wav,3.0,"56 Larus ridibundus (colony), Hortobagy Nal Park (Hungary), 10-05-10.mp3"
+Black-headed_Gull,56,2,data/processed/Black-headed_Gull/56_chunk002.wav,3.0,"56 Larus ridibundus (colony), Hortobagy Nal Park (Hungary), 10-05-10.mp3"
+Black-headed_Gull,BlackheadedgullGF,0,data/processed/Black-headed_Gull/BlackheadedgullGF_chunk000.wav,3.0,BlackheadedgullGF.mp3
+Black-headed_Gull,BlackheadedgullGF,1,data/processed/Black-headed_Gull/BlackheadedgullGF_chunk001.wav,3.0,BlackheadedgullGF.mp3
+Black-headed_Gull,BlackheadedgullGF,2,data/processed/Black-headed_Gull/BlackheadedgullGF_chunk002.wav,3.0,BlackheadedgullGF.mp3
+Black-headed_Gull,BlackheadedgullGF,3,data/processed/Black-headed_Gull/BlackheadedgullGF_chunk003.wav,3.0,BlackheadedgullGF.mp3
+Black-headed_Gull,BlackheadedgullGF,4,data/processed/Black-headed_Gull/BlackheadedgullGF_chunk004.wav,3.0,BlackheadedgullGF.mp3
+Black-headed_Gull,BlackheadedgullGF,5,data/processed/Black-headed_Gull/BlackheadedgullGF_chunk005.wav,3.0,BlackheadedgullGF.mp3
+Black-headed_Gull,BlackheadedgullGF,6,data/processed/Black-headed_Gull/BlackheadedgullGF_chunk006.wav,3.0,BlackheadedgullGF.mp3
+Black-headed_Gull,BlackheadedgullGF,7,data/processed/Black-headed_Gull/BlackheadedgullGF_chunk007.wav,3.0,BlackheadedgullGF.mp3
+Black-headed_Gull,BlackheadedgullGF,8,data/processed/Black-headed_Gull/BlackheadedgullGF_chunk008.wav,3.0,BlackheadedgullGF.mp3
+Black-headed_Gull,BlackheadedgullGF,9,data/processed/Black-headed_Gull/BlackheadedgullGF_chunk009.wav,3.0,BlackheadedgullGF.mp3
+Black-headed_Gull,BlackheadedgullGF,10,data/processed/Black-headed_Gull/BlackheadedgullGF_chunk010.wav,3.0,BlackheadedgullGF.mp3
+Black-headed_Gull,BlackheadedgullGF,11,data/processed/Black-headed_Gull/BlackheadedgullGF_chunk011.wav,3.0,BlackheadedgullGF.mp3
+Black-headed_Gull,BlackheadedgullGF,12,data/processed/Black-headed_Gull/BlackheadedgullGF_chunk012.wav,3.0,BlackheadedgullGF.mp3
+Black-headed_Gull,BlackheadedgullGF,13,data/processed/Black-headed_Gull/BlackheadedgullGF_chunk013.wav,3.0,BlackheadedgullGF.mp3
+Black-headed_Gull,BlackheadedgullGF,14,data/processed/Black-headed_Gull/BlackheadedgullGF_chunk014.wav,3.0,BlackheadedgullGF.mp3
+Black-headed_Gull,Hettemake_Hornborgasjon_220410,0,data/processed/Black-headed_Gull/Hettemake_Hornborgasjon_220410_chunk000.wav,3.0,Hettemake_Hornborgasjon_220410.mp3
+Black-headed_Gull,Hettemake_Hornborgasjon_220410,1,data/processed/Black-headed_Gull/Hettemake_Hornborgasjon_220410_chunk001.wav,3.0,Hettemake_Hornborgasjon_220410.mp3
+Black-headed_Gull,Hettemake_Hornborgasjon_220410,2,data/processed/Black-headed_Gull/Hettemake_Hornborgasjon_220410_chunk002.wav,3.0,Hettemake_Hornborgasjon_220410.mp3
+Black-headed_Gull,Hettemake_Hornborgasjon_220410,3,data/processed/Black-headed_Gull/Hettemake_Hornborgasjon_220410_chunk003.wav,3.0,Hettemake_Hornborgasjon_220410.mp3
+Black-headed_Gull,Hettemake_Hornborgasjon_220410,4,data/processed/Black-headed_Gull/Hettemake_Hornborgasjon_220410_chunk004.wav,3.0,Hettemake_Hornborgasjon_220410.mp3
+Black-headed_Gull,Hettemake_Hornborgasjon_220410,5,data/processed/Black-headed_Gull/Hettemake_Hornborgasjon_220410_chunk005.wav,3.0,Hettemake_Hornborgasjon_220410.mp3
+Black-headed_Gull,Hettemake_Hornborgasjon_220410,6,data/processed/Black-headed_Gull/Hettemake_Hornborgasjon_220410_chunk006.wav,3.0,Hettemake_Hornborgasjon_220410.mp3
+Black-headed_Gull,Hettemake_Hornborgasjon_220410,7,data/processed/Black-headed_Gull/Hettemake_Hornborgasjon_220410_chunk007.wav,3.0,Hettemake_Hornborgasjon_220410.mp3
+Black-headed_Gull,Hettemake_Hornborgasjon_220410,8,data/processed/Black-headed_Gull/Hettemake_Hornborgasjon_220410_chunk008.wav,3.0,Hettemake_Hornborgasjon_220410.mp3
+Black-headed_Gull,Hettemake_Hornborgasjon_220410,9,data/processed/Black-headed_Gull/Hettemake_Hornborgasjon_220410_chunk009.wav,3.0,Hettemake_Hornborgasjon_220410.mp3
+Black-headed_Gull,Hettemake_Hornborgasjon_220410,10,data/processed/Black-headed_Gull/Hettemake_Hornborgasjon_220410_chunk010.wav,3.0,Hettemake_Hornborgasjon_220410.mp3
+Black-headed_Gull,Hettemake_Hornborgasjon_220410,11,data/processed/Black-headed_Gull/Hettemake_Hornborgasjon_220410_chunk011.wav,3.0,Hettemake_Hornborgasjon_220410.mp3
+Black-headed_Gull,Hettemake_Hornborgasjon_220410,12,data/processed/Black-headed_Gull/Hettemake_Hornborgasjon_220410_chunk012.wav,3.0,Hettemake_Hornborgasjon_220410.mp3
+Black-headed_Gull,Hettemake_Hornborgasjon_220410,13,data/processed/Black-headed_Gull/Hettemake_Hornborgasjon_220410_chunk013.wav,3.0,Hettemake_Hornborgasjon_220410.mp3
+Black-headed_Gull,Hettemake_Hornborgasjon_220410,14,data/processed/Black-headed_Gull/Hettemake_Hornborgasjon_220410_chunk014.wav,3.0,Hettemake_Hornborgasjon_220410.mp3
+Black-headed_Gull,Hettemake_Hornborgasjon_220410,15,data/processed/Black-headed_Gull/Hettemake_Hornborgasjon_220410_chunk015.wav,3.0,Hettemake_Hornborgasjon_220410.mp3
+Black-headed_Gull,Hettemake_Hornborgasjon_220410,16,data/processed/Black-headed_Gull/Hettemake_Hornborgasjon_220410_chunk016.wav,3.0,Hettemake_Hornborgasjon_220410.mp3
+Black-headed_Gull,Hettemake_Hornborgasjon_220410,17,data/processed/Black-headed_Gull/Hettemake_Hornborgasjon_220410_chunk017.wav,3.0,Hettemake_Hornborgasjon_220410.mp3
+Black-headed_Gull,Hettemake_Hornborgasjon_220410,18,data/processed/Black-headed_Gull/Hettemake_Hornborgasjon_220410_chunk018.wav,3.0,Hettemake_Hornborgasjon_220410.mp3
+Black-headed_Gull,Hettemake_Hornborgasjon_220410,19,data/processed/Black-headed_Gull/Hettemake_Hornborgasjon_220410_chunk019.wav,3.0,Hettemake_Hornborgasjon_220410.mp3
+Black-headed_Gull,Hettemake_Hornborgasjon_220410,20,data/processed/Black-headed_Gull/Hettemake_Hornborgasjon_220410_chunk020.wav,3.0,Hettemake_Hornborgasjon_220410.mp3
+Black-headed_Gull,Kok_Ypenb_110707-03xc,0,data/processed/Black-headed_Gull/Kok_Ypenb_110707-03xc_chunk000.wav,3.0,Kok_Ypenb_110707-03xc.mp3
+Black-headed_Gull,Kok_Ypenb_110707-03xc,1,data/processed/Black-headed_Gull/Kok_Ypenb_110707-03xc_chunk001.wav,3.0,Kok_Ypenb_110707-03xc.mp3
+Black-headed_Gull,Kok_Ypenb_110707-03xc,2,data/processed/Black-headed_Gull/Kok_Ypenb_110707-03xc_chunk002.wav,3.0,Kok_Ypenb_110707-03xc.mp3
+Black-headed_Gull,Kok_Ypenb_110707-03xc,3,data/processed/Black-headed_Gull/Kok_Ypenb_110707-03xc_chunk003.wav,3.0,Kok_Ypenb_110707-03xc.mp3
+Black-headed_Gull,Kok_Ypenb_110707-03xc,4,data/processed/Black-headed_Gull/Kok_Ypenb_110707-03xc_chunk004.wav,3.0,Kok_Ypenb_110707-03xc.mp3
+Black-headed_Gull,Kok_Ypenb_110707-03xc,5,data/processed/Black-headed_Gull/Kok_Ypenb_110707-03xc_chunk005.wav,3.0,Kok_Ypenb_110707-03xc.mp3
+Black-headed_Gull,Kok_Ypenb_110707-03xc,6,data/processed/Black-headed_Gull/Kok_Ypenb_110707-03xc_chunk006.wav,3.0,Kok_Ypenb_110707-03xc.mp3
+Black-headed_Gull,Kok_Ypenb_110707-03xc,7,data/processed/Black-headed_Gull/Kok_Ypenb_110707-03xc_chunk007.wav,3.0,Kok_Ypenb_110707-03xc.mp3
+Black-headed_Gull,Kok_Ypenb_110707-03xc,8,data/processed/Black-headed_Gull/Kok_Ypenb_110707-03xc_chunk008.wav,3.0,Kok_Ypenb_110707-03xc.mp3
+Black-headed_Gull,LachmHelmsand27-9-11_11-43,0,data/processed/Black-headed_Gull/LachmHelmsand27-9-11_11-43_chunk000.wav,3.0,LachmHelmsand27-9-11_11-43.mp3
+Black-headed_Gull,LachmHelmsand27-9-11_11-43,1,data/processed/Black-headed_Gull/LachmHelmsand27-9-11_11-43_chunk001.wav,3.0,LachmHelmsand27-9-11_11-43.mp3
+Black-headed_Gull,LachmHelmsand27-9-11_11-43,2,data/processed/Black-headed_Gull/LachmHelmsand27-9-11_11-43_chunk002.wav,3.0,LachmHelmsand27-9-11_11-43.mp3
+Black-headed_Gull,LachmHelmsand27-9-11_11-43,3,data/processed/Black-headed_Gull/LachmHelmsand27-9-11_11-43_chunk003.wav,3.0,LachmHelmsand27-9-11_11-43.mp3
+Black-headed_Gull,LachmHelmsand27-9-11_11-43,4,data/processed/Black-headed_Gull/LachmHelmsand27-9-11_11-43_chunk004.wav,3.0,LachmHelmsand27-9-11_11-43.mp3
+Black-headed_Gull,LachmHelmsand27-9-11_11-43,5,data/processed/Black-headed_Gull/LachmHelmsand27-9-11_11-43_chunk005.wav,3.0,LachmHelmsand27-9-11_11-43.mp3
+Black-headed_Gull,LachmHelmsand27-9-11_11-43,6,data/processed/Black-headed_Gull/LachmHelmsand27-9-11_11-43_chunk006.wav,3.0,LachmHelmsand27-9-11_11-43.mp3
+Black-headed_Gull,LachmHelmsand27-9-11_11-43,7,data/processed/Black-headed_Gull/LachmHelmsand27-9-11_11-43_chunk007.wav,3.0,LachmHelmsand27-9-11_11-43.mp3
+Black-headed_Gull,LachmHelmsand27-9-11_11-43,8,data/processed/Black-headed_Gull/LachmHelmsand27-9-11_11-43_chunk008.wav,3.0,LachmHelmsand27-9-11_11-43.mp3
+Black-headed_Gull,XC110352-Skrattmas-2012-04-16,0,data/processed/Black-headed_Gull/XC110352-Skrattmas-2012-04-16_chunk000.wav,3.0,XC110352-Skrattmas-2012-04-16.mp3
+Black-headed_Gull,XC110352-Skrattmas-2012-04-16,1,data/processed/Black-headed_Gull/XC110352-Skrattmas-2012-04-16_chunk001.wav,3.0,XC110352-Skrattmas-2012-04-16.mp3
+Black-headed_Gull,XC110352-Skrattmas-2012-04-16,2,data/processed/Black-headed_Gull/XC110352-Skrattmas-2012-04-16_chunk002.wav,3.0,XC110352-Skrattmas-2012-04-16.mp3
+Black-headed_Gull,XC110352-Skrattmas-2012-04-16,3,data/processed/Black-headed_Gull/XC110352-Skrattmas-2012-04-16_chunk003.wav,3.0,XC110352-Skrattmas-2012-04-16.mp3
+Black-headed_Gull,XC110352-Skrattmas-2012-04-16,4,data/processed/Black-headed_Gull/XC110352-Skrattmas-2012-04-16_chunk004.wav,3.0,XC110352-Skrattmas-2012-04-16.mp3
+Black-headed_Gull,XC110352-Skrattmas-2012-04-16,5,data/processed/Black-headed_Gull/XC110352-Skrattmas-2012-04-16_chunk005.wav,3.0,XC110352-Skrattmas-2012-04-16.mp3
+Black-headed_Gull,XC110352-Skrattmas-2012-04-16,6,data/processed/Black-headed_Gull/XC110352-Skrattmas-2012-04-16_chunk006.wav,3.0,XC110352-Skrattmas-2012-04-16.mp3
+Black-headed_Gull,XC110352-Skrattmas-2012-04-16,7,data/processed/Black-headed_Gull/XC110352-Skrattmas-2012-04-16_chunk007.wav,3.0,XC110352-Skrattmas-2012-04-16.mp3
+Black-headed_Gull,XC110352-Skrattmas-2012-04-16,8,data/processed/Black-headed_Gull/XC110352-Skrattmas-2012-04-16_chunk008.wav,3.0,XC110352-Skrattmas-2012-04-16.mp3
+Black-headed_Gull,XC110352-Skrattmas-2012-04-16,9,data/processed/Black-headed_Gull/XC110352-Skrattmas-2012-04-16_chunk009.wav,3.0,XC110352-Skrattmas-2012-04-16.mp3
+Black-headed_Gull,XC110352-Skrattmas-2012-04-16,10,data/processed/Black-headed_Gull/XC110352-Skrattmas-2012-04-16_chunk010.wav,3.0,XC110352-Skrattmas-2012-04-16.mp3
+Black-headed_Gull,XC110352-Skrattmas-2012-04-16,11,data/processed/Black-headed_Gull/XC110352-Skrattmas-2012-04-16_chunk011.wav,3.0,XC110352-Skrattmas-2012-04-16.mp3
+Black-headed_Gull,XC110352-Skrattmas-2012-04-16,12,data/processed/Black-headed_Gull/XC110352-Skrattmas-2012-04-16_chunk012.wav,3.0,XC110352-Skrattmas-2012-04-16.mp3
+Black-headed_Gull,XC110352-Skrattmas-2012-04-16,13,data/processed/Black-headed_Gull/XC110352-Skrattmas-2012-04-16_chunk013.wav,3.0,XC110352-Skrattmas-2012-04-16.mp3
+Black-headed_Gull,XC110352-Skrattmas-2012-04-16,14,data/processed/Black-headed_Gull/XC110352-Skrattmas-2012-04-16_chunk014.wav,3.0,XC110352-Skrattmas-2012-04-16.mp3
+Black-headed_Gull,XC110352-Skrattmas-2012-04-16,15,data/processed/Black-headed_Gull/XC110352-Skrattmas-2012-04-16_chunk015.wav,3.0,XC110352-Skrattmas-2012-04-16.mp3
+Black-headed_Gull,XC110352-Skrattmas-2012-04-16,16,data/processed/Black-headed_Gull/XC110352-Skrattmas-2012-04-16_chunk016.wav,3.0,XC110352-Skrattmas-2012-04-16.mp3
+Black-headed_Gull,XC110352-Skrattmas-2012-04-16,17,data/processed/Black-headed_Gull/XC110352-Skrattmas-2012-04-16_chunk017.wav,3.0,XC110352-Skrattmas-2012-04-16.mp3
+Black-headed_Gull,XC110352-Skrattmas-2012-04-16,18,data/processed/Black-headed_Gull/XC110352-Skrattmas-2012-04-16_chunk018.wav,3.0,XC110352-Skrattmas-2012-04-16.mp3
+Black-headed_Gull,XC110352-Skrattmas-2012-04-16,19,data/processed/Black-headed_Gull/XC110352-Skrattmas-2012-04-16_chunk019.wav,3.0,XC110352-Skrattmas-2012-04-16.mp3
+Black-headed_Gull,XC110352-Skrattmas-2012-04-16,20,data/processed/Black-headed_Gull/XC110352-Skrattmas-2012-04-16_chunk020.wav,3.0,XC110352-Skrattmas-2012-04-16.mp3
+Black-headed_Gull,XC110352-Skrattmas-2012-04-16,21,data/processed/Black-headed_Gull/XC110352-Skrattmas-2012-04-16_chunk021.wav,3.0,XC110352-Skrattmas-2012-04-16.mp3
+Black-headed_Gull,XC110352-Skrattmas-2012-04-16,22,data/processed/Black-headed_Gull/XC110352-Skrattmas-2012-04-16_chunk022.wav,3.0,XC110352-Skrattmas-2012-04-16.mp3
+Black-headed_Gull,XC110352-Skrattmas-2012-04-16,23,data/processed/Black-headed_Gull/XC110352-Skrattmas-2012-04-16_chunk023.wav,3.0,XC110352-Skrattmas-2012-04-16.mp3
+Black-headed_Gull,XC110352-Skrattmas-2012-04-16,24,data/processed/Black-headed_Gull/XC110352-Skrattmas-2012-04-16_chunk024.wav,3.0,XC110352-Skrattmas-2012-04-16.mp3
+Black-headed_Gull,XC110352-Skrattmas-2012-04-16,25,data/processed/Black-headed_Gull/XC110352-Skrattmas-2012-04-16_chunk025.wav,3.0,XC110352-Skrattmas-2012-04-16.mp3
+Black-headed_Gull,XC110352-Skrattmas-2012-04-16,26,data/processed/Black-headed_Gull/XC110352-Skrattmas-2012-04-16_chunk026.wav,3.0,XC110352-Skrattmas-2012-04-16.mp3
+Black-headed_Gull,XC110352-Skrattmas-2012-04-16,27,data/processed/Black-headed_Gull/XC110352-Skrattmas-2012-04-16_chunk027.wav,3.0,XC110352-Skrattmas-2012-04-16.mp3
+Black-headed_Gull,XC110352-Skrattmas-2012-04-16,28,data/processed/Black-headed_Gull/XC110352-Skrattmas-2012-04-16_chunk028.wav,3.0,XC110352-Skrattmas-2012-04-16.mp3
+Black-headed_Gull,XC110352-Skrattmas-2012-04-16,29,data/processed/Black-headed_Gull/XC110352-Skrattmas-2012-04-16_chunk029.wav,3.0,XC110352-Skrattmas-2012-04-16.mp3
+Black-headed_Gull,XC113365-Kokmeeuw_20121123_Rotterdam,0,data/processed/Black-headed_Gull/XC113365-Kokmeeuw_20121123_Rotterdam_chunk000.wav,3.0,XC113365-Kokmeeuw_20121123_Rotterdam.mp3
+Black-headed_Gull,XC113365-Kokmeeuw_20121123_Rotterdam,1,data/processed/Black-headed_Gull/XC113365-Kokmeeuw_20121123_Rotterdam_chunk001.wav,3.0,XC113365-Kokmeeuw_20121123_Rotterdam.mp3
+Black-headed_Gull,XC113365-Kokmeeuw_20121123_Rotterdam,2,data/processed/Black-headed_Gull/XC113365-Kokmeeuw_20121123_Rotterdam_chunk002.wav,3.0,XC113365-Kokmeeuw_20121123_Rotterdam.mp3
+Black-headed_Gull,XC113365-Kokmeeuw_20121123_Rotterdam,3,data/processed/Black-headed_Gull/XC113365-Kokmeeuw_20121123_Rotterdam_chunk003.wav,3.0,XC113365-Kokmeeuw_20121123_Rotterdam.mp3
+Black-headed_Gull,XC113365-Kokmeeuw_20121123_Rotterdam,4,data/processed/Black-headed_Gull/XC113365-Kokmeeuw_20121123_Rotterdam_chunk004.wav,3.0,XC113365-Kokmeeuw_20121123_Rotterdam.mp3
+Black-headed_Gull,XC113365-Kokmeeuw_20121123_Rotterdam,5,data/processed/Black-headed_Gull/XC113365-Kokmeeuw_20121123_Rotterdam_chunk005.wav,3.0,XC113365-Kokmeeuw_20121123_Rotterdam.mp3
+Black-headed_Gull,XC113365-Kokmeeuw_20121123_Rotterdam,6,data/processed/Black-headed_Gull/XC113365-Kokmeeuw_20121123_Rotterdam_chunk006.wav,3.0,XC113365-Kokmeeuw_20121123_Rotterdam.mp3
+Black-headed_Gull,XC113365-Kokmeeuw_20121123_Rotterdam,7,data/processed/Black-headed_Gull/XC113365-Kokmeeuw_20121123_Rotterdam_chunk007.wav,3.0,XC113365-Kokmeeuw_20121123_Rotterdam.mp3
+Black-headed_Gull,XC113365-Kokmeeuw_20121123_Rotterdam,8,data/processed/Black-headed_Gull/XC113365-Kokmeeuw_20121123_Rotterdam_chunk008.wav,3.0,XC113365-Kokmeeuw_20121123_Rotterdam.mp3
+Black-headed_Gull,XC113365-Kokmeeuw_20121123_Rotterdam,9,data/processed/Black-headed_Gull/XC113365-Kokmeeuw_20121123_Rotterdam_chunk009.wav,3.0,XC113365-Kokmeeuw_20121123_Rotterdam.mp3
+Black-headed_Gull,XC113365-Kokmeeuw_20121123_Rotterdam,10,data/processed/Black-headed_Gull/XC113365-Kokmeeuw_20121123_Rotterdam_chunk010.wav,3.0,XC113365-Kokmeeuw_20121123_Rotterdam.mp3
+Black-headed_Gull,XC113365-Kokmeeuw_20121123_Rotterdam,11,data/processed/Black-headed_Gull/XC113365-Kokmeeuw_20121123_Rotterdam_chunk011.wav,3.0,XC113365-Kokmeeuw_20121123_Rotterdam.mp3
+Black-headed_Gull,XC129576-LARRID20130415Dranse-Renaudier-000008,0,data/processed/Black-headed_Gull/XC129576-LARRID20130415Dranse-Renaudier-000008_chunk000.wav,3.0,XC129576-LARRID20130415Dranse-Renaudier-000008.mp3
+Black-headed_Gull,XC129576-LARRID20130415Dranse-Renaudier-000008,1,data/processed/Black-headed_Gull/XC129576-LARRID20130415Dranse-Renaudier-000008_chunk001.wav,3.0,XC129576-LARRID20130415Dranse-Renaudier-000008.mp3
+Black-headed_Gull,XC129576-LARRID20130415Dranse-Renaudier-000008,2,data/processed/Black-headed_Gull/XC129576-LARRID20130415Dranse-Renaudier-000008_chunk002.wav,3.0,XC129576-LARRID20130415Dranse-Renaudier-000008.mp3
+Black-headed_Gull,XC129576-LARRID20130415Dranse-Renaudier-000008,3,data/processed/Black-headed_Gull/XC129576-LARRID20130415Dranse-Renaudier-000008_chunk003.wav,3.0,XC129576-LARRID20130415Dranse-Renaudier-000008.mp3
+Black-headed_Gull,XC129576-LARRID20130415Dranse-Renaudier-000008,4,data/processed/Black-headed_Gull/XC129576-LARRID20130415Dranse-Renaudier-000008_chunk004.wav,3.0,XC129576-LARRID20130415Dranse-Renaudier-000008.mp3
+Black-headed_Gull,XC129576-LARRID20130415Dranse-Renaudier-000008,5,data/processed/Black-headed_Gull/XC129576-LARRID20130415Dranse-Renaudier-000008_chunk005.wav,3.0,XC129576-LARRID20130415Dranse-Renaudier-000008.mp3
+Black-headed_Gull,XC129576-LARRID20130415Dranse-Renaudier-000008,6,data/processed/Black-headed_Gull/XC129576-LARRID20130415Dranse-Renaudier-000008_chunk006.wav,3.0,XC129576-LARRID20130415Dranse-Renaudier-000008.mp3
+Black-headed_Gull,XC129576-LARRID20130415Dranse-Renaudier-000008,7,data/processed/Black-headed_Gull/XC129576-LARRID20130415Dranse-Renaudier-000008_chunk007.wav,3.0,XC129576-LARRID20130415Dranse-Renaudier-000008.mp3
+Black-headed_Gull,XC129576-LARRID20130415Dranse-Renaudier-000008,8,data/processed/Black-headed_Gull/XC129576-LARRID20130415Dranse-Renaudier-000008_chunk008.wav,3.0,XC129576-LARRID20130415Dranse-Renaudier-000008.mp3
+Black-headed_Gull,XC129576-LARRID20130415Dranse-Renaudier-000008,9,data/processed/Black-headed_Gull/XC129576-LARRID20130415Dranse-Renaudier-000008_chunk009.wav,3.0,XC129576-LARRID20130415Dranse-Renaudier-000008.mp3
+Black-headed_Gull,XC129576-LARRID20130415Dranse-Renaudier-000008,10,data/processed/Black-headed_Gull/XC129576-LARRID20130415Dranse-Renaudier-000008_chunk010.wav,3.0,XC129576-LARRID20130415Dranse-Renaudier-000008.mp3
+Black-headed_Gull,XC129576-LARRID20130415Dranse-Renaudier-000008,11,data/processed/Black-headed_Gull/XC129576-LARRID20130415Dranse-Renaudier-000008_chunk011.wav,3.0,XC129576-LARRID20130415Dranse-Renaudier-000008.mp3
+Black-headed_Gull,XC129576-LARRID20130415Dranse-Renaudier-000008,12,data/processed/Black-headed_Gull/XC129576-LARRID20130415Dranse-Renaudier-000008_chunk012.wav,3.0,XC129576-LARRID20130415Dranse-Renaudier-000008.mp3
+Black-headed_Gull,XC129576-LARRID20130415Dranse-Renaudier-000008,13,data/processed/Black-headed_Gull/XC129576-LARRID20130415Dranse-Renaudier-000008_chunk013.wav,3.0,XC129576-LARRID20130415Dranse-Renaudier-000008.mp3
+Black-headed_Gull,XC129576-LARRID20130415Dranse-Renaudier-000008,14,data/processed/Black-headed_Gull/XC129576-LARRID20130415Dranse-Renaudier-000008_chunk014.wav,3.0,XC129576-LARRID20130415Dranse-Renaudier-000008.mp3
+Black-headed_Gull,XC129576-LARRID20130415Dranse-Renaudier-000008,15,data/processed/Black-headed_Gull/XC129576-LARRID20130415Dranse-Renaudier-000008_chunk015.wav,3.0,XC129576-LARRID20130415Dranse-Renaudier-000008.mp3
+Black-headed_Gull,XC129576-LARRID20130415Dranse-Renaudier-000008,16,data/processed/Black-headed_Gull/XC129576-LARRID20130415Dranse-Renaudier-000008_chunk016.wav,3.0,XC129576-LARRID20130415Dranse-Renaudier-000008.mp3
+Black-headed_Gull,XC129576-LARRID20130415Dranse-Renaudier-000008,17,data/processed/Black-headed_Gull/XC129576-LARRID20130415Dranse-Renaudier-000008_chunk017.wav,3.0,XC129576-LARRID20130415Dranse-Renaudier-000008.mp3
+Black-headed_Gull,XC172174-chroicocephalus_ridibundus_objezierze_wielkopolskie_02.04.2014_1857,0,data/processed/Black-headed_Gull/XC172174-chroicocephalus_ridibundus_objezierze_wielkopolskie_02.04.2014_1857_chunk000.wav,3.0,XC172174-chroicocephalus_ridibundus_objezierze_wielkopolskie_02.04.2014_1857.mp3
+Black-headed_Gull,XC172174-chroicocephalus_ridibundus_objezierze_wielkopolskie_02.04.2014_1857,1,data/processed/Black-headed_Gull/XC172174-chroicocephalus_ridibundus_objezierze_wielkopolskie_02.04.2014_1857_chunk001.wav,3.0,XC172174-chroicocephalus_ridibundus_objezierze_wielkopolskie_02.04.2014_1857.mp3
+Black-headed_Gull,XC172174-chroicocephalus_ridibundus_objezierze_wielkopolskie_02.04.2014_1857,2,data/processed/Black-headed_Gull/XC172174-chroicocephalus_ridibundus_objezierze_wielkopolskie_02.04.2014_1857_chunk002.wav,3.0,XC172174-chroicocephalus_ridibundus_objezierze_wielkopolskie_02.04.2014_1857.mp3
+Black-headed_Gull,XC172174-chroicocephalus_ridibundus_objezierze_wielkopolskie_02.04.2014_1857,3,data/processed/Black-headed_Gull/XC172174-chroicocephalus_ridibundus_objezierze_wielkopolskie_02.04.2014_1857_chunk003.wav,3.0,XC172174-chroicocephalus_ridibundus_objezierze_wielkopolskie_02.04.2014_1857.mp3
+Black-headed_Gull,XC187086-Ch.ridi,0,data/processed/Black-headed_Gull/XC187086-Ch.ridi_chunk000.wav,3.0,XC187086-Ch.ridi 140713_012.MP3
+Black-headed_Gull,XC187086-Ch.ridi,1,data/processed/Black-headed_Gull/XC187086-Ch.ridi_chunk001.wav,3.0,XC187086-Ch.ridi 140713_012.MP3
+Black-headed_Gull,XC187086-Ch.ridi,2,data/processed/Black-headed_Gull/XC187086-Ch.ridi_chunk002.wav,3.0,XC187086-Ch.ridi 140713_012.MP3
+Black-headed_Gull,XC187086-Ch.ridi,3,data/processed/Black-headed_Gull/XC187086-Ch.ridi_chunk003.wav,3.0,XC187086-Ch.ridi 140713_012.MP3
+Black-headed_Gull,XC187086-Ch.ridi,4,data/processed/Black-headed_Gull/XC187086-Ch.ridi_chunk004.wav,3.0,XC187086-Ch.ridi 140713_012.MP3
+Black-headed_Gull,XC187086-Ch.ridi,5,data/processed/Black-headed_Gull/XC187086-Ch.ridi_chunk005.wav,3.0,XC187086-Ch.ridi 140713_012.MP3
+Black-headed_Gull,XC187086-Ch.ridi,6,data/processed/Black-headed_Gull/XC187086-Ch.ridi_chunk006.wav,3.0,XC187086-Ch.ridi 140713_012.MP3
+Black-headed_Gull,XC187086-Ch.ridi,7,data/processed/Black-headed_Gull/XC187086-Ch.ridi_chunk007.wav,3.0,XC187086-Ch.ridi 140713_012.MP3
+Black-headed_Gull,XC190892-L.,0,data/processed/Black-headed_Gull/XC190892-L._chunk000.wav,3.0,"XC190892-L. ridib 0619_232104,AA++.MP3"
+Black-headed_Gull,XC190892-L.,1,data/processed/Black-headed_Gull/XC190892-L._chunk001.wav,3.0,"XC190892-L. ridib 0619_232104,AA++.MP3"
+Black-headed_Gull,XC190892-L.,2,data/processed/Black-headed_Gull/XC190892-L._chunk002.wav,3.0,"XC190892-L. ridib 0619_232104,AA++.MP3"
+Black-headed_Gull,XC190892-L.,3,data/processed/Black-headed_Gull/XC190892-L._chunk003.wav,3.0,"XC190892-L. ridib 0619_232104,AA++.MP3"
+Black-headed_Gull,XC190892-L.,4,data/processed/Black-headed_Gull/XC190892-L._chunk004.wav,3.0,"XC190892-L. ridib 0619_232104,AA++.MP3"
+Black-headed_Gull,XC190892-L.,5,data/processed/Black-headed_Gull/XC190892-L._chunk005.wav,3.0,"XC190892-L. ridib 0619_232104,AA++.MP3"
+Black-headed_Gull,XC190892-L.,6,data/processed/Black-headed_Gull/XC190892-L._chunk006.wav,3.0,"XC190892-L. ridib 0619_232104,AA++.MP3"
+Black-headed_Gull,XC190892-L.,7,data/processed/Black-headed_Gull/XC190892-L._chunk007.wav,3.0,"XC190892-L. ridib 0619_232104,AA++.MP3"
+Black-headed_Gull,XC190892-L.,8,data/processed/Black-headed_Gull/XC190892-L._chunk008.wav,3.0,"XC190892-L. ridib 0619_232104,AA++.MP3"
+Black-headed_Gull,XC190892-L.,9,data/processed/Black-headed_Gull/XC190892-L._chunk009.wav,3.0,"XC190892-L. ridib 0619_232104,AA++.MP3"
+Black-headed_Gull,XC190892-L.,10,data/processed/Black-headed_Gull/XC190892-L._chunk010.wav,3.0,"XC190892-L. ridib 0619_232104,AA++.MP3"
+Black-headed_Gull,XC190892-L.,11,data/processed/Black-headed_Gull/XC190892-L._chunk011.wav,3.0,"XC190892-L. ridib 0619_232104,AA++.MP3"
+Black-headed_Gull,XC203270-LS112887,0,data/processed/Black-headed_Gull/XC203270-LS112887_chunk000.wav,3.0,XC203270-LS112887.mp3
+Black-headed_Gull,XC203270-LS112887,1,data/processed/Black-headed_Gull/XC203270-LS112887_chunk001.wav,3.0,XC203270-LS112887.mp3
+Black-headed_Gull,XC203270-LS112887,2,data/processed/Black-headed_Gull/XC203270-LS112887_chunk002.wav,3.0,XC203270-LS112887.mp3
+Black-headed_Gull,XC203270-LS112887,3,data/processed/Black-headed_Gull/XC203270-LS112887_chunk003.wav,3.0,XC203270-LS112887.mp3
+Black-headed_Gull,XC203270-LS112887,4,data/processed/Black-headed_Gull/XC203270-LS112887_chunk004.wav,3.0,XC203270-LS112887.mp3
+Black-headed_Gull,XC203270-LS112887,5,data/processed/Black-headed_Gull/XC203270-LS112887_chunk005.wav,3.0,XC203270-LS112887.mp3
+Black-headed_Gull,XC203270-LS112887,6,data/processed/Black-headed_Gull/XC203270-LS112887_chunk006.wav,3.0,XC203270-LS112887.mp3
+Black-headed_Gull,XC203270-LS112887,7,data/processed/Black-headed_Gull/XC203270-LS112887_chunk007.wav,3.0,XC203270-LS112887.mp3
+Black-headed_Gull,XC203270-LS112887,8,data/processed/Black-headed_Gull/XC203270-LS112887_chunk008.wav,3.0,XC203270-LS112887.mp3
+Black-headed_Gull,XC203270-LS112887,9,data/processed/Black-headed_Gull/XC203270-LS112887_chunk009.wav,3.0,XC203270-LS112887.mp3
+Black-headed_Gull,XC203270-LS112887,10,data/processed/Black-headed_Gull/XC203270-LS112887_chunk010.wav,3.0,XC203270-LS112887.mp3
+Black-headed_Gull,XC203270-LS112887,11,data/processed/Black-headed_Gull/XC203270-LS112887_chunk011.wav,3.0,XC203270-LS112887.mp3
+Black-headed_Gull,XC203270-LS112887,12,data/processed/Black-headed_Gull/XC203270-LS112887_chunk012.wav,3.0,XC203270-LS112887.mp3
+Black-headed_Gull,XC203270-LS112887,13,data/processed/Black-headed_Gull/XC203270-LS112887_chunk013.wav,3.0,XC203270-LS112887.mp3
+Black-headed_Gull,XC203270-LS112887,14,data/processed/Black-headed_Gull/XC203270-LS112887_chunk014.wav,3.0,XC203270-LS112887.mp3
+Black-headed_Gull,XC203270-LS112887,15,data/processed/Black-headed_Gull/XC203270-LS112887_chunk015.wav,3.0,XC203270-LS112887.mp3
+Black-headed_Gull,XC203270-LS112887,16,data/processed/Black-headed_Gull/XC203270-LS112887_chunk016.wav,3.0,XC203270-LS112887.mp3
+Black-headed_Gull,XC203270-LS112887,17,data/processed/Black-headed_Gull/XC203270-LS112887_chunk017.wav,3.0,XC203270-LS112887.mp3
+Black-headed_Gull,XC203270-LS112887,18,data/processed/Black-headed_Gull/XC203270-LS112887_chunk018.wav,3.0,XC203270-LS112887.mp3
+Black-headed_Gull,XC203270-LS112887,19,data/processed/Black-headed_Gull/XC203270-LS112887_chunk019.wav,3.0,XC203270-LS112887.mp3
+Black-headed_Gull,XC203270-LS112887,20,data/processed/Black-headed_Gull/XC203270-LS112887_chunk020.wav,3.0,XC203270-LS112887.mp3
+Black-headed_Gull,XC203270-LS112887,21,data/processed/Black-headed_Gull/XC203270-LS112887_chunk021.wav,3.0,XC203270-LS112887.mp3
+Black-headed_Gull,XC203270-LS112887,22,data/processed/Black-headed_Gull/XC203270-LS112887_chunk022.wav,3.0,XC203270-LS112887.mp3
+Black-headed_Gull,XC203270-LS112887,23,data/processed/Black-headed_Gull/XC203270-LS112887_chunk023.wav,3.0,XC203270-LS112887.mp3
+Black-headed_Gull,XC203270-LS112887,24,data/processed/Black-headed_Gull/XC203270-LS112887_chunk024.wav,3.0,XC203270-LS112887.mp3
+Black-headed_Gull,XC203270-LS112887,25,data/processed/Black-headed_Gull/XC203270-LS112887_chunk025.wav,3.0,XC203270-LS112887.mp3
+Black-headed_Gull,XC203270-LS112887,26,data/processed/Black-headed_Gull/XC203270-LS112887_chunk026.wav,3.0,XC203270-LS112887.mp3
+Black-headed_Gull,XC203270-LS112887,27,data/processed/Black-headed_Gull/XC203270-LS112887_chunk027.wav,3.0,XC203270-LS112887.mp3
+Black-headed_Gull,XC203270-LS112887,28,data/processed/Black-headed_Gull/XC203270-LS112887_chunk028.wav,3.0,XC203270-LS112887.mp3
+Black-headed_Gull,XC203270-LS112887,29,data/processed/Black-headed_Gull/XC203270-LS112887_chunk029.wav,3.0,XC203270-LS112887.mp3
+Black-headed_Gull,XC203270-LS112887,30,data/processed/Black-headed_Gull/XC203270-LS112887_chunk030.wav,3.0,XC203270-LS112887.mp3
+Black-headed_Gull,XC203270-LS112887,31,data/processed/Black-headed_Gull/XC203270-LS112887_chunk031.wav,3.0,XC203270-LS112887.mp3
+Black-headed_Gull,XC203270-LS112887,32,data/processed/Black-headed_Gull/XC203270-LS112887_chunk032.wav,3.0,XC203270-LS112887.mp3
+Black-headed_Gull,XC203270-LS112887,33,data/processed/Black-headed_Gull/XC203270-LS112887_chunk033.wav,3.0,XC203270-LS112887.mp3
+Black-headed_Gull,XC203270-LS112887,34,data/processed/Black-headed_Gull/XC203270-LS112887_chunk034.wav,3.0,XC203270-LS112887.mp3
+Black-headed_Gull,XC203270-LS112887,35,data/processed/Black-headed_Gull/XC203270-LS112887_chunk035.wav,3.0,XC203270-LS112887.mp3
+Black-headed_Gull,XC205526-Lachmöwen,0,data/processed/Black-headed_Gull/XC205526-Lachmöwen_chunk000.wav,3.0,XC205526-Lachmöwen Hagnau Fütterung 2014 12 06 LS111479Xeno.mp3
+Black-headed_Gull,XC205526-Lachmöwen,1,data/processed/Black-headed_Gull/XC205526-Lachmöwen_chunk001.wav,3.0,XC205526-Lachmöwen Hagnau Fütterung 2014 12 06 LS111479Xeno.mp3
+Black-headed_Gull,XC205526-Lachmöwen,2,data/processed/Black-headed_Gull/XC205526-Lachmöwen_chunk002.wav,3.0,XC205526-Lachmöwen Hagnau Fütterung 2014 12 06 LS111479Xeno.mp3
+Black-headed_Gull,XC205526-Lachmöwen,3,data/processed/Black-headed_Gull/XC205526-Lachmöwen_chunk003.wav,3.0,XC205526-Lachmöwen Hagnau Fütterung 2014 12 06 LS111479Xeno.mp3
+Black-headed_Gull,XC205526-Lachmöwen,4,data/processed/Black-headed_Gull/XC205526-Lachmöwen_chunk004.wav,3.0,XC205526-Lachmöwen Hagnau Fütterung 2014 12 06 LS111479Xeno.mp3
+Black-headed_Gull,XC205526-Lachmöwen,5,data/processed/Black-headed_Gull/XC205526-Lachmöwen_chunk005.wav,3.0,XC205526-Lachmöwen Hagnau Fütterung 2014 12 06 LS111479Xeno.mp3
+Black-headed_Gull,XC205526-Lachmöwen,6,data/processed/Black-headed_Gull/XC205526-Lachmöwen_chunk006.wav,3.0,XC205526-Lachmöwen Hagnau Fütterung 2014 12 06 LS111479Xeno.mp3
+Black-headed_Gull,XC205526-Lachmöwen,7,data/processed/Black-headed_Gull/XC205526-Lachmöwen_chunk007.wav,3.0,XC205526-Lachmöwen Hagnau Fütterung 2014 12 06 LS111479Xeno.mp3
+Black-headed_Gull,XC205526-Lachmöwen,8,data/processed/Black-headed_Gull/XC205526-Lachmöwen_chunk008.wav,3.0,XC205526-Lachmöwen Hagnau Fütterung 2014 12 06 LS111479Xeno.mp3
+Black-headed_Gull,XC205526-Lachmöwen,9,data/processed/Black-headed_Gull/XC205526-Lachmöwen_chunk009.wav,3.0,XC205526-Lachmöwen Hagnau Fütterung 2014 12 06 LS111479Xeno.mp3
+Black-headed_Gull,XC205526-Lachmöwen,10,data/processed/Black-headed_Gull/XC205526-Lachmöwen_chunk010.wav,3.0,XC205526-Lachmöwen Hagnau Fütterung 2014 12 06 LS111479Xeno.mp3
+Black-headed_Gull,XC205526-Lachmöwen,11,data/processed/Black-headed_Gull/XC205526-Lachmöwen_chunk011.wav,3.0,XC205526-Lachmöwen Hagnau Fütterung 2014 12 06 LS111479Xeno.mp3
+Black-headed_Gull,XC205526-Lachmöwen,12,data/processed/Black-headed_Gull/XC205526-Lachmöwen_chunk012.wav,3.0,XC205526-Lachmöwen Hagnau Fütterung 2014 12 06 LS111479Xeno.mp3
+Black-headed_Gull,XC205526-Lachmöwen,13,data/processed/Black-headed_Gull/XC205526-Lachmöwen_chunk013.wav,3.0,XC205526-Lachmöwen Hagnau Fütterung 2014 12 06 LS111479Xeno.mp3
+Black-headed_Gull,XC205526-Lachmöwen,14,data/processed/Black-headed_Gull/XC205526-Lachmöwen_chunk014.wav,3.0,XC205526-Lachmöwen Hagnau Fütterung 2014 12 06 LS111479Xeno.mp3
+Black-headed_Gull,XC205526-Lachmöwen,15,data/processed/Black-headed_Gull/XC205526-Lachmöwen_chunk015.wav,3.0,XC205526-Lachmöwen Hagnau Fütterung 2014 12 06 LS111479Xeno.mp3
+Black-headed_Gull,XC205526-Lachmöwen,16,data/processed/Black-headed_Gull/XC205526-Lachmöwen_chunk016.wav,3.0,XC205526-Lachmöwen Hagnau Fütterung 2014 12 06 LS111479Xeno.mp3
+Black-headed_Gull,XC205526-Lachmöwen,17,data/processed/Black-headed_Gull/XC205526-Lachmöwen_chunk017.wav,3.0,XC205526-Lachmöwen Hagnau Fütterung 2014 12 06 LS111479Xeno.mp3
+Black-headed_Gull,XC205526-Lachmöwen,18,data/processed/Black-headed_Gull/XC205526-Lachmöwen_chunk018.wav,3.0,XC205526-Lachmöwen Hagnau Fütterung 2014 12 06 LS111479Xeno.mp3
+Black-headed_Gull,XC205526-Lachmöwen,19,data/processed/Black-headed_Gull/XC205526-Lachmöwen_chunk019.wav,3.0,XC205526-Lachmöwen Hagnau Fütterung 2014 12 06 LS111479Xeno.mp3
+Black-headed_Gull,XC205526-Lachmöwen,20,data/processed/Black-headed_Gull/XC205526-Lachmöwen_chunk020.wav,3.0,XC205526-Lachmöwen Hagnau Fütterung 2014 12 06 LS111479Xeno.mp3
+Black-headed_Gull,XC205526-Lachmöwen,21,data/processed/Black-headed_Gull/XC205526-Lachmöwen_chunk021.wav,3.0,XC205526-Lachmöwen Hagnau Fütterung 2014 12 06 LS111479Xeno.mp3
+Black-headed_Gull,XC205526-Lachmöwen,22,data/processed/Black-headed_Gull/XC205526-Lachmöwen_chunk022.wav,3.0,XC205526-Lachmöwen Hagnau Fütterung 2014 12 06 LS111479Xeno.mp3
+Black-headed_Gull,XC205526-Lachmöwen,23,data/processed/Black-headed_Gull/XC205526-Lachmöwen_chunk023.wav,3.0,XC205526-Lachmöwen Hagnau Fütterung 2014 12 06 LS111479Xeno.mp3
+Black-headed_Gull,XC205526-Lachmöwen,24,data/processed/Black-headed_Gull/XC205526-Lachmöwen_chunk024.wav,3.0,XC205526-Lachmöwen Hagnau Fütterung 2014 12 06 LS111479Xeno.mp3
+Black-headed_Gull,XC205526-Lachmöwen,25,data/processed/Black-headed_Gull/XC205526-Lachmöwen_chunk025.wav,3.0,XC205526-Lachmöwen Hagnau Fütterung 2014 12 06 LS111479Xeno.mp3
+Black-headed_Gull,XC205526-Lachmöwen,26,data/processed/Black-headed_Gull/XC205526-Lachmöwen_chunk026.wav,3.0,XC205526-Lachmöwen Hagnau Fütterung 2014 12 06 LS111479Xeno.mp3
+Black-headed_Gull,XC205526-Lachmöwen,27,data/processed/Black-headed_Gull/XC205526-Lachmöwen_chunk027.wav,3.0,XC205526-Lachmöwen Hagnau Fütterung 2014 12 06 LS111479Xeno.mp3
+Black-headed_Gull,XC205526-Lachmöwen,28,data/processed/Black-headed_Gull/XC205526-Lachmöwen_chunk028.wav,3.0,XC205526-Lachmöwen Hagnau Fütterung 2014 12 06 LS111479Xeno.mp3
+Black-headed_Gull,XC205526-Lachmöwen,29,data/processed/Black-headed_Gull/XC205526-Lachmöwen_chunk029.wav,3.0,XC205526-Lachmöwen Hagnau Fütterung 2014 12 06 LS111479Xeno.mp3
+Black-headed_Gull,XC459240-190222_0708,0,data/processed/Black-headed_Gull/XC459240-190222_0708_chunk000.wav,3.0,XC459240-190222_0708.mp3
+Black-headed_Gull,XC459240-190222_0708,1,data/processed/Black-headed_Gull/XC459240-190222_0708_chunk001.wav,3.0,XC459240-190222_0708.mp3
+Black-headed_Gull,XC459240-190222_0708,2,data/processed/Black-headed_Gull/XC459240-190222_0708_chunk002.wav,3.0,XC459240-190222_0708.mp3
+Black-headed_Gull,XC459240-190222_0708,3,data/processed/Black-headed_Gull/XC459240-190222_0708_chunk003.wav,3.0,XC459240-190222_0708.mp3
+Black-headed_Gull,XC459240-190222_0708,4,data/processed/Black-headed_Gull/XC459240-190222_0708_chunk004.wav,3.0,XC459240-190222_0708.mp3
+Black-headed_Gull,XC459240-190222_0708,5,data/processed/Black-headed_Gull/XC459240-190222_0708_chunk005.wav,3.0,XC459240-190222_0708.mp3
+Black-headed_Gull,XC459240-190222_0708,6,data/processed/Black-headed_Gull/XC459240-190222_0708_chunk006.wav,3.0,XC459240-190222_0708.mp3
+Black-headed_Gull,XC459240-190222_0708,7,data/processed/Black-headed_Gull/XC459240-190222_0708_chunk007.wav,3.0,XC459240-190222_0708.mp3
+Black-headed_Gull,XC459240-190222_0708,8,data/processed/Black-headed_Gull/XC459240-190222_0708_chunk008.wav,3.0,XC459240-190222_0708.mp3
+Black-headed_Gull,XC459240-190222_0708,9,data/processed/Black-headed_Gull/XC459240-190222_0708_chunk009.wav,3.0,XC459240-190222_0708.mp3
+Black-headed_Gull,XC459240-190222_0708,10,data/processed/Black-headed_Gull/XC459240-190222_0708_chunk010.wav,3.0,XC459240-190222_0708.mp3
+Black-headed_Gull,XC459240-190222_0708,11,data/processed/Black-headed_Gull/XC459240-190222_0708_chunk011.wav,3.0,XC459240-190222_0708.mp3
+Black-headed_Gull,XC459240-190222_0708,12,data/processed/Black-headed_Gull/XC459240-190222_0708_chunk012.wav,3.0,XC459240-190222_0708.mp3
+Black-headed_Gull,XC459240-190222_0708,13,data/processed/Black-headed_Gull/XC459240-190222_0708_chunk013.wav,3.0,XC459240-190222_0708.mp3
+Black-headed_Gull,XC459240-190222_0708,14,data/processed/Black-headed_Gull/XC459240-190222_0708_chunk014.wav,3.0,XC459240-190222_0708.mp3
+Black-headed_Gull,XC459240-190222_0708,15,data/processed/Black-headed_Gull/XC459240-190222_0708_chunk015.wav,3.0,XC459240-190222_0708.mp3
+Black-headed_Gull,XC459240-190222_0708,16,data/processed/Black-headed_Gull/XC459240-190222_0708_chunk016.wav,3.0,XC459240-190222_0708.mp3
+Black-headed_Gull,XC459240-190222_0708,17,data/processed/Black-headed_Gull/XC459240-190222_0708_chunk017.wav,3.0,XC459240-190222_0708.mp3
+Black-headed_Gull,XC459240-190222_0708,18,data/processed/Black-headed_Gull/XC459240-190222_0708_chunk018.wav,3.0,XC459240-190222_0708.mp3
+Black-headed_Gull,XC459240-190222_0708,19,data/processed/Black-headed_Gull/XC459240-190222_0708_chunk019.wav,3.0,XC459240-190222_0708.mp3
+Black-headed_Gull,XC459240-190222_0708,20,data/processed/Black-headed_Gull/XC459240-190222_0708_chunk020.wav,3.0,XC459240-190222_0708.mp3
+Black-headed_Gull,XC459240-190222_0708,21,data/processed/Black-headed_Gull/XC459240-190222_0708_chunk021.wav,3.0,XC459240-190222_0708.mp3
+Black-headed_Gull,XC459240-190222_0708,22,data/processed/Black-headed_Gull/XC459240-190222_0708_chunk022.wav,3.0,XC459240-190222_0708.mp3
+Black-headed_Gull,blackheadedgull-norfolk300607farrow,0,data/processed/Black-headed_Gull/blackheadedgull-norfolk300607farrow_chunk000.wav,3.0,blackheadedgull-norfolk300607farrow.mp3
+Black-headed_Gull,blackheadedgull-norfolk300607farrow,1,data/processed/Black-headed_Gull/blackheadedgull-norfolk300607farrow_chunk001.wav,3.0,blackheadedgull-norfolk300607farrow.mp3
+Black-headed_Gull,blackheadedgull-norfolk300607farrow,2,data/processed/Black-headed_Gull/blackheadedgull-norfolk300607farrow_chunk002.wav,3.0,blackheadedgull-norfolk300607farrow.mp3
+Black-headed_Gull,blackheadedgull-norfolk300607farrow,3,data/processed/Black-headed_Gull/blackheadedgull-norfolk300607farrow_chunk003.wav,3.0,blackheadedgull-norfolk300607farrow.mp3
+Black-headed_Gull,blackheadedgull-norfolk300607farrow,4,data/processed/Black-headed_Gull/blackheadedgull-norfolk300607farrow_chunk004.wav,3.0,blackheadedgull-norfolk300607farrow.mp3
+Black-headed_Gull,blackheadedgull-norfolk300607farrow,5,data/processed/Black-headed_Gull/blackheadedgull-norfolk300607farrow_chunk005.wav,3.0,blackheadedgull-norfolk300607farrow.mp3
+Black-headed_Gull,blackheadedgull-norfolk300607farrow,6,data/processed/Black-headed_Gull/blackheadedgull-norfolk300607farrow_chunk006.wav,3.0,blackheadedgull-norfolk300607farrow.mp3
+Black-headed_Gull,blackheadedgull-norfolk300607farrow,7,data/processed/Black-headed_Gull/blackheadedgull-norfolk300607farrow_chunk007.wav,3.0,blackheadedgull-norfolk300607farrow.mp3
+Black-headed_Gull,blackheadedgull-norfolk300607farrow,8,data/processed/Black-headed_Gull/blackheadedgull-norfolk300607farrow_chunk008.wav,3.0,blackheadedgull-norfolk300607farrow.mp3
+Black-headed_Gull,blackheadedgull-norfolk300607farrow,9,data/processed/Black-headed_Gull/blackheadedgull-norfolk300607farrow_chunk009.wav,3.0,blackheadedgull-norfolk300607farrow.mp3
+Black-headed_Gull,blackheadedgull-norfolk300607farrow,10,data/processed/Black-headed_Gull/blackheadedgull-norfolk300607farrow_chunk010.wav,3.0,blackheadedgull-norfolk300607farrow.mp3
+Black-headed_Gull,blackheadedgull-norfolk300607farrow,11,data/processed/Black-headed_Gull/blackheadedgull-norfolk300607farrow_chunk011.wav,3.0,blackheadedgull-norfolk300607farrow.mp3
+Black-tailed_Gull,XC1101470-Black-tailed-Gull-黑尾鸥-cll-声景-滩涂-连云港兴庄河口--X8-CICADA-2508241046_1537,0,data/processed/Black-tailed_Gull/XC1101470-Black-tailed-Gull-黑尾鸥-cll-声景-滩涂-连云港兴庄河口--X8-CICADA-2508241046_1537_chunk000.wav,3.0,XC1101470-Black-tailed-Gull-黑尾鸥-cll-声景-滩涂-连云港兴庄河口--X8-CICADA-2508241046_1537.mp3
+Black-tailed_Gull,XC1101470-Black-tailed-Gull-黑尾鸥-cll-声景-滩涂-连云港兴庄河口--X8-CICADA-2508241046_1537,1,data/processed/Black-tailed_Gull/XC1101470-Black-tailed-Gull-黑尾鸥-cll-声景-滩涂-连云港兴庄河口--X8-CICADA-2508241046_1537_chunk001.wav,3.0,XC1101470-Black-tailed-Gull-黑尾鸥-cll-声景-滩涂-连云港兴庄河口--X8-CICADA-2508241046_1537.mp3
+Black-tailed_Gull,XC1101470-Black-tailed-Gull-黑尾鸥-cll-声景-滩涂-连云港兴庄河口--X8-CICADA-2508241046_1537,2,data/processed/Black-tailed_Gull/XC1101470-Black-tailed-Gull-黑尾鸥-cll-声景-滩涂-连云港兴庄河口--X8-CICADA-2508241046_1537_chunk002.wav,3.0,XC1101470-Black-tailed-Gull-黑尾鸥-cll-声景-滩涂-连云港兴庄河口--X8-CICADA-2508241046_1537.mp3
+Black-tailed_Gull,XC284651-Larus_crassirostris_05072015,0,data/processed/Black-tailed_Gull/XC284651-Larus_crassirostris_05072015_chunk000.wav,3.0,XC284651-Larus_crassirostris_05072015.mp3
+Black-tailed_Gull,XC284651-Larus_crassirostris_05072015,1,data/processed/Black-tailed_Gull/XC284651-Larus_crassirostris_05072015_chunk001.wav,3.0,XC284651-Larus_crassirostris_05072015.mp3
+Black-tailed_Gull,XC284651-Larus_crassirostris_05072015,2,data/processed/Black-tailed_Gull/XC284651-Larus_crassirostris_05072015_chunk002.wav,3.0,XC284651-Larus_crassirostris_05072015.mp3
+Black-tailed_Gull,XC284651-Larus_crassirostris_05072015,3,data/processed/Black-tailed_Gull/XC284651-Larus_crassirostris_05072015_chunk003.wav,3.0,XC284651-Larus_crassirostris_05072015.mp3
+Black-tailed_Gull,XC284651-Larus_crassirostris_05072015,4,data/processed/Black-tailed_Gull/XC284651-Larus_crassirostris_05072015_chunk004.wav,3.0,XC284651-Larus_crassirostris_05072015.mp3
+Black-tailed_Gull,XC284651-Larus_crassirostris_05072015,5,data/processed/Black-tailed_Gull/XC284651-Larus_crassirostris_05072015_chunk005.wav,3.0,XC284651-Larus_crassirostris_05072015.mp3
+Black-tailed_Gull,XC284651-Larus_crassirostris_05072015,6,data/processed/Black-tailed_Gull/XC284651-Larus_crassirostris_05072015_chunk006.wav,3.0,XC284651-Larus_crassirostris_05072015.mp3
+Black-tailed_Gull,XC284651-Larus_crassirostris_05072015,7,data/processed/Black-tailed_Gull/XC284651-Larus_crassirostris_05072015_chunk007.wav,3.0,XC284651-Larus_crassirostris_05072015.mp3
+Black-tailed_Gull,XC284651-Larus_crassirostris_05072015,8,data/processed/Black-tailed_Gull/XC284651-Larus_crassirostris_05072015_chunk008.wav,3.0,XC284651-Larus_crassirostris_05072015.mp3
+Black-tailed_Gull,XC284651-Larus_crassirostris_05072015,9,data/processed/Black-tailed_Gull/XC284651-Larus_crassirostris_05072015_chunk009.wav,3.0,XC284651-Larus_crassirostris_05072015.mp3
+Black-tailed_Gull,XC284651-Larus_crassirostris_05072015,10,data/processed/Black-tailed_Gull/XC284651-Larus_crassirostris_05072015_chunk010.wav,3.0,XC284651-Larus_crassirostris_05072015.mp3
+Black-tailed_Gull,XC284651-Larus_crassirostris_05072015,11,data/processed/Black-tailed_Gull/XC284651-Larus_crassirostris_05072015_chunk011.wav,3.0,XC284651-Larus_crassirostris_05072015.mp3
+Black-tailed_Gull,XC284651-Larus_crassirostris_05072015,12,data/processed/Black-tailed_Gull/XC284651-Larus_crassirostris_05072015_chunk012.wav,3.0,XC284651-Larus_crassirostris_05072015.mp3
+Black-tailed_Gull,XC284651-Larus_crassirostris_05072015,13,data/processed/Black-tailed_Gull/XC284651-Larus_crassirostris_05072015_chunk013.wav,3.0,XC284651-Larus_crassirostris_05072015.mp3
+Black-tailed_Gull,XC284651-Larus_crassirostris_05072015,14,data/processed/Black-tailed_Gull/XC284651-Larus_crassirostris_05072015_chunk014.wav,3.0,XC284651-Larus_crassirostris_05072015.mp3
+Black-tailed_Gull,XC284651-Larus_crassirostris_05072015,15,data/processed/Black-tailed_Gull/XC284651-Larus_crassirostris_05072015_chunk015.wav,3.0,XC284651-Larus_crassirostris_05072015.mp3
+Black-tailed_Gull,XC284651-Larus_crassirostris_05072015,16,data/processed/Black-tailed_Gull/XC284651-Larus_crassirostris_05072015_chunk016.wav,3.0,XC284651-Larus_crassirostris_05072015.mp3
+Black-tailed_Gull,XC464604-Black-tailed,0,data/processed/Black-tailed_Gull/XC464604-Black-tailed_chunk000.wav,3.0,"XC464604-Black-tailed Gull 2017 04 07 South Korea, Seocheon (Geum river, Gunsan) - calls 1630.mp3"
+Black-tailed_Gull,XC464604-Black-tailed,1,data/processed/Black-tailed_Gull/XC464604-Black-tailed_chunk001.wav,3.0,"XC464604-Black-tailed Gull 2017 04 07 South Korea, Seocheon (Geum river, Gunsan) - calls 1630.mp3"
+Black-tailed_Gull,XC464604-Black-tailed,2,data/processed/Black-tailed_Gull/XC464604-Black-tailed_chunk002.wav,3.0,"XC464604-Black-tailed Gull 2017 04 07 South Korea, Seocheon (Geum river, Gunsan) - calls 1630.mp3"
+Black-tailed_Gull,XC464604-Black-tailed,3,data/processed/Black-tailed_Gull/XC464604-Black-tailed_chunk003.wav,3.0,"XC464604-Black-tailed Gull 2017 04 07 South Korea, Seocheon (Geum river, Gunsan) - calls 1630.mp3"
+Black-tailed_Gull,XC464604-Black-tailed,4,data/processed/Black-tailed_Gull/XC464604-Black-tailed_chunk004.wav,3.0,"XC464604-Black-tailed Gull 2017 04 07 South Korea, Seocheon (Geum river, Gunsan) - calls 1630.mp3"
+Black-tailed_Gull,XC464604-Black-tailed,5,data/processed/Black-tailed_Gull/XC464604-Black-tailed_chunk005.wav,3.0,"XC464604-Black-tailed Gull 2017 04 07 South Korea, Seocheon (Geum river, Gunsan) - calls 1630.mp3"
+Black-tailed_Gull,XC464604-Black-tailed,6,data/processed/Black-tailed_Gull/XC464604-Black-tailed_chunk006.wav,3.0,"XC464604-Black-tailed Gull 2017 04 07 South Korea, Seocheon (Geum river, Gunsan) - calls 1630.mp3"
+Black-tailed_Gull,XC464604-Black-tailed,7,data/processed/Black-tailed_Gull/XC464604-Black-tailed_chunk007.wav,3.0,"XC464604-Black-tailed Gull 2017 04 07 South Korea, Seocheon (Geum river, Gunsan) - calls 1630.mp3"
+Black-tailed_Gull,XC464604-Black-tailed,8,data/processed/Black-tailed_Gull/XC464604-Black-tailed_chunk008.wav,3.0,"XC464604-Black-tailed Gull 2017 04 07 South Korea, Seocheon (Geum river, Gunsan) - calls 1630.mp3"
+Black-tailed_Gull,XC464604-Black-tailed,9,data/processed/Black-tailed_Gull/XC464604-Black-tailed_chunk009.wav,3.0,"XC464604-Black-tailed Gull 2017 04 07 South Korea, Seocheon (Geum river, Gunsan) - calls 1630.mp3"
+Black-tailed_Gull,XC464604-Black-tailed,10,data/processed/Black-tailed_Gull/XC464604-Black-tailed_chunk010.wav,3.0,"XC464604-Black-tailed Gull 2017 04 07 South Korea, Seocheon (Geum river, Gunsan) - calls 1630.mp3"
+Black-tailed_Gull,XC464604-Black-tailed,11,data/processed/Black-tailed_Gull/XC464604-Black-tailed_chunk011.wav,3.0,"XC464604-Black-tailed Gull 2017 04 07 South Korea, Seocheon (Geum river, Gunsan) - calls 1630.mp3"
+Black-tailed_Gull,XC464604-Black-tailed,12,data/processed/Black-tailed_Gull/XC464604-Black-tailed_chunk012.wav,3.0,"XC464604-Black-tailed Gull 2017 04 07 South Korea, Seocheon (Geum river, Gunsan) - calls 1630.mp3"
+Black-tailed_Gull,XC464604-Black-tailed,13,data/processed/Black-tailed_Gull/XC464604-Black-tailed_chunk013.wav,3.0,"XC464604-Black-tailed Gull 2017 04 07 South Korea, Seocheon (Geum river, Gunsan) - calls 1630.mp3"
+Black-tailed_Gull,XC464604-Black-tailed,14,data/processed/Black-tailed_Gull/XC464604-Black-tailed_chunk014.wav,3.0,"XC464604-Black-tailed Gull 2017 04 07 South Korea, Seocheon (Geum river, Gunsan) - calls 1630.mp3"
+Black-tailed_Gull,XC464604-Black-tailed,15,data/processed/Black-tailed_Gull/XC464604-Black-tailed_chunk015.wav,3.0,"XC464604-Black-tailed Gull 2017 04 07 South Korea, Seocheon (Geum river, Gunsan) - calls 1630.mp3"
+Black-tailed_Gull,XC464604-Black-tailed,16,data/processed/Black-tailed_Gull/XC464604-Black-tailed_chunk016.wav,3.0,"XC464604-Black-tailed Gull 2017 04 07 South Korea, Seocheon (Geum river, Gunsan) - calls 1630.mp3"
+Black-tailed_Gull,XC464604-Black-tailed,17,data/processed/Black-tailed_Gull/XC464604-Black-tailed_chunk017.wav,3.0,"XC464604-Black-tailed Gull 2017 04 07 South Korea, Seocheon (Geum river, Gunsan) - calls 1630.mp3"
+Black-tailed_Gull,XC464604-Black-tailed,18,data/processed/Black-tailed_Gull/XC464604-Black-tailed_chunk018.wav,3.0,"XC464604-Black-tailed Gull 2017 04 07 South Korea, Seocheon (Geum river, Gunsan) - calls 1630.mp3"
+Black-tailed_Gull,XC464604-Black-tailed,19,data/processed/Black-tailed_Gull/XC464604-Black-tailed_chunk019.wav,3.0,"XC464604-Black-tailed Gull 2017 04 07 South Korea, Seocheon (Geum river, Gunsan) - calls 1630.mp3"
+Black-tailed_Gull,XC464604-Black-tailed,20,data/processed/Black-tailed_Gull/XC464604-Black-tailed_chunk020.wav,3.0,"XC464604-Black-tailed Gull 2017 04 07 South Korea, Seocheon (Geum river, Gunsan) - calls 1630.mp3"
+Black-tailed_Gull,XC464604-Black-tailed,21,data/processed/Black-tailed_Gull/XC464604-Black-tailed_chunk021.wav,3.0,"XC464604-Black-tailed Gull 2017 04 07 South Korea, Seocheon (Geum river, Gunsan) - calls 1630.mp3"
+Black-tailed_Gull,XC464604-Black-tailed,22,data/processed/Black-tailed_Gull/XC464604-Black-tailed_chunk022.wav,3.0,"XC464604-Black-tailed Gull 2017 04 07 South Korea, Seocheon (Geum river, Gunsan) - calls 1630.mp3"
+Black-tailed_Gull,XC464604-Black-tailed,23,data/processed/Black-tailed_Gull/XC464604-Black-tailed_chunk023.wav,3.0,"XC464604-Black-tailed Gull 2017 04 07 South Korea, Seocheon (Geum river, Gunsan) - calls 1630.mp3"
+Black-tailed_Gull,XC464604-Black-tailed,24,data/processed/Black-tailed_Gull/XC464604-Black-tailed_chunk024.wav,3.0,"XC464604-Black-tailed Gull 2017 04 07 South Korea, Seocheon (Geum river, Gunsan) - calls 1630.mp3"
+Black-tailed_Gull,XC464604-Black-tailed,25,data/processed/Black-tailed_Gull/XC464604-Black-tailed_chunk025.wav,3.0,"XC464604-Black-tailed Gull 2017 04 07 South Korea, Seocheon (Geum river, Gunsan) - calls 1630.mp3"
+Black-tailed_Gull,XC464604-Black-tailed,26,data/processed/Black-tailed_Gull/XC464604-Black-tailed_chunk026.wav,3.0,"XC464604-Black-tailed Gull 2017 04 07 South Korea, Seocheon (Geum river, Gunsan) - calls 1630.mp3"
+Black-tailed_Gull,XC464604-Black-tailed,27,data/processed/Black-tailed_Gull/XC464604-Black-tailed_chunk027.wav,3.0,"XC464604-Black-tailed Gull 2017 04 07 South Korea, Seocheon (Geum river, Gunsan) - calls 1630.mp3"
+Black-tailed_Gull,XC464604-Black-tailed,28,data/processed/Black-tailed_Gull/XC464604-Black-tailed_chunk028.wav,3.0,"XC464604-Black-tailed Gull 2017 04 07 South Korea, Seocheon (Geum river, Gunsan) - calls 1630.mp3"
+Black-tailed_Gull,XC464604-Black-tailed,29,data/processed/Black-tailed_Gull/XC464604-Black-tailed_chunk029.wav,3.0,"XC464604-Black-tailed Gull 2017 04 07 South Korea, Seocheon (Geum river, Gunsan) - calls 1630.mp3"
+Black-tailed_Gull,XC464604-Black-tailed,30,data/processed/Black-tailed_Gull/XC464604-Black-tailed_chunk030.wav,3.0,"XC464604-Black-tailed Gull 2017 04 07 South Korea, Seocheon (Geum river, Gunsan) - calls 1630.mp3"
+Black-tailed_Gull,XC464604-Black-tailed,31,data/processed/Black-tailed_Gull/XC464604-Black-tailed_chunk031.wav,3.0,"XC464604-Black-tailed Gull 2017 04 07 South Korea, Seocheon (Geum river, Gunsan) - calls 1630.mp3"
+Black-tailed_Gull,XC464604-Black-tailed,32,data/processed/Black-tailed_Gull/XC464604-Black-tailed_chunk032.wav,3.0,"XC464604-Black-tailed Gull 2017 04 07 South Korea, Seocheon (Geum river, Gunsan) - calls 1630.mp3"
+Black-tailed_Gull,XC464604-Black-tailed,33,data/processed/Black-tailed_Gull/XC464604-Black-tailed_chunk033.wav,3.0,"XC464604-Black-tailed Gull 2017 04 07 South Korea, Seocheon (Geum river, Gunsan) - calls 1630.mp3"
+Black-tailed_Gull,XC464604-Black-tailed,34,data/processed/Black-tailed_Gull/XC464604-Black-tailed_chunk034.wav,3.0,"XC464604-Black-tailed Gull 2017 04 07 South Korea, Seocheon (Geum river, Gunsan) - calls 1630.mp3"
+Black-tailed_Gull,XC464604-Black-tailed,35,data/processed/Black-tailed_Gull/XC464604-Black-tailed_chunk035.wav,3.0,"XC464604-Black-tailed Gull 2017 04 07 South Korea, Seocheon (Geum river, Gunsan) - calls 1630.mp3"
+Black-tailed_Gull,XC464604-Black-tailed,36,data/processed/Black-tailed_Gull/XC464604-Black-tailed_chunk036.wav,3.0,"XC464604-Black-tailed Gull 2017 04 07 South Korea, Seocheon (Geum river, Gunsan) - calls 1630.mp3"
+Black-tailed_Gull,XC464604-Black-tailed,37,data/processed/Black-tailed_Gull/XC464604-Black-tailed_chunk037.wav,3.0,"XC464604-Black-tailed Gull 2017 04 07 South Korea, Seocheon (Geum river, Gunsan) - calls 1630.mp3"
+Black-tailed_Gull,XC464604-Black-tailed,38,data/processed/Black-tailed_Gull/XC464604-Black-tailed_chunk038.wav,3.0,"XC464604-Black-tailed Gull 2017 04 07 South Korea, Seocheon (Geum river, Gunsan) - calls 1630.mp3"
+Black-tailed_Gull,XC464604-Black-tailed,39,data/processed/Black-tailed_Gull/XC464604-Black-tailed_chunk039.wav,3.0,"XC464604-Black-tailed Gull 2017 04 07 South Korea, Seocheon (Geum river, Gunsan) - calls 1630.mp3"
+Black-tailed_Gull,XC464604-Black-tailed,40,data/processed/Black-tailed_Gull/XC464604-Black-tailed_chunk040.wav,3.0,"XC464604-Black-tailed Gull 2017 04 07 South Korea, Seocheon (Geum river, Gunsan) - calls 1630.mp3"
+Black-tailed_Gull,XC839073-Black-tailed-Gull黑尾鸥--call-180422-海湾港口SHADOW_0202S12,0,data/processed/Black-tailed_Gull/XC839073-Black-tailed-Gull黑尾鸥--call-180422-海湾港口SHADOW_0202S12_chunk000.wav,3.0,XC839073-Black-tailed-Gull黑尾鸥--call-180422-海湾港口SHADOW_0202S12.mp3
+Black-tailed_Gull,XC839073-Black-tailed-Gull黑尾鸥--call-180422-海湾港口SHADOW_0202S12,1,data/processed/Black-tailed_Gull/XC839073-Black-tailed-Gull黑尾鸥--call-180422-海湾港口SHADOW_0202S12_chunk001.wav,3.0,XC839073-Black-tailed-Gull黑尾鸥--call-180422-海湾港口SHADOW_0202S12.mp3
+Black-tailed_Gull,XC839073-Black-tailed-Gull黑尾鸥--call-180422-海湾港口SHADOW_0202S12,2,data/processed/Black-tailed_Gull/XC839073-Black-tailed-Gull黑尾鸥--call-180422-海湾港口SHADOW_0202S12_chunk002.wav,3.0,XC839073-Black-tailed-Gull黑尾鸥--call-180422-海湾港口SHADOW_0202S12.mp3
+Black-tailed_Gull,XC839073-Black-tailed-Gull黑尾鸥--call-180422-海湾港口SHADOW_0202S12,3,data/processed/Black-tailed_Gull/XC839073-Black-tailed-Gull黑尾鸥--call-180422-海湾港口SHADOW_0202S12_chunk003.wav,3.0,XC839073-Black-tailed-Gull黑尾鸥--call-180422-海湾港口SHADOW_0202S12.mp3
+Black-tailed_Gull,XC839073-Black-tailed-Gull黑尾鸥--call-180422-海湾港口SHADOW_0202S12,4,data/processed/Black-tailed_Gull/XC839073-Black-tailed-Gull黑尾鸥--call-180422-海湾港口SHADOW_0202S12_chunk004.wav,3.0,XC839073-Black-tailed-Gull黑尾鸥--call-180422-海湾港口SHADOW_0202S12.mp3
+Black-tailed_Gull,XC839073-Black-tailed-Gull黑尾鸥--call-180422-海湾港口SHADOW_0202S12,5,data/processed/Black-tailed_Gull/XC839073-Black-tailed-Gull黑尾鸥--call-180422-海湾港口SHADOW_0202S12_chunk005.wav,3.0,XC839073-Black-tailed-Gull黑尾鸥--call-180422-海湾港口SHADOW_0202S12.mp3
+Black-tailed_Gull,XC839073-Black-tailed-Gull黑尾鸥--call-180422-海湾港口SHADOW_0202S12,6,data/processed/Black-tailed_Gull/XC839073-Black-tailed-Gull黑尾鸥--call-180422-海湾港口SHADOW_0202S12_chunk006.wav,3.0,XC839073-Black-tailed-Gull黑尾鸥--call-180422-海湾港口SHADOW_0202S12.mp3
+Black-tailed_Gull,XC839073-Black-tailed-Gull黑尾鸥--call-180422-海湾港口SHADOW_0202S12,7,data/processed/Black-tailed_Gull/XC839073-Black-tailed-Gull黑尾鸥--call-180422-海湾港口SHADOW_0202S12_chunk007.wav,3.0,XC839073-Black-tailed-Gull黑尾鸥--call-180422-海湾港口SHADOW_0202S12.mp3
+Black-tailed_Gull,XC839073-Black-tailed-Gull黑尾鸥--call-180422-海湾港口SHADOW_0202S12,8,data/processed/Black-tailed_Gull/XC839073-Black-tailed-Gull黑尾鸥--call-180422-海湾港口SHADOW_0202S12_chunk008.wav,3.0,XC839073-Black-tailed-Gull黑尾鸥--call-180422-海湾港口SHADOW_0202S12.mp3
+Black-tailed_Gull,XC839073-Black-tailed-Gull黑尾鸥--call-180422-海湾港口SHADOW_0202S12,9,data/processed/Black-tailed_Gull/XC839073-Black-tailed-Gull黑尾鸥--call-180422-海湾港口SHADOW_0202S12_chunk009.wav,3.0,XC839073-Black-tailed-Gull黑尾鸥--call-180422-海湾港口SHADOW_0202S12.mp3
+Black-tailed_Gull,XC839073-Black-tailed-Gull黑尾鸥--call-180422-海湾港口SHADOW_0202S12,10,data/processed/Black-tailed_Gull/XC839073-Black-tailed-Gull黑尾鸥--call-180422-海湾港口SHADOW_0202S12_chunk010.wav,3.0,XC839073-Black-tailed-Gull黑尾鸥--call-180422-海湾港口SHADOW_0202S12.mp3
+Black-tailed_Gull,XC839073-Black-tailed-Gull黑尾鸥--call-180422-海湾港口SHADOW_0202S12,11,data/processed/Black-tailed_Gull/XC839073-Black-tailed-Gull黑尾鸥--call-180422-海湾港口SHADOW_0202S12_chunk011.wav,3.0,XC839073-Black-tailed-Gull黑尾鸥--call-180422-海湾港口SHADOW_0202S12.mp3
+Black-tailed_Gull,XC839073-Black-tailed-Gull黑尾鸥--call-180422-海湾港口SHADOW_0202S12,12,data/processed/Black-tailed_Gull/XC839073-Black-tailed-Gull黑尾鸥--call-180422-海湾港口SHADOW_0202S12_chunk012.wav,3.0,XC839073-Black-tailed-Gull黑尾鸥--call-180422-海湾港口SHADOW_0202S12.mp3
+Black-tailed_Gull,XC839073-Black-tailed-Gull黑尾鸥--call-180422-海湾港口SHADOW_0202S12,13,data/processed/Black-tailed_Gull/XC839073-Black-tailed-Gull黑尾鸥--call-180422-海湾港口SHADOW_0202S12_chunk013.wav,3.0,XC839073-Black-tailed-Gull黑尾鸥--call-180422-海湾港口SHADOW_0202S12.mp3
+Black-tailed_Gull,XC839073-Black-tailed-Gull黑尾鸥--call-180422-海湾港口SHADOW_0202S12,14,data/processed/Black-tailed_Gull/XC839073-Black-tailed-Gull黑尾鸥--call-180422-海湾港口SHADOW_0202S12_chunk014.wav,3.0,XC839073-Black-tailed-Gull黑尾鸥--call-180422-海湾港口SHADOW_0202S12.mp3
+Black-tailed_Gull,XC839073-Black-tailed-Gull黑尾鸥--call-180422-海湾港口SHADOW_0202S12,15,data/processed/Black-tailed_Gull/XC839073-Black-tailed-Gull黑尾鸥--call-180422-海湾港口SHADOW_0202S12_chunk015.wav,3.0,XC839073-Black-tailed-Gull黑尾鸥--call-180422-海湾港口SHADOW_0202S12.mp3
+Black-tailed_Gull,XC839073-Black-tailed-Gull黑尾鸥--call-180422-海湾港口SHADOW_0202S12,16,data/processed/Black-tailed_Gull/XC839073-Black-tailed-Gull黑尾鸥--call-180422-海湾港口SHADOW_0202S12_chunk016.wav,3.0,XC839073-Black-tailed-Gull黑尾鸥--call-180422-海湾港口SHADOW_0202S12.mp3
+Black-tailed_Gull,XC839073-Black-tailed-Gull黑尾鸥--call-180422-海湾港口SHADOW_0202S12,17,data/processed/Black-tailed_Gull/XC839073-Black-tailed-Gull黑尾鸥--call-180422-海湾港口SHADOW_0202S12_chunk017.wav,3.0,XC839073-Black-tailed-Gull黑尾鸥--call-180422-海湾港口SHADOW_0202S12.mp3
+Black-tailed_Gull,XC839073-Black-tailed-Gull黑尾鸥--call-180422-海湾港口SHADOW_0202S12,18,data/processed/Black-tailed_Gull/XC839073-Black-tailed-Gull黑尾鸥--call-180422-海湾港口SHADOW_0202S12_chunk018.wav,3.0,XC839073-Black-tailed-Gull黑尾鸥--call-180422-海湾港口SHADOW_0202S12.mp3
+Black-tailed_Gull,XC839073-Black-tailed-Gull黑尾鸥--call-180422-海湾港口SHADOW_0202S12,19,data/processed/Black-tailed_Gull/XC839073-Black-tailed-Gull黑尾鸥--call-180422-海湾港口SHADOW_0202S12_chunk019.wav,3.0,XC839073-Black-tailed-Gull黑尾鸥--call-180422-海湾港口SHADOW_0202S12.mp3
+Black-tailed_Gull,XC839073-Black-tailed-Gull黑尾鸥--call-180422-海湾港口SHADOW_0202S12,20,data/processed/Black-tailed_Gull/XC839073-Black-tailed-Gull黑尾鸥--call-180422-海湾港口SHADOW_0202S12_chunk020.wav,3.0,XC839073-Black-tailed-Gull黑尾鸥--call-180422-海湾港口SHADOW_0202S12.mp3
+Black-tailed_Gull,XC839073-Black-tailed-Gull黑尾鸥--call-180422-海湾港口SHADOW_0202S12,21,data/processed/Black-tailed_Gull/XC839073-Black-tailed-Gull黑尾鸥--call-180422-海湾港口SHADOW_0202S12_chunk021.wav,3.0,XC839073-Black-tailed-Gull黑尾鸥--call-180422-海湾港口SHADOW_0202S12.mp3
+Black-tailed_Gull,XC839073-Black-tailed-Gull黑尾鸥--call-180422-海湾港口SHADOW_0202S12,22,data/processed/Black-tailed_Gull/XC839073-Black-tailed-Gull黑尾鸥--call-180422-海湾港口SHADOW_0202S12_chunk022.wav,3.0,XC839073-Black-tailed-Gull黑尾鸥--call-180422-海湾港口SHADOW_0202S12.mp3
+Black-tailed_Gull,XC991489-黑尾鸥,0,data/processed/Black-tailed_Gull/XC991489-黑尾鸥_chunk000.wav,3.0,XC991489-黑尾鸥.wav
+Black-tailed_Gull,XC991489-黑尾鸥,1,data/processed/Black-tailed_Gull/XC991489-黑尾鸥_chunk001.wav,3.0,XC991489-黑尾鸥.wav
+Slaty-backed_Gull,XC286303-LS_59215,0,data/processed/Slaty-backed_Gull/XC286303-LS_59215_chunk000.wav,3.0,XC286303-LS_59215 Slaty-backed Gull call B.mp3
+Slaty-backed_Gull,XC286303-LS_59215,1,data/processed/Slaty-backed_Gull/XC286303-LS_59215_chunk001.wav,3.0,XC286303-LS_59215 Slaty-backed Gull call B.mp3
+Slaty-backed_Gull,XC286303-LS_59215,2,data/processed/Slaty-backed_Gull/XC286303-LS_59215_chunk002.wav,3.0,XC286303-LS_59215 Slaty-backed Gull call B.mp3
+Slaty-backed_Gull,XC286303-LS_59215,3,data/processed/Slaty-backed_Gull/XC286303-LS_59215_chunk003.wav,3.0,XC286303-LS_59215 Slaty-backed Gull call B.mp3
+Slaty-backed_Gull,XC286303-LS_59215,4,data/processed/Slaty-backed_Gull/XC286303-LS_59215_chunk004.wav,3.0,XC286303-LS_59215 Slaty-backed Gull call B.mp3
+Slaty-backed_Gull,XC286303-LS_59215,5,data/processed/Slaty-backed_Gull/XC286303-LS_59215_chunk005.wav,3.0,XC286303-LS_59215 Slaty-backed Gull call B.mp3
+Slaty-backed_Gull,XC286303-LS_59215,6,data/processed/Slaty-backed_Gull/XC286303-LS_59215_chunk006.wav,3.0,XC286303-LS_59215 Slaty-backed Gull call B.mp3
+Slaty-backed_Gull,XC286303-LS_59215,7,data/processed/Slaty-backed_Gull/XC286303-LS_59215_chunk007.wav,3.0,XC286303-LS_59215 Slaty-backed Gull call B.mp3
+Slaty-backed_Gull,XC286303-LS_59215,8,data/processed/Slaty-backed_Gull/XC286303-LS_59215_chunk008.wav,3.0,XC286303-LS_59215 Slaty-backed Gull call B.mp3
+Slaty-backed_Gull,XC286303-LS_59215,9,data/processed/Slaty-backed_Gull/XC286303-LS_59215_chunk009.wav,3.0,XC286303-LS_59215 Slaty-backed Gull call B.mp3
+Slaty-backed_Gull,XC286322-LS_59251,0,data/processed/Slaty-backed_Gull/XC286322-LS_59251_chunk000.wav,3.0,XC286322-LS_59251 Slaty-backed Gull call B.mp3
+Slaty-backed_Gull,XC286322-LS_59251,1,data/processed/Slaty-backed_Gull/XC286322-LS_59251_chunk001.wav,3.0,XC286322-LS_59251 Slaty-backed Gull call B.mp3
+Slaty-backed_Gull,XC286322-LS_59251,2,data/processed/Slaty-backed_Gull/XC286322-LS_59251_chunk002.wav,3.0,XC286322-LS_59251 Slaty-backed Gull call B.mp3
+Slaty-backed_Gull,XC286322-LS_59251,3,data/processed/Slaty-backed_Gull/XC286322-LS_59251_chunk003.wav,3.0,XC286322-LS_59251 Slaty-backed Gull call B.mp3
+Slaty-backed_Gull,XC286322-LS_59251,4,data/processed/Slaty-backed_Gull/XC286322-LS_59251_chunk004.wav,3.0,XC286322-LS_59251 Slaty-backed Gull call B.mp3
+Slaty-backed_Gull,XC286323-LS_59252,0,data/processed/Slaty-backed_Gull/XC286323-LS_59252_chunk000.wav,3.0,XC286323-LS_59252 Slaty-backed Gull copulatio.mp3
+Slaty-backed_Gull,XC286323-LS_59252,1,data/processed/Slaty-backed_Gull/XC286323-LS_59252_chunk001.wav,3.0,XC286323-LS_59252 Slaty-backed Gull copulatio.mp3
+Slaty-backed_Gull,XC286323-LS_59252,2,data/processed/Slaty-backed_Gull/XC286323-LS_59252_chunk002.wav,3.0,XC286323-LS_59252 Slaty-backed Gull copulatio.mp3
+Slaty-backed_Gull,XC286323-LS_59252,3,data/processed/Slaty-backed_Gull/XC286323-LS_59252_chunk003.wav,3.0,XC286323-LS_59252 Slaty-backed Gull copulatio.mp3
+Slaty-backed_Gull,XC286323-LS_59252,4,data/processed/Slaty-backed_Gull/XC286323-LS_59252_chunk004.wav,3.0,XC286323-LS_59252 Slaty-backed Gull copulatio.mp3
+Slaty-backed_Gull,XC286323-LS_59252,5,data/processed/Slaty-backed_Gull/XC286323-LS_59252_chunk005.wav,3.0,XC286323-LS_59252 Slaty-backed Gull copulatio.mp3
+Slaty-backed_Gull,XC286323-LS_59252,6,data/processed/Slaty-backed_Gull/XC286323-LS_59252_chunk006.wav,3.0,XC286323-LS_59252 Slaty-backed Gull copulatio.mp3
+Slaty-backed_Gull,XC286323-LS_59252,7,data/processed/Slaty-backed_Gull/XC286323-LS_59252_chunk007.wav,3.0,XC286323-LS_59252 Slaty-backed Gull copulatio.mp3
+Slaty-backed_Gull,XC286323-LS_59252,8,data/processed/Slaty-backed_Gull/XC286323-LS_59252_chunk008.wav,3.0,XC286323-LS_59252 Slaty-backed Gull copulatio.mp3
+Slaty-backed_Gull,XC286323-LS_59252,9,data/processed/Slaty-backed_Gull/XC286323-LS_59252_chunk009.wav,3.0,XC286323-LS_59252 Slaty-backed Gull copulatio.mp3
+Slaty-backed_Gull,XC286323-LS_59252,10,data/processed/Slaty-backed_Gull/XC286323-LS_59252_chunk010.wav,3.0,XC286323-LS_59252 Slaty-backed Gull copulatio.mp3
+Slaty-backed_Gull,XC286323-LS_59252,11,data/processed/Slaty-backed_Gull/XC286323-LS_59252_chunk011.wav,3.0,XC286323-LS_59252 Slaty-backed Gull copulatio.mp3
+Slaty-backed_Gull,XC286323-LS_59252,12,data/processed/Slaty-backed_Gull/XC286323-LS_59252_chunk012.wav,3.0,XC286323-LS_59252 Slaty-backed Gull copulatio.mp3
+Slaty-backed_Gull,XC286323-LS_59252,13,data/processed/Slaty-backed_Gull/XC286323-LS_59252_chunk013.wav,3.0,XC286323-LS_59252 Slaty-backed Gull copulatio.mp3
+Slaty-backed_Gull,XC286323-LS_59252,14,data/processed/Slaty-backed_Gull/XC286323-LS_59252_chunk014.wav,3.0,XC286323-LS_59252 Slaty-backed Gull copulatio.mp3
+Slaty-backed_Gull,XC286323-LS_59252,15,data/processed/Slaty-backed_Gull/XC286323-LS_59252_chunk015.wav,3.0,XC286323-LS_59252 Slaty-backed Gull copulatio.mp3
+Slaty-backed_Gull,XC921108-355A5718,0,data/processed/Slaty-backed_Gull/XC921108-355A5718_chunk000.wav,3.0,XC921108-355A5718.mp3
+Slaty-backed_Gull,XC921108-355A5718,1,data/processed/Slaty-backed_Gull/XC921108-355A5718_chunk001.wav,3.0,XC921108-355A5718.mp3
+Slaty-backed_Gull,XC921108-355A5718,2,data/processed/Slaty-backed_Gull/XC921108-355A5718_chunk002.wav,3.0,XC921108-355A5718.mp3
+Slaty-backed_Gull,XC921108-355A5718,3,data/processed/Slaty-backed_Gull/XC921108-355A5718_chunk003.wav,3.0,XC921108-355A5718.mp3
+Slaty-backed_Gull,XC921108-355A5718,4,data/processed/Slaty-backed_Gull/XC921108-355A5718_chunk004.wav,3.0,XC921108-355A5718.mp3
+Slaty-backed_Gull,XC921108-355A5718,5,data/processed/Slaty-backed_Gull/XC921108-355A5718_chunk005.wav,3.0,XC921108-355A5718.mp3
+Common_Gull,110728,0,data/processed/Common_Gull/110728_chunk000.wav,3.0,110728 larcan AC 01.mp3
+Common_Gull,110728,1,data/processed/Common_Gull/110728_chunk001.wav,3.0,110728 larcan AC 01.mp3
+Common_Gull,110728,2,data/processed/Common_Gull/110728_chunk002.wav,3.0,110728 larcan AC 01.mp3
+Common_Gull,110728,3,data/processed/Common_Gull/110728_chunk003.wav,3.0,110728 larcan AC 01.mp3
+Common_Gull,110728,4,data/processed/Common_Gull/110728_chunk004.wav,3.0,110728 larcan AC 01.mp3
+Common_Gull,Larus,0,data/processed/Common_Gull/Larus_chunk000.wav,3.0,Larus canus 23409 2007.mp3
+Common_Gull,Larus,1,data/processed/Common_Gull/Larus_chunk001.wav,3.0,Larus canus 23409 2007.mp3
+Common_Gull,Larus,2,data/processed/Common_Gull/Larus_chunk002.wav,3.0,Larus canus 23409 2007.mp3
+Common_Gull,Larus,3,data/processed/Common_Gull/Larus_chunk003.wav,3.0,Larus canus 23409 2007.mp3
+Common_Gull,Larus,4,data/processed/Common_Gull/Larus_chunk004.wav,3.0,Larus canus 23409 2007.mp3
+Common_Gull,Larus,5,data/processed/Common_Gull/Larus_chunk005.wav,3.0,Larus canus 23409 2007.mp3
+Common_Gull,Larus,6,data/processed/Common_Gull/Larus_chunk006.wav,3.0,Larus canus 23409 2007.mp3
+Common_Gull,Larus,7,data/processed/Common_Gull/Larus_chunk007.wav,3.0,Larus canus 23409 2007.mp3
+Common_Gull,Larus_canus_Jarek_Matusiak_Vistula_River_Poland_20091108,0,data/processed/Common_Gull/Larus_canus_Jarek_Matusiak_Vistula_River_Poland_20091108_chunk000.wav,3.0,Larus_canus_Jarek_Matusiak_Vistula_River_Poland_20091108.mp3
+Common_Gull,XC110302-Fiskmas-2012-06-13,0,data/processed/Common_Gull/XC110302-Fiskmas-2012-06-13_chunk000.wav,3.0,XC110302-Fiskmas-2012-06-13.mp3
+Common_Gull,XC110302-Fiskmas-2012-06-13,1,data/processed/Common_Gull/XC110302-Fiskmas-2012-06-13_chunk001.wav,3.0,XC110302-Fiskmas-2012-06-13.mp3
+Common_Gull,XC110302-Fiskmas-2012-06-13,2,data/processed/Common_Gull/XC110302-Fiskmas-2012-06-13_chunk002.wav,3.0,XC110302-Fiskmas-2012-06-13.mp3
+Common_Gull,XC110302-Fiskmas-2012-06-13,3,data/processed/Common_Gull/XC110302-Fiskmas-2012-06-13_chunk003.wav,3.0,XC110302-Fiskmas-2012-06-13.mp3
+Common_Gull,XC110302-Fiskmas-2012-06-13,4,data/processed/Common_Gull/XC110302-Fiskmas-2012-06-13_chunk004.wav,3.0,XC110302-Fiskmas-2012-06-13.mp3
+Common_Gull,XC110302-Fiskmas-2012-06-13,5,data/processed/Common_Gull/XC110302-Fiskmas-2012-06-13_chunk005.wav,3.0,XC110302-Fiskmas-2012-06-13.mp3
+Common_Gull,XC110302-Fiskmas-2012-06-13,6,data/processed/Common_Gull/XC110302-Fiskmas-2012-06-13_chunk006.wav,3.0,XC110302-Fiskmas-2012-06-13.mp3
+Common_Gull,XC112676-Fiskmas-2011-05-01,0,data/processed/Common_Gull/XC112676-Fiskmas-2011-05-01_chunk000.wav,3.0,XC112676-Fiskmas-2011-05-01.mp3
+Common_Gull,XC112676-Fiskmas-2011-05-01,1,data/processed/Common_Gull/XC112676-Fiskmas-2011-05-01_chunk001.wav,3.0,XC112676-Fiskmas-2011-05-01.mp3
+Common_Gull,XC112676-Fiskmas-2011-05-01,2,data/processed/Common_Gull/XC112676-Fiskmas-2011-05-01_chunk002.wav,3.0,XC112676-Fiskmas-2011-05-01.mp3
+Common_Gull,XC112676-Fiskmas-2011-05-01,3,data/processed/Common_Gull/XC112676-Fiskmas-2011-05-01_chunk003.wav,3.0,XC112676-Fiskmas-2011-05-01.mp3
+Common_Gull,XC112676-Fiskmas-2011-05-01,4,data/processed/Common_Gull/XC112676-Fiskmas-2011-05-01_chunk004.wav,3.0,XC112676-Fiskmas-2011-05-01.mp3
+Common_Gull,XC154466-Larus,0,data/processed/Common_Gull/XC154466-Larus_chunk000.wav,3.0,XC154466-Larus canus alarm calls near colony Mayshukur lake Aqmola province 5 May 2013 (Arend Wassink).mp3
+Common_Gull,XC154466-Larus,1,data/processed/Common_Gull/XC154466-Larus_chunk001.wav,3.0,XC154466-Larus canus alarm calls near colony Mayshukur lake Aqmola province 5 May 2013 (Arend Wassink).mp3
+Common_Gull,XC154466-Larus,2,data/processed/Common_Gull/XC154466-Larus_chunk002.wav,3.0,XC154466-Larus canus alarm calls near colony Mayshukur lake Aqmola province 5 May 2013 (Arend Wassink).mp3
+Common_Gull,XC154466-Larus,3,data/processed/Common_Gull/XC154466-Larus_chunk003.wav,3.0,XC154466-Larus canus alarm calls near colony Mayshukur lake Aqmola province 5 May 2013 (Arend Wassink).mp3
+Common_Gull,XC154466-Larus,4,data/processed/Common_Gull/XC154466-Larus_chunk004.wav,3.0,XC154466-Larus canus alarm calls near colony Mayshukur lake Aqmola province 5 May 2013 (Arend Wassink).mp3
+Common_Gull,XC154466-Larus,5,data/processed/Common_Gull/XC154466-Larus_chunk005.wav,3.0,XC154466-Larus canus alarm calls near colony Mayshukur lake Aqmola province 5 May 2013 (Arend Wassink).mp3
+Common_Gull,XC154466-Larus,6,data/processed/Common_Gull/XC154466-Larus_chunk006.wav,3.0,XC154466-Larus canus alarm calls near colony Mayshukur lake Aqmola province 5 May 2013 (Arend Wassink).mp3
+Common_Gull,XC154466-Larus,7,data/processed/Common_Gull/XC154466-Larus_chunk007.wav,3.0,XC154466-Larus canus alarm calls near colony Mayshukur lake Aqmola province 5 May 2013 (Arend Wassink).mp3
+Common_Gull,XC154466-Larus,8,data/processed/Common_Gull/XC154466-Larus_chunk008.wav,3.0,XC154466-Larus canus alarm calls near colony Mayshukur lake Aqmola province 5 May 2013 (Arend Wassink).mp3
+Common_Gull,XC154466-Larus,9,data/processed/Common_Gull/XC154466-Larus_chunk009.wav,3.0,XC154466-Larus canus alarm calls near colony Mayshukur lake Aqmola province 5 May 2013 (Arend Wassink).mp3
+Common_Gull,XC154466-Larus,10,data/processed/Common_Gull/XC154466-Larus_chunk010.wav,3.0,XC154466-Larus canus alarm calls near colony Mayshukur lake Aqmola province 5 May 2013 (Arend Wassink).mp3
+Common_Gull,XC154466-Larus,11,data/processed/Common_Gull/XC154466-Larus_chunk011.wav,3.0,XC154466-Larus canus alarm calls near colony Mayshukur lake Aqmola province 5 May 2013 (Arend Wassink).mp3
+Common_Gull,XC154466-Larus,12,data/processed/Common_Gull/XC154466-Larus_chunk012.wav,3.0,XC154466-Larus canus alarm calls near colony Mayshukur lake Aqmola province 5 May 2013 (Arend Wassink).mp3
+Common_Gull,XC154466-Larus,13,data/processed/Common_Gull/XC154466-Larus_chunk013.wav,3.0,XC154466-Larus canus alarm calls near colony Mayshukur lake Aqmola province 5 May 2013 (Arend Wassink).mp3
+Common_Gull,XC154466-Larus,14,data/processed/Common_Gull/XC154466-Larus_chunk014.wav,3.0,XC154466-Larus canus alarm calls near colony Mayshukur lake Aqmola province 5 May 2013 (Arend Wassink).mp3
+Common_Gull,XC154466-Larus,15,data/processed/Common_Gull/XC154466-Larus_chunk015.wav,3.0,XC154466-Larus canus alarm calls near colony Mayshukur lake Aqmola province 5 May 2013 (Arend Wassink).mp3
+Common_Gull,XC154466-Larus,16,data/processed/Common_Gull/XC154466-Larus_chunk016.wav,3.0,XC154466-Larus canus alarm calls near colony Mayshukur lake Aqmola province 5 May 2013 (Arend Wassink).mp3
+Common_Gull,XC154466-Larus,17,data/processed/Common_Gull/XC154466-Larus_chunk017.wav,3.0,XC154466-Larus canus alarm calls near colony Mayshukur lake Aqmola province 5 May 2013 (Arend Wassink).mp3
+Common_Gull,XC154466-Larus,18,data/processed/Common_Gull/XC154466-Larus_chunk018.wav,3.0,XC154466-Larus canus alarm calls near colony Mayshukur lake Aqmola province 5 May 2013 (Arend Wassink).mp3
+Common_Gull,XC251896-gavina01,0,data/processed/Common_Gull/XC251896-gavina01_chunk000.wav,3.0,XC251896-gavina01.mp3
+Common_Gull,XC251896-gavina01,1,data/processed/Common_Gull/XC251896-gavina01_chunk001.wav,3.0,XC251896-gavina01.mp3
+Common_Gull,XC251896-gavina01,2,data/processed/Common_Gull/XC251896-gavina01_chunk002.wav,3.0,XC251896-gavina01.mp3
+Common_Gull,XC251896-gavina01,3,data/processed/Common_Gull/XC251896-gavina01_chunk003.wav,3.0,XC251896-gavina01.mp3
+Common_Gull,XC251896-gavina01,4,data/processed/Common_Gull/XC251896-gavina01_chunk004.wav,3.0,XC251896-gavina01.mp3
+Common_Gull,XC251896-gavina01,5,data/processed/Common_Gull/XC251896-gavina01_chunk005.wav,3.0,XC251896-gavina01.mp3
+Common_Gull,XC251896-gavina01,6,data/processed/Common_Gull/XC251896-gavina01_chunk006.wav,3.0,XC251896-gavina01.mp3
+Common_Gull,XC251896-gavina01,7,data/processed/Common_Gull/XC251896-gavina01_chunk007.wav,3.0,XC251896-gavina01.mp3
+Common_Gull,XC251896-gavina01,8,data/processed/Common_Gull/XC251896-gavina01_chunk008.wav,3.0,XC251896-gavina01.mp3
+Common_Gull,XC251896-gavina01,9,data/processed/Common_Gull/XC251896-gavina01_chunk009.wav,3.0,XC251896-gavina01.mp3
+Common_Gull,XC251896-gavina01,10,data/processed/Common_Gull/XC251896-gavina01_chunk010.wav,3.0,XC251896-gavina01.mp3
+Common_Gull,XC252435-T56,0,data/processed/Common_Gull/XC252435-T56_chunk000.wav,3.0,XC252435-T56.mp3
+Common_Gull,XC252435-T56,1,data/processed/Common_Gull/XC252435-T56_chunk001.wav,3.0,XC252435-T56.mp3
+Common_Gull,XC252435-T56,2,data/processed/Common_Gull/XC252435-T56_chunk002.wav,3.0,XC252435-T56.mp3
+Common_Gull,XC252435-T56,3,data/processed/Common_Gull/XC252435-T56_chunk003.wav,3.0,XC252435-T56.mp3
+Common_Gull,XC252435-T56,4,data/processed/Common_Gull/XC252435-T56_chunk004.wav,3.0,XC252435-T56.mp3
+Common_Gull,XC252435-T56,5,data/processed/Common_Gull/XC252435-T56_chunk005.wav,3.0,XC252435-T56.mp3
+Common_Gull,XC252435-T56,6,data/processed/Common_Gull/XC252435-T56_chunk006.wav,3.0,XC252435-T56.mp3
+Common_Gull,XC252435-T56,7,data/processed/Common_Gull/XC252435-T56_chunk007.wav,3.0,XC252435-T56.mp3
+Common_Gull,XC252435-T56,8,data/processed/Common_Gull/XC252435-T56_chunk008.wav,3.0,XC252435-T56.mp3
+Common_Gull,XC252435-T56,9,data/processed/Common_Gull/XC252435-T56_chunk009.wav,3.0,XC252435-T56.mp3
+Common_Gull,XC252435-T56,10,data/processed/Common_Gull/XC252435-T56_chunk010.wav,3.0,XC252435-T56.mp3
+Common_Gull,XC252435-T56,11,data/processed/Common_Gull/XC252435-T56_chunk011.wav,3.0,XC252435-T56.mp3
+Common_Gull,XC252435-T56,12,data/processed/Common_Gull/XC252435-T56_chunk012.wav,3.0,XC252435-T56.mp3
+Common_Gull,XC252435-T56,13,data/processed/Common_Gull/XC252435-T56_chunk013.wav,3.0,XC252435-T56.mp3
+Common_Gull,XC252435-T56,14,data/processed/Common_Gull/XC252435-T56_chunk014.wav,3.0,XC252435-T56.mp3
+Common_Gull,XC252435-T56,15,data/processed/Common_Gull/XC252435-T56_chunk015.wav,3.0,XC252435-T56.mp3
+Common_Gull,XC252435-T56,16,data/processed/Common_Gull/XC252435-T56_chunk016.wav,3.0,XC252435-T56.mp3
+Common_Gull,XC252435-T56,17,data/processed/Common_Gull/XC252435-T56_chunk017.wav,3.0,XC252435-T56.mp3
+Common_Gull,XC268472-150614-005_Larus,0,data/processed/Common_Gull/XC268472-150614-005_Larus_chunk000.wav,3.0,XC268472-150614-005_Larus canus alarm.mp3
+Common_Gull,XC268472-150614-005_Larus,1,data/processed/Common_Gull/XC268472-150614-005_Larus_chunk001.wav,3.0,XC268472-150614-005_Larus canus alarm.mp3
+Common_Gull,XC268472-150614-005_Larus,2,data/processed/Common_Gull/XC268472-150614-005_Larus_chunk002.wav,3.0,XC268472-150614-005_Larus canus alarm.mp3
+Common_Gull,XC268472-150614-005_Larus,3,data/processed/Common_Gull/XC268472-150614-005_Larus_chunk003.wav,3.0,XC268472-150614-005_Larus canus alarm.mp3
+Common_Gull,XC268472-150614-005_Larus,4,data/processed/Common_Gull/XC268472-150614-005_Larus_chunk004.wav,3.0,XC268472-150614-005_Larus canus alarm.mp3
+Common_Gull,XC268472-150614-005_Larus,5,data/processed/Common_Gull/XC268472-150614-005_Larus_chunk005.wav,3.0,XC268472-150614-005_Larus canus alarm.mp3
+Common_Gull,XC268472-150614-005_Larus,6,data/processed/Common_Gull/XC268472-150614-005_Larus_chunk006.wav,3.0,XC268472-150614-005_Larus canus alarm.mp3
+Common_Gull,XC268472-150614-005_Larus,7,data/processed/Common_Gull/XC268472-150614-005_Larus_chunk007.wav,3.0,XC268472-150614-005_Larus canus alarm.mp3
+Common_Gull,XC281180-233,0,data/processed/Common_Gull/XC281180-233_chunk000.wav,3.0,XC281180-233 2 Stormmeeuw 2 Roep.mp3
+Common_Gull,XC281180-233,1,data/processed/Common_Gull/XC281180-233_chunk001.wav,3.0,XC281180-233 2 Stormmeeuw 2 Roep.mp3
+Common_Gull,XC281180-233,2,data/processed/Common_Gull/XC281180-233_chunk002.wav,3.0,XC281180-233 2 Stormmeeuw 2 Roep.mp3
+Common_Gull,XC281180-233,3,data/processed/Common_Gull/XC281180-233_chunk003.wav,3.0,XC281180-233 2 Stormmeeuw 2 Roep.mp3
+Common_Gull,XC281180-233,4,data/processed/Common_Gull/XC281180-233_chunk004.wav,3.0,XC281180-233 2 Stormmeeuw 2 Roep.mp3
+Common_Gull,XC281180-233,5,data/processed/Common_Gull/XC281180-233_chunk005.wav,3.0,XC281180-233 2 Stormmeeuw 2 Roep.mp3
+Common_Gull,XC281180-233,6,data/processed/Common_Gull/XC281180-233_chunk006.wav,3.0,XC281180-233 2 Stormmeeuw 2 Roep.mp3
+Common_Gull,XC281180-233,7,data/processed/Common_Gull/XC281180-233_chunk007.wav,3.0,XC281180-233 2 Stormmeeuw 2 Roep.mp3
+Common_Gull,XC281180-233,8,data/processed/Common_Gull/XC281180-233_chunk008.wav,3.0,XC281180-233 2 Stormmeeuw 2 Roep.mp3
+Common_Gull,XC281180-233,9,data/processed/Common_Gull/XC281180-233_chunk009.wav,3.0,XC281180-233 2 Stormmeeuw 2 Roep.mp3
+Common_Gull,XC281180-233,10,data/processed/Common_Gull/XC281180-233_chunk010.wav,3.0,XC281180-233 2 Stormmeeuw 2 Roep.mp3
+Common_Gull,XC281180-233,11,data/processed/Common_Gull/XC281180-233_chunk011.wav,3.0,XC281180-233 2 Stormmeeuw 2 Roep.mp3
+Common_Gull,XC281180-233,12,data/processed/Common_Gull/XC281180-233_chunk012.wav,3.0,XC281180-233 2 Stormmeeuw 2 Roep.mp3
+Common_Gull,XC281180-233,13,data/processed/Common_Gull/XC281180-233_chunk013.wav,3.0,XC281180-233 2 Stormmeeuw 2 Roep.mp3
+Common_Gull,XC281180-233,14,data/processed/Common_Gull/XC281180-233_chunk014.wav,3.0,XC281180-233 2 Stormmeeuw 2 Roep.mp3
+Common_Gull,XC281180-233,15,data/processed/Common_Gull/XC281180-233_chunk015.wav,3.0,XC281180-233 2 Stormmeeuw 2 Roep.mp3
+Common_Gull,XC301924-Gavina,0,data/processed/Common_Gull/XC301924-Gavina_chunk000.wav,3.0,XC301924-Gavina 1st-winter e gabbiani comuni.mp3
+Common_Gull,XC301924-Gavina,1,data/processed/Common_Gull/XC301924-Gavina_chunk001.wav,3.0,XC301924-Gavina 1st-winter e gabbiani comuni.mp3
+Common_Gull,XC301924-Gavina,2,data/processed/Common_Gull/XC301924-Gavina_chunk002.wav,3.0,XC301924-Gavina 1st-winter e gabbiani comuni.mp3
+Common_Gull,XC301924-Gavina,3,data/processed/Common_Gull/XC301924-Gavina_chunk003.wav,3.0,XC301924-Gavina 1st-winter e gabbiani comuni.mp3
+Common_Gull,XC301924-Gavina,4,data/processed/Common_Gull/XC301924-Gavina_chunk004.wav,3.0,XC301924-Gavina 1st-winter e gabbiani comuni.mp3
+Common_Gull,XC301924-Gavina,5,data/processed/Common_Gull/XC301924-Gavina_chunk005.wav,3.0,XC301924-Gavina 1st-winter e gabbiani comuni.mp3
+Common_Gull,XC301924-Gavina,6,data/processed/Common_Gull/XC301924-Gavina_chunk006.wav,3.0,XC301924-Gavina 1st-winter e gabbiani comuni.mp3
+Common_Gull,XC301924-Gavina,7,data/processed/Common_Gull/XC301924-Gavina_chunk007.wav,3.0,XC301924-Gavina 1st-winter e gabbiani comuni.mp3
+Common_Gull,XC301924-Gavina,8,data/processed/Common_Gull/XC301924-Gavina_chunk008.wav,3.0,XC301924-Gavina 1st-winter e gabbiani comuni.mp3
+Common_Gull,XC301924-Gavina,9,data/processed/Common_Gull/XC301924-Gavina_chunk009.wav,3.0,XC301924-Gavina 1st-winter e gabbiani comuni.mp3
+Common_Gull,XC301924-Gavina,10,data/processed/Common_Gull/XC301924-Gavina_chunk010.wav,3.0,XC301924-Gavina 1st-winter e gabbiani comuni.mp3
+Common_Gull,XC301924-Gavina,11,data/processed/Common_Gull/XC301924-Gavina_chunk011.wav,3.0,XC301924-Gavina 1st-winter e gabbiani comuni.mp3
+Common_Gull,XC301924-Gavina,12,data/processed/Common_Gull/XC301924-Gavina_chunk012.wav,3.0,XC301924-Gavina 1st-winter e gabbiani comuni.mp3
+Common_Gull,XC301924-Gavina,13,data/processed/Common_Gull/XC301924-Gavina_chunk013.wav,3.0,XC301924-Gavina 1st-winter e gabbiani comuni.mp3
+Common_Gull,XC301924-Gavina,14,data/processed/Common_Gull/XC301924-Gavina_chunk014.wav,3.0,XC301924-Gavina 1st-winter e gabbiani comuni.mp3
+Common_Gull,XC301924-Gavina,15,data/processed/Common_Gull/XC301924-Gavina_chunk015.wav,3.0,XC301924-Gavina 1st-winter e gabbiani comuni.mp3
+Common_Gull,XC301924-Gavina,16,data/processed/Common_Gull/XC301924-Gavina_chunk016.wav,3.0,XC301924-Gavina 1st-winter e gabbiani comuni.mp3
+Common_Gull,XC301924-Gavina,17,data/processed/Common_Gull/XC301924-Gavina_chunk017.wav,3.0,XC301924-Gavina 1st-winter e gabbiani comuni.mp3
+Common_Gull,XC317631-316,0,data/processed/Common_Gull/XC317631-316_chunk000.wav,3.0,"XC317631-316 Goélan cendré, Lorindorb, 5 mai 2016, 16h.mp3"
+Common_Gull,XC317631-316,1,data/processed/Common_Gull/XC317631-316_chunk001.wav,3.0,"XC317631-316 Goélan cendré, Lorindorb, 5 mai 2016, 16h.mp3"
+Common_Gull,XC317631-316,2,data/processed/Common_Gull/XC317631-316_chunk002.wav,3.0,"XC317631-316 Goélan cendré, Lorindorb, 5 mai 2016, 16h.mp3"
+Common_Gull,XC317631-316,3,data/processed/Common_Gull/XC317631-316_chunk003.wav,3.0,"XC317631-316 Goélan cendré, Lorindorb, 5 mai 2016, 16h.mp3"
+Common_Gull,XC317631-316,4,data/processed/Common_Gull/XC317631-316_chunk004.wav,3.0,"XC317631-316 Goélan cendré, Lorindorb, 5 mai 2016, 16h.mp3"
+Common_Gull,XC317631-316,5,data/processed/Common_Gull/XC317631-316_chunk005.wav,3.0,"XC317631-316 Goélan cendré, Lorindorb, 5 mai 2016, 16h.mp3"
+Common_Gull,XC317631-316,6,data/processed/Common_Gull/XC317631-316_chunk006.wav,3.0,"XC317631-316 Goélan cendré, Lorindorb, 5 mai 2016, 16h.mp3"
+Common_Gull,XC317631-316,7,data/processed/Common_Gull/XC317631-316_chunk007.wav,3.0,"XC317631-316 Goélan cendré, Lorindorb, 5 mai 2016, 16h.mp3"
+Common_Gull,XC317631-316,8,data/processed/Common_Gull/XC317631-316_chunk008.wav,3.0,"XC317631-316 Goélan cendré, Lorindorb, 5 mai 2016, 16h.mp3"
+Common_Gull,XC317631-316,9,data/processed/Common_Gull/XC317631-316_chunk009.wav,3.0,"XC317631-316 Goélan cendré, Lorindorb, 5 mai 2016, 16h.mp3"
+Common_Gull,XC317631-316,10,data/processed/Common_Gull/XC317631-316_chunk010.wav,3.0,"XC317631-316 Goélan cendré, Lorindorb, 5 mai 2016, 16h.mp3"
+Common_Gull,XC317631-316,11,data/processed/Common_Gull/XC317631-316_chunk011.wav,3.0,"XC317631-316 Goélan cendré, Lorindorb, 5 mai 2016, 16h.mp3"
+Common_Gull,XC317631-316,12,data/processed/Common_Gull/XC317631-316_chunk012.wav,3.0,"XC317631-316 Goélan cendré, Lorindorb, 5 mai 2016, 16h.mp3"
+Common_Gull,XC317631-316,13,data/processed/Common_Gull/XC317631-316_chunk013.wav,3.0,"XC317631-316 Goélan cendré, Lorindorb, 5 mai 2016, 16h.mp3"
+Common_Gull,XC317631-316,14,data/processed/Common_Gull/XC317631-316_chunk014.wav,3.0,"XC317631-316 Goélan cendré, Lorindorb, 5 mai 2016, 16h.mp3"
+Common_Gull,XC317631-316,15,data/processed/Common_Gull/XC317631-316_chunk015.wav,3.0,"XC317631-316 Goélan cendré, Lorindorb, 5 mai 2016, 16h.mp3"
+Common_Gull,XC317631-316,16,data/processed/Common_Gull/XC317631-316_chunk016.wav,3.0,"XC317631-316 Goélan cendré, Lorindorb, 5 mai 2016, 16h.mp3"
+Common_Gull,XC317631-316,17,data/processed/Common_Gull/XC317631-316_chunk017.wav,3.0,"XC317631-316 Goélan cendré, Lorindorb, 5 mai 2016, 16h.mp3"
+Common_Gull,XC317631-316,18,data/processed/Common_Gull/XC317631-316_chunk018.wav,3.0,"XC317631-316 Goélan cendré, Lorindorb, 5 mai 2016, 16h.mp3"
+Common_Gull,XC317631-316,19,data/processed/Common_Gull/XC317631-316_chunk019.wav,3.0,"XC317631-316 Goélan cendré, Lorindorb, 5 mai 2016, 16h.mp3"
+Common_Gull,XC317631-316,20,data/processed/Common_Gull/XC317631-316_chunk020.wav,3.0,"XC317631-316 Goélan cendré, Lorindorb, 5 mai 2016, 16h.mp3"
+Common_Gull,XC317631-316,21,data/processed/Common_Gull/XC317631-316_chunk021.wav,3.0,"XC317631-316 Goélan cendré, Lorindorb, 5 mai 2016, 16h.mp3"
+Common_Gull,XC317631-316,22,data/processed/Common_Gull/XC317631-316_chunk022.wav,3.0,"XC317631-316 Goélan cendré, Lorindorb, 5 mai 2016, 16h.mp3"
+Common_Gull,XC317631-316,23,data/processed/Common_Gull/XC317631-316_chunk023.wav,3.0,"XC317631-316 Goélan cendré, Lorindorb, 5 mai 2016, 16h.mp3"
+Common_Gull,XC317631-316,24,data/processed/Common_Gull/XC317631-316_chunk024.wav,3.0,"XC317631-316 Goélan cendré, Lorindorb, 5 mai 2016, 16h.mp3"
+Common_Gull,XC317631-316,25,data/processed/Common_Gull/XC317631-316_chunk025.wav,3.0,"XC317631-316 Goélan cendré, Lorindorb, 5 mai 2016, 16h.mp3"
+Common_Gull,XC317631-316,26,data/processed/Common_Gull/XC317631-316_chunk026.wav,3.0,"XC317631-316 Goélan cendré, Lorindorb, 5 mai 2016, 16h.mp3"
+Common_Gull,XC317631-316,27,data/processed/Common_Gull/XC317631-316_chunk027.wav,3.0,"XC317631-316 Goélan cendré, Lorindorb, 5 mai 2016, 16h.mp3"
+Common_Gull,XC317631-316,28,data/processed/Common_Gull/XC317631-316_chunk028.wav,3.0,"XC317631-316 Goélan cendré, Lorindorb, 5 mai 2016, 16h.mp3"
+Common_Gull,XC342971-395_larcan_varoitus2_Suomi_Jyväskylä_2009-05-15,0,data/processed/Common_Gull/XC342971-395_larcan_varoitus2_Suomi_Jyväskylä_2009-05-15_chunk000.wav,3.0,XC342971-395_larcan_varoitus2_Suomi_Jyväskylä_2009-05-15.mp3
+Common_Gull,XC342971-395_larcan_varoitus2_Suomi_Jyväskylä_2009-05-15,1,data/processed/Common_Gull/XC342971-395_larcan_varoitus2_Suomi_Jyväskylä_2009-05-15_chunk001.wav,3.0,XC342971-395_larcan_varoitus2_Suomi_Jyväskylä_2009-05-15.mp3
+Common_Gull,XC342971-395_larcan_varoitus2_Suomi_Jyväskylä_2009-05-15,2,data/processed/Common_Gull/XC342971-395_larcan_varoitus2_Suomi_Jyväskylä_2009-05-15_chunk002.wav,3.0,XC342971-395_larcan_varoitus2_Suomi_Jyväskylä_2009-05-15.mp3
+Common_Gull,XC342971-395_larcan_varoitus2_Suomi_Jyväskylä_2009-05-15,3,data/processed/Common_Gull/XC342971-395_larcan_varoitus2_Suomi_Jyväskylä_2009-05-15_chunk003.wav,3.0,XC342971-395_larcan_varoitus2_Suomi_Jyväskylä_2009-05-15.mp3
+Common_Gull,XC356210-Larus_canus-FL,0,data/processed/Common_Gull/XC356210-Larus_canus-FL_chunk000.wav,3.0,"XC356210-Larus_canus-FL calls Westchester Lagoon, Anchorage AK 6.24am 11Jun15 LS116743b.mp3"
+Common_Gull,XC356210-Larus_canus-FL,1,data/processed/Common_Gull/XC356210-Larus_canus-FL_chunk001.wav,3.0,"XC356210-Larus_canus-FL calls Westchester Lagoon, Anchorage AK 6.24am 11Jun15 LS116743b.mp3"
+Common_Gull,XC356210-Larus_canus-FL,2,data/processed/Common_Gull/XC356210-Larus_canus-FL_chunk002.wav,3.0,"XC356210-Larus_canus-FL calls Westchester Lagoon, Anchorage AK 6.24am 11Jun15 LS116743b.mp3"
+Common_Gull,XC356210-Larus_canus-FL,3,data/processed/Common_Gull/XC356210-Larus_canus-FL_chunk003.wav,3.0,"XC356210-Larus_canus-FL calls Westchester Lagoon, Anchorage AK 6.24am 11Jun15 LS116743b.mp3"
+Common_Gull,XC356210-Larus_canus-FL,4,data/processed/Common_Gull/XC356210-Larus_canus-FL_chunk004.wav,3.0,"XC356210-Larus_canus-FL calls Westchester Lagoon, Anchorage AK 6.24am 11Jun15 LS116743b.mp3"
+Common_Gull,XC356210-Larus_canus-FL,5,data/processed/Common_Gull/XC356210-Larus_canus-FL_chunk005.wav,3.0,"XC356210-Larus_canus-FL calls Westchester Lagoon, Anchorage AK 6.24am 11Jun15 LS116743b.mp3"
+Common_Gull,XC356210-Larus_canus-FL,6,data/processed/Common_Gull/XC356210-Larus_canus-FL_chunk006.wav,3.0,"XC356210-Larus_canus-FL calls Westchester Lagoon, Anchorage AK 6.24am 11Jun15 LS116743b.mp3"
+Common_Gull,XC356210-Larus_canus-FL,7,data/processed/Common_Gull/XC356210-Larus_canus-FL_chunk007.wav,3.0,"XC356210-Larus_canus-FL calls Westchester Lagoon, Anchorage AK 6.24am 11Jun15 LS116743b.mp3"
+Common_Gull,XC356210-Larus_canus-FL,8,data/processed/Common_Gull/XC356210-Larus_canus-FL_chunk008.wav,3.0,"XC356210-Larus_canus-FL calls Westchester Lagoon, Anchorage AK 6.24am 11Jun15 LS116743b.mp3"
+Common_Gull,XC356210-Larus_canus-FL,9,data/processed/Common_Gull/XC356210-Larus_canus-FL_chunk009.wav,3.0,"XC356210-Larus_canus-FL calls Westchester Lagoon, Anchorage AK 6.24am 11Jun15 LS116743b.mp3"
+Common_Gull,XC356210-Larus_canus-FL,10,data/processed/Common_Gull/XC356210-Larus_canus-FL_chunk010.wav,3.0,"XC356210-Larus_canus-FL calls Westchester Lagoon, Anchorage AK 6.24am 11Jun15 LS116743b.mp3"
+Common_Gull,XC375839-170611_larcan_enonkoski_2019,0,data/processed/Common_Gull/XC375839-170611_larcan_enonkoski_2019_chunk000.wav,3.0,XC375839-170611_larcan_enonkoski_2019.mp3
+Common_Gull,XC375839-170611_larcan_enonkoski_2019,1,data/processed/Common_Gull/XC375839-170611_larcan_enonkoski_2019_chunk001.wav,3.0,XC375839-170611_larcan_enonkoski_2019.mp3
+Common_Gull,XC375839-170611_larcan_enonkoski_2019,2,data/processed/Common_Gull/XC375839-170611_larcan_enonkoski_2019_chunk002.wav,3.0,XC375839-170611_larcan_enonkoski_2019.mp3
+Common_Gull,XC375839-170611_larcan_enonkoski_2019,3,data/processed/Common_Gull/XC375839-170611_larcan_enonkoski_2019_chunk003.wav,3.0,XC375839-170611_larcan_enonkoski_2019.mp3
+Common_Gull,XC375839-170611_larcan_enonkoski_2019,4,data/processed/Common_Gull/XC375839-170611_larcan_enonkoski_2019_chunk004.wav,3.0,XC375839-170611_larcan_enonkoski_2019.mp3
+Common_Gull,XC375839-170611_larcan_enonkoski_2019,5,data/processed/Common_Gull/XC375839-170611_larcan_enonkoski_2019_chunk005.wav,3.0,XC375839-170611_larcan_enonkoski_2019.mp3
+Common_Gull,XC375839-170611_larcan_enonkoski_2019,6,data/processed/Common_Gull/XC375839-170611_larcan_enonkoski_2019_chunk006.wav,3.0,XC375839-170611_larcan_enonkoski_2019.mp3
+Common_Gull,XC375839-170611_larcan_enonkoski_2019,7,data/processed/Common_Gull/XC375839-170611_larcan_enonkoski_2019_chunk007.wav,3.0,XC375839-170611_larcan_enonkoski_2019.mp3
+Common_Gull,XC375839-170611_larcan_enonkoski_2019,8,data/processed/Common_Gull/XC375839-170611_larcan_enonkoski_2019_chunk008.wav,3.0,XC375839-170611_larcan_enonkoski_2019.mp3
+Common_Gull,XC375839-170611_larcan_enonkoski_2019,9,data/processed/Common_Gull/XC375839-170611_larcan_enonkoski_2019_chunk009.wav,3.0,XC375839-170611_larcan_enonkoski_2019.mp3
+Common_Gull,XC375839-170611_larcan_enonkoski_2019,10,data/processed/Common_Gull/XC375839-170611_larcan_enonkoski_2019_chunk010.wav,3.0,XC375839-170611_larcan_enonkoski_2019.mp3
+Common_Gull,XC375839-170611_larcan_enonkoski_2019,11,data/processed/Common_Gull/XC375839-170611_larcan_enonkoski_2019_chunk011.wav,3.0,XC375839-170611_larcan_enonkoski_2019.mp3
+Common_Gull,XC375839-170611_larcan_enonkoski_2019,12,data/processed/Common_Gull/XC375839-170611_larcan_enonkoski_2019_chunk012.wav,3.0,XC375839-170611_larcan_enonkoski_2019.mp3
+Common_Gull,XC375839-170611_larcan_enonkoski_2019,13,data/processed/Common_Gull/XC375839-170611_larcan_enonkoski_2019_chunk013.wav,3.0,XC375839-170611_larcan_enonkoski_2019.mp3
+Common_Gull,XC375839-170611_larcan_enonkoski_2019,14,data/processed/Common_Gull/XC375839-170611_larcan_enonkoski_2019_chunk014.wav,3.0,XC375839-170611_larcan_enonkoski_2019.mp3
+Common_Gull,XC375839-170611_larcan_enonkoski_2019,15,data/processed/Common_Gull/XC375839-170611_larcan_enonkoski_2019_chunk015.wav,3.0,XC375839-170611_larcan_enonkoski_2019.mp3
+Common_Gull,XC375839-170611_larcan_enonkoski_2019,16,data/processed/Common_Gull/XC375839-170611_larcan_enonkoski_2019_chunk016.wav,3.0,XC375839-170611_larcan_enonkoski_2019.mp3
+Common_Gull,XC375839-170611_larcan_enonkoski_2019,17,data/processed/Common_Gull/XC375839-170611_larcan_enonkoski_2019_chunk017.wav,3.0,XC375839-170611_larcan_enonkoski_2019.mp3
+Common_Gull,XC375839-170611_larcan_enonkoski_2019,18,data/processed/Common_Gull/XC375839-170611_larcan_enonkoski_2019_chunk018.wav,3.0,XC375839-170611_larcan_enonkoski_2019.mp3
+Common_Gull,XC375839-170611_larcan_enonkoski_2019,19,data/processed/Common_Gull/XC375839-170611_larcan_enonkoski_2019_chunk019.wav,3.0,XC375839-170611_larcan_enonkoski_2019.mp3
+Common_Gull,XC375839-170611_larcan_enonkoski_2019,20,data/processed/Common_Gull/XC375839-170611_larcan_enonkoski_2019_chunk020.wav,3.0,XC375839-170611_larcan_enonkoski_2019.mp3
+Common_Gull,XC375839-170611_larcan_enonkoski_2019,21,data/processed/Common_Gull/XC375839-170611_larcan_enonkoski_2019_chunk021.wav,3.0,XC375839-170611_larcan_enonkoski_2019.mp3
+Common_Gull,XC375839-170611_larcan_enonkoski_2019,22,data/processed/Common_Gull/XC375839-170611_larcan_enonkoski_2019_chunk022.wav,3.0,XC375839-170611_larcan_enonkoski_2019.mp3
+Common_Gull,XC375839-170611_larcan_enonkoski_2019,23,data/processed/Common_Gull/XC375839-170611_larcan_enonkoski_2019_chunk023.wav,3.0,XC375839-170611_larcan_enonkoski_2019.mp3
+Common_Gull,XC375839-170611_larcan_enonkoski_2019,24,data/processed/Common_Gull/XC375839-170611_larcan_enonkoski_2019_chunk024.wav,3.0,XC375839-170611_larcan_enonkoski_2019.mp3
+Common_Gull,XC375839-170611_larcan_enonkoski_2019,25,data/processed/Common_Gull/XC375839-170611_larcan_enonkoski_2019_chunk025.wav,3.0,XC375839-170611_larcan_enonkoski_2019.mp3
+Common_Gull,XC375839-170611_larcan_enonkoski_2019,26,data/processed/Common_Gull/XC375839-170611_larcan_enonkoski_2019_chunk026.wav,3.0,XC375839-170611_larcan_enonkoski_2019.mp3
+Common_Gull,XC375839-170611_larcan_enonkoski_2019,27,data/processed/Common_Gull/XC375839-170611_larcan_enonkoski_2019_chunk027.wav,3.0,XC375839-170611_larcan_enonkoski_2019.mp3
+Common_Gull,XC375839-170611_larcan_enonkoski_2019,28,data/processed/Common_Gull/XC375839-170611_larcan_enonkoski_2019_chunk028.wav,3.0,XC375839-170611_larcan_enonkoski_2019.mp3
+Common_Gull,XC375839-170611_larcan_enonkoski_2019,29,data/processed/Common_Gull/XC375839-170611_larcan_enonkoski_2019_chunk029.wav,3.0,XC375839-170611_larcan_enonkoski_2019.mp3
+Common_Gull,XC375839-170611_larcan_enonkoski_2019,30,data/processed/Common_Gull/XC375839-170611_larcan_enonkoski_2019_chunk030.wav,3.0,XC375839-170611_larcan_enonkoski_2019.mp3
+Common_Gull,XC375839-170611_larcan_enonkoski_2019,31,data/processed/Common_Gull/XC375839-170611_larcan_enonkoski_2019_chunk031.wav,3.0,XC375839-170611_larcan_enonkoski_2019.mp3
+Common_Gull,XC375839-170611_larcan_enonkoski_2019,32,data/processed/Common_Gull/XC375839-170611_larcan_enonkoski_2019_chunk032.wav,3.0,XC375839-170611_larcan_enonkoski_2019.mp3
+Common_Gull,XC375839-170611_larcan_enonkoski_2019,33,data/processed/Common_Gull/XC375839-170611_larcan_enonkoski_2019_chunk033.wav,3.0,XC375839-170611_larcan_enonkoski_2019.mp3
+Common_Gull,XC375839-170611_larcan_enonkoski_2019,34,data/processed/Common_Gull/XC375839-170611_larcan_enonkoski_2019_chunk034.wav,3.0,XC375839-170611_larcan_enonkoski_2019.mp3
+Common_Gull,XC375839-170611_larcan_enonkoski_2019,35,data/processed/Common_Gull/XC375839-170611_larcan_enonkoski_2019_chunk035.wav,3.0,XC375839-170611_larcan_enonkoski_2019.mp3
+Common_Gull,XC375839-170611_larcan_enonkoski_2019,36,data/processed/Common_Gull/XC375839-170611_larcan_enonkoski_2019_chunk036.wav,3.0,XC375839-170611_larcan_enonkoski_2019.mp3
+Common_Gull,XC375839-170611_larcan_enonkoski_2019,37,data/processed/Common_Gull/XC375839-170611_larcan_enonkoski_2019_chunk037.wav,3.0,XC375839-170611_larcan_enonkoski_2019.mp3
+Common_Gull,XC375839-170611_larcan_enonkoski_2019,38,data/processed/Common_Gull/XC375839-170611_larcan_enonkoski_2019_chunk038.wav,3.0,XC375839-170611_larcan_enonkoski_2019.mp3
+Common_Gull,XC375839-170611_larcan_enonkoski_2019,39,data/processed/Common_Gull/XC375839-170611_larcan_enonkoski_2019_chunk039.wav,3.0,XC375839-170611_larcan_enonkoski_2019.mp3
+Common_Gull,XC375839-170611_larcan_enonkoski_2019,40,data/processed/Common_Gull/XC375839-170611_larcan_enonkoski_2019_chunk040.wav,3.0,XC375839-170611_larcan_enonkoski_2019.mp3
+Common_Gull,XC375839-170611_larcan_enonkoski_2019,41,data/processed/Common_Gull/XC375839-170611_larcan_enonkoski_2019_chunk041.wav,3.0,XC375839-170611_larcan_enonkoski_2019.mp3
+Common_Gull,XC375839-170611_larcan_enonkoski_2019,42,data/processed/Common_Gull/XC375839-170611_larcan_enonkoski_2019_chunk042.wav,3.0,XC375839-170611_larcan_enonkoski_2019.mp3
+Common_Gull,XC375839-170611_larcan_enonkoski_2019,43,data/processed/Common_Gull/XC375839-170611_larcan_enonkoski_2019_chunk043.wav,3.0,XC375839-170611_larcan_enonkoski_2019.mp3
+Common_Gull,XC375839-170611_larcan_enonkoski_2019,44,data/processed/Common_Gull/XC375839-170611_larcan_enonkoski_2019_chunk044.wav,3.0,XC375839-170611_larcan_enonkoski_2019.mp3
+Common_Gull,XC375839-170611_larcan_enonkoski_2019,45,data/processed/Common_Gull/XC375839-170611_larcan_enonkoski_2019_chunk045.wav,3.0,XC375839-170611_larcan_enonkoski_2019.mp3
+Common_Gull,XC375839-170611_larcan_enonkoski_2019,46,data/processed/Common_Gull/XC375839-170611_larcan_enonkoski_2019_chunk046.wav,3.0,XC375839-170611_larcan_enonkoski_2019.mp3
+Common_Gull,XC375839-170611_larcan_enonkoski_2019,47,data/processed/Common_Gull/XC375839-170611_larcan_enonkoski_2019_chunk047.wav,3.0,XC375839-170611_larcan_enonkoski_2019.mp3
+Common_Gull,XC375839-170611_larcan_enonkoski_2019,48,data/processed/Common_Gull/XC375839-170611_larcan_enonkoski_2019_chunk048.wav,3.0,XC375839-170611_larcan_enonkoski_2019.mp3
+Common_Gull,XC375839-170611_larcan_enonkoski_2019,49,data/processed/Common_Gull/XC375839-170611_larcan_enonkoski_2019_chunk049.wav,3.0,XC375839-170611_larcan_enonkoski_2019.mp3
+Common_Gull,XC375839-170611_larcan_enonkoski_2019,50,data/processed/Common_Gull/XC375839-170611_larcan_enonkoski_2019_chunk050.wav,3.0,XC375839-170611_larcan_enonkoski_2019.mp3
+Common_Gull,XC375839-170611_larcan_enonkoski_2019,51,data/processed/Common_Gull/XC375839-170611_larcan_enonkoski_2019_chunk051.wav,3.0,XC375839-170611_larcan_enonkoski_2019.mp3
+Common_Gull,XC375839-170611_larcan_enonkoski_2019,52,data/processed/Common_Gull/XC375839-170611_larcan_enonkoski_2019_chunk052.wav,3.0,XC375839-170611_larcan_enonkoski_2019.mp3
+Common_Gull,XC375852-170614_larcan_enonkoski_0022,0,data/processed/Common_Gull/XC375852-170614_larcan_enonkoski_0022_chunk000.wav,3.0,XC375852-170614_larcan_enonkoski_0022.mp3
+Common_Gull,XC375852-170614_larcan_enonkoski_0022,1,data/processed/Common_Gull/XC375852-170614_larcan_enonkoski_0022_chunk001.wav,3.0,XC375852-170614_larcan_enonkoski_0022.mp3
+Common_Gull,XC375852-170614_larcan_enonkoski_0022,2,data/processed/Common_Gull/XC375852-170614_larcan_enonkoski_0022_chunk002.wav,3.0,XC375852-170614_larcan_enonkoski_0022.mp3
+Common_Gull,XC375852-170614_larcan_enonkoski_0022,3,data/processed/Common_Gull/XC375852-170614_larcan_enonkoski_0022_chunk003.wav,3.0,XC375852-170614_larcan_enonkoski_0022.mp3
+Common_Gull,XC375852-170614_larcan_enonkoski_0022,4,data/processed/Common_Gull/XC375852-170614_larcan_enonkoski_0022_chunk004.wav,3.0,XC375852-170614_larcan_enonkoski_0022.mp3
+Common_Gull,XC375852-170614_larcan_enonkoski_0022,5,data/processed/Common_Gull/XC375852-170614_larcan_enonkoski_0022_chunk005.wav,3.0,XC375852-170614_larcan_enonkoski_0022.mp3
+Common_Gull,XC375852-170614_larcan_enonkoski_0022,6,data/processed/Common_Gull/XC375852-170614_larcan_enonkoski_0022_chunk006.wav,3.0,XC375852-170614_larcan_enonkoski_0022.mp3
+Common_Gull,XC375852-170614_larcan_enonkoski_0022,7,data/processed/Common_Gull/XC375852-170614_larcan_enonkoski_0022_chunk007.wav,3.0,XC375852-170614_larcan_enonkoski_0022.mp3
+Common_Gull,XC375852-170614_larcan_enonkoski_0022,8,data/processed/Common_Gull/XC375852-170614_larcan_enonkoski_0022_chunk008.wav,3.0,XC375852-170614_larcan_enonkoski_0022.mp3
+Common_Gull,XC375852-170614_larcan_enonkoski_0022,9,data/processed/Common_Gull/XC375852-170614_larcan_enonkoski_0022_chunk009.wav,3.0,XC375852-170614_larcan_enonkoski_0022.mp3
+Common_Gull,XC375852-170614_larcan_enonkoski_0022,10,data/processed/Common_Gull/XC375852-170614_larcan_enonkoski_0022_chunk010.wav,3.0,XC375852-170614_larcan_enonkoski_0022.mp3
+Common_Gull,XC375852-170614_larcan_enonkoski_0022,11,data/processed/Common_Gull/XC375852-170614_larcan_enonkoski_0022_chunk011.wav,3.0,XC375852-170614_larcan_enonkoski_0022.mp3
+Common_Gull,XC375852-170614_larcan_enonkoski_0022,12,data/processed/Common_Gull/XC375852-170614_larcan_enonkoski_0022_chunk012.wav,3.0,XC375852-170614_larcan_enonkoski_0022.mp3
+Common_Gull,XC375852-170614_larcan_enonkoski_0022,13,data/processed/Common_Gull/XC375852-170614_larcan_enonkoski_0022_chunk013.wav,3.0,XC375852-170614_larcan_enonkoski_0022.mp3
+Common_Gull,XC375852-170614_larcan_enonkoski_0022,14,data/processed/Common_Gull/XC375852-170614_larcan_enonkoski_0022_chunk014.wav,3.0,XC375852-170614_larcan_enonkoski_0022.mp3
+Common_Gull,XC375852-170614_larcan_enonkoski_0022,15,data/processed/Common_Gull/XC375852-170614_larcan_enonkoski_0022_chunk015.wav,3.0,XC375852-170614_larcan_enonkoski_0022.mp3
+Common_Gull,XC375852-170614_larcan_enonkoski_0022,16,data/processed/Common_Gull/XC375852-170614_larcan_enonkoski_0022_chunk016.wav,3.0,XC375852-170614_larcan_enonkoski_0022.mp3
+Common_Gull,XC375852-170614_larcan_enonkoski_0022,17,data/processed/Common_Gull/XC375852-170614_larcan_enonkoski_0022_chunk017.wav,3.0,XC375852-170614_larcan_enonkoski_0022.mp3
+Common_Gull,XC375852-170614_larcan_enonkoski_0022,18,data/processed/Common_Gull/XC375852-170614_larcan_enonkoski_0022_chunk018.wav,3.0,XC375852-170614_larcan_enonkoski_0022.mp3
+Common_Gull,XC375852-170614_larcan_enonkoski_0022,19,data/processed/Common_Gull/XC375852-170614_larcan_enonkoski_0022_chunk019.wav,3.0,XC375852-170614_larcan_enonkoski_0022.mp3
+Common_Gull,XC375852-170614_larcan_enonkoski_0022,20,data/processed/Common_Gull/XC375852-170614_larcan_enonkoski_0022_chunk020.wav,3.0,XC375852-170614_larcan_enonkoski_0022.mp3
+Common_Gull,XC375852-170614_larcan_enonkoski_0022,21,data/processed/Common_Gull/XC375852-170614_larcan_enonkoski_0022_chunk021.wav,3.0,XC375852-170614_larcan_enonkoski_0022.mp3
+Common_Gull,XC375852-170614_larcan_enonkoski_0022,22,data/processed/Common_Gull/XC375852-170614_larcan_enonkoski_0022_chunk022.wav,3.0,XC375852-170614_larcan_enonkoski_0022.mp3
+Common_Gull,XC375852-170614_larcan_enonkoski_0022,23,data/processed/Common_Gull/XC375852-170614_larcan_enonkoski_0022_chunk023.wav,3.0,XC375852-170614_larcan_enonkoski_0022.mp3
