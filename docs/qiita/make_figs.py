@@ -1,5 +1,5 @@
 """Qiita 記事用の図を生成する（クリーンテイスト / 日本語ラベル）。Part2 / Part3…。
-出力先: docs/qiita/figures/
+出力先: docs/qiita/part<N>/figures/（記事ごと）
 """
 import matplotlib
 matplotlib.use("Agg")
@@ -21,8 +21,9 @@ rcParams["axes.spines.top"] = False
 rcParams["axes.spines.right"] = False
 rcParams["font.size"] = 12
 
-OUT = Path(__file__).parent / "figures"
-OUT.mkdir(exist_ok=True)
+BASE = Path(__file__).parent
+P2 = BASE / "part2" / "figures"; P2.mkdir(parents=True, exist_ok=True)
+P3 = BASE / "part3" / "figures"; P3.mkdir(parents=True, exist_ok=True)
 
 C_BLUE = "#4C72B0"
 C_ORANGE = "#DD8452"
@@ -65,7 +66,7 @@ ax.set_xticks(x)
 ax.set_xticklabels(runs)
 ax.set_ylabel("test f1_macro（8種）")
 ax.set_ylim(0.66, 0.86)
-fig.savefig(OUT / "fig1_run_trajectory.png")
+fig.savefig(P2 / "fig1_run_trajectory.png")
 plt.close(fig)
 
 # =====================================================================
@@ -87,7 +88,7 @@ for b, v in zip(bars, [0.269, 0.269]):
     ax.text(b.get_x()+b.get_width()/2, v+0.006, f"{v:.3f}", ha="center", fontsize=10)
 ax.set_ylim(0, 0.36)
 fig.tight_layout()
-fig.savefig(OUT / "fig2_run08_collapse.png")
+fig.savefig(P2 / "fig2_run08_collapse.png")
 plt.close(fig)
 
 # =====================================================================
@@ -111,7 +112,7 @@ ax.set_xticklabels(labels)
 ax.set_ylabel("キンクロと誤判定された件数")
 ax.set_ylim(0, 15)
 ax.legend(frameon=False, fontsize=10)
-fig.savefig(OUT / "fig3_recording_concentration.png")
+fig.savefig(P2 / "fig3_recording_concentration.png")
 plt.close(fig)
 
 # =====================================================================
@@ -137,7 +138,7 @@ ax.set_xticklabels(sp, fontsize=10)
 ax.set_ylabel("test F1")
 ax.set_ylim(0, 1.1)
 ax.legend(frameon=False, fontsize=10, loc="lower right")
-fig.savefig(OUT / "fig4_per_species.png")
+fig.savefig(P2 / "fig4_per_species.png")
 plt.close(fig)
 
 # =====================================================================
@@ -162,7 +163,7 @@ for i in range(len(groups)):
 ax.set_xticks(x); ax.set_xticklabels(groups)
 ax.set_ylabel("録音単位 macro-F1"); ax.set_ylim(0, 1.05)
 ax.legend(loc="upper left", framealpha=0.9)
-fig.savefig(OUT / "fig_p3_1_effect_by_student.png")
+fig.savefig(P3 / "fig_p3_1_effect_by_student.png")
 plt.close(fig)
 
 # =====================================================================
@@ -178,7 +179,7 @@ ax.set_xlim(0, clean + leak); ax.set_yticks([])
 ax.set_xlabel("Cv2-test の録音数（計 289）")
 ax.legend(loc="lower center", bbox_to_anchor=(0.5, -0.95), ncol=1, framealpha=0.9)
 ax.grid(False)
-fig.savefig(OUT / "fig_p3_2_leak.png")
+fig.savefig(P3 / "fig_p3_2_leak.png")
 plt.close(fig)
 
 # =====================================================================
@@ -197,9 +198,10 @@ for ax, vals, title in [(axes[0], full, "全体評価（リーク込み・289録
     ax.set_title(title, fontsize=12)
     ax.set_ylim(0, 1.0)
 axes[0].set_ylabel("録音単位 f1")
-fig.savefig(OUT / "fig_p3_3_rank_flip.png")
+fig.savefig(P3 / "fig_p3_3_rank_flip.png")
 plt.close(fig)
 
 print("生成完了:")
-for p in sorted(OUT.glob("*.png")):
-    print(" ", p.relative_to(Path(__file__).parent.parent))
+for d in (P2, P3):
+    for p in sorted(d.glob("*.png")):
+        print(" ", p.relative_to(BASE))
