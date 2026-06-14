@@ -24,6 +24,8 @@ rcParams["font.size"] = 12
 BASE = Path(__file__).parent
 P2 = BASE / "part2" / "figures"; P2.mkdir(parents=True, exist_ok=True)
 P3 = BASE / "part3" / "figures"; P3.mkdir(parents=True, exist_ok=True)
+P4 = BASE / "part4" / "figures"; P4.mkdir(parents=True, exist_ok=True)
+P5 = BASE / "part5" / "figures"; P5.mkdir(parents=True, exist_ok=True)
 
 C_BLUE = "#4C72B0"
 C_ORANGE = "#DD8452"
@@ -201,7 +203,65 @@ axes[0].set_ylabel("録音単位 f1")
 fig.savefig(P3 / "fig_p3_3_rank_flip.png")
 plt.close(fig)
 
+# =====================================================================
+# Part4 ①｜CPU 推論レイテンシ（推論は軽い・前処理が律速）
+# =====================================================================
+fig, ax = plt.subplots(figsize=(7.5, 4.2))
+items = ["AST 推論", "前処理\n(特徴抽出)"]
+ms = [109, 611]
+cols = [C_BLUE, C_ORANGE]
+b = ax.bar(items, ms, color=cols, width=0.55)
+for bi, v in zip(b, ms):
+    ax.annotate(f"{v} ms", (bi.get_x()+bi.get_width()/2, v), ha="center", va="bottom", fontsize=11)
+ax.set_ylabel("CPU 処理時間 (ms / 3秒チャンク)")
+ax.set_ylim(0, 700)
+ax.set_title("", fontsize=1)
+fig.savefig(P4 / "fig_p4_1_cpu_latency.png")
+plt.close(fig)
+
+# =====================================================================
+# Part4 ②｜カルガモ壁: Perch2.0本体でも カルガモは自種に当たらない（非対称崩壊）
+# =====================================================================
+fig, ax = plt.subplots(figsize=(7.5, 4.3))
+labels = ["カルガモ録音", "マガモ録音"]
+self_hit = [0, 18]   # 全クラス argmax = 自種 (/30)
+ax.bar(labels, self_hit, color=[C_RED, C_GREEN], width=0.5)
+for i, v in enumerate(self_hit):
+    ax.annotate(f"{v}/30", (i, v), ha="center", va="bottom", fontsize=12, fontweight="bold")
+ax.set_ylabel("Perch本体が「自種」と判定した数 (/30)")
+ax.set_ylim(0, 30)
+ax.annotate("カルガモ専用クラスを持つ\nPerch2.0でも 0/30", (0, 1.0), ha="center", va="bottom",
+            fontsize=10, color=C_RED)
+fig.savefig(P4 / "fig_p4_2_kalgamo_wall.png")
+plt.close(fig)
+
+# =====================================================================
+# Part5 ①｜gull 録音単位 混同行列（大型白頭3種は互いに崩壊しない）
+# =====================================================================
+g_labels = ["ユリ", "ウミネコ", "カモメ", "ズグロ", "オオセグロ", "セグロ"]
+cm = np.array([
+    [16, 0, 0, 0, 0, 0],
+    [0, 3, 1, 0, 1, 0],
+    [2, 0, 14, 0, 0, 0],
+    [1, 0, 0, 4, 0, 0],
+    [0, 0, 0, 0, 4, 0],
+    [2, 0, 0, 0, 0, 8],
+])
+fig, ax = plt.subplots(figsize=(6.2, 5.4))
+im = ax.imshow(cm, cmap="Blues")
+ax.set_xticks(range(6)); ax.set_xticklabels(g_labels, rotation=30, ha="right")
+ax.set_yticks(range(6)); ax.set_yticklabels(g_labels)
+ax.set_xlabel("予測"); ax.set_ylabel("真")
+for i in range(6):
+    for j in range(6):
+        if cm[i, j]:
+            ax.text(j, i, cm[i, j], ha="center", va="center",
+                    color="white" if cm[i, j] > 8 else "black", fontsize=11)
+ax.grid(False)
+fig.savefig(P5 / "fig_p5_1_gull_confusion.png")
+plt.close(fig)
+
 print("生成完了:")
-for d in (P2, P3):
+for d in (P2, P3, P4, P5):
     for p in sorted(d.glob("*.png")):
         print(" ", p.relative_to(BASE))
