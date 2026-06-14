@@ -55,3 +55,20 @@ crow:
     #   閾値はXeno-canto域の暫定=デプロイ後フィールド再キャリブレ必須。複合(display_groups)は不要。
     energy_threshold: 2.610
     energy_temperature: 1.0
+
+# ==================================================
+# カモメ類グループ
+# ==================================================
+gull:
+  pipeline:
+    # 2026-06-14 登録: 6種(ウミネコ/ユリカモメ/セグロ/オオセグロ/カモメ/ズグロ)。lean soup(録音f1 0.864, 複合不要=6種そのまま)。
+    stage2_model: "models/ast-gull-lean-soup"
+    # 2026-06-14 §6 OOD energy ゲート(tools/ood_fp_audit.py, lean-soup, AST単独監査):
+    #   ※アジサシ類(Common/Little Tern)は stage1(BirdNET)が33/33正答=gull stage2に来ないので OOD較正から除外
+    #     (混ぜると同科漏れ偽悪化, AUROC 0.713→0.877。§6判断則=OOD較正は stage1 が当群へ誤ルートしうる種に限る)。
+    #   録音単位AUROC(在群vs同科Laridae)=0.877。残課題=大型白頭カモメ(Glaucous系)が target gull に一部漏れる=gullの弱い対外Laridae壁。
+    #   動作点: 規則「保持>=0.90」は閾値2.413(同科漏れ0.51と緩い)→大型白頭対策で「保持>=0.85」採用 → 閾値 2.760
+    #   (在群保持0.857 / 非同科FP0.468 / 同科他種漏れ0.209)。非同科(カワウ/アオサギ/トビ/シギ)はBirdNETがgullに回さず実害小。
+    #   閾値はXeno-canto域の暫定=デプロイ後フィールド再キャリブレ必須。複合(display_groups)は不要。
+    energy_threshold: 2.760
+    energy_temperature: 1.0
