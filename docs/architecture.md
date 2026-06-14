@@ -1,41 +1,18 @@
-# Architecture
+# Architecture（Stage2 内部リファレンス）
 
-> ⚠ 旧8種/10秒前提の記述を含む。現状=10種/3秒/KD-soup/OODゲート/複合クラス。最新は docs/perch_kd_report.md と CLAUDE.md 参照。
+> ⚠ 一部に旧8種/10秒前提の記述が残る。現状=duck 10種/crow 4種・3秒・lean/KD soup・OODゲート・複合クラス。
+> 学習経緯の最新は `docs/perch_kd_report.md`、新群の作成手順は `docs/group_classifier_playbook.md`。
 
-bird-fine-classifier の全体設計。
-モデル構造・データパイプライン・OOD 検知・デプロイ方針をまとめる。
+**この文書は bird-fine-classifier（Stage2 細分類器）の内部設計リファレンス**＝AST モデル構造・
+species_master 設計・Energy Gate・学習設定・stage2 推論・デプロイを詳述する。
 
----
+> **📄 全体像（2段パイプラインがどう繋がって動くか）と、それを「1本で通す」手順は
+> 正典 `BirdProject/docs/plans/two_stage_pipeline_design.md` を参照**（BirdNET Stage1 → Dispatcher →
+> 群別 Stage2 → Energy Gate → DB、新群の追加〜配線まで集約）。本書はその Stage2 の中身に閉じる。
 
-## 1. システム全体像
-
-```
-フィールド録音（マイク）
-        ↓
-  Stage1: BirdNET CNN
-  （83種 or デフォルト 6000種）
-        ↓
-  Dispatcher
-  species_master.csv の en_birdnet × group を参照
-        ├─ group="duck" の種 → AST duck Stage2
-        ├─ group="crow" の種 → AST crow Stage2  ← 実装予定
-        └─ 該当なし → Stage1 の結果をそのまま記録
-               ↓
-         Stage2: AST Transformer
-         （group ごとの fine-tune モデル）
-               ↓
-         Energy Gate
-         energy = T * logsumexp(logits / T)
-               ├─ score < threshold → "unknown"（OOD 拒絶）
-               └─ score >= threshold → 種名を出力
-```
-
-### なぜ 2 段階か
-
-BirdNET は広く浅く分類するため、近縁種（カモ類・カラス類等）の細分類が苦手。
-近縁種に特化した Transformer fine-tune モデルを Stage2 として置くことで精度を補う。
-BirdNET のラベルバイアス（欧州データ偏重でカラスをほぼミヤマガラスと出力する等）も
-Dispatcher + Stage2 で吸収できる。
+ランタイム要約（詳細は上記正典 §2-4）: `フィールド録音 → Stage1 BirdNET → Dispatcher(species_master の group 解決) →
+group の AST Stage2(同3秒窓を再分類) → Energy Gate(録音平均energy≥閾値) → 種/複合 or 棄却`。
+duck・crow は **`species_taxonomy.yaml` に登録された群**として同一経路を通る（コード非依存）。
 
 ---
 
