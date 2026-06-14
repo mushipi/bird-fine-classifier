@@ -41,10 +41,17 @@ duck:
       sci: "Anas platyrhynchos/zonorhyncha"
 
 # ==================================================
-# カラス類グループ（実装予定）
+# カラス類グループ
 # ==================================================
 crow:
   pipeline:
-    stage2_model: null          # TBD: models/ast-crow-v1
-    energy_threshold: null      # TBD: 学習・ood_eval 後に設定
+    # 2026-06-14 登録: 4種(ハシブト/ハシボソ/ミヤマ/カササギ)。A+B の lean soup を採用
+    #   (KD効果ゼロ=lean, grade緩和不要, 複合不要=4種そのまま。録音単位f1≈0.88)。
+    stage2_model: "models/ast-crow-AB-lean-soup"
+    # 2026-06-14 Phase4 OOD energy ゲート(tools/ood_fp_audit.py, lean-soup, AST単独監査):
+    #   録音単位AUROC(在群vs非同科)=0.824 / 在群vs同科Corvidae=0.906。
+    #   同属Corvus(Northern Raven 等)でも崩壊せず(Raven rec_leak0.10)=crow壁無し(カモのカルガモ壁と別物)。
+    #   動作点「在群最優先・保持>=0.90」→ 閾値2.610で 在群保持0.902 / 非同科FP0.35 / 同科他種漏れ0.115。
+    #   閾値はXeno-canto域の暫定=デプロイ後フィールド再キャリブレ必須。複合(display_groups)は不要。
+    energy_threshold: 2.610
     energy_temperature: 1.0
