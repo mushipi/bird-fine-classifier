@@ -107,7 +107,7 @@ scripts/build_group.sh register  --config config-<group>.yaml                   
 
 ## 9. 各群の状態
 - **duck** ✅運用中: `ast-duck-D-base-soup`(honest 0.897), OOD 3.081, 複合=マガモ/カルガモ。BirdProject 統合済(settings既定disabled)。
-- **crow** 🔬Phase3完了→Phase4へ: 4種(ハシブト164/ハシボソ102/ミヤマ97/カササギ100), **A+B lean soup 採用**(KD効果ゼロ・grade緩和不要・複合不要)。録音f1≈0.88(Carrion最弱0.80)。残=Phase4 OOD→Phase5 登録(crow)。
+- **crow** 🔬Phase4完了→Phase5へ: 4種, A+B lean soup(KD/grade緩和/複合 すべて不要), 録音f1≈0.88。**OODゲート energy_threshold=2.610**(保持≥0.90, AUROC 在群vs同科0.906・crow壁無し)。残=Phase5 taxonomy登録(stage2_model+閾値)。
   → grade緩和/KD/複合 すべて不要が実測で確定。
 - **gull** ⬜未着手（本 playbook ＋ config-gull.yaml で展開予定）。
 
@@ -139,3 +139,10 @@ scripts/build_group.sh register  --config config-<group>.yaml                   
   Carrion の誤りは Rook2/Large-billed2/Magpie1 と**3クラスに散逸**（precision 1.00＝他種は Carrion に化けない）。
   → **カモのカルガモ壁（非対称全崩壊）とは別物。crow に音響的に割れる種ペア無し → display_groups（複合）不要、4種そのまま出力**。
   Carrion の recall 0.67 は support15 の小標本振れ＋データ律速で、複合でなくデータ増でしか動かない（据え置き）。
+- 2026-06-14 **crow Phase4 OOD energy ゲート ＋ OOD系の多群化（§6 実証）**:
+  OOD系3ツールが duck 固定だった取り残しを群対応化: `download_ood.py`(species_master を group×status で絞る/出力 data/ood[-group])、
+  `ood_fp_audit.py`(`--splits-dir`/同科判定 `in_family` 自動導出/Perch未整備なら auto-skip=AST単独監査)、`build_group.sh` ood段(`--arm` 既定lean＋OODパス群別配線)。
+  crow OOD=master 12種(tier1 同属Corvus/tier2 他Corvidae/tier3 非corvid)。**落とし穴(§8 追加)**: XC `en_birdnet` は IOC 改名に注意。
+  Common Raven→**Northern Raven**, Eurasian Jackdaw→**Western Jackdaw**。worldwide 0件は grade でなく名前不一致を疑え(API で件数実測して確定)。
+  結果(lean-soup): 録音AUROC 在群vs非同科0.824/在群vs同科Corvidae**0.906**。同属Corvus でも崩壊せず(Raven rec_leak0.10/Jackdaw0.03)=**crow壁無し**。
+  **§6 動作点 保持≥0.90 → energy_threshold=2.610**(在群保持0.902/非同科FP0.350/同科漏れ0.115)。duck(3.081/0.33/0.48)同等以上。閾値は in-dist 保持駆動でOOD多寡に非依存=堅い。

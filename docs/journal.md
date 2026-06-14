@@ -1341,3 +1341,20 @@ schedule-run.sh 経由の夜間 crow-full(Lean vs Full KD) が 22:31 JST「完�
 ### 修正
 - crow_full_pipeline.sh: 教師proba export を `--splits train` → `--splits train val`（根本修正、再発防止）。
 - 復旧手順: teacher_proba-crow/val.npz を再エクスポート → KD枝(step3-6: KD学習×3seed→soup→eval→soup_ci)を再走。
+
+## 2026-06-14 crow Phase4 OOD energy ゲートキャリブレ ＋ OOD系の多群化
+
+### OOD系3ツールが duck 固定だったのを群対応化
+- `download_ood.py`: 陳腐化した `taxonomy["ood_species"]` 廃止 → `species_master.csv` を group×status(ood_tier*) で絞る方式に。出力 `data/ood[-group]`/`data/ood_processed[-group]`(duckは後方互換で無印)。`--group` 追加。
+- `ood_fp_audit.py`: in-dist の `data/splits` ハードコード → `--splits-dir`。同科判定の `Anatidae` ハードコード → `in_family` を target種の科から自動導出(`--in-family`上書き可)、crow=Corvidae 自動。Perch側は埋め込み未整備なら auto-skip(crow は AST単独監査)。カモ表記を群中立(在群/同科他種/非同科)に。
+- `build_group.sh` ood段: kd固定 → `--arm`(既定lean)、OOD系パス(`--splits-dir/--ood-root/--duck-order/--perch-emb/--ood-emb`)を群別配線。
+
+### crow OOD データ(master 12種)
+tier1=同属/近縁Corvus(ワタリガラス/ニシ・コクマルガラス)、tier2=他Corvidae(カケス/オナガ/ホシガラス)、tier3=非corvid(ヒヨドリ/ムクドリ/モズ/シジュウカラ/スズメ/トビ)。
+**XC en_birdnet 名ミス発見・修正**: Common Raven→Northern Raven, Eurasian Jackdaw→Western Jackdaw(IOCリネーム)。worldwide 0件は grade でなく名前不一致が原因(API実測 Northern Raven A=389件)。
+
+### 結果(AST lean-soup, energy)
+- 録音単位AUROC: 在群 vs 非同科=0.824 / 在群 vs 同科他種(Corvidae)=**0.906**。
+- 同属Corvus FP: Northern Raven rec_leak **0.10**(→Carrion Crow), Western Jackdaw 0.03, Daurian 0.00 → **同属でも崩壊せず=crow壁は無い**(カルガモ壁と対照)。tier3の濁声passerine(ヒヨドリ/モズ/スズメ)が漏れやすい(0.3前後)=予想通り。
+- **§6規則 保持≥0.90 → energy_threshold = 2.610**(在群保持0.902/非同科FP0.350/同科他種漏れ0.115)。duck(3.081/FP0.33/漏れ0.48)と同等以上。**XC域暫定、deploy後フィールド再キャリブレ必須**。
+- 閾値は in-dist 保持で決まる(OODの多寡に非依存)ので 2.610 は堅い。Phase5(taxonomy stage2_model + energy_threshold 登録)へ。
