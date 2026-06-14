@@ -80,3 +80,7 @@ Thumbs.db
 /.venv-cpu/
 /bench_chunks/
 /bench_ood/
+
+# 群別OODデータ(生mp3/wav/metadata)もコード外
+/data/ood-*/
+/data/ood_processed-*/

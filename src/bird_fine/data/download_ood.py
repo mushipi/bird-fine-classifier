@@ -1,14 +1,15 @@
-"""OOD テスト用音声を species_taxonomy.yaml からダウンロードし 3s チャンクに前処理する。
+"""OOD テスト用音声を species_master.csv（group×status=ood_tier*）からダウンロードし 3s チャンクに前処理する。
 
-data/ood/tier{N}/{Species}/  ← 生 MP3
-data/ood_processed/tier{N}/{Species}/  ← 3s WAV チャンク
+群別（多群対応）:
+    data/ood[-<group>]/tier{N}/{Species}/            ← 生 MP3
+    data/ood_processed[-<group>]/tier{N}/{Species}/  ← 3s WAV チャンク
+    （group=duck は後方互換で接尾辞なし data/ood・data/ood_processed）
 
 使い方:
-    uv run python -m bird_fine.data.download_ood               # 全 tier DL + 前処理
-    uv run python -m bird_fine.data.download_ood --metadata-only
-    uv run python -m bird_fine.data.download_ood --tiers 1 3   # Tier1,3 のみ
-    uv run python -m bird_fine.data.download_ood --no-preprocess  # DL のみ
-    uv run python -m bird_fine.data.download_ood --preprocess-only  # 前処理のみ（再実行用）
+    uv run python -m bird_fine.data.download_ood --group crow         # crow OOD 全 tier DL + 前処理
+    uv run python -m bird_fine.data.download_ood --group crow --tiers 1
+    uv run python -m bird_fine.data.download_ood --group crow --no-preprocess     # DL のみ
+    uv run python -m bird_fine.data.download_ood --group crow --preprocess-only   # 前処理のみ（再実行用）
 """
 from __future__ import annotations
 
@@ -20,6 +21,7 @@ from pathlib import Path
 
 import librosa
 import numpy as np
+import pandas as pd
 import soundfile as sf
 import yaml
 from dotenv import load_dotenv
@@ -32,13 +34,32 @@ from xcapi.client import XenoCantoClient
 from xcapi.downloader import Downloader
 from xcapi.query import QueryBuilder
 
-TAXONOMY_PATH = PROJECT_ROOT / "species_taxonomy.yaml"
+MASTER_PATH = PROJECT_ROOT / "data" / "species_master.csv"
+# 群別 OOD 出力先（duck は後方互換で接尾辞なし）。main で --group により確定。
 OOD_RAW_DIR = PROJECT_ROOT / "data" / "ood"
 OOD_PROCESSED_DIR = PROJECT_ROOT / "data" / "ood_processed"
 
 
-def load_taxonomy() -> dict:
-    with open(TAXONOMY_PATH, "r", encoding="utf-8") as f:
+def ood_dirs(group: str) -> tuple[Path, Path]:
+    """群別の (raw, processed) ディレクトリ。duck は後方互換で接尾辞なし。"""
+    suffix = "" if group == "duck" else f"-{group}"
+    return (PROJECT_ROOT / "data" / f"ood{suffix}",
+            PROJECT_ROOT / "data" / f"ood_processed{suffix}")
+
+
+def load_ood_species(group: str) -> dict[int, list[dict]]:
+    """species_master.csv から group の OOD 種を tier 別に取得。{tier: [{en, ja}, ...]}。"""
+    df = pd.read_csv(MASTER_PATH)
+    sub = df[(df["group"] == group) & df["status"].astype(str).str.startswith("ood_tier")]
+    tier_map: dict[int, list[dict]] = {1: [], 2: [], 3: []}
+    for _, r in sub.iterrows():
+        tier = int(str(r["status"]).replace("ood_tier", ""))
+        tier_map[tier].append({"en": str(r["en_birdnet"]), "ja": str(r.get("ja", ""))})
+    return tier_map
+
+
+def load_config() -> dict:
+    with open(PROJECT_ROOT / "config.yaml", "r", encoding="utf-8") as f:
         return yaml.safe_load(f)
 
 
@@ -204,18 +225,26 @@ def main() -> None:
         help="種あたり最大録音数 (デフォルト: 30)",
     )
     parser.add_argument("--quality", type=str, default="A", help="Xeno-canto 品質フィルタ")
+    parser.add_argument("--group", type=str, default="duck",
+                        help="対象群（species_master.csv の group 列。例: crow）")
     args = parser.parse_args()
 
-    taxonomy = load_taxonomy()
+    global OOD_RAW_DIR, OOD_PROCESSED_DIR
+    OOD_RAW_DIR, OOD_PROCESSED_DIR = ood_dirs(args.group)
+
     config = load_config()
     pp = config["preprocessing"]
     sample_rate = int(pp["sample_rate"])
     chunk_duration = float(pp["chunk_duration_sec"])
     min_duration = float(pp["min_chunk_duration_sec"])
 
-    ood = taxonomy["ood_species"]
-    tier_map = {1: ood["tier1"], 2: ood["tier2"], 3: ood["tier3"]}
+    tier_map = load_ood_species(args.group)
+    n_total = sum(len(v) for v in tier_map.values())
+    if n_total == 0:
+        print(f"[ERROR] species_master.csv に group={args.group} の ood_tier* 種が無い。")
+        sys.exit(1)
 
+    print(f"[CFG] group={args.group} / OOD種数 tier1={len(tier_map[1])} tier2={len(tier_map[2])} tier3={len(tier_map[3])}")
     print(f"[CFG] sample_rate={sample_rate}Hz / chunk={chunk_duration}s / min={min_duration}s")
     print(f"[CFG] tiers={args.tiers} / quality={args.quality} / max={args.max_per_species}/種")
     print(f"[CFG] 出力先: {OOD_RAW_DIR} / {OOD_PROCESSED_DIR}")

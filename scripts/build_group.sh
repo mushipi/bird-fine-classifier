@@ -155,9 +155,14 @@ case "$STAGE" in
 
   # §6 OOD energy 閾値キャリブレ（動作点は人間が選ぶ）
   ood)
-    sp="$(soup_dir kd)"; [ -d "$sp" ] || sp="$(soup_dir lean)"
-    run $PY tools/ood_fp_audit.py --config "$CONFIG" --ast-model "$sp"
-    hr; echo "判断ゲート(§6): 動作点『真${GROUP}最優先・保持≥0.90』で energy 閾値を選ぶ。"
+    sp="$(soup_dir "$ARM")"; [ -d "$sp" ] || sp="$(soup_dir lean)"
+    run $PY tools/ood_fp_audit.py --config "$CONFIG" --ast-model "$sp" \
+      --splits-dir "$EVAL_SPLITS" \
+      --ood-root "data/ood_processed-${GROUP}" \
+      --duck-order "$TEACHER/duck_order.csv" \
+      --perch-emb "$PERCH_EMB" \
+      --ood-emb "data/embeddings/perch_ood-${GROUP}/ood.npz"
+    hr; echo "判断ゲート(§6): 動作点『在群(${GROUP})最優先・保持≥0.90』で energy 閾値を選ぶ（運用 arm=$ARM）。"
     echo "  ⚠モデルを替えたら必ず再導出（energy分布シフト）。XC域の暫定→デプロイ後フィールド再キャリブレ必須。"
     ;;
 
