@@ -84,3 +84,6 @@ Thumbs.db
 # 群別OODデータ(生mp3/wav/metadata)もコード外
 /data/ood-*/
 /data/ood_processed-*/
+
+# Qiita記事の図(再生成可ゆえ追跡しない。生成= docs/qiita/make_figs.py)
+/docs/qiita/figures/

@@ -1,5 +1,5 @@
-"""Qiita Part2 用の図を生成する（クリーンテイスト / 日本語ラベル）。
-出力先: docs/qiita_figures/
+"""Qiita 記事用の図を生成する（クリーンテイスト / 日本語ラベル）。Part2 / Part3…。
+出力先: docs/qiita/figures/
 """
 import matplotlib
 matplotlib.use("Agg")
@@ -21,7 +21,7 @@ rcParams["axes.spines.top"] = False
 rcParams["axes.spines.right"] = False
 rcParams["font.size"] = 12
 
-OUT = Path(__file__).parent / "qiita_figures"
+OUT = Path(__file__).parent / "figures"
 OUT.mkdir(exist_ok=True)
 
 C_BLUE = "#4C72B0"
@@ -138,6 +138,66 @@ ax.set_ylabel("test F1")
 ax.set_ylim(0, 1.1)
 ax.legend(frameon=False, fontsize=10, loc="lower right")
 fig.savefig(OUT / "fig4_per_species.png")
+plt.close(fig)
+
+# =====================================================================
+# Part3 ①｜効果量は「生徒の伸びしろ」で決まる（弱CNN は有意 / 強AST は非有意）
+# =====================================================================
+fig, ax = plt.subplots(figsize=(8.5, 4.6))
+groups = ["素のCNN\n(弱い生徒)", "AST\n(強い生徒)"]
+base_v = [0.4498, 0.8259]
+kd_v = [0.5977, 0.8510]
+x = np.arange(len(groups)); w = 0.34
+ax.bar(x - w / 2, base_v, w, color=C_GRAY, label="蒸留なし base")
+ax.bar(x + w / 2, kd_v, w, color=C_BLUE, label="蒸留 KD")
+for i in range(len(groups)):
+    ax.annotate(f"{base_v[i]:.3f}", (x[i] - w / 2, base_v[i]), ha="center", va="bottom", fontsize=10)
+    ax.annotate(f"{kd_v[i]:.3f}", (x[i] + w / 2, kd_v[i]), ha="center", va="bottom", fontsize=10)
+delta = ["+0.148\n★有意 [+0.084,+0.211]", "+0.025\n非有意 [-0.022,+0.079]"]
+dcol = [C_GREEN, C_RED]
+for i in range(len(groups)):
+    top = max(base_v[i], kd_v[i])
+    ax.annotate(delta[i], (x[i], top + 0.07), ha="center", va="bottom",
+                fontsize=10.5, color=dcol[i], fontweight="bold")
+ax.set_xticks(x); ax.set_xticklabels(groups)
+ax.set_ylabel("録音単位 macro-F1"); ax.set_ylim(0, 1.05)
+ax.legend(loc="upper left", framealpha=0.9)
+fig.savefig(OUT / "fig_p3_1_effect_by_student.png")
+plt.close(fig)
+
+# =====================================================================
+# Part3 ②｜リーク: 運用モデルのテスト289録音の45%が「学習済み」だった
+# =====================================================================
+fig, ax = plt.subplots(figsize=(9, 2.6))
+clean, leak = 159, 130
+ax.barh([0], [clean], color=C_GREEN, label=f"未学習＝honest評価に使える {clean}録音")
+ax.barh([0], [leak], left=[clean], color=C_RED, label=f"旧trainからリーク {leak}録音 (45.0%)")
+ax.annotate(f"{clean}", (clean / 2, 0), ha="center", va="center", color="white", fontweight="bold")
+ax.annotate(f"{leak}\n(45%)", (clean + leak / 2, 0), ha="center", va="center", color="white", fontweight="bold", fontsize=10)
+ax.set_xlim(0, clean + leak); ax.set_yticks([])
+ax.set_xlabel("Cv2-test の録音数（計 289）")
+ax.legend(loc="lower center", bbox_to_anchor=(0.5, -0.95), ncol=1, framealpha=0.9)
+ax.grid(False)
+fig.savefig(OUT / "fig_p3_2_leak.png")
+plt.close(fig)
+
+# =====================================================================
+# Part3 ③｜評価をhonestにすると順位が反転する（運用モデルが最下位へ）
+# =====================================================================
+fig, axes = plt.subplots(1, 2, figsize=(10, 4.4), sharey=True)
+models = ["Cprod\n(運用中)", "Cv2BASE\n(蒸留なし)", "Cv2KD\n(蒸留)"]
+full = [0.910, 0.908, 0.894]
+honest = [0.787, 0.897, 0.822]
+cols = [C_RED, C_GREEN, C_BLUE]
+for ax, vals, title in [(axes[0], full, "全体評価（リーク込み・289録音）"),
+                        (axes[1], honest, "honest 評価（未学習159録音）")]:
+    ax.bar(models, vals, color=cols)
+    for i, v in enumerate(vals):
+        ax.annotate(f"{v:.3f}", (i, v), ha="center", va="bottom", fontsize=10.5)
+    ax.set_title(title, fontsize=12)
+    ax.set_ylim(0, 1.0)
+axes[0].set_ylabel("録音単位 f1")
+fig.savefig(OUT / "fig_p3_3_rank_flip.png")
 plt.close(fig)
 
 print("生成完了:")
