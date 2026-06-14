@@ -1358,3 +1358,26 @@ tier1=同属/近縁Corvus(ワタリガラス/ニシ・コクマルガラス)、t
 - 同属Corvus FP: Northern Raven rec_leak **0.10**(→Carrion Crow), Western Jackdaw 0.03, Daurian 0.00 → **同属でも崩壊せず=crow壁は無い**(カルガモ壁と対照)。tier3の濁声passerine(ヒヨドリ/モズ/スズメ)が漏れやすい(0.3前後)=予想通り。
 - **§6規則 保持≥0.90 → energy_threshold = 2.610**(在群保持0.902/非同科FP0.350/同科他種漏れ0.115)。duck(3.081/FP0.33/漏れ0.48)と同等以上。**XC域暫定、deploy後フィールド再キャリブレ必須**。
 - 閾値は in-dist 保持で決まる(OODの多寡に非依存)ので 2.610 は堅い。Phase5(taxonomy stage2_model + energy_threshold 登録)へ。
+
+## 2026-06-14 gull §6 OOD ＋「アジサシ問題」= 較正ミスと判明（§6読み筋の実例）
+
+gull(6種:ウミネコ/ユリカモメ/セグロ/オオセグロ/カモメ/ズグロ, lean-soup, 録音macro-F1 0.864)の OOD energy 監査。
+
+### 初回監査で「アジサシ大量漏れ」
+在群vs同科Laridae AUROC=0.713 と低く、tier1 の Common Tern が rec_leak **0.862**(→Black-headed Gull), Little Tern 0.750 で gull に化けた。一見「gullゲートは無理筋」。
+
+### §6読み筋で切り分け（stage1精度を実測）
+playbook §6「非同科FP/同科漏れは stage1 のルーティング精度次第」に従い、**BirdNET(stage1)のアジサシ同定を実測**(N97 birdnetlib, region filter無し, 33録音):
+- **Common Tern 29/29・Little Tern 4/4 を『アジサシ』と正答、gullには0件化け**。
+→ **アジサシは stage1 で完璧に弾かれ gull stage2 に来ない**。漏れ0.86は「来ない種を OOD較正に混ぜてた較正ミス」だった。
+
+### 修正＝アジサシを gull OOD から除外して再監査
+master の gull ood_tier1 から Common/Little Tern 削除＋data/ood_processed-gull の該当dir除去 → 再監査:
+- **在群vs同科Laridae AUROC 0.713→0.877**(crow 0.906 に接近)。残同科OOD=他カモメ類(Glaucous0.00/Kittiwake0.07/Glaucous-winged0.20)。
+- 動作点: 保持≥0.90→2.413(同科漏れ0.512), 保持≥0.85→2.760(0.209), Youden→3.115(0.070)。
+- 残課題=**大型白頭カモメ(Glaucous系)が target gull に一部漏れる**=gullの弱い「対外Laridae壁」。非同科(カワウ/アオサギ/トビ/シギ)はBirdNETがgullに回さず実害小。
+
+### 学び
+- **再学習は不要**: アジサシは元から学習外(split.py群フィルタでtarget6種のみ, config other_classは未使用の死に設定, モデルは6クラス)。アジサシが触れたのはOOD較正だけ→除外で解決。**「OODに混ぜる種は“stage1がgullに回す種”に限れ」**(回さない種を混ぜると較正が歪む)。
+- 群ごとの壁の位置: duck=ターゲット内(カルガモ壁)/crow=壁無し/**gull=対外Laridae(大型白頭)に弱い壁**。
+- 残=閾値決定(保持≥0.90規則=2.413 か 大型白頭対策で0.85=2.760)→taxonomy登録。

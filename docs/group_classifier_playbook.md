@@ -116,7 +116,7 @@ scripts/build_group.sh register  --config config-<group>.yaml                   
 - **duck** ✅運用中: `ast-duck-D-base-soup`(honest 0.897), OOD 3.081, 複合=マガモ/カルガモ。BirdProject 統合済(settings既定disabled)。
 - **crow** 🔬Phase4完了→Phase5へ: 4種, A+B lean soup(KD/grade緩和/複合 すべて不要), 録音f1≈0.88。**OODゲート energy_threshold=2.610**(保持≥0.90, AUROC 在群vs同科0.906・crow壁無し)。残=Phase5 taxonomy登録(stage2_model+閾値)。
   → grade緩和/KD/複合 すべて不要が実測で確定。
-- **gull** ⬜未着手（本 playbook ＋ config-gull.yaml で展開予定）。
+- **gull** 🔬Phase6(OOD)→Phase5登録待ち: 6種(ウミネコ/ユリカモメ/セグロ/オオセグロ/カモメ/ズグロ, lean soup, 録音f1 0.864, 複合不要)。OOD: アジサシは stage1 が弾く(較正から除外)→在群vs同科Laridae AUROC 0.877。残課題=大型白頭カモメの弱い壁。閾値(2.413 or 2.760)決め→登録。
 
 ---
 
@@ -153,3 +153,9 @@ scripts/build_group.sh register  --config config-<group>.yaml                   
   Common Raven→**Northern Raven**, Eurasian Jackdaw→**Western Jackdaw**。worldwide 0件は grade でなく名前不一致を疑え(API で件数実測して確定)。
   結果(lean-soup): 録音AUROC 在群vs非同科0.824/在群vs同科Corvidae**0.906**。同属Corvus でも崩壊せず(Raven rec_leak0.10/Jackdaw0.03)=**crow壁無し**。
   **§6 動作点 保持≥0.90 → energy_threshold=2.610**(在群保持0.902/非同科FP0.350/同科漏れ0.115)。duck(3.081/0.33/0.48)同等以上。閾値は in-dist 保持駆動でOOD多寡に非依存=堅い。
+- 2026-06-14 **gull §6 で「OODに混ぜる種を間違える」較正ミスの実例（§6読み筋の実証）**:
+  gull 初回OOD監査で Common Tern が rec_leak 0.86 で gull に化け「ゲート無理筋」に見えた。が §6 の判断則に従い
+  **stage1(BirdNET)のアジサシ同定を実測**(N97 birdnetlib, 33録音)→ **Common Tern 29/29・Little Tern 4/4 を正答, gull化け0件**。
+  ＝アジサシは stage1 で弾かれ gull stage2 に来ない。漏れは「来ない種をOOD較正に混ぜた」**較正ミス**だった。
+  → **判断則(§6追記)**: **OOD較正に入れる種は「stage1 が当該群に誤ルートしうる種」に限れ**。BirdNET が別物と正答する種(別科・声質明確に違う種)を混ぜると同科漏れ/FPが偽悪化する。混ぜる前に怪しい種は stage1 を実測して仕分ける。
+  アジサシ除外で 在群vs同科Laridae AUROC 0.713→**0.877**(crow並)。**再学習は不要**(OOD較正のみの問題, モデルは元から target6種クリーン)。
