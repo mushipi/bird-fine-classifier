@@ -116,7 +116,7 @@ case "$STAGE" in
       --out-dir "$PERCH_EMB" --source raw --chunk-sec 3.0 --min-chunk-sec 1.0 --splits train
     run $PY tools/probe_sweep/export_teacher_proba.py \
       --emb-dir "$PERCH_EMB" --ast-dir "$AST42" \
-      --out-dir "$TEACHER" --splits train --oof-folds 5
+      --out-dir "$TEACHER" --splits train val --oof-folds 5
     ;;
 
   # §4 学習: --arm lean|kd ×複数seed → soup

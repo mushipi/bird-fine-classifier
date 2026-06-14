@@ -143,6 +143,15 @@ def main() -> None:
 
     df = pd.read_csv(index_csv)
     print(f"[INFO] 全チャンク数: {len(df)}")
+    # 群フィルタ: data/processed は全群共有なので config の target_species だけに絞る
+    # （種名は en_birdnet のスペース→アンダースコア表記＝processed ディレクトリ名と一致）
+    targets = {sp["en"].replace(" ", "_") for sp in config.get("target_species", [])}
+    if targets:
+        before = len(df)
+        df = df[df["species"].isin(targets)].copy()
+        missing = targets - set(df["species"].unique())
+        print(f"[INFO] 群フィルタ(target {len(targets)}種): {before} → {len(df)} chunk"
+              + (f" / 欠落種={sorted(missing)}" if missing else ""))
     print(f"[INFO] 種数: {df['species'].nunique()}")
 
     if args.preserve_existing:
