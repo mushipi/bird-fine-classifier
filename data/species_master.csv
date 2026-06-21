@@ -1,226 +1,254 @@
-taxon_id,sci,en_inat,en_birdnet,ja,family,order,obs_count,last_observed,status,group,birdproject,data_source,notes
-6930.0,Anas platyrhynchos,Mallard,Mallard,マガモ,Anatidae,Anseriformes,195.0,2026-06-05,target,duck,True,xeno-canto,
-6937.0,Anas crecca,Eurasian Teal,Green-winged Teal,コガモ,Anatidae,Anseriformes,86.0,2026-06-05,target,duck,True,xeno-canto,"BirdNET 6K V2.4/カスタムv5の出力名 ""Green-winged Teal"" に整合(旧 ""Common Teal"" はStage1→Stage2 dispatch不一致だった)"
-6933.0,Anas acuta,Northern Pintail,Northern Pintail,オナガガモ,Anatidae,Anseriformes,60.0,2026-06-05,target,duck,True,xeno-canto,
-558438.0,Spatula clypeata,Northern Shoveler,Northern Shoveler,ハシビロガモ,Anatidae,Anseriformes,28.0,2026-06-05,target,duck,True,xeno-canto,
-558441.0,Mareca penelope,Eurasian Wigeon,Eurasian Wigeon,ヒドリガモ,Anatidae,Anseriformes,178.0,2026-06-05,target,duck,True,xeno-canto,
-7046.0,Aythya fuligula,Tufted Duck,Tufted Duck,キンクロハジロ,Anatidae,Anseriformes,36.0,2026-06-05,target,duck,True,xeno-canto,
-7045.0,Aythya ferina,Common Pochard,Common Pochard,ホシハジロ,Anatidae,Anseriformes,88.0,2026-06-05,target,duck,True,xeno-canto,
-6990.0,Bucephala clangula,Common Goldeneye,Common Goldeneye,ホオジロガモ,Anatidae,Anseriformes,6.0,2026-06-05,target,duck,False,xeno-canto,BirdProject未収録。BirdNET v2.4デフォルト経由
-72504.0,Anas zonorhyncha,Eastern Spot-billed Duck,Eastern Spot-billed Duck,カルガモ,Anatidae,Anseriformes,131.0,2026-06-05,ood_tier1,duck,True,xeno-canto,run15でotherへ差戻し(Mallardと分離困難・表現力の壁)
-558439.0,Mareca strepera,Gadwall,Gadwall,オカヨシガモ,Anatidae,Anseriformes,20.0,2026-06-05,target,duck,True,xeno-canto,run13で target 昇格
-558428.0,Sibirionetta formosa,Baikal Teal,Baikal Teal,トモエガモ,Anatidae,Anseriformes,18.0,2026-06-05,ood_tier1,duck,True,xeno-canto,コガモと音響近縁
-558440.0,Mareca falcata,Falcated Duck,Falcated Duck,ヨシガモ,Anatidae,Anseriformes,23.0,2026-06-05,ood_tier1,duck,True,xeno-canto,ヒドリガモと同Mareca属
-6996.0,Mergus serrator,Red-breasted Merganser,Red-breasted Merganser,ウミアイサ,Anatidae,Anseriformes,17.0,2026-06-05,target,duck,True,xeno-canto,run13で target 昇格
-7004.0,Mergus merganser,Common Merganser,Common Merganser,カワアイサ,Anatidae,Anseriformes,2.0,2026-06-05,ood_tier1,duck,False,xeno-canto,run15でotherへ差戻し(録音不足8本)
-7047.0,Aythya marila,Greater Scaup,Greater Scaup,スズガモ,Anatidae,Anseriformes,11.0,2026-06-05,ood_tier1,duck,False,xeno-canto,キンクロハジロと同Aythya属
-482.0,Fulica atra,Eurasian Coot,Eurasian Coot,オオバン,Rallidae,Gruiformes,130.0,2026-06-05,ood_tier2,duck,True,xeno-canto,
-4237.0,Tachybaptus ruficollis,Little Grebe,Little Grebe,カイツブリ,Podicipedidae,Podicipediformes,61.0,2026-06-05,ood_tier2,duck,True,xeno-canto,
-4205.0,Podiceps nigricollis,Black-necked Grebe,Black-necked Grebe,ハジロカイツブリ,Podicipedidae,Podicipediformes,7.0,2026-06-05,ood_tier2,duck,False,xeno-canto,
-13141.0,Monticola solitarius,Blue Rock Thrush,Blue Rock Thrush,イソヒヨドリ,Muscicapidae,Passeriformes,139.0,2026-06-05,ood_tier3,duck,True,xeno-canto,
-116999.0,Pandion haliaetus,Osprey,Osprey,ミサゴ,Pandionidae,Accipitriformes,118.0,2026-06-05,ood_tier3,duck,True,xeno-canto,
-4370.0,Larus crassirostris,Black-tailed Gull,Black-tailed Gull,ウミネコ,Laridae,Charadriiformes,70.0,2026-06-05,ood_tier3,duck,True,xeno-canto,
-5268.0,Milvus migrans,Black Kite,Black Kite,トビ,Accipitridae,Accipitriformes,390.0,2026-06-05,ood_tier3,duck,True,xeno-canto,
-,Charadrius dubius,Little Ringed Plover,Little Ringed Plover,コチドリ,Charadriidae,Charadriiformes,,,ood_tier3,duck,False,xeno-canto,
-,Charadrius alexandrinus,Kentish Plover,Kentish Plover,シロチドリ,Charadriidae,Charadriiformes,,,ood_tier3,duck,True,xeno-canto,
-4892.0,Pluvialis squatarola,Grey Plover,Grey Plover,ダイゼン,Charadriidae,Charadriiformes,30.0,2026-06-05,ood_tier3,duck,True,xeno-canto,
-3898.0,Numenius madagascariensis,Far Eastern Curlew,Far Eastern Curlew,ダイシャクシギ,Scolopacidae,Charadriiformes,21.0,2026-06-05,ood_tier3,duck,True,xeno-canto,
-3896.0,Numenius arquata,Eurasian Curlew,Eurasian Curlew,ホウロクシギ,Scolopacidae,Charadriiformes,23.0,2026-06-05,ood_tier3,duck,True,xeno-canto,
-3901.0,Numenius phaeopus,Eurasian Whimbrel,Eurasian Whimbrel,チュウシャクシギ,Scolopacidae,Charadriiformes,17.0,2026-06-05,ood_tier3,duck,True,xeno-canto,
-8026.0,Corvus macrorhynchos,Large-billed Crow,Large-billed Crow,ハシブトガラス,Corvidae,Passeriformes,132.0,2026-06-05,target,crow,True,xeno-canto,
-204496.0,Corvus corone,Carrion Crow,Carrion Crow,ハシボソガラス,Corvidae,Passeriformes,100.0,2026-06-05,target,crow,True,xeno-canto,
-8029.0,Corvus frugilegus,Rook,Rook,ミヤマガラス,Corvidae,Passeriformes,55.0,2026-06-05,target,crow,True,xeno-canto,BirdNETが日本のカラスをこのラベルで誤出力することが多い
-827401.0,Pica serica,Oriental Magpie,Eurasian Magpie,カササギ,Corvidae,Passeriformes,54.0,2026-06-05,target,crow,True,xeno-canto,北部九州限定分布。日本録音不足時はYouTubeで補完
-1578721.0,Coloeus dauuricus,Daurian Jackdaw,Daurian Jackdaw,コクマルガラス,Corvidae,Passeriformes,24.0,2026-06-05,ood_tier1,crow,True,xeno-canto,ミヤマガラスと混群を作る小型カラス
-8088.0,Garrulus glandarius,Eurasian Jay,Eurasian Jay,カケス,Corvidae,Passeriformes,6.0,2026-06-05,ood_tier2,crow,True,xeno-canto,
-,Cyanopica cyanus,Azure-winged Magpie,Azure-winged Magpie,オナガ,Corvidae,Passeriformes,,,ood_tier2,crow,True,xeno-canto,
-4954.0,Ardea cinerea,Grey Heron,Grey Heron,,,,429.0,2026-06-05,candidate,,,xeno-canto,
-13851.0,Passer montanus,Eurasian Tree Sparrow,Eurasian Tree Sparrow,,,,184.0,2026-06-05,candidate,,,xeno-canto,
-4270.0,Phalacrocorax carbo,Great Cormorant,Great Cormorant,,,,183.0,2026-06-05,candidate,,,xeno-canto,
-13695.0,Motacilla alba,White Wagtail,White Wagtail,,,,158.0,2026-06-05,candidate,,,xeno-canto,
-144455.0,Ardea alba,Great Egret,Great Egret,,,,143.0,2026-06-05,candidate,,,xeno-canto,
-144910.0,Hypsipetes amaurotis,Brown-eared Bulbul,Brown-eared Bulbul,,,,137.0,2026-06-05,candidate,,,xeno-canto,
-26.0,Grus monacha,Hooded Crane,Hooded Crane,,,,136.0,2026-06-05,candidate,,,xeno-canto,
-547179.0,Spodiopsar cineraceus,White-cheeked Starling,White-cheeked Starling,,,,134.0,2026-06-05,candidate,,,xeno-canto,
-11901.0,Hirundo rustica,Barn Swallow,Barn Swallow,,,,131.0,2026-06-05,candidate,,,xeno-canto,
-12993.0,Phoenicurus auroreus,Daurian Redstart,Daurian Redstart,,,,130.0,2026-06-05,candidate,,,xeno-canto,
-3017.0,Columba livia,Rock Pigeon,Rock Pigeon,,,,115.0,2026-06-05,candidate,,,xeno-canto,
-4943.0,Egretta garzetta,Little Egret,Little Egret,,,,115.0,2026-06-05,candidate,,,xeno-canto,
-508057.0,Antigone vipio,White-naped Crane,White-naped Crane,,,,112.0,2026-06-05,candidate,,,xeno-canto,
-145361.0,Chloris sinica,Oriental Greenfinch,Oriental Greenfinch,,,,107.0,2026-06-05,candidate,,,xeno-canto,
-144510.0,Chroicocephalus ridibundus,Black-headed Gull,Black-headed Gull,,,,103.0,2026-06-05,candidate,,,xeno-canto,
-980262.0,Zosterops japonicus,Warbling White-eye,Warbling White-eye,,,,101.0,2026-06-05,candidate,,,xeno-canto,
-12779.0,Turdus pallidus,Pale Thrush,Pale Thrush,,,,91.0,2026-06-05,candidate,,,xeno-canto,
-9216.0,Emberiza cioides,Meadow Bunting,Meadow Bunting,,,,89.0,2026-06-05,candidate,,,xeno-canto,
-339691.0,Parus cinereus,Asian Tit,Asian Tit,,,,87.0,2026-06-05,candidate,,,xeno-canto,
-12051.0,Lanius bucephalus,Bull-headed Shrike,Bull-headed Shrike,,,,83.0,2026-06-05,candidate,,,xeno-canto,
-2927.0,Streptopelia orientalis,Oriental Turtle-Dove,Oriental Turtle-Dove,,,,79.0,2026-06-05,candidate,,,xeno-canto,
-145087.0,Turdus eunomus,Dusky Thrush,Dusky Thrush,,,,75.0,2026-06-05,candidate,,,xeno-canto,
-518169.0,Sittiparus varius,Varied Tit,Varied Tit,,,,71.0,2026-06-05,candidate,,,xeno-canto,
-3729.0,Platalea minor,Black-faced Spoonbill,Black-faced Spoonbill,,,,66.0,2026-06-05,candidate,,,xeno-canto,
-3857.0,Calidris alpina,Dunlin,Dunlin,,,,58.0,2026-06-05,candidate,,,xeno-canto,
-13688.0,Motacilla cinerea,Grey Wagtail,Grey Wagtail,,,,57.0,2026-06-05,candidate,,,xeno-canto,
-792952.0,Yungipicus kizuki,Japanese Pygmy Woodpecker,Japanese Pygmy Woodpecker,,,,56.0,2026-06-05,candidate,,,xeno-canto,
-144500.0,Saundersilarus saundersi,Saunders's Gull,Saunders's Gull,,,,53.0,2026-06-05,candidate,,,xeno-canto,
-4208.0,Podiceps cristatus,Great Crested Grebe,Great Crested Grebe,,,,50.0,2026-06-05,candidate,,,xeno-canto,
-13702.0,Motacilla grandis,Japanese Wagtail,Japanese Wagtail,,,,48.0,2026-06-05,candidate,,,xeno-canto,
-3731.0,Platalea leucorodia,Eurasian Spoonbill,Eurasian Spoonbill,,,,47.0,2026-06-05,candidate,,,xeno-canto,
-7278.0,Aegithalos caudatus,Long-tailed Tit,Long-tailed Tit,,,,45.0,2026-06-05,candidate,,,xeno-canto,
-3978.0,Actitis hypoleucos,Common Sandpiper,Common Sandpiper,,,,44.0,2026-06-05,candidate,,,xeno-canto,
-2599.0,Alcedo atthis,Common Kingfisher,Common Kingfisher,,,,43.0,2026-06-05,candidate,,,xeno-canto,
-7067.0,Tadorna tadorna,Common Shelduck,Common Shelduck,,,,42.0,2026-06-05,candidate,,,xeno-canto,
-1505620.0,Anarhynchus alexandrinus,Kentish Plover,Kentish Plover,,,,41.0,2026-06-05,candidate,,,xeno-canto,
-4857.0,Vanellus vanellus,Northern Lapwing,Northern Lapwing,,,,40.0,2026-06-05,candidate,,,xeno-canto,
-1437051.0,Emberiza personata,Masked Bunting,Masked Bunting,,,,34.0,2026-06-05,candidate,,,xeno-canto,
-324718.0,Larus vegae,Vega Gull,Vega Gull,,,,31.0,2026-06-05,candidate,,,xeno-canto,
-10069.0,Fringilla montifringilla,Brambling,Brambling,,,,30.0,2026-06-05,candidate,,,xeno-canto,
-508048.0,Antigone canadensis,Sandhill Crane,Sandhill Crane,,,,30.0,2026-06-05,candidate,,,xeno-canto,
-4293.0,Phalacrocorax capillatus,Japanese Cormorant,Japanese Cormorant,,,,29.0,2026-06-05,candidate,,,xeno-canto,
-144289.0,Leucogeranus leucogeranus,Siberian Crane,Siberian Crane,,,,28.0,2026-06-05,candidate,,,xeno-canto,
-41.0,Grus grus,Common Crane,Common Crane,,,,27.0,2026-06-05,candidate,,,xeno-canto,
-3878.0,Tringa nebularia,Common Greenshank,Common Greenshank,,,,25.0,2026-06-05,candidate,,,xeno-canto,
-486630.0,Buteo japonicus,Eastern Buzzard,Eastern Buzzard,,,,25.0,2026-06-05,candidate,,,xeno-canto,
-5106.0,Accipiter nisus,Eurasian Sparrowhawk,Eurasian Sparrowhawk,,,,24.0,2026-06-05,candidate,,,xeno-canto,
-7347.0,Alauda arvensis,Eurasian Skylark,Eurasian Skylark,,,,24.0,2026-06-05,candidate,,,xeno-canto,
-201282.0,Gallinula chloropus,Common Moorhen,Common Moorhen,,,,24.0,2026-06-05,candidate,,,xeno-canto,
-980065.0,Horornis diphone,Japanese Bush Warbler,Japanese Bush Warbler,,,,24.0,2026-06-05,candidate,,,xeno-canto,
-9198.0,Emberiza fucata,Chestnut-eared Bunting,Chestnut-eared Bunting,,,,23.0,2026-06-05,candidate,,,xeno-canto,
-793321.0,Passer cinnamomeus,Russet Sparrow,Russet Sparrow,,,,22.0,2026-06-05,candidate,,,xeno-canto,
-6921.0,Cygnus olor,Mute Swan,Mute Swan,,,,20.0,2026-06-05,candidate,,,xeno-canto,
-4189.0,Calonectris leucomelas,Streaked Shearwater,Streaked Shearwater,,,,19.0,2026-06-05,candidate,,,xeno-canto,
-9207.0,Emberiza elegans,Yellow-throated Bunting,Yellow-throated Bunting,,,,19.0,2026-06-05,candidate,,,xeno-canto,
-1580267.0,Anthus japonicus,Siberian Pipit,Siberian Pipit,,,,19.0,2026-06-05,candidate,,,xeno-canto,
-4647.0,Falco peregrinus,Peregrine Falcon,Peregrine Falcon,,,,18.0,2026-06-05,candidate,,,xeno-canto,
-145303.0,Spinus spinus,Eurasian Siskin,Eurasian Siskin,,,,18.0,2026-06-05,candidate,,,xeno-canto,
-472766.0,Falco tinnunculus,Eurasian Kestrel,Eurasian Kestrel,,,,18.0,2026-06-05,candidate,,,xeno-canto,
-559064.0,Circus cyaneus,Hen Harrier,Hen Harrier,,,,17.0,2026-06-05,candidate,,,xeno-canto,
-1446088.0,Phasianus versicolor,Green Pheasant,Green Pheasant,,,,17.0,2026-06-05,candidate,,,xeno-canto,
-7106.0,Aix galericulata,Mandarin Duck,Mandarin Duck,,,,16.0,2026-06-05,candidate,,,xeno-canto,
-3885.0,Tringa ochropus,Green Sandpiper,Green Sandpiper,,,,15.0,2026-06-05,candidate,,,xeno-canto,
-3797.0,Sula leucogaster,Brown Booby,Brown Booby,,,,14.0,2026-06-05,candidate,,,xeno-canto,
-48.0,Grus virgo,Demoiselle Crane,Demoiselle Crane,,,,13.0,2026-06-05,candidate,,,xeno-canto,
-4835.0,Himantopus himantopus,Black-winged Stilt,Black-winged Stilt,,,,13.0,2026-06-05,candidate,,,xeno-canto,
-7851.0,Pericrocotus tegimae,Ryukyu Minivet,Ryukyu Minivet,,,,13.0,2026-06-05,candidate,,,xeno-canto,
-144458.0,Pernis ptilorhynchus,Oriental Honey-buzzard,Oriental Honey-buzzard,,,,13.0,2026-06-05,candidate,,,xeno-canto,
-3852.0,Calidris tenuirostris,Great Knot,Great Knot,,,,12.0,2026-06-05,candidate,,,xeno-canto,
-3854.0,Calidris ruficollis,Red-necked Stint,Red-necked Stint,,,,12.0,2026-06-05,candidate,,,xeno-canto,
-4560.0,Synthliboramphus wumizusume,Japanese Murrelet,Japanese Murrelet,,,,12.0,2026-06-05,candidate,,,xeno-canto,
-4843.0,Haematopus ostralegus,Eurasian Oystercatcher,Eurasian Oystercatcher,,,,12.0,2026-06-05,candidate,,,xeno-canto,
-7014.0,Anser cygnoides,Swan Goose,Swan Goose,,,,12.0,2026-06-05,candidate,,,xeno-canto,
-14850.0,Sturnus vulgaris,European Starling,European Starling,,,,12.0,2026-06-05,candidate,,,xeno-canto,
-793469.0,Regulus regulus,Goldcrest,Goldcrest,,,,12.0,2026-06-05,candidate,,,xeno-canto,
-4366.0,Larus schistisagus,Slaty-backed Gull,Slaty-backed Gull,,,,11.0,2026-06-05,candidate,,,xeno-canto,
-13678.0,Remiz consobrinus,Chinese Penduline-Tit,Chinese Penduline-Tit,,,,11.0,2026-06-05,candidate,,,xeno-canto,
-15560.0,Leiothrix lutea,Red-billed Leiothrix,Red-billed Leiothrix,,,,11.0,2026-06-05,candidate,,,xeno-canto,
-210941.0,Tarsiger cyanurus,Red-flanked Bluetail,Red-flanked Bluetail,,,,11.0,2026-06-05,candidate,,,xeno-canto,
-9201.0,Emberiza schoeniclus,Reed Bunting,Reed Bunting,,,,10.0,2026-06-05,candidate,,,xeno-canto,
-4981.0,Nycticorax nycticorax,Black-crowned Night Heron,Black-crowned Night Heron,,,,9.0,2026-06-05,candidate,,,xeno-canto,
-7019.0,Anser albifrons,Greater White-fronted Goose,Greater White-fronted Goose,,,,9.0,2026-06-05,candidate,,,xeno-canto,
-7192.0,Mergellus albellus,Smew,Smew,,,,9.0,2026-06-05,candidate,,,xeno-canto,
-318836.0,Gallinago gallinago,Common Snipe,Common Snipe,,,,9.0,2026-06-05,candidate,,,xeno-canto,
-1580336.0,Thinornis dubius,Little Ringed Plover,Little Ringed Plover,,,,9.0,2026-06-05,candidate,,,xeno-canto,
-7642.0,Cinclus pallasii,Brown Dipper,Brown Dipper,,,,8.0,2026-06-05,candidate,,,xeno-canto,
-9188.0,Emberiza rustica,Rustic Bunting,Rustic Bunting,,,,8.0,2026-06-05,candidate,,,xeno-canto,
-144489.0,Tringa brevipes,Grey-tailed Tattler,Grey-tailed Tattler,,,,8.0,2026-06-05,candidate,,,xeno-canto,
-1159.0,Syrmaticus soemmerringii,Copper Pheasant,Copper Pheasant,,,,7.0,2026-06-05,candidate,,,xeno-canto,
-3424.0,Treron sieboldii,White-bellied Green-Pigeon,White-bellied Green-Pigeon,,,,7.0,2026-06-05,candidate,,,xeno-canto,
-4947.0,Egretta sacra,Pacific Reef Heron,Pacific Reef Heron,,,,7.0,2026-06-05,candidate,,,xeno-canto,
-5377.0,Butastur indicus,Gray-faced Buzzard,Gray-faced Buzzard,,,,7.0,2026-06-05,candidate,,,xeno-canto,
-7697.0,Cisticola juncidis,Zitting Cisticola,Zitting Cisticola,,,,7.0,2026-06-05,candidate,,,xeno-canto,
-11876.0,Delichon dasypus,Asian House Martin,Asian House Martin,,,,7.0,2026-06-05,candidate,,,xeno-canto,
-13721.0,Anthus cervinus,Red-throated Pipit,Red-throated Pipit,,,,7.0,2026-06-05,candidate,,,xeno-canto,
-558445.0,Ardea intermedia,Medium Egret,Medium Egret,,,,7.0,2026-06-05,candidate,,,xeno-canto,
-1579015.0,Astur gentilis,Eurasian Goshawk,Eurasian Goshawk,,,,7.0,2026-06-05,candidate,,,xeno-canto,
-3882.0,Tringa erythropus,Spotted Redshank,Spotted Redshank,,,,6.0,2026-06-05,candidate,,,xeno-canto,
-3951.0,Limosa lapponica,Bar-tailed Godwit,Bar-tailed Godwit,,,,6.0,2026-06-05,candidate,,,xeno-canto,
-4356.0,Larus canus,Common Gull,Common Gull,,,,6.0,2026-06-05,candidate,,,xeno-canto,
-4875.0,Vanellus cinereus,Grey-headed Lapwing,Grey-headed Lapwing,,,,6.0,2026-06-05,candidate,,,xeno-canto,
-4883.0,Recurvirostra avosetta,Pied Avocet,Pied Avocet,,,,6.0,2026-06-05,candidate,,,xeno-canto,
-7018.0,Anser anser,Greylag Goose,Greylag Goose,,,,6.0,2026-06-05,candidate,,,xeno-canto,
-13724.0,Anthus hodgsoni,Olive-backed Pipit,Olive-backed Pipit,,,,6.0,2026-06-05,candidate,,,xeno-canto,
-19910.0,Strix uralensis,Ural Owl,Ural Owl,,,,6.0,2026-06-05,candidate,,,xeno-canto,
-339594.0,Calidris falcinellus,Broad-billed Sandpiper,Broad-billed Sandpiper,,,,6.0,2026-06-05,candidate,,,xeno-canto,
-1636180.0,Butorides atricapilla,Little Heron,Little Heron,,,,6.0,2026-06-05,candidate,,,xeno-canto,
-3072.0,Columba janthina,Black Wood-Pigeon,Black Wood-Pigeon,,,,5.0,2026-06-05,candidate,,,xeno-canto,
-3845.0,Calidris canutus,Red Knot,Red Knot,,,,5.0,2026-06-05,candidate,,,xeno-canto,
-3888.0,Tringa glareola,Wood Sandpiper,Wood Sandpiper,,,,5.0,2026-06-05,candidate,,,xeno-canto,
-3947.0,Limosa limosa,Black-tailed Godwit,Black-tailed Godwit,,,,5.0,2026-06-05,candidate,,,xeno-canto,
-4739.0,Ciconia boyciana,Oriental Stork,Oriental Stork,,,,5.0,2026-06-05,candidate,,,xeno-canto,
-10535.0,Eophona personata,Japanese Grosbeak,Japanese Grosbeak,,,,5.0,2026-06-05,candidate,,,xeno-canto,
-13726.0,Anthus richardi,Richard's Pipit,Richard's Pipit,,,,5.0,2026-06-05,candidate,,,xeno-canto,
-18367.0,Picus awokera,Japanese Green Woodpecker,Japanese Green Woodpecker,,,,5.0,2026-06-05,candidate,,,xeno-canto,
-144792.0,Cecropis daurica,Eastern Red-rumped Swallow,Eastern Red-rumped Swallow,,,,5.0,2026-06-05,candidate,,,xeno-canto,
-145207.0,Motacilla tschutschensis,Eastern Yellow Wagtail,Eastern Yellow Wagtail,,,,5.0,2026-06-05,candidate,,,xeno-canto,
-558429.0,Spatula querquedula,Garganey,Garganey,,,,5.0,2026-06-05,candidate,,,xeno-canto,
-1585373.0,Ardea coromanda,Eastern Cattle-Egret,Eastern Cattle-Egret,,,,5.0,2026-06-05,candidate,,,xeno-canto,
-2556.0,Megaceryle lugubris,Crested Kingfisher,Crested Kingfisher,,,,4.0,2026-06-05,candidate,,,xeno-canto,
-3863.0,Calidris ferruginea,Curlew Sandpiper,Curlew Sandpiper,,,,4.0,2026-06-05,candidate,,,xeno-canto,
-3873.0,Limnodromus scolopaceus,Long-billed Dowitcher,Long-billed Dowitcher,,,,4.0,2026-06-05,candidate,,,xeno-canto,
-3879.0,Tringa totanus,Common Redshank,Common Redshank,,,,4.0,2026-06-05,candidate,,,xeno-canto,
-3969.0,Xenus cinereus,Terek Sandpiper,Terek Sandpiper,,,,4.0,2026-06-05,candidate,,,xeno-canto,
-4672.0,Falco columbarius,Merlin,Merlin,,,,4.0,2026-06-05,candidate,,,xeno-canto,
-4896.0,Pluvialis fulva,Pacific Golden-Plover,Pacific Golden-Plover,,,,4.0,2026-06-05,candidate,,,xeno-canto,
-7013.0,Anser erythropus,Lesser White-fronted Goose,Lesser White-fronted Goose,,,,4.0,2026-06-05,candidate,,,xeno-canto,
-7055.0,Aythya nyroca,Ferruginous Duck,Ferruginous Duck,,,,4.0,2026-06-05,candidate,,,xeno-canto,
-9801.0,Coccothraustes coccothraustes,Hawfinch,Hawfinch,,,,4.0,2026-06-05,candidate,,,xeno-canto,
-10534.0,Eophona migratoria,Yellow-billed Grosbeak,Yellow-billed Grosbeak,,,,4.0,2026-06-05,candidate,,,xeno-canto,
-13128.0,Ficedula narcissina,Narcissus Flycatcher,Narcissus Flycatcher,,,,4.0,2026-06-05,candidate,,,xeno-canto,
-13258.0,Cyanoptila cyanomelana,Blue-and-white Flycatcher,Blue-and-white Flycatcher,,,,4.0,2026-06-05,candidate,,,xeno-canto,
-979659.0,Circus spilonotus,Eastern Marsh Harrier,Eastern Marsh Harrier,,,,4.0,2026-06-05,candidate,,,xeno-canto,
-1286913.0,Saxicola stejnegeri,Amur Stonechat,Amur Stonechat,,,,4.0,2026-06-05,candidate,,,xeno-canto,
-1289605.0,Urile pelagicus,Pelagic Cormorant,Pelagic Cormorant,,,,4.0,2026-06-05,candidate,,,xeno-canto,
-1505781.0,Anarhynchus mongolus,Siberian Sand-Plover,Siberian Sand-Plover,,,,4.0,2026-06-05,candidate,,,xeno-canto,
-1902.0,Cuculus poliocephalus,Lesser Cuckoo,Lesser Cuckoo,,,,3.0,2026-06-05,candidate,,,xeno-canto,
-3844.0,Calidris acuminata,Sharp-tailed Sandpiper,Sharp-tailed Sandpiper,,,,3.0,2026-06-05,candidate,,,xeno-canto,
-3849.0,Calidris alba,Sanderling,Sanderling,,,,3.0,2026-06-05,candidate,,,xeno-canto,
-3891.0,Tringa guttifer,Nordmann's Greenshank,Nordmann's Greenshank,,,,3.0,2026-06-05,candidate,,,xeno-canto,
-3931.0,Scolopax rusticola,Eurasian Woodcock,Eurasian Woodcock,,,,3.0,2026-06-05,candidate,,,xeno-canto,
-6916.0,Cygnus cygnus,Whooper Swan,Whooper Swan,,,,3.0,2026-06-05,candidate,,,xeno-canto,
-9199.0,Emberiza variabilis,Grey Bunting,Grey Bunting,,,,3.0,2026-06-05,candidate,,,xeno-canto,
-12741.0,Turdus chrysolaus,Brown-headed Thrush,Brown-headed Thrush,,,,3.0,2026-06-05,candidate,,,xeno-canto,
-12776.0,Turdus obscurus,Eyebrowed Thrush,Eyebrowed Thrush,,,,3.0,2026-06-05,candidate,,,xeno-canto,
-12988.0,Muscicapa griseisticta,Gray-streaked Flycatcher,Gray-streaked Flycatcher,,,,3.0,2026-06-05,candidate,,,xeno-canto,
-20315.0,Asio flammeus,Short-eared Owl,Short-eared Owl,,,,3.0,2026-06-05,candidate,,,xeno-canto,
-144603.0,Ninox japonica,Northern Boobook,Northern Boobook,,,,3.0,2026-06-05,candidate,,,xeno-canto,
-144823.0,Periparus ater,Coal Tit,Coal Tit,,,,3.0,2026-06-05,candidate,,,xeno-canto,
-144928.0,Acrocephalus orientalis,Oriental Reed Warbler,Oriental Reed Warbler,,,,3.0,2026-06-05,candidate,,,xeno-canto,
-145363.0,Troglodytes troglodytes,Eurasian Wren,Eurasian Wren,,,,3.0,2026-06-05,candidate,,,xeno-canto,
-512431.0,Muscicapa dauurica,Asian Brown Flycatcher,Asian Brown Flycatcher,,,,3.0,2026-06-05,candidate,,,xeno-canto,
-533231.0,Anas platyrhynchos × zonorhyncha,Mallard × Eastern Spot-billed Duck,Mallard × Eastern Spot-billed Duck,,,,3.0,2026-06-05,candidate,,,xeno-canto,
-547178.0,Spodiopsar sericeus,Red-billed Starling,Red-billed Starling,,,,3.0,2026-06-05,candidate,,,xeno-canto,
-1505629.0,Anarhynchus leschenaultii,Greater Sand-Plover,Greater Sand-Plover,,,,3.0,2026-06-05,candidate,,,xeno-canto,
-882.0,Gallus gallus,Red Junglefowl,Red Junglefowl,,,,2.0,2026-06-05,candidate,,,xeno-canto,
-3881.0,Tringa stagnatilis,Marsh Sandpiper,Marsh Sandpiper,,,,2.0,2026-06-05,candidate,,,xeno-canto,
-3920.0,Gallinago megala,Swinhoe's Snipe,Swinhoe's Snipe,,,,2.0,2026-06-05,candidate,,,xeno-canto,
-4381.0,Larus fuscus,Lesser Black-backed Gull,Lesser Black-backed Gull,,,,2.0,2026-06-05,candidate,,,xeno-canto,
-4489.0,Stercorarius parasiticus,Parasitic Jaeger,Parasitic Jaeger,,,,2.0,2026-06-05,candidate,,,xeno-canto,
-6917.0,Cygnus columbianus,Tundra Swan,Tundra Swan,,,,2.0,2026-06-05,candidate,,,xeno-canto,
-9197.0,Emberiza pusilla,Little Bunting,Little Bunting,,,,2.0,2026-06-05,candidate,,,xeno-canto,
-9212.0,Emberiza aureola,Yellow-breasted Bunting,Yellow-breasted Bunting,,,,2.0,2026-06-05,candidate,,,xeno-canto,
-13113.0,Ficedula parva,Red-breasted Flycatcher,Red-breasted Flycatcher,,,,2.0,2026-06-05,candidate,,,xeno-canto,
-73104.0,Nisaetus nipalensis,Mountain Hawk-Eagle,Mountain Hawk-Eagle,,,,2.0,2026-06-05,candidate,,,xeno-canto,
-144477.0,Rallus indicus,Brown-cheeked Rail,Brown-cheeked Rail,,,,2.0,2026-06-05,candidate,,,xeno-canto,
-339593.0,Calidris pugnax,Ruff,Ruff,,,,2.0,2026-06-05,candidate,,,xeno-canto,
-339689.0,Periparus venustulus,Yellow-bellied Tit,Yellow-bellied Tit,,,,2.0,2026-06-05,candidate,,,xeno-canto,
-,Corvus corax,Northern Raven,Northern Raven,ワタリガラス,Corvidae,Passeriformes,,,ood_tier1,crow,,ood_phase4_crow,crow OOD calibration set (Phase4)
-,Coloeus monedula,Western Jackdaw,Western Jackdaw,ニシコクマルガラス,Corvidae,Passeriformes,,,ood_tier1,crow,,ood_phase4_crow,crow OOD calibration set (Phase4)
-,Nucifraga caryocatactes,Spotted Nutcracker,Spotted Nutcracker,ホシガラス,Corvidae,Passeriformes,,,ood_tier2,crow,,ood_phase4_crow,crow OOD calibration set (Phase4)
-,Hypsipetes amaurotis,Brown-eared Bulbul,Brown-eared Bulbul,ヒヨドリ,Pycnonotidae,Passeriformes,,,ood_tier3,crow,,ood_phase4_crow,crow OOD calibration set (Phase4)
-,Spodiopsar cineraceus,White-cheeked Starling,White-cheeked Starling,ムクドリ,Sturnidae,Passeriformes,,,ood_tier3,crow,,ood_phase4_crow,crow OOD calibration set (Phase4)
-,Lanius bucephalus,Bull-headed Shrike,Bull-headed Shrike,モズ,Laniidae,Passeriformes,,,ood_tier3,crow,,ood_phase4_crow,crow OOD calibration set (Phase4)
-,Parus minor,Japanese Tit,Japanese Tit,シジュウカラ,Paridae,Passeriformes,,,ood_tier3,crow,,ood_phase4_crow,crow OOD calibration set (Phase4)
-,Passer montanus,Eurasian Tree Sparrow,Eurasian Tree Sparrow,スズメ,Passeridae,Passeriformes,,,ood_tier3,crow,,ood_phase4_crow,crow OOD calibration set (Phase4)
-,Milvus migrans,Black Kite,Black Kite,トビ,Accipitridae,Accipitriformes,,,ood_tier3,crow,,ood_phase4_crow,crow OOD calibration set (Phase4)
-,Larus crassirostris,Black-tailed Gull,Black-tailed Gull,ウミネコ,Laridae,Charadriiformes,,,target,gull,,gull_phase1,gull target (XC名実測確定 2026-06-14)
-,Chroicocephalus ridibundus,Black-headed Gull,Black-headed Gull,ユリカモメ,Laridae,Charadriiformes,,,target,gull,,gull_phase1,gull target (XC名実測確定 2026-06-14)
-,Larus vegae,Vega Gull,Vega Gull,セグロカモメ,Laridae,Charadriiformes,,,target,gull,,gull_phase1,gull target (XC名実測確定 2026-06-14)
-,Larus schistisagus,Slaty-backed Gull,Slaty-backed Gull,オオセグロカモメ,Laridae,Charadriiformes,,,target,gull,,gull_phase1,gull target (XC名実測確定 2026-06-14)
-,Larus canus,Common Gull,Common Gull,カモメ,Laridae,Charadriiformes,,,target,gull,,gull_phase1,gull target (XC名実測確定 2026-06-14)
-,Saundersilarus saundersi,Saunders's Gull,Saunders's Gull,ズグロカモメ,Laridae,Charadriiformes,,,target,gull,,gull_phase1,gull target (XC名実測確定 2026-06-14)
-,Larus hyperboreus,Glaucous Gull,Glaucous Gull,シロカモメ,Laridae,Charadriiformes,,,ood_tier1,gull,,ood_phase4_gull,gull OOD calibration (XC名実測 2026-06-14)
-,Larus glaucescens,Glaucous-winged Gull,Glaucous-winged Gull,ワシカモメ,Laridae,Charadriiformes,,,ood_tier1,gull,,ood_phase4_gull,gull OOD calibration (XC名実測 2026-06-14)
-,Rissa tridactyla,Black-legged Kittiwake,Black-legged Kittiwake,ミツユビカモメ,Laridae,Charadriiformes,,,ood_tier1,gull,,ood_phase4_gull,gull OOD calibration (XC名実測 2026-06-14)
-,Phalacrocorax carbo,Great Cormorant,Great Cormorant,カワウ,Phalacrocoracidae,Suliformes,,,ood_tier2,gull,,ood_phase4_gull,gull OOD calibration (XC名実測 2026-06-14)
-,Ardea cinerea,Grey Heron,Grey Heron,アオサギ,Ardeidae,Pelecaniformes,,,ood_tier2,gull,,ood_phase4_gull,gull OOD calibration (XC名実測 2026-06-14)
-,Milvus migrans,Black Kite,Black Kite,トビ,Accipitridae,Accipitriformes,,,ood_tier3,gull,,ood_phase4_gull,gull OOD calibration (XC名実測 2026-06-14)
-,Numenius arquata,Eurasian Curlew,Eurasian Curlew,ダイシャクシギ,Scolopacidae,Charadriiformes,,,ood_tier3,gull,,ood_phase4_gull,gull OOD calibration (XC名実測 2026-06-14)
+taxon_id,sci,en_inat,en_birdnet,ja,family,order,obs_count,last_observed,status,group,birdproject,data_source,notes,xc_sci,model_label
+6930.0,Anas platyrhynchos,Mallard,Mallard,マガモ,Anatidae,Anseriformes,195.0,2026-06-05,target,duck,True,xeno-canto,,,Anas platyrhynchos_Mallard
+6937.0,Anas crecca,Eurasian Teal,Common Teal,コガモ,Anatidae,Anseriformes,86.0,2026-06-05,target,duck,True,xeno-canto,"BirdProjectでは""Common Teal""として収録",,Anas crecca_Common Teal
+6933.0,Anas acuta,Northern Pintail,Northern Pintail,オナガガモ,Anatidae,Anseriformes,60.0,2026-06-05,target,duck,True,xeno-canto,,,Anas acuta_Northern Pintail
+558438.0,Spatula clypeata,Northern Shoveler,Northern Shoveler,ハシビロガモ,Anatidae,Anseriformes,28.0,2026-06-05,target,duck,True,xeno-canto,,,Spatula clypeata_Northern Shoveler
+558441.0,Mareca penelope,Eurasian Wigeon,Eurasian Wigeon,ヒドリガモ,Anatidae,Anseriformes,178.0,2026-06-05,target,duck,True,xeno-canto,,,Mareca penelope_Eurasian Wigeon
+7046.0,Aythya fuligula,Tufted Duck,Tufted Duck,キンクロハジロ,Anatidae,Anseriformes,36.0,2026-06-05,target,duck,True,xeno-canto,,,Aythya fuligula_Tufted Duck
+7045.0,Aythya ferina,Common Pochard,Common Pochard,ホシハジロ,Anatidae,Anseriformes,88.0,2026-06-05,target,duck,True,xeno-canto,,,Aythya ferina_Common Pochard
+6990.0,Bucephala clangula,Common Goldeneye,Common Goldeneye,ホオジロガモ,Anatidae,Anseriformes,6.0,2026-06-05,target,duck,False,xeno-canto,BirdProject未収録。BirdNET v2.4デフォルト経由,,Bucephala clangula_Common Goldeneye
+72504.0,Anas zonorhyncha,Eastern Spot-billed Duck,Eastern Spot-billed Duck,カルガモ,Anatidae,Anseriformes,131.0,2026-06-05,ood_tier1,duck,True,xeno-canto,run15でotherへ差戻し(Mallardと分離困難・表現力の壁),,Anas zonorhyncha_Eastern Spot-billed Duck
+558439.0,Mareca strepera,Gadwall,Gadwall,オカヨシガモ,Anatidae,Anseriformes,20.0,2026-06-05,target,duck,True,xeno-canto,run13で target 昇格,,Mareca strepera_Gadwall
+558428.0,Sibirionetta formosa,Baikal Teal,Baikal Teal,トモエガモ,Anatidae,Anseriformes,18.0,2026-06-05,ood_tier1,duck,True,xeno-canto,コガモと音響近縁,,Sibirionetta formosa_Baikal Teal
+558440.0,Mareca falcata,Falcated Duck,Falcated Duck,ヨシガモ,Anatidae,Anseriformes,23.0,2026-06-05,ood_tier1,duck,True,xeno-canto,ヒドリガモと同Mareca属,,Mareca falcata_Falcated Duck
+6996.0,Mergus serrator,Red-breasted Merganser,Red-breasted Merganser,ウミアイサ,Anatidae,Anseriformes,17.0,2026-06-05,target,duck,True,xeno-canto,run13で target 昇格,,Mergus serrator_Red-breasted Merganser
+7004.0,Mergus merganser,Common Merganser,Common Merganser,カワアイサ,Anatidae,Anseriformes,2.0,2026-06-05,ood_tier1,duck,False,xeno-canto,run15でotherへ差戻し(録音不足8本),,Mergus merganser_Common Merganser
+7047.0,Aythya marila,Greater Scaup,Greater Scaup,スズガモ,Anatidae,Anseriformes,11.0,2026-06-05,ood_tier1,duck,False,xeno-canto,キンクロハジロと同Aythya属,,
+482.0,Fulica atra,Eurasian Coot,Eurasian Coot,オオバン,Rallidae,Gruiformes,130.0,2026-06-05,ood_tier2,duck,True,xeno-canto,,,Fulica atra_Eurasian Coot
+4237.0,Tachybaptus ruficollis,Little Grebe,Little Grebe,カイツブリ,Podicipedidae,Podicipediformes,61.0,2026-06-05,ood_tier2,duck,True,xeno-canto,,,Tachybaptus ruficollis_Little Grebe
+4205.0,Podiceps nigricollis,Black-necked Grebe,Black-necked Grebe,ハジロカイツブリ,Podicipedidae,Podicipediformes,7.0,2026-06-05,ood_tier2,duck,False,xeno-canto,,,Podiceps nigricollis_Black-necked Grebe
+13141.0,Monticola solitarius,Blue Rock Thrush,Blue Rock Thrush,イソヒヨドリ,Muscicapidae,Passeriformes,139.0,2026-06-05,ood_tier3,duck,True,xeno-canto,,,Monticola solitarius_Blue Rock Thrush
+116999.0,Pandion haliaetus,Osprey,Osprey,ミサゴ,Pandionidae,Accipitriformes,118.0,2026-06-05,ood_tier3,duck,True,xeno-canto,,,Pandion haliaetus_Osprey
+4370.0,Larus crassirostris,Black-tailed Gull,Black-tailed Gull,ウミネコ,Laridae,Charadriiformes,70.0,2026-06-05,ood_tier3,duck,True,xeno-canto,,,Larus crassirostris_Black-tailed Gull
+5268.0,Milvus migrans,Black Kite,Black Kite,トビ,Accipitridae,Accipitriformes,390.0,2026-06-05,ood_tier3,duck,True,xeno-canto,,,Milvus migrans_Black Kite
+1580336,Thinornis dubius,Little Ringed Plover,Little Ringed Plover,コチドリ,Charadriidae,Charadriiformes,,,ood_tier3,duck,False,xeno-canto,genus正規化(iNat現行),,Thinornis dubius_Little Ringed Plover
+1505620,Anarhynchus alexandrinus,Kentish Plover,Kentish Plover,シロチドリ,Charadriidae,Charadriiformes,,,ood_tier3,duck,True,xeno-canto,genus正規化(iNat現行),,Anarhynchus alexandrinus_Kentish Plover
+4892.0,Pluvialis squatarola,Grey Plover,Grey Plover,ダイゼン,Charadriidae,Charadriiformes,30.0,2026-06-05,ood_tier3,duck,True,xeno-canto,,,Pluvialis squatarola_Grey Plover
+3898.0,Numenius madagascariensis,Far Eastern Curlew,Far Eastern Curlew,ダイシャクシギ,Scolopacidae,Charadriiformes,21.0,2026-06-05,ood_tier3,duck,True,xeno-canto,,,Numenius madagascariensis_Far Eastern Curlew
+3896.0,Numenius arquata,Eurasian Curlew,Eurasian Curlew,ホウロクシギ,Scolopacidae,Charadriiformes,23.0,2026-06-05,ood_tier3,duck,True,xeno-canto,,,Numenius arquata_Eurasian Curlew
+3901.0,Numenius phaeopus,Eurasian Whimbrel,Eurasian Whimbrel,チュウシャクシギ,Scolopacidae,Charadriiformes,17.0,2026-06-05,ood_tier3,duck,True,xeno-canto,,,Numenius phaeopus_Eurasian Whimbrel
+8026.0,Corvus macrorhynchos,Large-billed Crow,Large-billed Crow,ハシブトガラス,Corvidae,Passeriformes,132.0,2026-06-05,target,crow,True,xeno-canto,,,Corvus macrorhynchos_Large-billed Crow
+204496.0,Corvus corone,Carrion Crow,Carrion Crow,ハシボソガラス,Corvidae,Passeriformes,100.0,2026-06-05,target,crow,True,xeno-canto,,,Corvus corone_Carrion Crow
+8029.0,Corvus frugilegus,Rook,Rook,ミヤマガラス,Corvidae,Passeriformes,55.0,2026-06-05,target,crow,True,xeno-canto,BirdNETが日本のカラスをこのラベルで誤出力することが多い,,Corvus frugilegus_Rook
+827401.0,Pica serica,Oriental Magpie,Eurasian Magpie,カササギ,Corvidae,Passeriformes,54.0,2026-06-05,target,crow,True,xeno-canto,北部九州限定分布。日本録音不足時はYouTubeで補完,,Pica serica_Eurasian Magpie
+1578721.0,Coloeus dauuricus,Daurian Jackdaw,Daurian Jackdaw,コクマルガラス,Corvidae,Passeriformes,24.0,2026-06-05,ood_tier1,crow,True,xeno-canto,ミヤマガラスと混群を作る小型カラス,,Coloeus dauuricus_Daurian Jackdaw
+8088.0,Garrulus glandarius,Eurasian Jay,Eurasian Jay,カケス,Corvidae,Passeriformes,6.0,2026-06-05,ood_tier2,crow,True,xeno-canto,,,Garrulus glandarius_Eurasian Jay
+72785,Cyanopica cyanus,Azure-winged Magpie,Azure-winged Magpie,オナガ,Corvidae,Passeriformes,,,ood_tier2,crow,True,xeno-canto,,,Cyanopica cyanus_Azure-winged Magpie
+4954.0,Ardea cinerea,Grey Heron,Grey Heron,,,,429.0,2026-06-05,candidate,,,xeno-canto,,,Ardea cinerea_Grey Heron
+13851.0,Passer montanus,Eurasian Tree Sparrow,Eurasian Tree Sparrow,,,,184.0,2026-06-05,candidate,,,xeno-canto,,,Passer montanus_Eurasian Tree Sparrow
+4270.0,Phalacrocorax carbo,Great Cormorant,Great Cormorant,,,,183.0,2026-06-05,candidate,,,xeno-canto,,,Phalacrocorax carbo_Great Cormorant
+13695.0,Motacilla alba,White Wagtail,White Wagtail,,,,158.0,2026-06-05,candidate,,,xeno-canto,,,Motacilla alba_White Wagtail
+144455.0,Ardea alba,Great Egret,Great Egret,,,,143.0,2026-06-05,candidate,,,xeno-canto,,,Ardea alba_Great Egret
+144910.0,Hypsipetes amaurotis,Brown-eared Bulbul,Brown-eared Bulbul,,,,137.0,2026-06-05,candidate,,,xeno-canto,,,Hypsipetes amaurotis_Brown-eared Bulbul
+26.0,Grus monacha,Hooded Crane,Hooded Crane,,,,136.0,2026-06-05,candidate,,,xeno-canto,,,Grus monacha_Hooded Crane
+547179.0,Spodiopsar cineraceus,White-cheeked Starling,White-cheeked Starling,,,,134.0,2026-06-05,candidate,,,xeno-canto,,,Spodiopsar cineraceus_White-cheeked Starling
+11901.0,Hirundo rustica,Barn Swallow,Barn Swallow,,,,131.0,2026-06-05,candidate,,,xeno-canto,,,Hirundo rustica_Barn Swallow
+12993.0,Phoenicurus auroreus,Daurian Redstart,Daurian Redstart,,,,130.0,2026-06-05,candidate,,,xeno-canto,,,Phoenicurus auroreus_Daurian Redstart
+3017.0,Columba livia,Rock Pigeon,Rock Pigeon,,,,115.0,2026-06-05,candidate,,,xeno-canto,,,Columba livia_Rock Pigeon
+4943.0,Egretta garzetta,Little Egret,Little Egret,,,,115.0,2026-06-05,candidate,,,xeno-canto,,,Egretta garzetta_Little Egret
+508057.0,Antigone vipio,White-naped Crane,White-naped Crane,,,,112.0,2026-06-05,candidate,,,xeno-canto,,,Antigone vipio_White-naped Crane
+145361.0,Chloris sinica,Oriental Greenfinch,Oriental Greenfinch,,,,107.0,2026-06-05,candidate,,,xeno-canto,,,Chloris sinica_Oriental Greenfinch
+144510.0,Chroicocephalus ridibundus,Black-headed Gull,Black-headed Gull,,,,103.0,2026-06-05,candidate,,,xeno-canto,,,Chroicocephalus ridibundus_Black-headed Gull
+980262.0,Zosterops japonicus,Warbling White-eye,Warbling White-eye,,,,101.0,2026-06-05,candidate,,,xeno-canto,,,Zosterops japonicus_Warbling White-eye
+12779.0,Turdus pallidus,Pale Thrush,Pale Thrush,,,,91.0,2026-06-05,candidate,,,xeno-canto,,,Turdus pallidus_Pale Thrush
+9216.0,Emberiza cioides,Meadow Bunting,Meadow Bunting,,,,89.0,2026-06-05,candidate,,,xeno-canto,,,Emberiza cioides_Meadow Bunting
+339691.0,Parus cinereus,Asian Tit,Asian Tit,,,,87.0,2026-06-05,candidate,,,xeno-canto,,,Parus cinereus_Asian Tit
+12051.0,Lanius bucephalus,Bull-headed Shrike,Bull-headed Shrike,,,,83.0,2026-06-05,candidate,,,xeno-canto,,,Lanius bucephalus_Bull-headed Shrike
+2927.0,Streptopelia orientalis,Oriental Turtle-Dove,Oriental Turtle-Dove,,,,79.0,2026-06-05,candidate,,,xeno-canto,,,Streptopelia orientalis_Oriental Turtle-Dove
+145087.0,Turdus eunomus,Dusky Thrush,Dusky Thrush,,,,75.0,2026-06-05,candidate,,,xeno-canto,,,Turdus eunomus_Dusky Thrush
+518169.0,Sittiparus varius,Varied Tit,Varied Tit,,,,71.0,2026-06-05,candidate,,,xeno-canto,,,Sittiparus varius_Varied Tit
+3729.0,Platalea minor,Black-faced Spoonbill,Black-faced Spoonbill,,,,66.0,2026-06-05,candidate,,,xeno-canto,,,
+3857.0,Calidris alpina,Dunlin,Dunlin,,,,58.0,2026-06-05,candidate,,,xeno-canto,,,Calidris alpina_Dunlin
+13688.0,Motacilla cinerea,Grey Wagtail,Grey Wagtail,,,,57.0,2026-06-05,candidate,,,xeno-canto,,,Motacilla cinerea_Grey Wagtail
+792952.0,Yungipicus kizuki,Japanese Pygmy Woodpecker,Japanese Pygmy Woodpecker,,,,56.0,2026-06-05,candidate,,,xeno-canto,,,Yungipicus kizuki_Japanese Pygmy Woodpecker
+144500.0,Saundersilarus saundersi,Saunders's Gull,Saunders's Gull,,,,53.0,2026-06-05,candidate,,,xeno-canto,,Chroicocephalus saundersi,Saundersilarus saundersi_Saunders's Gull
+4208.0,Podiceps cristatus,Great Crested Grebe,Great Crested Grebe,,,,50.0,2026-06-05,candidate,,,xeno-canto,,,Podiceps cristatus_Great Crested Grebe
+13702.0,Motacilla grandis,Japanese Wagtail,Japanese Wagtail,,,,48.0,2026-06-05,candidate,,,xeno-canto,,,Motacilla grandis_Japanese Wagtail
+3731.0,Platalea leucorodia,Eurasian Spoonbill,Eurasian Spoonbill,,,,47.0,2026-06-05,candidate,,,xeno-canto,,,Platalea leucorodia_Eurasian Spoonbill
+7278.0,Aegithalos caudatus,Long-tailed Tit,Long-tailed Tit,,,,45.0,2026-06-05,candidate,,,xeno-canto,,,Aegithalos caudatus_Long-tailed Tit
+3978.0,Actitis hypoleucos,Common Sandpiper,Common Sandpiper,,,,44.0,2026-06-05,candidate,,,xeno-canto,,,Actitis hypoleucos_Common Sandpiper
+2599.0,Alcedo atthis,Common Kingfisher,Common Kingfisher,,,,43.0,2026-06-05,candidate,,,xeno-canto,,,Alcedo atthis_Common Kingfisher
+7067.0,Tadorna tadorna,Common Shelduck,Common Shelduck,,,,42.0,2026-06-05,candidate,,,xeno-canto,,,Tadorna tadorna_Common Shelduck
+1505620.0,Anarhynchus alexandrinus,Kentish Plover,Kentish Plover,,,,41.0,2026-06-05,candidate,,,xeno-canto,,,
+4857.0,Vanellus vanellus,Northern Lapwing,Northern Lapwing,,,,40.0,2026-06-05,candidate,,,xeno-canto,,,Vanellus vanellus_Northern Lapwing
+1437051.0,Emberiza personata,Masked Bunting,Masked Bunting,,,,34.0,2026-06-05,candidate,,,xeno-canto,,,
+324718.0,Larus vegae,Vega Gull,Vega Gull,,,,31.0,2026-06-05,candidate,,,xeno-canto,,,Larus vegae_Vega Gull
+10069.0,Fringilla montifringilla,Brambling,Brambling,,,,30.0,2026-06-05,candidate,,,xeno-canto,,,Fringilla montifringilla_Brambling
+508048.0,Antigone canadensis,Sandhill Crane,Sandhill Crane,,,,30.0,2026-06-05,candidate,,,xeno-canto,,,Antigone canadensis_Sandhill Crane
+4293.0,Phalacrocorax capillatus,Japanese Cormorant,Japanese Cormorant,,,,29.0,2026-06-05,candidate,,,xeno-canto,,,
+144289.0,Leucogeranus leucogeranus,Siberian Crane,Siberian Crane,,,,28.0,2026-06-05,candidate,,,xeno-canto,,,Leucogeranus leucogeranus_Siberian Crane
+41.0,Grus grus,Common Crane,Common Crane,,,,27.0,2026-06-05,candidate,,,xeno-canto,,,Grus grus_Common Crane
+3878.0,Tringa nebularia,Common Greenshank,Common Greenshank,,,,25.0,2026-06-05,candidate,,,xeno-canto,,,Tringa nebularia_Common Greenshank
+486630.0,Buteo japonicus,Eastern Buzzard,Eastern Buzzard,,,,25.0,2026-06-05,candidate,,,xeno-canto,,,
+5106.0,Accipiter nisus,Eurasian Sparrowhawk,Eurasian Sparrowhawk,,,,24.0,2026-06-05,candidate,,,xeno-canto,,,Accipiter nisus_Eurasian Sparrowhawk
+7347.0,Alauda arvensis,Eurasian Skylark,Eurasian Skylark,,,,24.0,2026-06-05,candidate,,,xeno-canto,,,Alauda arvensis_Eurasian Skylark
+201282.0,Gallinula chloropus,Common Moorhen,Common Moorhen,,,,24.0,2026-06-05,candidate,,,xeno-canto,,,Gallinula chloropus_Common Moorhen
+980065.0,Horornis diphone,Japanese Bush Warbler,Japanese Bush Warbler,,,,24.0,2026-06-05,candidate,,,xeno-canto,,,Horornis diphone_Japanese Bush Warbler
+9198.0,Emberiza fucata,Chestnut-eared Bunting,Chestnut-eared Bunting,,,,23.0,2026-06-05,candidate,,,xeno-canto,,,Emberiza fucata_Chestnut-eared Bunting
+793321.0,Passer cinnamomeus,Russet Sparrow,Russet Sparrow,,,,22.0,2026-06-05,candidate,,,xeno-canto,,,Passer cinnamomeus_Russet Sparrow
+6921.0,Cygnus olor,Mute Swan,Mute Swan,,,,20.0,2026-06-05,candidate,,,xeno-canto,,,Cygnus olor_Mute Swan
+4189.0,Calonectris leucomelas,Streaked Shearwater,Streaked Shearwater,,,,19.0,2026-06-05,candidate,,,xeno-canto,,,
+9207.0,Emberiza elegans,Yellow-throated Bunting,Yellow-throated Bunting,,,,19.0,2026-06-05,candidate,,,xeno-canto,,,Emberiza elegans_Yellow-throated Bunting
+1580267.0,Anthus japonicus,Siberian Pipit,Siberian Pipit,,,,19.0,2026-06-05,candidate,,,xeno-canto,,,
+4647.0,Falco peregrinus,Peregrine Falcon,Peregrine Falcon,,,,18.0,2026-06-05,candidate,,,xeno-canto,,,Falco peregrinus_Peregrine Falcon
+145303.0,Spinus spinus,Eurasian Siskin,Eurasian Siskin,,,,18.0,2026-06-05,candidate,,,xeno-canto,,,Spinus spinus_Eurasian Siskin
+472766.0,Falco tinnunculus,Eurasian Kestrel,Eurasian Kestrel,,,,18.0,2026-06-05,candidate,,,xeno-canto,,,Falco tinnunculus_Eurasian Kestrel
+559064.0,Circus cyaneus,Hen Harrier,Hen Harrier,,,,17.0,2026-06-05,candidate,,,xeno-canto,,,Circus cyaneus_Hen Harrier
+1446088.0,Phasianus versicolor,Green Pheasant,Green Pheasant,,,,17.0,2026-06-05,candidate,,,xeno-canto,,,
+7106.0,Aix galericulata,Mandarin Duck,Mandarin Duck,,,,16.0,2026-06-05,candidate,,,xeno-canto,,,Aix galericulata_Mandarin Duck
+3885.0,Tringa ochropus,Green Sandpiper,Green Sandpiper,,,,15.0,2026-06-05,candidate,,,xeno-canto,,,Tringa ochropus_Green Sandpiper
+3797.0,Sula leucogaster,Brown Booby,Brown Booby,,,,14.0,2026-06-05,candidate,,,xeno-canto,,,Sula leucogaster_Brown Booby
+48.0,Grus virgo,Demoiselle Crane,Demoiselle Crane,,,,13.0,2026-06-05,candidate,,,xeno-canto,,,Grus virgo_Demoiselle Crane
+4835.0,Himantopus himantopus,Black-winged Stilt,Black-winged Stilt,,,,13.0,2026-06-05,candidate,,,xeno-canto,,,Himantopus himantopus_Black-winged Stilt
+7851.0,Pericrocotus tegimae,Ryukyu Minivet,Ryukyu Minivet,,,,13.0,2026-06-05,candidate,,,xeno-canto,,,Pericrocotus tegimae_Ryukyu Minivet
+144458.0,Pernis ptilorhynchus,Oriental Honey-buzzard,Oriental Honey-buzzard,,,,13.0,2026-06-05,candidate,,,xeno-canto,,,Pernis ptilorhynchus_Oriental Honey-buzzard
+3852.0,Calidris tenuirostris,Great Knot,Great Knot,,,,12.0,2026-06-05,candidate,,,xeno-canto,,,
+3854.0,Calidris ruficollis,Red-necked Stint,Red-necked Stint,,,,12.0,2026-06-05,candidate,,,xeno-canto,,,Calidris ruficollis_Red-necked Stint
+4560.0,Synthliboramphus wumizusume,Japanese Murrelet,Japanese Murrelet,,,,12.0,2026-06-05,candidate,,,xeno-canto,,,
+4843.0,Haematopus ostralegus,Eurasian Oystercatcher,Eurasian Oystercatcher,,,,12.0,2026-06-05,candidate,,,xeno-canto,,,Haematopus ostralegus_Eurasian Oystercatcher
+7014.0,Anser cygnoides,Swan Goose,Swan Goose,,,,12.0,2026-06-05,candidate,,,xeno-canto,,,Anser cygnoides_Swan Goose
+14850.0,Sturnus vulgaris,European Starling,European Starling,,,,12.0,2026-06-05,candidate,,,xeno-canto,,,Sturnus vulgaris_European Starling
+793469.0,Regulus regulus,Goldcrest,Goldcrest,,,,12.0,2026-06-05,candidate,,,xeno-canto,,,Regulus regulus_Goldcrest
+4366.0,Larus schistisagus,Slaty-backed Gull,Slaty-backed Gull,,,,11.0,2026-06-05,candidate,,,xeno-canto,,,Larus schistisagus_Slaty-backed Gull
+13678.0,Remiz consobrinus,Chinese Penduline-Tit,Chinese Penduline-Tit,,,,11.0,2026-06-05,candidate,,,xeno-canto,,,Remiz consobrinus_Chinese Penduline-Tit
+15560.0,Leiothrix lutea,Red-billed Leiothrix,Red-billed Leiothrix,,,,11.0,2026-06-05,candidate,,,xeno-canto,,,
+210941.0,Tarsiger cyanurus,Red-flanked Bluetail,Red-flanked Bluetail,,,,11.0,2026-06-05,candidate,,,xeno-canto,,,Tarsiger cyanurus_Red-flanked Bluetail
+9201.0,Emberiza schoeniclus,Reed Bunting,Reed Bunting,,,,10.0,2026-06-05,candidate,,,xeno-canto,,,Emberiza schoeniclus_Reed Bunting
+4981.0,Nycticorax nycticorax,Black-crowned Night Heron,Black-crowned Night Heron,,,,9.0,2026-06-05,candidate,,,xeno-canto,,,Nycticorax nycticorax_Black-crowned Night Heron
+7019.0,Anser albifrons,Greater White-fronted Goose,Greater White-fronted Goose,,,,9.0,2026-06-05,candidate,,,xeno-canto,,,Anser albifrons_Greater White-fronted Goose
+7192.0,Mergellus albellus,Smew,Smew,,,,9.0,2026-06-05,candidate,,,xeno-canto,,,Mergellus albellus_Smew
+318836.0,Gallinago gallinago,Common Snipe,Common Snipe,,,,9.0,2026-06-05,candidate,,,xeno-canto,,,Gallinago gallinago_Common Snipe
+1580336.0,Thinornis dubius,Little Ringed Plover,Little Ringed Plover,,,,9.0,2026-06-05,candidate,,,xeno-canto,,,
+7642.0,Cinclus pallasii,Brown Dipper,Brown Dipper,,,,8.0,2026-06-05,candidate,,,xeno-canto,,,Cinclus pallasii_Brown Dipper
+9188.0,Emberiza rustica,Rustic Bunting,Rustic Bunting,,,,8.0,2026-06-05,candidate,,,xeno-canto,,,Emberiza rustica_Rustic Bunting
+144489.0,Tringa brevipes,Grey-tailed Tattler,Grey-tailed Tattler,,,,8.0,2026-06-05,candidate,,,xeno-canto,,,Tringa brevipes_Grey-tailed Tattler
+1159.0,Syrmaticus soemmerringii,Copper Pheasant,Copper Pheasant,,,,7.0,2026-06-05,candidate,,,xeno-canto,,,
+3424.0,Treron sieboldii,White-bellied Green-Pigeon,White-bellied Green-Pigeon,,,,7.0,2026-06-05,candidate,,,xeno-canto,,,
+4947.0,Egretta sacra,Pacific Reef Heron,Pacific Reef Heron,,,,7.0,2026-06-05,candidate,,,xeno-canto,,,
+5377.0,Butastur indicus,Gray-faced Buzzard,Gray-faced Buzzard,,,,7.0,2026-06-05,candidate,,,xeno-canto,,,
+7697.0,Cisticola juncidis,Zitting Cisticola,Zitting Cisticola,,,,7.0,2026-06-05,candidate,,,xeno-canto,,,Cisticola juncidis_Zitting Cisticola
+11876.0,Delichon dasypus,Asian House Martin,Asian House Martin,,,,7.0,2026-06-05,candidate,,,xeno-canto,,,Delichon dasypus_Asian House Martin
+13721.0,Anthus cervinus,Red-throated Pipit,Red-throated Pipit,,,,7.0,2026-06-05,candidate,,,xeno-canto,,,Anthus cervinus_Red-throated Pipit
+558445.0,Ardea intermedia,Medium Egret,Medium Egret,,,,7.0,2026-06-05,candidate,,,xeno-canto,,,
+1579015.0,Astur gentilis,Eurasian Goshawk,Eurasian Goshawk,,,,7.0,2026-06-05,candidate,,,xeno-canto,,,Astur gentilis_Eurasian Goshawk
+3882.0,Tringa erythropus,Spotted Redshank,Spotted Redshank,,,,6.0,2026-06-05,candidate,,,xeno-canto,,,Tringa erythropus_Spotted Redshank
+3951.0,Limosa lapponica,Bar-tailed Godwit,Bar-tailed Godwit,,,,6.0,2026-06-05,candidate,,,xeno-canto,,,Limosa lapponica_Bar-tailed Godwit
+4356.0,Larus canus,Common Gull,Common Gull,,,,6.0,2026-06-05,candidate,,,xeno-canto,,,Larus canus_Common Gull
+4875.0,Vanellus cinereus,Grey-headed Lapwing,Grey-headed Lapwing,,,,6.0,2026-06-05,candidate,,,xeno-canto,,,Vanellus cinereus_Grey-headed Lapwing
+4883.0,Recurvirostra avosetta,Pied Avocet,Pied Avocet,,,,6.0,2026-06-05,candidate,,,xeno-canto,,,Recurvirostra avosetta_Pied Avocet
+7018.0,Anser anser,Greylag Goose,Greylag Goose,,,,6.0,2026-06-05,candidate,,,xeno-canto,,,Anser anser_Greylag Goose
+13724.0,Anthus hodgsoni,Olive-backed Pipit,Olive-backed Pipit,,,,6.0,2026-06-05,candidate,,,xeno-canto,,,Anthus hodgsoni_Olive-backed Pipit
+19910.0,Strix uralensis,Ural Owl,Ural Owl,,,,6.0,2026-06-05,candidate,,,xeno-canto,,,Strix uralensis_Ural Owl
+339594.0,Calidris falcinellus,Broad-billed Sandpiper,Broad-billed Sandpiper,,,,6.0,2026-06-05,candidate,,,xeno-canto,,,Calidris falcinellus_Broad-billed Sandpiper
+1636180.0,Butorides atricapilla,Little Heron,Little Heron,,,,6.0,2026-06-05,candidate,,,xeno-canto,,,
+3072.0,Columba janthina,Black Wood-Pigeon,Black Wood-Pigeon,,,,5.0,2026-06-05,candidate,,,xeno-canto,,,
+3845.0,Calidris canutus,Red Knot,Red Knot,,,,5.0,2026-06-05,candidate,,,xeno-canto,,,Calidris canutus_Red Knot
+3888.0,Tringa glareola,Wood Sandpiper,Wood Sandpiper,,,,5.0,2026-06-05,candidate,,,xeno-canto,,,Tringa glareola_Wood Sandpiper
+3947.0,Limosa limosa,Black-tailed Godwit,Black-tailed Godwit,,,,5.0,2026-06-05,candidate,,,xeno-canto,,,Limosa limosa_Black-tailed Godwit
+4739.0,Ciconia boyciana,Oriental Stork,Oriental Stork,,,,5.0,2026-06-05,candidate,,,xeno-canto,,,
+10535.0,Eophona personata,Japanese Grosbeak,Japanese Grosbeak,,,,5.0,2026-06-05,candidate,,,xeno-canto,,,
+13726.0,Anthus richardi,Richard's Pipit,Richard's Pipit,,,,5.0,2026-06-05,candidate,,,xeno-canto,,,Anthus richardi_Richard's Pipit
+18367.0,Picus awokera,Japanese Green Woodpecker,Japanese Green Woodpecker,,,,5.0,2026-06-05,candidate,,,xeno-canto,,,Picus awokera_Japanese Green Woodpecker
+144792.0,Cecropis daurica,Eastern Red-rumped Swallow,Eastern Red-rumped Swallow,,,,5.0,2026-06-05,candidate,,,xeno-canto,,,Cecropis daurica_Eastern Red-rumped Swallow
+145207.0,Motacilla tschutschensis,Eastern Yellow Wagtail,Eastern Yellow Wagtail,,,,5.0,2026-06-05,candidate,,,xeno-canto,,,Motacilla tschutschensis_Eastern Yellow Wagtail
+558429.0,Spatula querquedula,Garganey,Garganey,,,,5.0,2026-06-05,candidate,,,xeno-canto,,,Spatula querquedula_Garganey
+1585373.0,Bubulcus coromandus,Eastern Cattle-Egret,Eastern Cattle-Egret,,,,5.0,2026-06-05,candidate,,,xeno-canto,genus Ardea→Bubulcus(eBird統一),,
+2556.0,Megaceryle lugubris,Crested Kingfisher,Crested Kingfisher,,,,4.0,2026-06-05,candidate,,,xeno-canto,,,
+3863.0,Calidris ferruginea,Curlew Sandpiper,Curlew Sandpiper,,,,4.0,2026-06-05,candidate,,,xeno-canto,,,Calidris ferruginea_Curlew Sandpiper
+3873.0,Limnodromus scolopaceus,Long-billed Dowitcher,Long-billed Dowitcher,,,,4.0,2026-06-05,candidate,,,xeno-canto,,,Limnodromus scolopaceus_Long-billed Dowitcher
+3879.0,Tringa totanus,Common Redshank,Common Redshank,,,,4.0,2026-06-05,candidate,,,xeno-canto,,,Tringa totanus_Common Redshank
+3969.0,Xenus cinereus,Terek Sandpiper,Terek Sandpiper,,,,4.0,2026-06-05,candidate,,,xeno-canto,,,Xenus cinereus_Terek Sandpiper
+4672.0,Falco columbarius,Merlin,Merlin,,,,4.0,2026-06-05,candidate,,,xeno-canto,,,Falco columbarius_Merlin
+4896.0,Pluvialis fulva,Pacific Golden-Plover,Pacific Golden-Plover,,,,4.0,2026-06-05,candidate,,,xeno-canto,,,Pluvialis fulva_Pacific Golden-Plover
+7013.0,Anser erythropus,Lesser White-fronted Goose,Lesser White-fronted Goose,,,,4.0,2026-06-05,candidate,,,xeno-canto,,,Anser erythropus_Lesser White-fronted Goose
+7055.0,Aythya nyroca,Ferruginous Duck,Ferruginous Duck,,,,4.0,2026-06-05,candidate,,,xeno-canto,,,
+9801.0,Coccothraustes coccothraustes,Hawfinch,Hawfinch,,,,4.0,2026-06-05,candidate,,,xeno-canto,,,Coccothraustes coccothraustes_Hawfinch
+10534.0,Eophona migratoria,Yellow-billed Grosbeak,Yellow-billed Grosbeak,,,,4.0,2026-06-05,candidate,,,xeno-canto,,,
+13128.0,Ficedula narcissina,Narcissus Flycatcher,Narcissus Flycatcher,,,,4.0,2026-06-05,candidate,,,xeno-canto,,,Ficedula narcissina_Narcissus Flycatcher
+13258.0,Cyanoptila cyanomelana,Blue-and-white Flycatcher,Blue-and-white Flycatcher,,,,4.0,2026-06-05,candidate,,,xeno-canto,,,Cyanoptila cyanomelana_Blue-and-white Flycatcher
+979659.0,Circus spilonotus,Eastern Marsh Harrier,Eastern Marsh Harrier,,,,4.0,2026-06-05,candidate,,,xeno-canto,,,
+1286913.0,Saxicola stejnegeri,Amur Stonechat,Amur Stonechat,,,,4.0,2026-06-05,candidate,,,xeno-canto,,,Saxicola stejnegeri_Amur Stonechat
+1289605.0,Urile pelagicus,Pelagic Cormorant,Pelagic Cormorant,,,,4.0,2026-06-05,candidate,,,xeno-canto,,,
+1505781.0,Anarhynchus mongolus,Siberian Sand-Plover,Siberian Sand-Plover,,,,4.0,2026-06-05,candidate,,,xeno-canto,,,
+1902.0,Cuculus poliocephalus,Lesser Cuckoo,Lesser Cuckoo,,,,3.0,2026-06-05,candidate,,,xeno-canto,,,Cuculus poliocephalus_Lesser Cuckoo
+3844.0,Calidris acuminata,Sharp-tailed Sandpiper,Sharp-tailed Sandpiper,,,,3.0,2026-06-05,candidate,,,xeno-canto,,,
+3849.0,Calidris alba,Sanderling,Sanderling,,,,3.0,2026-06-05,candidate,,,xeno-canto,,,Calidris alba_Sanderling
+3891.0,Tringa guttifer,Nordmann's Greenshank,Nordmann's Greenshank,,,,3.0,2026-06-05,candidate,,,xeno-canto,,,
+3931.0,Scolopax rusticola,Eurasian Woodcock,Eurasian Woodcock,,,,3.0,2026-06-05,candidate,,,xeno-canto,,,Scolopax rusticola_Eurasian Woodcock
+6916.0,Cygnus cygnus,Whooper Swan,Whooper Swan,,,,3.0,2026-06-05,candidate,,,xeno-canto,,,Cygnus cygnus_Whooper Swan
+9199.0,Emberiza variabilis,Grey Bunting,Grey Bunting,,,,3.0,2026-06-05,candidate,,,xeno-canto,,,
+12741.0,Turdus chrysolaus,Brown-headed Thrush,Brown-headed Thrush,,,,3.0,2026-06-05,candidate,,,xeno-canto,,,Turdus chrysolaus_Brown-headed Thrush
+12776.0,Turdus obscurus,Eyebrowed Thrush,Eyebrowed Thrush,,,,3.0,2026-06-05,candidate,,,xeno-canto,,,Turdus obscurus_Eyebrowed Thrush
+12988.0,Muscicapa griseisticta,Gray-streaked Flycatcher,Gray-streaked Flycatcher,,,,3.0,2026-06-05,candidate,,,xeno-canto,,,
+20315.0,Asio flammeus,Short-eared Owl,Short-eared Owl,,,,3.0,2026-06-05,candidate,,,xeno-canto,,,Asio flammeus_Short-eared Owl
+144603.0,Ninox japonica,Northern Boobook,Northern Boobook,,,,3.0,2026-06-05,candidate,,,xeno-canto,,,Ninox japonica_Northern Boobook
+144823.0,Periparus ater,Coal Tit,Coal Tit,,,,3.0,2026-06-05,candidate,,,xeno-canto,,,Periparus ater_Coal Tit
+144928.0,Acrocephalus orientalis,Oriental Reed Warbler,Oriental Reed Warbler,,,,3.0,2026-06-05,candidate,,,xeno-canto,,,Acrocephalus orientalis_Oriental Reed Warbler
+145363.0,Troglodytes troglodytes,Eurasian Wren,Eurasian Wren,,,,3.0,2026-06-05,candidate,,,xeno-canto,,,Troglodytes troglodytes_Eurasian Wren
+512431.0,Muscicapa dauurica,Asian Brown Flycatcher,Asian Brown Flycatcher,,,,3.0,2026-06-05,candidate,,,xeno-canto,,,Muscicapa dauurica_Asian Brown Flycatcher
+533231.0,Anas platyrhynchos × zonorhyncha,Mallard × Eastern Spot-billed Duck,Mallard × Eastern Spot-billed Duck,,,,3.0,2026-06-05,candidate,,,xeno-canto,,,
+547178.0,Spodiopsar sericeus,Red-billed Starling,Red-billed Starling,,,,3.0,2026-06-05,candidate,,,xeno-canto,,,Spodiopsar sericeus_Red-billed Starling
+1505629.0,Anarhynchus leschenaultii,Greater Sand-Plover,Greater Sand-Plover,,,,3.0,2026-06-05,candidate,,,xeno-canto,,,
+882.0,Gallus gallus,Red Junglefowl,Red Junglefowl,,,,2.0,2026-06-05,candidate,,,xeno-canto,,,Gallus gallus_Red Junglefowl
+3881.0,Tringa stagnatilis,Marsh Sandpiper,Marsh Sandpiper,,,,2.0,2026-06-05,candidate,,,xeno-canto,,,Tringa stagnatilis_Marsh Sandpiper
+3920.0,Gallinago megala,Swinhoe's Snipe,Swinhoe's Snipe,,,,2.0,2026-06-05,candidate,,,xeno-canto,,,
+4381.0,Larus fuscus,Lesser Black-backed Gull,Lesser Black-backed Gull,,,,2.0,2026-06-05,candidate,,,xeno-canto,,,Larus fuscus_Lesser Black-backed Gull
+4489.0,Stercorarius parasiticus,Parasitic Jaeger,Parasitic Jaeger,,,,2.0,2026-06-05,candidate,,,xeno-canto,,,Stercorarius parasiticus_Parasitic Jaeger
+6917.0,Cygnus columbianus,Tundra Swan,Tundra Swan,,,,2.0,2026-06-05,candidate,,,xeno-canto,,,Cygnus columbianus_Tundra Swan
+9197.0,Emberiza pusilla,Little Bunting,Little Bunting,,,,2.0,2026-06-05,candidate,,,xeno-canto,,,Emberiza pusilla_Little Bunting
+9212.0,Emberiza aureola,Yellow-breasted Bunting,Yellow-breasted Bunting,,,,2.0,2026-06-05,candidate,,,xeno-canto,,,
+13113.0,Ficedula parva,Red-breasted Flycatcher,Red-breasted Flycatcher,,,,2.0,2026-06-05,candidate,,,xeno-canto,,,Ficedula parva_Red-breasted Flycatcher
+73104.0,Nisaetus nipalensis,Mountain Hawk-Eagle,Mountain Hawk-Eagle,,,,2.0,2026-06-05,candidate,,,xeno-canto,,,
+144477.0,Rallus indicus,Brown-cheeked Rail,Brown-cheeked Rail,,,,2.0,2026-06-05,candidate,,,xeno-canto,,,Rallus indicus_Brown-cheeked Rail
+339593.0,Calidris pugnax,Ruff,Ruff,,,,2.0,2026-06-05,candidate,,,xeno-canto,,,Calidris pugnax_Ruff
+339689.0,Periparus venustulus,Yellow-bellied Tit,Yellow-bellied Tit,,,,2.0,2026-06-05,candidate,,,xeno-canto,,,Periparus venustulus_Yellow-bellied Tit
+8010,Corvus corax,Northern Raven,Northern Raven,ワタリガラス,Corvidae,Passeriformes,,,ood_tier1,crow,,ood_phase4_crow,crow OOD calibration set (Phase4),,Corvus corax_Northern Raven
+336399,Coloeus monedula,Western Jackdaw,Western Jackdaw,ニシコクマルガラス,Corvidae,Passeriformes,,,ood_tier1,crow,,ood_phase4_crow,crow OOD calibration set (Phase4),,Coloeus monedula_Western Jackdaw
+204552,Nucifraga caryocatactes,Spotted Nutcracker,Spotted Nutcracker,ホシガラス,Corvidae,Passeriformes,,,ood_tier2,crow,,ood_phase4_crow,crow OOD calibration set (Phase4),,Nucifraga caryocatactes_Spotted Nutcracker
+144910,Hypsipetes amaurotis,Brown-eared Bulbul,Brown-eared Bulbul,ヒヨドリ,Pycnonotidae,Passeriformes,,,ood_tier3,crow,,ood_phase4_crow,crow OOD calibration set (Phase4),,
+547179,Spodiopsar cineraceus,White-cheeked Starling,White-cheeked Starling,ムクドリ,Sturnidae,Passeriformes,,,ood_tier3,crow,,ood_phase4_crow,crow OOD calibration set (Phase4),,
+12051,Lanius bucephalus,Bull-headed Shrike,Bull-headed Shrike,モズ,Laniidae,Passeriformes,,,ood_tier3,crow,,ood_phase4_crow,crow OOD calibration set (Phase4),,
+339691,Parus minor,Japanese Tit,Japanese Tit,シジュウカラ,Paridae,Passeriformes,,,ood_tier3,crow,,ood_phase4_crow,crow OOD calibration set (Phase4),,Parus minor_Japanese Tit
+13851,Passer montanus,Eurasian Tree Sparrow,Eurasian Tree Sparrow,スズメ,Passeridae,Passeriformes,,,ood_tier3,crow,,ood_phase4_crow,crow OOD calibration set (Phase4),,
+5268,Milvus migrans,Black Kite,Black Kite,トビ,Accipitridae,Accipitriformes,,,ood_tier3,crow,,ood_phase4_crow,crow OOD calibration set (Phase4),,
+4370,Larus crassirostris,Black-tailed Gull,Black-tailed Gull,ウミネコ,Laridae,Charadriiformes,,,target,gull,,gull_phase1,gull target (XC名実測確定 2026-06-14),,
+144510,Chroicocephalus ridibundus,Black-headed Gull,Black-headed Gull,ユリカモメ,Laridae,Charadriiformes,,,target,gull,,gull_phase1,gull target (XC名実測確定 2026-06-14),,
+324718,Larus vegae,Vega Gull,Vega Gull,セグロカモメ,Laridae,Charadriiformes,,,target,gull,,gull_phase1,gull target (XC名実測確定 2026-06-14),,
+4366,Larus schistisagus,Slaty-backed Gull,Slaty-backed Gull,オオセグロカモメ,Laridae,Charadriiformes,,,target,gull,,gull_phase1,gull target (XC名実測確定 2026-06-14),,
+4356,Larus canus,Common Gull,Common Gull,カモメ,Laridae,Charadriiformes,,,target,gull,,gull_phase1,gull target (XC名実測確定 2026-06-14),,
+144500,Saundersilarus saundersi,Saunders's Gull,Saunders's Gull,ズグロカモメ,Laridae,Charadriiformes,,,target,gull,,gull_phase1,gull target (XC名実測確定 2026-06-14),Chroicocephalus saundersi,
+4349,Larus hyperboreus,Glaucous Gull,Glaucous Gull,シロカモメ,Laridae,Charadriiformes,,,ood_tier1,gull,,ood_phase4_gull,gull OOD calibration (XC名実測 2026-06-14),,Larus hyperboreus_Glaucous Gull
+4399,Larus glaucescens,Glaucous-winged Gull,Glaucous-winged Gull,ワシカモメ,Laridae,Charadriiformes,,,ood_tier1,gull,,ood_phase4_gull,gull OOD calibration (XC名実測 2026-06-14),,Larus glaucescens_Glaucous-winged Gull
+4494,Rissa tridactyla,Black-legged Kittiwake,Black-legged Kittiwake,ミツユビカモメ,Laridae,Charadriiformes,,,ood_tier1,gull,,ood_phase4_gull,gull OOD calibration (XC名実測 2026-06-14),,Rissa tridactyla_Black-legged Kittiwake
+4270,Phalacrocorax carbo,Great Cormorant,Great Cormorant,カワウ,Phalacrocoracidae,Suliformes,,,ood_tier2,gull,,ood_phase4_gull,gull OOD calibration (XC名実測 2026-06-14),,
+4954,Ardea cinerea,Grey Heron,Grey Heron,アオサギ,Ardeidae,Pelecaniformes,,,ood_tier2,gull,,ood_phase4_gull,gull OOD calibration (XC名実測 2026-06-14),,
+5268,Milvus migrans,Black Kite,Black Kite,トビ,Accipitridae,Accipitriformes,,,ood_tier3,gull,,ood_phase4_gull,gull OOD calibration (XC名実測 2026-06-14),,
+3896,Numenius arquata,Eurasian Curlew,Eurasian Curlew,ダイシャクシギ,Scolopacidae,Charadriiformes,,,ood_tier3,gull,,ood_phase4_gull,gull OOD calibration (XC名実測 2026-06-14),,
+7111,Histrionicus histrionicus,Harlequin Duck,Harlequin Duck,シノリガモ,,,,,target,,,applicable_cnn_2026,v2 added 2026-06-21,,Histrionicus histrionicus_Harlequin Duck
+508914,Zapornia fusca,Ruddy-breasted Crake,Ruddy-breasted Crake,ヒクイナ,,,,,target,,,applicable_cnn_2026,v2 added 2026-06-21,,Zapornia fusca_Ruddy-breasted Crake
+144529,Sternula albifrons,Little Tern,Little Tern,コアジサシ,,,,,target,,,applicable_cnn_2026,v2 added 2026-06-21,,Sternula albifrons_Little Tern
+4450,Sterna hirundo,Common Tern,Common Tern,アジサシ,,,,,target,,,applicable_cnn_2026,v2 added 2026-06-21,,Sterna hirundo_Common Tern
+8359,Terpsiphone atrocaudata,Black Paradise-Flycatcher,Japanese Paradise-Flycatcher,サンコウチョウ,,,,,target,,,applicable_cnn_2026,v2 added 2026-06-21,,Terpsiphone atrocaudata_Japanese Paradise-Flycatcher
+20234,Otus sunia,Oriental Scops-Owl,Oriental Scops Owl,コノハズク,,,,,target,,,applicable_cnn_2026,v2 added 2026-06-21,,Otus sunia_Oriental Scops Owl
+17871,Dendrocopos major,Great Spotted Woodpecker,Great Spotted Woodpecker,アカゲラ,,,,,target,,,applicable_cnn_2026,v2 added 2026-06-21,,Dendrocopos major_Great Spotted Woodpecker
+558596,Carpodacus sibiricus,Long-tailed Rosefinch,Long-tailed Rosefinch,ベニマシコ,,,,,target,,,applicable_cnn_2026,v2 added 2026-06-21,,Carpodacus sibiricus_Long-tailed Rosefinch
+117017,Phylloscopus coronatus,Eastern Crowned Warbler,Eastern Crowned Warbler,センダイムシクイ,,,,,target,,,applicable_cnn_2026,v2 added 2026-06-21,,Phylloscopus coronatus_Eastern Crowned Warbler
+117009,Phylloscopus borealoides,Sakhalin Leaf Warbler,Sakhalin Leaf Warbler,エゾムシクイ,,,,,target,,,applicable_cnn_2026,v2 added 2026-06-21,,Phylloscopus borealoides_Sakhalin Leaf Warbler
+12726,Turdus cardis,Japanese Thrush,Japanese Thrush,クロツグミ,,,,,target,,,applicable_cnn_2026,v2 added 2026-06-21,,Turdus cardis_Japanese Thrush
+497042,Zoothera aurea,White's Thrush,White's Thrush,トラツグミ,,,,,target,,,applicable_cnn_2026,v2 added 2026-06-21,,Zoothera aurea_White's Thrush
+145060,Larvivora cyane,Siberian Blue Robin,Siberian Blue Robin,コルリ,,,,,target,,,applicable_cnn_2026,v2 added 2026-06-21,,Larvivora cyane_Siberian Blue Robin
+145057,Larvivora akahige,Japanese Robin,Japanese Robin,コマドリ,,,,,target,,,applicable_cnn_2026,v2 added 2026-06-21,,Larvivora akahige_Japanese Robin
+9204,Emberiza spodocephala,Black-faced Bunting,Black-faced Bunting,アオジ,,,,,target,,,applicable_cnn_2026,v2 added 2026-06-21,,Emberiza spodocephala_Black-faced Bunting
+1585373,Bubulcus coromandus,Eastern Cattle-Egret,Eastern Cattle Egret,アマサギ,,,,,target,,,applicable_cnn_2026,v2 added 2026-06-21,,Bubulcus coromandus_Eastern Cattle Egret
+1209,Bambusicola thoracicus,Chinese Bamboo-Partridge,Chinese Bamboo-Partridge,コジュケイ,,,,,target,,,applicable_cnn_2026,v2 added 2026-06-21,,Bambusicola thoracicus_Chinese Bamboo-Partridge
+1907,Cuculus canorus,Common Cuckoo,Common Cuckoo,カッコウ,,,,,target,,,applicable_cnn_2026,v2 added 2026-06-21,,Cuculus canorus_Common Cuckoo
+1927,Cuculus optatus,Oriental Cuckoo,Oriental Cuckoo,ツツドリ,,,,,target,,,applicable_cnn_2026,v2 added 2026-06-21,,Cuculus optatus_Oriental Cuckoo
+11941,Riparia riparia,Bank Swallow,Sand Martin,ショウドウツバメ,,,,,target,,,applicable_cnn_2026,v2 added 2026-06-21,,Riparia riparia_Sand Martin
+367657,Phylloscopus xanthodryas,Japanese Leaf Warbler,Japanese Leaf Warbler,メボソムシクイ,,,,,target,,,applicable_cnn_2026,v2 added 2026-06-21,,Phylloscopus xanthodryas_Japanese Leaf Warbler
+1289502,Helopsaltes pryeri,Marsh Grassbird,Marsh Grassbird,オオセッカ,,,,,target,,,applicable_cnn_2026,v2 added 2026-06-21,,Helopsaltes pryeri_Marsh Grassbird
+3938,Arenaria interpres,Ruddy Turnstone,Ruddy Turnstone,キョウジョシギ,,,,,target,,,applicable_cnn_2026,v2 added 2026-06-21,,Arenaria interpres_Ruddy Turnstone
+3914,Gallinago hardwickii,Latham's Snipe,Latham's Snipe,オオジシギ,,,,,target,,,applicable_cnn_2026,v2 added 2026-06-21,,Gallinago hardwickii_Latham's Snipe
+12041,Lanius tigrinus,Tiger Shrike,Tiger Shrike,チゴモズ,,,,,target,,,applicable_cnn_2026,v2 added 2026-06-21,,Lanius tigrinus_Tiger Shrike
+12021,Lanius cristatus,Brown Shrike,Brown Shrike,アカモズ,,,,,target,,,applicable_cnn_2026,v2 added 2026-06-21,,Lanius cristatus_Brown Shrike
+9225,Emberiza tristrami,Tristram's Bunting,Tristram's Bunting,シロハラホオジロ,,,,,target,,,applicable_cnn_2026,v2 added 2026-06-21,,Emberiza tristrami_Tristram's Bunting
+18448,Jynx torquilla,Eurasian Wryneck,Eurasian Wryneck,アリスイ,,,,,target,,,applicable_cnn_2026,v2 added 2026-06-21,,Jynx torquilla_Eurasian Wryneck
